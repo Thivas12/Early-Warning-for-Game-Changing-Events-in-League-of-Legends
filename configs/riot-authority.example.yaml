@@ -1,6 +1,6 @@
 # Copy this file to data/private/riot-authority.yaml and review every value.
 # Keep the private copy out of Git. Never add RIOT_API_KEY to this record.
-schema_version: riot-collection-authority-v1
+schema_version: riot-collection-authority-v2
 recorded_on: 2026-09-15
 policy_reviewed_on: 2026-09-15
 policy_urls:
@@ -10,8 +10,15 @@ purpose: non-commercial-research
 player_facing: false
 credential_tier: personal
 portal_status: pending
-regions: [europe]
-endpoints: [match-v5.match, match-v5.timeline]
+regions: [europe, americas]
+endpoints:
+  - league-v4.challenger
+  - league-v4.grandmaster
+  - league-v4.master
+  - summoner-v4.by-summoner-id
+  - match-v5.ids-by-puuid
+  - match-v5.match
+  - match-v5.timeline
 raw_storage: private
 raw_retention_days: 30
 raw_redistribution: prohibited

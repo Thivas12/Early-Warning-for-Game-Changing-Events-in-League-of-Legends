@@ -8,9 +8,11 @@ import pytest
 
 from league_ews.riot import (
     HTTPTransport,
+    RequestPacer,
     RetryPolicy,
     RiotAPIError,
     RiotMatchClient,
+    RiotPlatformClient,
     TransportResponse,
     collect_match_bundles,
 )
@@ -89,6 +91,142 @@ def test_riot_client_obeys_retry_after_without_leaking_key() -> None:
     assert delays == [2.0]
     assert len(transport.requests) == 2
     assert "never-print-this" not in str(error.value)
+
+
+def test_discovery_clients_use_platform_and_regional_routes() -> None:
+    platform_transport = FakeTransport(
+        [
+            _response(200, {"entries": [{"summonerId": "encrypted-id"}]}),
+            _response(200, {"puuid": "resolved-puuid"}),
+        ]
+    )
+    platform = RiotPlatformClient(
+        "secret",
+        platform_id="EUW1",
+        transport=platform_transport,
+    )
+    ladder = platform.get_top_league("MASTER")
+    summoner = platform.get_summoner_by_id("encrypted-id")
+
+    assert ladder["entries"]
+    assert summoner["puuid"] == "resolved-puuid"
+    assert platform_transport.requests[0][0] == (
+        "https://euw1.api.riotgames.com/lol/league/v4/masterleagues/by-queue/RANKED_SOLO_5x5"
+    )
+    assert platform_transport.requests[1][0].endswith("/lol/summoner/v4/summoners/encrypted-id")
+
+    regional_transport = FakeTransport([_response(200, ["EUW1_2", "EUW1_1"])])
+    regional = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=regional_transport,
+    )
+    match_ids = regional.get_match_ids_by_puuid(
+        "private/puuid",
+        start_time=100,
+        end_time=200,
+        queue_id=420,
+    )
+    assert match_ids == ("EUW1_2", "EUW1_1")
+    url = regional_transport.requests[0][0]
+    assert url.startswith(
+        "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/private%2Fpuuid/ids?"
+    )
+    assert "startTime=100" in url
+    assert "endTime=200" in url
+    assert "queue=420" in url
+    assert "count=100" in url
+
+
+def test_discovery_error_redacts_player_identifier_and_validates_shapes() -> None:
+    private_puuid = "private-puuid-never-echo"
+    forbidden = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=FakeTransport([_response(403)]),
+    )
+    with pytest.raises(RiotAPIError) as error:
+        forbidden.get_match_ids_by_puuid(
+            private_puuid,
+            start_time=100,
+            end_time=200,
+            queue_id=420,
+        )
+    assert private_puuid not in str(error.value)
+    assert "match-v5.ids-by-puuid" in str(error.value)
+
+    malformed = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=FakeTransport([_response(200, {"not": "a list"})]),
+    )
+    with pytest.raises(RiotAPIError, match="non-list"):
+        malformed.get_match_ids_by_puuid(
+            "valid-puuid",
+            start_time=100,
+            end_time=200,
+            queue_id=420,
+        )
+
+    class BrokenTransport:
+        def get(self, url: str, *, headers: dict[str, str]) -> TransportResponse:
+            raise OSError(f"network failed for {url}")
+
+    disconnected = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=BrokenTransport(),
+    )
+    with pytest.raises(RiotAPIError) as transport_error:
+        disconnected.get_match_ids_by_puuid(
+            private_puuid,
+            start_time=100,
+            end_time=200,
+            queue_id=420,
+        )
+    assert private_puuid not in str(transport_error.value)
+
+
+def test_invalid_retry_after_falls_back_to_exponential_delay() -> None:
+    delays: list[float] = []
+    transport = FakeTransport(
+        [
+            TransportResponse(status_code=429, body=b"", headers={"Retry-After": "invalid"}),
+            _response(200, {"metadata": {"matchId": "EUW1_1"}}),
+        ]
+    )
+    client = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=transport,
+        sleep=delays.append,
+    )
+
+    client.get_match("EUW1_1")
+
+    assert delays == [1.0]
+
+
+def test_request_pacer_spaces_sequential_calls() -> None:
+    clock_value = [10.0]
+    delays: list[float] = []
+
+    def sleep(delay: float) -> None:
+        delays.append(delay)
+        clock_value[0] += delay
+
+    pacer = RequestPacer(
+        1.25,
+        sleep=sleep,
+        clock=lambda: clock_value[0],
+    )
+    pacer()
+    clock_value[0] += 0.25
+    pacer()
+    clock_value[0] += 2.0
+    pacer()
+
+    assert delays == [1.0]
 
 
 def test_collection_is_atomic_resumable_and_privacy_minimal(tmp_path) -> None:

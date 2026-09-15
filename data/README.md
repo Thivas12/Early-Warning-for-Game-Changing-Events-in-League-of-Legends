@@ -16,29 +16,45 @@ benchmark`.
 Before any research-v2 request, copy
 `configs/riot-authority.example.yaml` to the ignored path
 `data/private/riot-authority.yaml`. Review the current Riot policies, replace
-the fail-closed placeholder values truthfully, export `RIOT_API_KEY`, and run:
+the fail-closed placeholder values truthfully and export `RIOT_API_KEY`.
+Authority schema v2 explicitly covers EUW1/europe, NA1/americas and the seven
+endpoints registered for candidate discovery and complete bundle collection.
 
-```bash
-make preflight
-```
-
-The example intentionally fails until ethics status and collection authority
-are resolved. The preflight makes no network request, never reads the key into
-its report and returns exit code 2 when any gate fails.
-
-Validate the committed population, patch series, split and deterministic cell
-allocations independently of credentials or private data:
+Validate the frame and its checksum-bound stopping supplement without a key or
+network request:
 
 ```bash
 make validate-sampling-frame
+make validate-discovery-plan
 ```
 
-This confirms the pre-pilot contract only. It does not make an API request and
-does not claim that the current private authority record includes the americas
-route or the additional candidate-discovery endpoints.
+Then validate the private authority, both routes, all endpoints and runtime key:
 
-Only after the preflight passes, put one safe Match-V5 ID per line in an
-ignored local file and run:
+```bash
+make preflight-discovery
+```
+
+The committed example intentionally fails until ethics status and collection
+authority are resolved. The preflight makes no network request, never returns
+the key and exits with code 2 when any gate fails.
+
+After preflight passes, create or resume the private ladder snapshot and
+pre-detail Match-V5 ID pool:
+
+```bash
+make discover-candidates
+```
+
+The discovery command processes EUW1 and NA1 in equal deterministic player
+waves and stops only when all 12 calendar cells have the frozen two-times
+candidate buffer. It caches every identifier-bearing response atomically under
+`data/private/pilot-discovery`, so the same command safely resumes after an
+interruption. Its terminal manifest contains only counts and checksums. It does
+not fetch match details or timelines; exact eligibility and authoritative
+`gameVersion` assignment belong to the next collection stage.
+
+For a deliberately pre-specified Match-V5 canary, put one safe ID per line in
+an ignored local file and run:
 
 ```bash
 uv run league-ews collect \

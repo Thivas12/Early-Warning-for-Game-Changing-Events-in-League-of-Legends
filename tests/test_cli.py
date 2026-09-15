@@ -140,6 +140,146 @@ def test_preflight_cli_writes_failure_report(tmp_path) -> None:
     assert json.loads(output.read_text(encoding="utf-8"))["passed"] is False
 
 
+def test_discovery_plan_cli_passes_offline(tmp_path) -> None:
+    output = tmp_path / "discovery-plan.json"
+
+    exit_code = main(
+        [
+            "validate-discovery-plan",
+            "--plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 0
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
+
+
+def test_discovery_preflight_cli_fails_without_private_record(tmp_path) -> None:
+    output = tmp_path / "discovery-preflight.json"
+
+    exit_code = main(
+        [
+            "preflight-discovery",
+            "--authority-record",
+            str(tmp_path / "missing.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is False
+
+
+def test_discover_cli_repeats_gate_before_client_creation(tmp_path, monkeypatch, capsys) -> None:
+    def forbidden_client(*args: object, **kwargs: object) -> None:
+        raise AssertionError("Riot clients must not be created before discovery preflight")
+
+    monkeypatch.setattr("league_ews.cli.RiotPlatformClient.from_environment", forbidden_client)
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient.from_environment", forbidden_client)
+
+    exit_code = main(
+        [
+            "discover-candidates",
+            "--authority-record",
+            str(tmp_path / "missing.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--output",
+            str(tmp_path / "discovery"),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(capsys.readouterr().out)["passed"] is False
+
+
+def test_discover_cli_builds_all_clients_after_preflight(tmp_path, monkeypatch, capsys) -> None:
+    events: list[str] = []
+
+    monkeypatch.setattr(
+        "league_ews.cli.candidate_discovery_preflight",
+        lambda *args, **kwargs: {"passed": True},
+    )
+
+    class FakeClient:
+        def __init__(self, name: str) -> None:
+            self.name = name
+
+        def __enter__(self):
+            events.append(f"enter:{self.name}")
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            events.append(f"exit:{self.name}")
+
+    class FakePlatformClient:
+        @classmethod
+        def from_environment(cls, *, platform_id: str, pace):
+            assert callable(pace)
+            return FakeClient(platform_id)
+
+    class FakeMatchClient:
+        @classmethod
+        def from_environment(cls, *, regional_route: str, pace):
+            assert callable(pace)
+            return FakeClient(regional_route)
+
+    def fake_discover(
+        frame,
+        plan,
+        *,
+        output_root,
+        platform_fetchers,
+        regional_fetchers,
+        progress,
+    ) -> dict[str, object]:
+        events.append("discover")
+        assert set(platform_fetchers) == {"EUW1", "NA1"}
+        assert set(regional_fetchers) == {"europe", "americas"}
+        assert output_root == tmp_path / "discovery"
+        progress("safe progress")
+        return {"complete": True, "candidate_match_ids": 10_000}
+
+    monkeypatch.setattr("league_ews.cli.RiotPlatformClient", FakePlatformClient)
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient", FakeMatchClient)
+    monkeypatch.setattr("league_ews.cli.discover_candidate_pool", fake_discover)
+
+    exit_code = main(
+        [
+            "discover-candidates",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--output",
+            str(tmp_path / "discovery"),
+            "--request-interval",
+            "0",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert json.loads(captured.out)["complete"] is True
+    assert "safe progress" in captured.err
+    assert events[:4] == ["enter:EUW1", "enter:NA1", "enter:europe", "enter:americas"]
+    assert events[4] == "discover"
+
+
 def test_collect_proceeds_after_successful_gate(tmp_path, monkeypatch, capsys) -> None:
     events: list[str] = []
 

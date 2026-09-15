@@ -61,3 +61,24 @@ its hypotheses, outcomes, event definitions, horizons or pass criteria. The
 only real evidence inspected was the operational canary's source/processed
 agreement, native cadence and label-opportunity diagnostics; no pilot or model
 result existed.
+
+## 2026-09-15 — freeze the candidate-discovery stopping rule
+
+**Stage:** after freezing and validating the sampling frame; before any pilot
+ladder, summoner, match-history or match-detail request.
+
+The sampling frame fixed the ladder source and match-ID ordering but did not
+state how many ladder members to query or when the pre-detail crawl must stop.
+The checksum-bound discovery supplement closes that operational gap before
+observing candidates: members are hash-ordered with the registered seed; EUW1
+and NA1 advance in equal 32-player waves; each player contributes one capped
+100-ID queue-420 page for every frozen patch window; and discovery stops at the
+first complete wave with twice the pilot quota in every calendar cell. The run
+fails incomplete at 256 players per platform rather than changing the rule.
+
+This rule can inspect only ladder identifiers and Match-V5 ID-list responses.
+It cannot inspect match details, labels, model scores or downstream outcomes.
+The calendar-cell buffer is not an eligibility decision: authoritative patch
+and population checks remain based on Match-V5 detail in the next stage. This
+amendment changes no hypothesis, outcome, event definition, horizon, split or
+pilot quota; no pilot candidate or model evidence existed when it was frozen.

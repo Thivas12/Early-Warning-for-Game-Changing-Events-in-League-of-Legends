@@ -4,9 +4,10 @@ import json
 from datetime import date
 from pathlib import Path
 
+import pytest
 import yaml
 
-from league_ews.authority import collection_preflight
+from league_ews.authority import DISCOVERY_ENDPOINTS, collection_preflight
 
 
 def _record(**overrides: object) -> dict[str, object]:
@@ -211,3 +212,77 @@ def test_invalid_yaml_is_rejected_without_echoing_source(tmp_path) -> None:
     assert report["passed"] is False
     assert sensitive_source not in rendered
     assert "invalid YAML" in rendered
+
+
+def test_v2_preflight_requires_all_discovery_routes_and_endpoints(tmp_path) -> None:
+    path = tmp_path / "authority.yaml"
+    _write_record(
+        path,
+        schema_version="riot-collection-authority-v2",
+        regions=["europe", "americas"],
+        endpoints=sorted(DISCOVERY_ENDPOINTS),
+    )
+
+    report = collection_preflight(
+        path,
+        requested_regions=("europe", "americas"),
+        required_endpoints=DISCOVERY_ENDPOINTS,
+        environment={"RIOT_API_KEY": "configured"},
+        as_of=date(2026, 9, 15),
+    )
+
+    assert report["passed"] is True
+    assert report["requested_region"] is None
+    assert report["requested_regions"] == ["europe", "americas"]
+
+
+def test_v1_record_cannot_claim_discovery_endpoints(tmp_path) -> None:
+    path = tmp_path / "authority.yaml"
+    _write_record(path, endpoints=sorted(DISCOVERY_ENDPOINTS))
+
+    report = collection_preflight(
+        path,
+        requested_region="europe",
+        environment={"RIOT_API_KEY": "configured"},
+        as_of=date(2026, 9, 15),
+    )
+
+    assert report["passed"] is False
+    assert _failed_checks(report) == {"record-schema"}
+
+
+def test_v2_record_rejects_duplicate_scope(tmp_path) -> None:
+    path = tmp_path / "authority.yaml"
+    _write_record(
+        path,
+        schema_version="riot-collection-authority-v2",
+        regions=["europe", "europe"],
+    )
+
+    report = collection_preflight(
+        path,
+        requested_region="europe",
+        environment={"RIOT_API_KEY": "configured"},
+        as_of=date(2026, 9, 15),
+    )
+
+    assert report["passed"] is False
+    assert _failed_checks(report) == {"record-schema"}
+
+
+def test_preflight_rejects_ambiguous_or_unknown_requested_scope(tmp_path) -> None:
+    path = tmp_path / "authority.yaml"
+    _write_record(path)
+
+    with pytest.raises(ValueError, match="either"):
+        collection_preflight(
+            path,
+            requested_region="europe",
+            requested_regions=("europe",),
+        )
+    with pytest.raises(ValueError, match="endpoint"):
+        collection_preflight(
+            path,
+            requested_region="europe",
+            required_endpoints=("unknown-v1.endpoint",),
+        )
