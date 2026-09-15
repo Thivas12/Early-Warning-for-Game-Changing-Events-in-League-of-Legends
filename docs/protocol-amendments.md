@@ -35,3 +35,29 @@ This addition makes the registered native-versus-fixed-cadence ablation and
 short-horizon feasibility limits auditable. It does not change a hypothesis,
 outcome, event definition, horizon or pass criterion. No model result was
 available or inspected when the diagnostic was added.
+
+## 2026-09-15 — operationalize the pilot sampling frame
+
+**Stage:** after the checksum-bound one-match canary review; before pilot
+candidate discovery, pilot match-detail collection, duration inspection, model
+fitting, threshold selection or outcome analysis.
+
+The registered two-route, six-consecutive-patch design is made executable as
+EUW1/europe and NA1/americas over completed Match-V5 game-version patches
+16.12-16.17 (Riot public schedule 26.12-26.17), queue 420. The 5,000-match pilot
+uses deterministic balanced-largest-remainder allocation across all 12 cells:
+417 per route for patches 16.12-16.15 and 416 per route for patches 16.16-16.17.
+The full target remains 3,000 per cell and 36,000 total. Seed 20260915 and a
+checksum-bound high-ranked ladder candidate construction are fixed before
+fetching pilot details.
+
+No duration cutoff is set from the canary. Otherwise eligible short games stay
+in the pilot, which is excluded from final claims. A single duration rule must
+be frozen after inspecting only the pilot and before final collection. Final
+frame validation is blocked until that post-pilot amendment exists.
+
+This operationalizes choices left open by the registered plan without changing
+its hypotheses, outcomes, event definitions, horizons or pass criteria. The
+only real evidence inspected was the operational canary's source/processed
+agreement, native cadence and label-opportunity diagnostics; no pilot or model
+result existed.

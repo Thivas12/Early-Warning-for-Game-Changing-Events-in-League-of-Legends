@@ -35,7 +35,9 @@ The `research/v2` programme starts again from a falsifiable protocol:
 See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan and
 [`docs/legacy-audit.md`](docs/legacy-audit.md) for the evidence that motivated
 the reset. Post-freeze corrections are recorded in
-[`docs/protocol-amendments.md`](docs/protocol-amendments.md).
+[`docs/protocol-amendments.md`](docs/protocol-amendments.md). The executable
+two-route, six-patch population and allocation are in
+[`docs/sampling-frame.md`](docs/sampling-frame.md).
 
 ## Quick start
 
@@ -46,6 +48,7 @@ environment.
 uv sync --all-groups
 uv run league-ews audit --csv /path/to/final_dataset.csv
 uv run league-ews benchmark --csv /path/to/final_dataset.csv --output reports/local
+uv run league-ews validate-sampling-frame --frame configs/rifthazard-sampling-frame.yaml
 uv run pytest
 ```
 
@@ -76,6 +79,8 @@ the frozen candidate and are never used for tuning.
 Raw-validation reports also record genuine within-match snapshot cadence and
 the event-level label opportunity at each registered horizon. These diagnostics
 do not interpolate observations and are not treated as model performance.
+When a sampling frame is supplied, validation additionally requires the exact
+route-platform/patch cross-product and stage-specific count in every cell.
 
 ## Riot and data notice
 

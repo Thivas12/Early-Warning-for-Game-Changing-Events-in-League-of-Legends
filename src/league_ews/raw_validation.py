@@ -18,10 +18,16 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from league_ews.constants import EVENTS, RIFTHAZARD_HORIZONS_SECONDS
 from league_ews.labels import extract_event_index
+from league_ews.sampling import (
+    SamplingFrame,
+    SamplingStage,
+    load_registered_sampling_frame,
+    sampling_coverage,
+)
 from league_ews.timeline import normalise_match_timeline
 
 RAW_MANIFEST_SCHEMA_VERSION = "riot-raw-collection-v2"
-RAW_VALIDATION_SCHEMA_VERSION = "riot-raw-validation-v3"
+RAW_VALIDATION_SCHEMA_VERSION = "riot-raw-validation-v4"
 EVENT_SPOT_CHECK_SCHEMA_VERSION: Literal["riot-event-spot-check-v1"] = "riot-event-spot-check-v1"
 
 
@@ -139,6 +145,70 @@ def _payload_match_id(payload: Mapping[str, Any]) -> str:
 def _patch(game_version: str) -> str:
     parts = game_version.split(".")
     return ".".join(parts[:2]) if len(parts) >= 2 else game_version
+
+
+def _platform(match_id: str) -> str:
+    return match_id.split("_", maxsplit=1)[0]
+
+
+def _frame_eligibility_matches(
+    match_payload: Mapping[str, Any],
+    entry: RawBundleRecord,
+    frame: SamplingFrame,
+) -> bool:
+    info = match_payload.get("info")
+    metadata = match_payload.get("metadata")
+    if not isinstance(info, Mapping) or not isinstance(metadata, Mapping):
+        return False
+    expected_routes = {route.platform_id: route.regional_route for route in frame.route_platforms}
+    platform = _platform(entry.match_id)
+    expected_patches = {patch.game_version_patch for patch in frame.patches}
+    info_participants = info.get("participants")
+    metadata_participants = metadata.get("participants")
+    return (
+        expected_routes.get(platform) == entry.regional_route
+        and info.get("platformId") == platform
+        and _patch(entry.game_version) in expected_patches
+        and info.get("queueId") == frame.eligibility.queue_id
+        and info.get("mapId") == frame.eligibility.map_id
+        and info.get("gameMode") == frame.eligibility.game_mode
+        and info.get("gameType") == frame.eligibility.game_type
+        and isinstance(info_participants, list)
+        and len(info_participants) == frame.eligibility.participant_count
+        and isinstance(metadata_participants, list)
+        and len(metadata_participants) == frame.eligibility.participant_count
+    )
+
+
+def _sampling_frame_context(
+    sampling_frame: str | Path | None,
+    sampling_stage: SamplingStage | None,
+) -> tuple[SamplingFrame | None, dict[str, object]]:
+    if (sampling_frame is None) != (sampling_stage is None):
+        raise ValueError("sampling_frame and sampling_stage must be supplied together")
+    if sampling_frame is None:
+        return None, {
+            "status": "not-supplied",
+            "stage": None,
+            "frame_id": None,
+            "frame_sha256": None,
+        }
+    try:
+        frame, frame_sha256 = load_registered_sampling_frame(sampling_frame)
+    except ValueError:
+        return None, {
+            "status": "invalid",
+            "stage": sampling_stage,
+            "frame_id": None,
+            "frame_sha256": None,
+        }
+    return frame, {
+        "status": "pending-collection-check",
+        "stage": sampling_stage,
+        "frame_id": frame.frame_id,
+        "frame_sha256": frame_sha256,
+        "duration_cutoff_status": frame.duration.final_rule_status,
+    }
 
 
 def _cadence_summary(intervals_ms: list[int]) -> dict[str, int | float | None]:
@@ -510,6 +580,7 @@ def _failed_manifest_report(
     min_routes: int,
     min_patches: int,
     spot_check_requested: bool,
+    sampling_frame_summary: Mapping[str, object],
 ) -> dict[str, object]:
     check = RawValidationCheck(
         check_id="manifest-schema",
@@ -542,6 +613,7 @@ def _failed_manifest_report(
             "blocked" if spot_check_requested else "pending",
             required_cells=0,
         ),
+        "sampling_frame": dict(sampling_frame_summary),
     }
 
 
@@ -552,6 +624,8 @@ def validate_raw_collection(
     min_patches: int = 6,
     event_spot_check: str | Path | None = None,
     processed_root: str | Path | None = None,
+    sampling_frame: str | Path | None = None,
+    sampling_stage: SamplingStage | None = None,
     checked_at: datetime | None = None,
 ) -> dict[str, object]:
     """Validate raw inventory, provenance and normalized shape without network access."""
@@ -561,6 +635,7 @@ def validate_raw_collection(
     timestamp = checked_at or datetime.now(UTC)
     if timestamp.tzinfo is None:
         raise ValueError("checked_at must be timezone-aware")
+    frame, frame_summary = _sampling_frame_context(sampling_frame, sampling_stage)
 
     root = Path(raw_root)
     try:
@@ -572,6 +647,7 @@ def validate_raw_collection(
             min_routes=min_routes,
             min_patches=min_patches,
             spot_check_requested=event_spot_check is not None,
+            sampling_frame_summary=frame_summary,
         )
 
     checks = [
@@ -632,6 +708,8 @@ def validate_raw_collection(
     cadence_intervals_ms: list[int] = []
     route_counts = Counter[str]()
     patch_counts = Counter[str]()
+    frame_cell_counts = Counter[tuple[str, str, str]]()
+    frame_eligibility_valid = True
     valid_by_id: dict[str, RawBundleRecord] = {}
     for entry in available_by_id.values():
         match_path = match_files.get(entry.match_id)
@@ -690,7 +768,15 @@ def validate_raw_collection(
                     counts=labelable_counts,
                 )
             route_counts[entry.regional_route] += 1
-            patch_counts[_patch(normalized.game_version)] += 1
+            game_patch = _patch(normalized.game_version)
+            patch_counts[game_patch] += 1
+            if frame is not None:
+                frame_cell_counts[entry.regional_route, _platform(entry.match_id), game_patch] += 1
+                frame_eligibility_valid = frame_eligibility_valid and _frame_eligibility_matches(
+                    match_payload,
+                    entry,
+                    frame,
+                )
 
     checks.extend(
         [
@@ -732,6 +818,62 @@ def validate_raw_collection(
             ),
         ]
     )
+    if sampling_frame is not None:
+        frame_valid = frame is not None
+        checks.append(
+            _check(
+                "sampling-frame",
+                frame_valid,
+                "The supplied sampling frame is valid and checksum-bound in this report",
+                "The supplied sampling frame failed registered contract validation",
+            )
+        )
+        coverage: dict[str, object]
+        if frame is None or sampling_stage is None:
+            coverage = {
+                "stage": sampling_stage,
+                "passed": False,
+                "expected_cells": 0,
+                "represented_cells": 0,
+                "unexpected_cells": 0,
+                "target_matches": 0,
+                "observed_in_frame_matches": 0,
+                "exact_cell_targets_met": False,
+            }
+        else:
+            coverage = sampling_coverage(frame, frame_cell_counts, stage=sampling_stage)
+        checks.extend(
+            [
+                _check(
+                    "frame-eligibility",
+                    frame_valid and frame_eligibility_valid,
+                    "Every valid bundle matches the frozen route, patch and queue eligibility",
+                    "One or more valid bundles fall outside the frozen eligibility contract",
+                ),
+                _check(
+                    "frame-cell-coverage",
+                    coverage["passed"] is True,
+                    "Every route-patch cell exactly meets its registered stage target",
+                    "The exact registered route-patch cell targets are not all met",
+                ),
+            ]
+        )
+        if sampling_stage == "final":
+            checks.append(
+                RawValidationCheck(
+                    check_id="final-duration-freeze",
+                    passed=False,
+                    message=(
+                        "Final collection is blocked until the pilot fixes one minimum-duration "
+                        "rule in a post-pilot sampling-frame amendment"
+                    ),
+                )
+            )
+        frame_summary.update(coverage)
+        if frame_valid and sampling_stage == "final":
+            frame_summary["status"] = "blocked-duration-rule"
+        elif frame_valid:
+            frame_summary["status"] = "passed" if coverage["passed"] is True else "incomplete"
     automated_passed = all(check.passed for check in checks)
     spot_check = _event_spot_check_summary(
         Path(event_spot_check) if event_spot_check is not None else None,
@@ -741,6 +883,12 @@ def validate_raw_collection(
         valid_by_id=valid_by_id,
     )
     passed = automated_passed and (event_spot_check is None or spot_check["status"] == "passed")
+    g2_complete = (
+        passed
+        and sampling_stage == "final"
+        and event_spot_check is not None
+        and spot_check["status"] == "passed"
+    )
     return {
         "schema_version": RAW_VALIDATION_SCHEMA_VERSION,
         "checked_at": timestamp.astimezone(UTC).isoformat(),
@@ -751,7 +899,7 @@ def validate_raw_collection(
         },
         "passed": passed,
         "automated_passed": automated_passed,
-        "g2_complete": False,
+        "g2_complete": g2_complete,
         "checks": [asdict(check) for check in checks],
         "summary": {
             "manifest_bundles": len(available_by_id),
@@ -767,4 +915,5 @@ def validate_raw_collection(
             "patches": dict(sorted(patch_counts.items())),
         },
         "manual_event_spot_check": spot_check,
+        "sampling_frame": frame_summary,
     }

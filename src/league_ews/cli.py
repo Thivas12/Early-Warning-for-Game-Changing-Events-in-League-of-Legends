@@ -16,6 +16,7 @@ from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
 from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
 from league_ews.riot import RiotMatchClient, collect_match_bundles
+from league_ews.sampling import validate_sampling_frame
 
 
 def _write_json(payload: object, output: Path | None) -> None:
@@ -106,11 +107,19 @@ def _preflight_collection(args: argparse.Namespace) -> int:
     return 0 if report["passed"] else 2
 
 
+def _validate_sampling_frame(args: argparse.Namespace) -> int:
+    report = validate_sampling_frame(args.frame)
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
 def _process(args: argparse.Namespace) -> int:
     validation = validate_raw_collection(
         args.raw,
         min_routes=args.min_routes,
         min_patches=args.min_patches,
+        sampling_frame=args.sampling_frame,
+        sampling_stage=args.sampling_stage,
     )
     if not validation["passed"]:
         _write_json(validation, None)
@@ -128,6 +137,8 @@ def _validate_raw(args: argparse.Namespace) -> int:
         min_patches=args.min_patches,
         event_spot_check=args.event_spot_check,
         processed_root=args.processed,
+        sampling_frame=args.sampling_frame,
+        sampling_stage=args.sampling_stage,
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
@@ -187,6 +198,14 @@ def build_parser() -> argparse.ArgumentParser:
     preflight.add_argument("--output", type=Path)
     preflight.set_defaults(handler=_preflight_collection)
 
+    sampling_frame = subparsers.add_parser(
+        "validate-sampling-frame",
+        help="validate the frozen sampling frame without making an API request",
+    )
+    sampling_frame.add_argument("--frame", type=Path, required=True)
+    sampling_frame.add_argument("--output", type=Path)
+    sampling_frame.set_defaults(handler=_validate_sampling_frame)
+
     collect = subparsers.add_parser("collect", help="fetch private Match-V5 raw bundles")
     collect.add_argument("--authority-record", type=Path, required=True)
     collect.add_argument("--match-ids", type=Path, required=True)
@@ -205,6 +224,8 @@ def build_parser() -> argparse.ArgumentParser:
     validate_raw.add_argument("--min-patches", type=int, default=6)
     validate_raw.add_argument("--event-spot-check", type=Path)
     validate_raw.add_argument("--processed", type=Path)
+    validate_raw.add_argument("--sampling-frame", type=Path)
+    validate_raw.add_argument("--sampling-stage", choices=("pilot", "final"))
     validate_raw.set_defaults(handler=_validate_raw)
 
     spot_check = subparsers.add_parser(
@@ -225,6 +246,8 @@ def build_parser() -> argparse.ArgumentParser:
     process.add_argument("--output", type=Path, default=Path("data/processed"))
     process.add_argument("--min-routes", type=int, default=2)
     process.add_argument("--min-patches", type=int, default=6)
+    process.add_argument("--sampling-frame", type=Path)
+    process.add_argument("--sampling-stage", choices=("pilot", "final"))
     process.set_defaults(handler=_process)
     return parser
 
