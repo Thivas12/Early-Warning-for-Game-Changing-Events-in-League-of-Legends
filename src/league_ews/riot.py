@@ -155,6 +155,7 @@ class RiotMatchClient:
 @dataclass(frozen=True)
 class CollectedMatch:
     match_id: str
+    regional_route: str
     game_version: str
     game_creation_ms: int
     match_sha256: str
@@ -184,9 +185,114 @@ def _payload_match_id(payload: Mapping[str, Any]) -> str:
     return str(metadata.get("matchId", ""))
 
 
+def _json_object(path: Path) -> tuple[bytes, Mapping[str, Any]]:
+    content = path.read_bytes()
+    try:
+        payload = json.loads(content)
+    except json.JSONDecodeError as error:
+        raise ValueError(f"Invalid JSON in {path.name}") from error
+    if not isinstance(payload, Mapping):
+        raise ValueError(f"Expected a JSON object in {path.name}")
+    return content, payload
+
+
+def _bundle_record(
+    match_id: str,
+    *,
+    regional_route: str,
+    match_content: bytes,
+    timeline_content: bytes,
+    match_payload: Mapping[str, Any],
+    timeline_payload: Mapping[str, Any],
+) -> CollectedMatch:
+    if (
+        _payload_match_id(match_payload) != match_id
+        or _payload_match_id(timeline_payload) != match_id
+    ):
+        raise RiotAPIError(f"Payload identity mismatch for {match_id}")
+    info = match_payload.get("info")
+    safe_info = info if isinstance(info, Mapping) else {}
+    game_version = str(safe_info.get("gameVersion", ""))
+    try:
+        game_creation_ms = int(safe_info.get("gameCreation", 0))
+    except (TypeError, ValueError) as error:
+        raise RiotAPIError("Payload has invalid required match metadata") from error
+    if not re.fullmatch(r"\d+\.\d+(?:\.\d+)*", game_version) or game_creation_ms <= 0:
+        raise RiotAPIError("Payload is missing required match version or creation metadata")
+    return CollectedMatch(
+        match_id=match_id,
+        regional_route=regional_route,
+        game_version=game_version,
+        game_creation_ms=game_creation_ms,
+        match_sha256=hashlib.sha256(match_content).hexdigest(),
+        timeline_sha256=hashlib.sha256(timeline_content).hexdigest(),
+    )
+
+
+def _previous_records(root: Path) -> dict[str, CollectedMatch]:
+    manifest_path = root / "collection-manifest.json"
+    if not manifest_path.is_file():
+        return {}
+    _, payload = _json_object(manifest_path)
+    if payload.get("schema_version") != "riot-raw-collection-v2":
+        return {}
+    available = payload.get("available")
+    if not isinstance(available, list):
+        raise ValueError("Existing v2 collection manifest has no available inventory")
+    records: dict[str, CollectedMatch] = {}
+    for raw_entry in available:
+        if not isinstance(raw_entry, Mapping):
+            raise ValueError("Existing v2 collection manifest has an invalid entry")
+        try:
+            record = CollectedMatch(
+                match_id=str(raw_entry.get("match_id", "")),
+                regional_route=str(raw_entry.get("regional_route", "")),
+                game_version=str(raw_entry.get("game_version", "")),
+                game_creation_ms=int(raw_entry.get("game_creation_ms", -1)),
+                match_sha256=str(raw_entry.get("match_sha256", "")),
+                timeline_sha256=str(raw_entry.get("timeline_sha256", "")),
+            )
+        except (TypeError, ValueError) as error:
+            raise ValueError("Existing v2 collection manifest has an invalid entry") from error
+        _validate_match_id(record.match_id)
+        valid_hashes = all(
+            re.fullmatch(r"[0-9a-f]{64}", value)
+            for value in (record.match_sha256, record.timeline_sha256)
+        )
+        if (
+            record.regional_route not in REGIONAL_ROUTES
+            or not record.game_version
+            or record.game_creation_ms <= 0
+            or not valid_hashes
+            or record.match_id in records
+        ):
+            raise ValueError("Existing v2 collection manifest has invalid bundle metadata")
+        records[record.match_id] = record
+    return records
+
+
+def _read_bundle_record(
+    root: Path,
+    match_id: str,
+    *,
+    regional_route: str,
+) -> CollectedMatch:
+    match_content, match_payload = _json_object(root / "matches" / f"{match_id}.json")
+    timeline_content, timeline_payload = _json_object(root / "timelines" / f"{match_id}.json")
+    return _bundle_record(
+        match_id,
+        regional_route=regional_route,
+        match_content=match_content,
+        timeline_content=timeline_content,
+        match_payload=match_payload,
+        timeline_payload=timeline_payload,
+    )
+
+
 def collect_match_bundles(
     match_ids: Iterable[str],
     *,
+    regional_route: str,
     output_root: str | Path,
     fetcher: MatchFetcher,
     overwrite: bool = False,
@@ -194,6 +300,9 @@ def collect_match_bundles(
 ) -> dict[str, object]:
     """Fetch match/timeline pairs atomically and write a privacy-minimal manifest."""
 
+    route = regional_route.lower()
+    if route not in REGIONAL_ROUTES:
+        raise ValueError(f"Unsupported regional route: {regional_route}")
     identifiers = tuple(
         dict.fromkeys(match_id.strip() for match_id in match_ids if match_id.strip())
     )
@@ -203,6 +312,33 @@ def collect_match_bundles(
         _validate_match_id(match_id)
 
     root = Path(output_root)
+    previous_records = _previous_records(root)
+    requested_ids = set(identifiers)
+    if list(root.rglob("*.partial")):
+        raise ValueError("Raw collection contains incomplete partial files")
+    match_files = {path.stem: path for path in (root / "matches").glob("*.json")}
+    timeline_files = {path.stem: path for path in (root / "timelines").glob("*.json")}
+    if set(match_files) != set(timeline_files):
+        raise ValueError("Raw collection contains unpaired match/timeline files")
+    overwrite_ids = requested_ids if overwrite else set()
+    for match_id in match_files:
+        _validate_match_id(match_id)
+        prior_record = previous_records.get(match_id)
+        if prior_record is None:
+            if match_id not in overwrite_ids:
+                raise ValueError("Raw collection contains an untracked existing bundle")
+            continue
+        if match_id in requested_ids and prior_record.regional_route != route:
+            raise ValueError("A resumed bundle cannot change regional route")
+        if match_id not in overwrite_ids:
+            existing_record = _read_bundle_record(
+                root,
+                match_id,
+                regional_route=prior_record.regional_route,
+            )
+            if existing_record != prior_record:
+                raise ValueError("Existing bundle differs from its recorded manifest")
+
     collected: list[CollectedMatch] = []
     skipped: list[str] = []
     for match_id in identifiers:
@@ -214,35 +350,60 @@ def collect_match_bundles(
 
         match_payload = fetcher.get_match(match_id)
         timeline_payload = fetcher.get_timeline(match_id)
-        if (
-            _payload_match_id(match_payload) != match_id
-            or _payload_match_id(timeline_payload) != match_id
-        ):
-            raise RiotAPIError(f"Payload identity mismatch for {match_id}")
-
         match_bytes = _canonical_json(match_payload)
         timeline_bytes = _canonical_json(timeline_payload)
+        record = _bundle_record(
+            match_id,
+            regional_route=route,
+            match_content=match_bytes,
+            timeline_content=timeline_bytes,
+            match_payload=match_payload,
+            timeline_payload=timeline_payload,
+        )
         _atomic_write(match_path, match_bytes)
         _atomic_write(timeline_path, timeline_bytes)
-        info = match_payload.get("info")
-        safe_info = info if isinstance(info, Mapping) else {}
-        collected.append(
-            CollectedMatch(
-                match_id=match_id,
-                game_version=str(safe_info.get("gameVersion", "unknown")),
-                game_creation_ms=int(safe_info.get("gameCreation", 0)),
-                match_sha256=hashlib.sha256(match_bytes).hexdigest(),
-                timeline_sha256=hashlib.sha256(timeline_bytes).hexdigest(),
-            )
+        collected.append(record)
+
+    if list(root.rglob("*.partial")):
+        raise ValueError("Raw collection contains incomplete partial files")
+    match_files = {path.stem: path for path in (root / "matches").glob("*.json")}
+    timeline_files = {path.stem: path for path in (root / "timelines").glob("*.json")}
+    if set(match_files) != set(timeline_files):
+        raise ValueError("Raw collection contains unpaired match/timeline files")
+
+    collected_ids = {record.match_id for record in collected}
+    available: list[CollectedMatch] = []
+    for match_id in sorted(match_files):
+        _validate_match_id(match_id)
+        prior_record = previous_records.get(match_id)
+        prior_route = prior_record.regional_route if prior_record is not None else None
+        if match_id in requested_ids:
+            if prior_route is not None and prior_route != route:
+                raise ValueError("A resumed bundle cannot change regional route")
+            bundle_route = route
+        elif prior_route is not None:
+            bundle_route = prior_route
+        else:
+            raise ValueError("Raw collection contains an untracked existing bundle")
+        record = _read_bundle_record(
+            root,
+            match_id,
+            regional_route=bundle_route,
         )
+        if prior_record is not None and match_id not in collected_ids and record != prior_record:
+            raise ValueError("Existing bundle differs from its recorded manifest")
+        available.append(record)
 
     timestamp = collected_at or datetime.now(UTC)
+    if timestamp.tzinfo is None:
+        raise ValueError("collected_at must be timezone-aware")
     manifest: dict[str, object] = {
-        "schema_version": "riot-raw-collection-v1",
+        "schema_version": "riot-raw-collection-v2",
         "collected_at": timestamp.astimezone(UTC).isoformat(),
         "requested": len(identifiers),
         "collected": [asdict(record) for record in collected],
         "skipped_existing": skipped,
+        "available": [asdict(record) for record in available],
         "contains_raw_player_identifiers": True,
         "redistribution": "not-authorized-by-this-manifest",
     }

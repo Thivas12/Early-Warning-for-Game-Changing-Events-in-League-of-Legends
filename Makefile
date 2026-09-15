@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -21,6 +21,13 @@ preflight:
 	uv run league-ews preflight-collection \
 		--record data/private/riot-authority.yaml \
 		--region europe
+
+validate-raw:
+	uv run league-ews validate-raw \
+		--raw data/raw \
+		--output data/private/raw-validation.json \
+		--min-routes 2 \
+		--min-patches 6
 
 audit:
 	uv run league-ews audit --csv audit-data/final_dataset.csv --output reports/local/audit.json

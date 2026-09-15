@@ -38,14 +38,37 @@ uv run league-ews collect \
 
 `collect` repeats the preflight as a mandatory gate and exits before constructing
 the API client if it fails. The collector retries rate limits/server failures,
-writes match/timeline pairs atomically, resumes existing pairs and records
-checksums without copying PUUIDs into its collection manifest.
+writes each payload atomically, manifests only complete match/timeline pairs,
+resumes existing pairs and records checksums without copying PUUIDs into its
+collection manifest. Manifest schema v2 retains and revalidates the complete
+available inventory across resumed runs, even when a later run requests only a
+subset.
+
+Validate the private raw inventory before processing:
+
+```bash
+make validate-raw
+```
+
+This network-free command checks manifest consistency, complete pairs,
+checksums, payload identity, supported causal normalization, and the registered
+minimum of two regional routes and six patches. It writes the report to the
+ignored `data/private/raw-validation.json`, binds that report to the exact
+manifest SHA-256, and returns exit code 2 on failure.
+For a deliberately smaller pipeline smoke test, call `validate-raw` directly
+with lower `--min-routes` and `--min-patches` values and record that deviation.
+An automated pass does not complete G2: event timestamps still require a
+documented human spot-check against source payloads.
 
 Normalize the private pairs and build exact labels with:
 
 ```bash
 uv run league-ews process --raw data/raw --output data/processed
 ```
+
+`process` repeats the same automated gate before writing derived files. A pilot
+that has a preregistered coverage deviation must pass the matching explicit
+`--min-routes` and `--min-patches` values to both commands.
 
 Processed match files contain the supported causal timeline fields and labels,
 not Riot IDs or PUUIDs. They remain ignored until redistribution is explicitly

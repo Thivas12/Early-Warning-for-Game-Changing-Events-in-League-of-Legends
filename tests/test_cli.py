@@ -162,9 +162,10 @@ def test_collect_proceeds_after_successful_gate(tmp_path, monkeypatch, capsys) -
         def __exit__(self, *args: object) -> None:
             return None
 
-    def fake_collect(match_ids, *, output_root, fetcher, overwrite):
+    def fake_collect(match_ids, *, regional_route, output_root, fetcher, overwrite):
         events.append("collect")
         assert list(match_ids) == ["EUW1_123"]
+        assert regional_route == "europe"
         assert output_root == tmp_path / "raw"
         assert isinstance(fetcher, FakeClient)
         assert overwrite is False
@@ -193,3 +194,87 @@ def test_collect_proceeds_after_successful_gate(tmp_path, monkeypatch, capsys) -
     assert exit_code == 0
     assert events == ["preflight", "client", "collect"]
     assert "Collected 0" in capsys.readouterr().out
+
+
+def test_validate_raw_cli_writes_failure_report(tmp_path) -> None:
+    output = tmp_path / "raw-validation.json"
+
+    exit_code = main(
+        [
+            "validate-raw",
+            "--raw",
+            str(tmp_path / "missing"),
+            "--output",
+            str(output),
+            "--min-routes",
+            "1",
+            "--min-patches",
+            "1",
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is False
+
+
+def test_process_fails_raw_gate_before_writing_outputs(tmp_path, monkeypatch, capsys) -> None:
+    def forbidden_processing(*args: object, **kwargs: object) -> None:
+        raise AssertionError("processing must not start")
+
+    monkeypatch.setattr("league_ews.cli.process_raw_collection", forbidden_processing)
+
+    exit_code = main(
+        [
+            "process",
+            "--raw",
+            str(tmp_path / "missing"),
+            "--output",
+            str(tmp_path / "processed"),
+            "--min-routes",
+            "1",
+            "--min-patches",
+            "1",
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(capsys.readouterr().out)["passed"] is False
+    assert not (tmp_path / "processed").exists()
+
+
+def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, capsys) -> None:
+    events: list[str] = []
+
+    def fake_validation(raw, *, min_routes: int, min_patches: int) -> dict[str, object]:
+        events.append("validate")
+        assert raw == tmp_path / "raw"
+        assert min_routes == 1
+        assert min_patches == 1
+        return {"passed": True}
+
+    def fake_processing(raw, *, output_root) -> dict[str, object]:
+        events.append("process")
+        assert raw == tmp_path / "raw"
+        assert output_root == tmp_path / "processed"
+        return {"matches": []}
+
+    monkeypatch.setattr("league_ews.cli.validate_raw_collection", fake_validation)
+    monkeypatch.setattr("league_ews.cli.process_raw_collection", fake_processing)
+
+    exit_code = main(
+        [
+            "process",
+            "--raw",
+            str(tmp_path / "raw"),
+            "--output",
+            str(tmp_path / "processed"),
+            "--min-routes",
+            "1",
+            "--min-patches",
+            "1",
+        ]
+    )
+
+    assert exit_code == 0
+    assert events == ["validate", "process"]
+    assert "Processed 0" in capsys.readouterr().out

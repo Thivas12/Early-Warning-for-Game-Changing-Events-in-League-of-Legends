@@ -93,31 +93,107 @@ def test_collection_is_atomic_resumable_and_privacy_minimal(tmp_path) -> None:
     timestamp = datetime(2026, 9, 15, tzinfo=UTC)
     manifest = collect_match_bundles(
         ["EUW1_1", "EUW1_1", "EUW1_2"],
+        regional_route="europe",
         output_root=tmp_path,
         fetcher=fetcher,
         collected_at=timestamp,
     )
 
     assert len(manifest["collected"]) == 2
+    assert len(manifest["available"]) == 2
+    assert manifest["schema_version"] == "riot-raw-collection-v2"
     assert manifest["contains_raw_player_identifiers"] is True
     assert "private-puuid" not in json.dumps(manifest)
     assert (tmp_path / "matches" / "EUW1_1.json").is_file()
     assert not list(tmp_path.rglob("*.partial"))
 
     second = collect_match_bundles(
-        ["EUW1_1", "EUW1_2"],
+        ["EUW1_1"],
+        regional_route="europe",
         output_root=tmp_path,
         fetcher=fetcher,
         collected_at=timestamp,
     )
-    assert second["skipped_existing"] == ["EUW1_1", "EUW1_2"]
+    assert second["skipped_existing"] == ["EUW1_1"]
+    assert len(second["available"]) == 2
     assert len(fetcher.calls) == 4
+
+
+def test_resumed_bundle_cannot_change_regional_route(tmp_path) -> None:
+    collect_match_bundles(
+        ["EUW1_1"],
+        regional_route="europe",
+        output_root=tmp_path,
+        fetcher=FakeFetcher(),
+    )
+
+    with pytest.raises(ValueError, match="cannot change regional route"):
+        collect_match_bundles(
+            ["EUW1_1"],
+            regional_route="americas",
+            output_root=tmp_path,
+            fetcher=FakeFetcher(),
+        )
+
+
+def test_resume_rejects_existing_bytes_that_no_longer_match_manifest(tmp_path) -> None:
+    collect_match_bundles(
+        ["EUW1_1"],
+        regional_route="europe",
+        output_root=tmp_path,
+        fetcher=FakeFetcher(),
+    )
+    timeline_path = tmp_path / "timelines" / "EUW1_1.json"
+    timeline_path.write_text(
+        timeline_path.read_text(encoding="utf-8") + " ",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="differs from its recorded manifest"):
+        collect_match_bundles(
+            ["EUW1_1"],
+            regional_route="europe",
+            output_root=tmp_path,
+            fetcher=FakeFetcher(),
+        )
+
+
+def test_invalid_existing_inventory_blocks_new_fetches(tmp_path) -> None:
+    fetcher = FakeFetcher()
+    collect_match_bundles(
+        ["EUW1_1"],
+        regional_route="europe",
+        output_root=tmp_path,
+        fetcher=fetcher,
+    )
+    timeline_path = tmp_path / "timelines" / "EUW1_1.json"
+    timeline_path.write_text(
+        timeline_path.read_text(encoding="utf-8") + " ",
+        encoding="utf-8",
+    )
+    fetcher.calls.clear()
+
+    with pytest.raises(ValueError, match="differs from its recorded manifest"):
+        collect_match_bundles(
+            ["EUW1_2"],
+            regional_route="europe",
+            output_root=tmp_path,
+            fetcher=fetcher,
+        )
+
+    assert fetcher.calls == []
+    assert not (tmp_path / "matches" / "EUW1_2.json").exists()
 
 
 @pytest.mark.parametrize("match_id", ["../secret", "", "EUW1-123"])
 def test_unsafe_match_ids_are_rejected(match_id: str, tmp_path) -> None:
     with pytest.raises(ValueError):
-        collect_match_bundles([match_id], output_root=tmp_path, fetcher=FakeFetcher())
+        collect_match_bundles(
+            [match_id],
+            regional_route="europe",
+            output_root=tmp_path,
+            fetcher=FakeFetcher(),
+        )
 
 
 def test_payload_identity_mismatch_is_rejected(tmp_path) -> None:
@@ -126,7 +202,12 @@ def test_payload_identity_mismatch_is_rejected(tmp_path) -> None:
             return _bundle("EUW1_999")[0]
 
     with pytest.raises(RiotAPIError, match="identity mismatch"):
-        collect_match_bundles(["EUW1_1"], output_root=tmp_path, fetcher=MismatchFetcher())
+        collect_match_bundles(
+            ["EUW1_1"],
+            regional_route="europe",
+            output_root=tmp_path,
+            fetcher=MismatchFetcher(),
+        )
 
 
 def test_client_configuration_is_validated(monkeypatch) -> None:

@@ -14,6 +14,7 @@ from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
+from league_ews.raw_validation import validate_raw_collection
 from league_ews.riot import RiotMatchClient, collect_match_bundles
 
 
@@ -84,6 +85,7 @@ def _collect(args: argparse.Namespace) -> int:
     with RiotMatchClient.from_environment(regional_route=args.region) as client:
         result = collect_match_bundles(
             match_ids,
+            regional_route=args.region,
             output_root=args.output,
             fetcher=client,
             overwrite=args.overwrite,
@@ -105,10 +107,28 @@ def _preflight_collection(args: argparse.Namespace) -> int:
 
 
 def _process(args: argparse.Namespace) -> int:
+    validation = validate_raw_collection(
+        args.raw,
+        min_routes=args.min_routes,
+        min_patches=args.min_patches,
+    )
+    if not validation["passed"]:
+        _write_json(validation, None)
+        return 2
     result = process_raw_collection(args.raw, output_root=args.output)
     matches = cast(list[object], result["matches"])
     print(f"Processed {len(matches)} matches; manifest: {args.output / 'processing-manifest.json'}")
     return 0
+
+
+def _validate_raw(args: argparse.Namespace) -> int:
+    report = validate_raw_collection(
+        args.raw,
+        min_routes=args.min_routes,
+        min_patches=args.min_patches,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -159,9 +179,21 @@ def build_parser() -> argparse.ArgumentParser:
     collect.add_argument("--overwrite", action="store_true")
     collect.set_defaults(handler=_collect)
 
+    validate_raw = subparsers.add_parser(
+        "validate-raw",
+        help="validate private raw bundle integrity and coverage without network access",
+    )
+    validate_raw.add_argument("--raw", type=Path, default=Path("data/raw"))
+    validate_raw.add_argument("--output", type=Path)
+    validate_raw.add_argument("--min-routes", type=int, default=2)
+    validate_raw.add_argument("--min-patches", type=int, default=6)
+    validate_raw.set_defaults(handler=_validate_raw)
+
     process = subparsers.add_parser("process", help="normalize and label private raw bundles")
     process.add_argument("--raw", type=Path, default=Path("data/raw"))
     process.add_argument("--output", type=Path, default=Path("data/processed"))
+    process.add_argument("--min-routes", type=int, default=2)
+    process.add_argument("--min-patches", type=int, default=6)
     process.set_defaults(handler=_process)
     return parser
 
