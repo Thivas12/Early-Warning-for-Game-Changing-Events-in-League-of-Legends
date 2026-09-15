@@ -8,8 +8,8 @@ import pandas as pd
 
 from league_ews.constants import (
     IDENTIFIER_COLUMNS,
-    LABEL_COLUMNS,
     LEGACY_BROKEN_COLUMNS,
+    LEGACY_LABEL_COLUMNS,
     LEGACY_POST_MATCH_COLUMNS,
     TIME_COLUMN,
 )
@@ -36,7 +36,7 @@ def causal_feature_columns(frame: pd.DataFrame) -> list[str]:
 
     excluded = {
         *IDENTIFIER_COLUMNS,
-        *LABEL_COLUMNS,
+        *LEGACY_LABEL_COLUMNS,
         *LEGACY_POST_MATCH_COLUMNS,
         *LEGACY_BROKEN_COLUMNS,
     }

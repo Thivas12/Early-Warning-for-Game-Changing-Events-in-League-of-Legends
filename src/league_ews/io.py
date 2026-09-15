@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from league_ews.constants import LABEL_COLUMNS, TIME_COLUMN
+from league_ews.constants import LEGACY_LABEL_COLUMNS, TIME_COLUMN
 
 
 def sha256_file(path: str | Path, chunk_size: int = 1024 * 1024) -> str:
@@ -33,7 +33,7 @@ def load_legacy_csv(
     frame = pd.read_csv(path, nrows=nrows, usecols=selected, low_memory=False)
     if TIME_COLUMN in frame:
         frame[TIME_COLUMN] = pd.to_numeric(frame[TIME_COLUMN], downcast="integer")
-    for column in LABEL_COLUMNS:
+    for column in LEGACY_LABEL_COLUMNS:
         if column in frame:
             frame[column] = pd.to_numeric(frame[column], downcast="integer")
     float_columns = frame.select_dtypes(include=["float64"]).columns

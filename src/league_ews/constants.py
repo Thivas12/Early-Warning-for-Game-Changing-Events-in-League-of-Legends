@@ -3,10 +3,15 @@
 from __future__ import annotations
 
 EVENTS: tuple[str, ...] = ("baron", "dragon", "teamfight")
-HORIZONS_SECONDS: tuple[int, ...] = (10, 20, 30)
 
-LABEL_COLUMNS: tuple[str, ...] = tuple(
-    f"y_{event}_{horizon}" for event in EVENTS for horizon in HORIZONS_SECONDS
+# The released legacy table contains these three horizons only.
+LEGACY_HORIZONS_SECONDS: tuple[int, ...] = (10, 20, 30)
+
+# Frozen in docs/research-plan.md and configs/rifthazard-v2.yaml.
+RIFTHAZARD_HORIZONS_SECONDS: tuple[int, ...] = (10, 20, 30, 60)
+
+LEGACY_LABEL_COLUMNS: tuple[str, ...] = tuple(
+    f"y_{event}_{horizon}" for event in EVENTS for horizon in LEGACY_HORIZONS_SECONDS
 )
 
 # These are final match-summary values repeated at every timestamp in the
