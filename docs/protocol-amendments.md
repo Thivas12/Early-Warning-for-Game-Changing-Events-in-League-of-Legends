@@ -82,3 +82,24 @@ The calendar-cell buffer is not an eligibility decision: authoritative patch
 and population checks remain based on Match-V5 detail in the next stage. This
 amendment changes no hypothesis, outcome, event definition, horizon, split or
 pilot quota; no pilot candidate or model evidence existed when it was frozen.
+
+## 2026-09-15 — make pilot eligibility selection executable
+
+**Stage:** after candidate discovery completed; before any registered pilot
+match-detail or timeline request, duration inspection, model fitting, threshold
+selection or outcome analysis.
+
+The already-frozen eligibility and seeded ordering rules are implemented as a
+checksum-bound, resumable detail-screen stage. All globally deduplicated
+candidates are traversed in the registered SHA-256 order. Match-V5 detail
+assigns the authoritative `gameVersion` cell and enforces queue, map, mode,
+type, platform, creation-time and participant-count requirements. Selection
+stops only when all 12 pilot quotas are exact. A 404 is recorded as unavailable;
+other request failures stop rather than silently exclude a candidate.
+
+The only newly observed evidence before this implementation was the
+identifier-free discovery summary: two balanced 64-player waves produced a
+complete two-times buffer in every cell. No candidate detail, duration,
+timeline, label or model outcome was inspected. This implementation does not
+change a hypothesis, population rule, seed, quota, event definition, horizon,
+split or pass criterion.

@@ -169,7 +169,13 @@ class _RiotAPIClient:
     def close(self) -> None:
         """Retained for a stable context-manager API; the transport is stateless."""
 
-    def _request_json(self, path: str, *, safe_endpoint: str) -> object:
+    def _request_json(
+        self,
+        path: str,
+        *,
+        safe_endpoint: str,
+        allow_not_found: bool = False,
+    ) -> object | None:
         url = f"https://{self._route}.api.riotgames.com{path}"
         for attempt in range(1, self._retry.max_attempts + 1):
             if self._pace is not None:
@@ -189,7 +195,9 @@ class _RiotAPIClient:
                     payload = json.loads(response.body)
                 except json.JSONDecodeError as error:
                     raise RiotAPIError("Riot API returned invalid JSON") from error
-                return payload
+                return cast(object, payload)
+            if allow_not_found and response.status_code == 404:
+                return None
             retriable = response.status_code == 429 or response.status_code >= 500
             if not retriable or attempt == self._retry.max_attempts:
                 raise RiotAPIError(
@@ -259,6 +267,21 @@ class RiotMatchClient(_RiotAPIClient):
             f"/lol/match/v5/matches/{match_id}",
             safe_endpoint="match-v5.match",
         )
+
+    def get_match_for_screening(self, match_id: str) -> Mapping[str, Any] | None:
+        """Return a detail payload, treating an authoritative 404 as unavailable."""
+
+        _validate_match_id(match_id)
+        payload = self._request_json(
+            f"/lol/match/v5/matches/{match_id}",
+            safe_endpoint="match-v5.match",
+            allow_not_found=True,
+        )
+        if payload is None:
+            return None
+        if not isinstance(payload, Mapping):
+            raise RiotAPIError("Riot API returned a non-object JSON payload")
+        return cast(Mapping[str, Any], payload)
 
     def get_timeline(self, match_id: str) -> Mapping[str, Any]:
         _validate_match_id(match_id)

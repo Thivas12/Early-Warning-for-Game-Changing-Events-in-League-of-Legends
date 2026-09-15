@@ -74,6 +74,23 @@ def test_riot_client_uses_regional_route_and_identified_secret_request() -> None
     }
 
 
+def test_detail_screening_treats_only_404_as_unavailable() -> None:
+    missing = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=FakeTransport([_response(404)]),
+    )
+    assert missing.get_match_for_screening("EUW1_1") is None
+
+    forbidden = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        transport=FakeTransport([_response(403)]),
+    )
+    with pytest.raises(RiotAPIError, match="HTTP 403"):
+        forbidden.get_match_for_screening("EUW1_1")
+
+
 def test_riot_client_obeys_retry_after_without_leaking_key() -> None:
     delays: list[float] = []
     limited = TransportResponse(status_code=429, body=b"", headers={"Retry-After": "2"})

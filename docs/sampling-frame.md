@@ -58,7 +58,9 @@ The checksum-bound operational supplement in
 `configs/rifthazard-discovery-plan.yaml` hash-orders ladder members, advances
 both platforms in equal 32-player waves and fixes the pre-detail stopping rule
 at a two-times candidate buffer in every calendar cell. See
-`docs/candidate-discovery.md`.
+`docs/candidate-discovery.md`. The subsequent global detail-screen order,
+authoritative cell assignment and exact quota freeze are executable as
+documented in `docs/pilot-selection.md`.
 Within every eligible cell, selection order is the ascending SHA-256 order
 defined by `seeded-sha256-within-cell-v1`: hash the UTF-8 bytes of decimal seed
 `20260915`, one NUL byte, and the uppercase match ID, then sort by digest with

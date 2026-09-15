@@ -39,7 +39,9 @@ the reset. Post-freeze corrections are recorded in
 two-route, six-patch population and allocation are in
 [`docs/sampling-frame.md`](docs/sampling-frame.md). Its deterministic,
 pre-detail crawl and stopping supplement is in
-[`docs/candidate-discovery.md`](docs/candidate-discovery.md).
+[`docs/candidate-discovery.md`](docs/candidate-discovery.md). Checksum-bound
+detail eligibility and exact pilot selection are documented in
+[`docs/pilot-selection.md`](docs/pilot-selection.md).
 
 ## Quick start
 
@@ -52,6 +54,7 @@ uv run league-ews audit --csv /path/to/final_dataset.csv
 uv run league-ews benchmark --csv /path/to/final_dataset.csv --output reports/local
 uv run league-ews validate-sampling-frame --frame configs/rifthazard-sampling-frame.yaml
 make validate-discovery-plan
+make validate-candidate-pool
 uv run pytest
 ```
 
