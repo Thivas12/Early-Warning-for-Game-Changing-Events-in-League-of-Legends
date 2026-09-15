@@ -17,6 +17,7 @@ from urllib.request import Request, urlopen
 
 REGIONAL_ROUTES = frozenset({"americas", "asia", "europe", "sea"})
 MATCH_ID_PATTERN = re.compile(r"^[A-Z0-9]+_[0-9]+$")
+RIOT_API_USER_AGENT = "league-ews-research/0.1"
 
 
 class RiotAPIError(RuntimeError):
@@ -120,7 +121,13 @@ class RiotMatchClient:
     def _request(self, path: str) -> Mapping[str, Any]:
         url = f"https://{self._route}.api.riotgames.com{path}"
         for attempt in range(1, self._retry.max_attempts + 1):
-            response = self._transport.get(url, headers={"X-Riot-Token": self._api_key})
+            response = self._transport.get(
+                url,
+                headers={
+                    "User-Agent": RIOT_API_USER_AGENT,
+                    "X-Riot-Token": self._api_key,
+                },
+            )
             if response.status_code == 200:
                 try:
                     payload = json.loads(response.body)
