@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+from league_ews.constants import LEGACY_HORIZONS_SECONDS, RIFTHAZARD_HORIZONS_SECONDS
 from league_ews.labels import EventIndex, extract_event_index, future_event_labels
 from league_ews.timeline import NormalizedTimeline, Observation, TimelineEvent
 
@@ -53,6 +54,13 @@ def test_future_labels_are_nested_and_strictly_future() -> None:
         0,
     ]
     assert labels.loc[1, "y_teamfight_30"] == 1
+    assert labels.loc[0, "y_teamfight_60"] == 1
+    assert labels.loc[3, "y_baron_60"] == 0
+
+
+def test_research_horizons_include_registered_60_seconds_without_changing_legacy() -> None:
+    assert RIFTHAZARD_HORIZONS_SECONDS == (10, 20, 30, 60)
+    assert LEGACY_HORIZONS_SECONDS == (10, 20, 30)
 
 
 @pytest.mark.parametrize("horizons", [(), (0, 10), (20, 10)])

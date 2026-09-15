@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from league_ews.constants import EVENTS, HORIZONS_SECONDS
+from league_ews.constants import EVENTS, LEGACY_HORIZONS_SECONDS
 
 
 def synthetic_legacy_frame(matches: int = 12, timestamps: int = 10) -> pd.DataFrame:
@@ -30,7 +30,7 @@ def synthetic_legacy_frame(matches: int = 12, timestamps: int = 10) -> pd.DataFr
                 row[f"time_since_last_{event}"] = (
                     9999 if step < event_step else (step - event_step) * 10
                 )
-                for horizon in HORIZONS_SECONDS:
+                for horizon in LEGACY_HORIZONS_SECONDS:
                     seconds_until = (event_step - step) * 10
                     row[f"y_{event}_{horizon}"] = int(0 < seconds_until <= horizon)
             rows.append(row)

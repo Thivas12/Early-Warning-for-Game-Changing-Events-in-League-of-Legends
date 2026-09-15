@@ -34,7 +34,8 @@ The `research/v2` programme starts again from a falsifiable protocol:
 
 See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan and
 [`docs/legacy-audit.md`](docs/legacy-audit.md) for the evidence that motivated
-the reset.
+the reset. Post-freeze corrections are recorded in
+[`docs/protocol-amendments.md`](docs/protocol-amendments.md).
 
 ## Quick start
 

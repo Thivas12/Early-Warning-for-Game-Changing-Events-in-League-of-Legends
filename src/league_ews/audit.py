@@ -10,9 +10,9 @@ import pandas as pd
 
 from league_ews.constants import (
     EVENTS,
-    HORIZONS_SECONDS,
-    LABEL_COLUMNS,
     LEGACY_BROKEN_COLUMNS,
+    LEGACY_HORIZONS_SECONDS,
+    LEGACY_LABEL_COLUMNS,
     LEGACY_POST_MATCH_COLUMNS,
 )
 
@@ -54,21 +54,21 @@ class DatasetAudit:
 
 def _label_findings(frame: pd.DataFrame) -> list[Finding]:
     findings: list[Finding] = []
-    missing = tuple(column for column in LABEL_COLUMNS if column not in frame)
+    missing = tuple(column for column in LEGACY_LABEL_COLUMNS if column not in frame)
     if missing:
         findings.append(Finding("error", "missing-labels", "Required labels are absent", missing))
         return findings
 
     non_binary = tuple(
         column
-        for column in LABEL_COLUMNS
+        for column in LEGACY_LABEL_COLUMNS
         if not set(frame[column].dropna().unique()).issubset({0, 1})
     )
     if non_binary:
         findings.append(Finding("error", "non-binary-labels", "Labels must be binary", non_binary))
 
     for event in EVENTS:
-        columns = [f"y_{event}_{horizon}" for horizon in HORIZONS_SECONDS]
+        columns = [f"y_{event}_{horizon}" for horizon in LEGACY_HORIZONS_SECONDS]
         values = frame[columns].to_numpy()
         violations = int(((values[:, 0] > values[:, 1]) | (values[:, 1] > values[:, 2])).sum())
         if violations:
@@ -173,13 +173,13 @@ def audit_legacy_frame(frame: pd.DataFrame) -> DatasetAudit:
                 "warning",
                 "teamfight-proxy",
                 "The legacy generator can emit several pseudo-events for one three-kill episode",
-                tuple(column for column in LABEL_COLUMNS if "teamfight" in column),
+                tuple(column for column in LEGACY_LABEL_COLUMNS if "teamfight" in column),
             )
         )
 
     rates = {
         column: float(np.mean(frame[column].to_numpy(dtype=np.float64)))
-        for column in LABEL_COLUMNS
+        for column in LEGACY_LABEL_COLUMNS
         if column in frame
     }
     matches = int(frame["match_id"].nunique()) if "match_id" in frame else 0

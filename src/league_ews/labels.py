@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from league_ews.constants import HORIZONS_SECONDS
+from league_ews.constants import RIFTHAZARD_HORIZONS_SECONDS
 from league_ews.timeline import NormalizedTimeline, TimelineEvent
 
 
@@ -87,7 +87,7 @@ def future_event_labels(
     observation_times_ms: tuple[int, ...],
     event_index: EventIndex,
     *,
-    horizons_seconds: tuple[int, ...] = HORIZONS_SECONDS,
+    horizons_seconds: tuple[int, ...] = RIFTHAZARD_HORIZONS_SECONDS,
 ) -> pd.DataFrame:
     """Label strictly future events on genuine observation timestamps."""
 

@@ -1,7 +1,7 @@
 import pandas as pd
 
 from league_ews.audit import audit_legacy_frame
-from league_ews.constants import LABEL_COLUMNS
+from league_ews.constants import LEGACY_LABEL_COLUMNS
 
 
 def _frame() -> pd.DataFrame:
@@ -19,7 +19,7 @@ def _frame() -> pd.DataFrame:
                 "low_hp_t1": 5,
                 "kills_blue": match_index + 10,
             }
-            row.update(dict.fromkeys(LABEL_COLUMNS, 0))
+            row.update(dict.fromkeys(LEGACY_LABEL_COLUMNS, 0))
             rows.append(row)
     return pd.DataFrame(rows)
 
