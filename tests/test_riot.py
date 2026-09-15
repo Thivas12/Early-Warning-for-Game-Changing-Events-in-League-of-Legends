@@ -59,14 +59,17 @@ def _response(status: int, payload: Any = None, **headers: str) -> TransportResp
     )
 
 
-def test_riot_client_uses_regional_route_and_secret_header() -> None:
+def test_riot_client_uses_regional_route_and_identified_secret_request() -> None:
     transport = FakeTransport([_response(200, {"metadata": {"matchId": "EUW1_1"}})])
     client = RiotMatchClient("secret", regional_route="europe", transport=transport)
     client.get_match("EUW1_1")
     client.close()
 
     assert transport.requests[0][0].startswith("https://europe.api.riotgames.com/")
-    assert transport.requests[0][1]["X-Riot-Token"] == "secret"
+    assert transport.requests[0][1] == {
+        "User-Agent": "league-ews-research/0.1",
+        "X-Riot-Token": "secret",
+    }
 
 
 def test_riot_client_obeys_retry_after_without_leaking_key() -> None:
