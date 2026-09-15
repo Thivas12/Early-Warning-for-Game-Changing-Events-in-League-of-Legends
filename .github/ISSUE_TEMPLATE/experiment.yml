@@ -1,0 +1,38 @@
+name: Experiment
+description: Register a falsifiable research run before execution
+title: "[experiment]: "
+labels: [experiment]
+body:
+  - type: input
+    id: hypothesis
+    attributes:
+      label: Falsifiable hypothesis
+    validations:
+      required: true
+  - type: input
+    id: primary_metric
+    attributes:
+      label: Primary metric and pass threshold
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Dataset, split and licence manifests
+    validations:
+      required: true
+  - type: textarea
+    id: methods
+    attributes:
+      label: Configuration, seeds, baselines and stopping rule
+    validations:
+      required: true
+  - type: checkboxes
+    id: protocol
+    attributes:
+      label: Protocol lock
+      options:
+        - label: I will record every run, including negative results.
+          required: true
+        - label: I will not use final-test results for model selection.
+          required: true

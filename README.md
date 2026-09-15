@@ -1,17 +1,90 @@
-# Early Warning for Game-Changing Events in League of Legends
+# LeagueEWS Research
 
-This repository contains the full data collection and processing pipeline used to build the **LOL Dataset**, a structured dataset of Challenger-tier ranked matches from the EUW server. The data is collected directly from the **Riot Games API**, transformed into player, team, and timeline-level views, and prepared for analytics and machine learning tasks such as predicting major in-game events (Baron, Dragon, teamfights, etc.).
+[![Research CI](https://github.com/Thivas12/Early-Warning-for-Game-Changing-Events-in-League-of-Legends/actions/workflows/ci.yml/badge.svg)](https://github.com/Thivas12/Early-Warning-for-Game-Changing-Events-in-League-of-Legends/actions/workflows/ci.yml)
 
----
+LeagueEWS Research studies whether strategically important League of Legends
+events can be forecast before they occur using only information that was
+available at prediction time.
 
-## Dataset on Kaggle
+The current research question is:
 
-The complete dataset is publicly available on Kaggle:  
-[LOL Dataset on Kaggle](https://www.kaggle.com/datasets/keerthivasankannan/lol-dataset)
+> Can Baron, Dragon and teamfight events be forecast 10–60 seconds ahead with
+> calibrated probabilities that remain useful on unseen matches and game
+> patches?
 
----
+This repository is the **research and reproducibility project**. A future
+player-facing product will live in a separate repository and will consume only
+a versioned, validated research release.
 
+## Research status
 
+The original MSc notebooks reported promising results, but a post-project audit
+found data leakage, broken features and train/test contamination. Those results
+are preserved for research transparency under [`legacy/msc-v1`](legacy/msc-v1)
+and are **not treated as production or generalisation evidence**.
 
+The `research/v2` programme starts again from a falsifiable protocol:
 
+1. establish causal data contracts;
+2. split complete matches before preprocessing or augmentation;
+3. beat time, event-history and tabular baselines;
+4. evaluate distinct events rather than positive rows;
+5. test calibration, alert burden and lead time;
+6. hold out future patches and publish negative results.
 
+See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan and
+[`docs/legacy-audit.md`](docs/legacy-audit.md) for the evidence that motivated
+the reset.
+
+## Quick start
+
+Python 3.12 and [uv](https://docs.astral.sh/uv/) are the supported development
+environment.
+
+```bash
+uv sync --all-groups
+uv run league-ews audit --csv /path/to/final_dataset.csv
+uv run league-ews benchmark --csv /path/to/final_dataset.csv --output reports/local
+uv run pytest
+```
+
+Raw and derived datasets are intentionally excluded from Git. Public data must
+be accompanied by a source, licence and checksum manifest under
+`data/manifests/`.
+
+## Repository map
+
+```text
+src/league_ews/       tested research library and command-line interface
+tests/                unit, contract and regression tests
+configs/              versioned experiment configurations
+data/manifests/       provenance and licence metadata, never raw data
+reports/              committed reproducible summaries, not ad-hoc outputs
+paper/                manuscript and bibliography
+docs/                 protocol, audit, cards, ethics and AI-use record
+legacy/msc-v1/        immutable historical MSc assets
+```
+
+## Reproducibility contract
+
+Every reported result must identify its Git commit, dataset checksum, feature
+and label versions, split manifest, configuration, random seed and runtime.
+Model selection uses validation data only. Test results are generated once for
+the frozen candidate and are never used for tuning.
+
+## Riot and data notice
+
+This project is not endorsed by Riot Games and does not reflect the views or
+opinions of Riot Games or anyone officially involved in producing or managing
+Riot Games properties. Riot Games and all associated properties are trademarks
+or registered trademarks of Riot Games, Inc.
+
+The legacy Kaggle dataset is distributed separately under CC BY-NC 4.0. It may
+support non-commercial research, but it is not a commercial product data asset.
+Do not commit Riot API keys, PUUIDs or raw player identifiers.
+
+## Licence and citation
+
+Code is licensed under the [MIT License](LICENSE). Dataset, model and paper
+licences are declared separately. Citation metadata is provided in
+[`CITATION.cff`](CITATION.cff).

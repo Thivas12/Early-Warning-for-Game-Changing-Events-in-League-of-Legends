@@ -1,0 +1,151 @@
+"""Command-line entry point for auditable research workflows."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any, cast
+
+from league_ews.audit import audit_legacy_frame
+from league_ews.benchmark import run_legacy_benchmark
+from league_ews.diagnostics import diagnose_legacy_sequence_split
+from league_ews.io import load_legacy_csv, sha256_file
+from league_ews.processing import process_raw_collection
+from league_ews.provenance import source_provenance
+from league_ews.riot import RiotMatchClient, collect_match_bundles
+
+
+def _write_json(payload: dict[str, Any], output: Path | None) -> None:
+    rendered = json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n"
+    if output is None:
+        print(rendered, end="")
+        return
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(rendered, encoding="utf-8")
+
+
+def _audit(args: argparse.Namespace) -> int:
+    frame = load_legacy_csv(args.csv, nrows=args.nrows)
+    report = audit_legacy_frame(frame).to_dict()
+    report["dataset_sha256"] = sha256_file(args.csv)
+    report["source"] = source_provenance()
+    _write_json(report, args.output)
+    return 2 if args.strict and not report["passed"] else 0
+
+
+def _benchmark(args: argparse.Namespace) -> int:
+    names = tuple(value.strip() for value in args.baselines.split(",") if value.strip())
+    allowed = {"time", "history", "causal", "postmatch_leak"}
+    unknown = sorted(set(names) - allowed)
+    if unknown:
+        raise ValueError(f"Unknown baselines: {', '.join(unknown)}")
+    result = run_legacy_benchmark(
+        args.csv,
+        baselines=names,
+        max_matches=args.max_matches,
+        max_iter=args.max_iter,
+        threshold_candidates=args.threshold_candidates,
+    )
+    output = Path(args.output)
+    if output.suffix.lower() != ".json":
+        output = output / "benchmark.json"
+    _write_json(result, output)
+    print(f"Wrote {output}")
+    return 0
+
+
+def _diagnose_split(args: argparse.Namespace) -> int:
+    frame = load_legacy_csv(args.csv, usecols=("match_id", "t"))
+    result = diagnose_legacy_sequence_split(
+        frame,
+        sequence_length=args.sequence_length,
+        step=args.step,
+        augmented_copies=args.augmented_copies,
+        random_state=args.random_state,
+    ).to_dict()
+    result["dataset_sha256"] = sha256_file(args.csv)
+    result["source"] = source_provenance()
+    _write_json(result, args.output)
+    return 0
+
+
+def _collect(args: argparse.Namespace) -> int:
+    match_ids = args.match_ids.read_text(encoding="utf-8").splitlines()
+    with RiotMatchClient.from_environment(regional_route=args.region) as client:
+        result = collect_match_bundles(
+            match_ids,
+            output_root=args.output,
+            fetcher=client,
+            overwrite=args.overwrite,
+        )
+    collected = cast(list[object], result["collected"])
+    skipped = cast(list[object], result["skipped_existing"])
+    print(
+        f"Collected {len(collected)}; "
+        f"skipped {len(skipped)}; manifest: "
+        f"{args.output / 'collection-manifest.json'}"
+    )
+    return 0
+
+
+def _process(args: argparse.Namespace) -> int:
+    result = process_raw_collection(args.raw, output_root=args.output)
+    matches = cast(list[object], result["matches"])
+    print(f"Processed {len(matches)} matches; manifest: {args.output / 'processing-manifest.json'}")
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="league-ews")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    audit = subparsers.add_parser("audit", help="audit a legacy derived CSV")
+    audit.add_argument("--csv", type=Path, required=True)
+    audit.add_argument("--output", type=Path)
+    audit.add_argument("--nrows", type=int)
+    audit.add_argument("--strict", action="store_true")
+    audit.set_defaults(handler=_audit)
+
+    benchmark = subparsers.add_parser("benchmark", help="run group-safe legacy baselines")
+    benchmark.add_argument("--csv", type=Path, required=True)
+    benchmark.add_argument("--output", type=Path, required=True)
+    benchmark.add_argument("--baselines", default="time,history,causal")
+    benchmark.add_argument("--max-matches", type=int)
+    benchmark.add_argument("--max-iter", type=int, default=100)
+    benchmark.add_argument("--threshold-candidates", type=int, default=31)
+    benchmark.set_defaults(handler=_benchmark)
+
+    diagnostic = subparsers.add_parser(
+        "diagnose-split", help="measure contamination in the legacy sequence split"
+    )
+    diagnostic.add_argument("--csv", type=Path, required=True)
+    diagnostic.add_argument("--output", type=Path)
+    diagnostic.add_argument("--sequence-length", type=int, default=40)
+    diagnostic.add_argument("--step", type=int, default=5)
+    diagnostic.add_argument("--augmented-copies", type=int, default=3)
+    diagnostic.add_argument("--random-state", type=int, default=42)
+    diagnostic.set_defaults(handler=_diagnose_split)
+
+    collect = subparsers.add_parser("collect", help="fetch private Match-V5 raw bundles")
+    collect.add_argument("--match-ids", type=Path, required=True)
+    collect.add_argument("--output", type=Path, default=Path("data/raw"))
+    collect.add_argument("--region", choices=("americas", "asia", "europe", "sea"), required=True)
+    collect.add_argument("--overwrite", action="store_true")
+    collect.set_defaults(handler=_collect)
+
+    process = subparsers.add_parser("process", help="normalize and label private raw bundles")
+    process.add_argument("--raw", type=Path, default=Path("data/raw"))
+    process.add_argument("--output", type=Path, default=Path("data/processed"))
+    process.set_defaults(handler=_process)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    handler = args.handler
+    return int(handler(args))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

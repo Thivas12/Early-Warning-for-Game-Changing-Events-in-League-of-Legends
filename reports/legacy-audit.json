@@ -1,0 +1,101 @@
+{
+  "columns": 86,
+  "constant_columns": [
+    "alive_diff",
+    "alive_t1",
+    "alive_t2",
+    "barons_t1",
+    "barons_t2",
+    "dragons_t1",
+    "dragons_t2",
+    "heralds_t1",
+    "heralds_t2",
+    "low_hp_t1",
+    "low_hp_t2"
+  ],
+  "dataset_sha256": "dd2b2dffc95ca182792ee679b458c362469e99b975f8361124900f050f64ffc0",
+  "findings": [
+    {
+      "code": "synthetic-cadence",
+      "columns": [
+        "gold_blue",
+        "gold_red",
+        "xp_blue",
+        "xp_red"
+      ],
+      "message": "The 10-second grid mostly forward-fills lower-frequency participant frames; core snapshots change in 16.7% of rows",
+      "severity": "warning"
+    },
+    {
+      "code": "broken-features",
+      "columns": [
+        "alive_t1",
+        "alive_t2",
+        "alive_diff",
+        "low_hp_t1",
+        "low_hp_t2",
+        "dragons_t1",
+        "dragons_t2",
+        "barons_t1",
+        "barons_t2",
+        "heralds_t1",
+        "heralds_t2"
+      ],
+      "message": "Known legacy fields contain generator defaults instead of observations",
+      "severity": "error"
+    },
+    {
+      "code": "future-leakage",
+      "columns": [
+        "kills_blue",
+        "kills_red",
+        "deaths_blue",
+        "deaths_red",
+        "assists_blue",
+        "assists_red",
+        "totdmgdealt_blue",
+        "totdmgdealt_red",
+        "totdmgtochamp_blue",
+        "totdmgtochamp_red",
+        "totheal_blue",
+        "totheal_red",
+        "wardsplaced_blue",
+        "wardsplaced_red",
+        "wardskilled_blue",
+        "wardskilled_red"
+      ],
+      "message": "End-of-match aggregates are repeated at prediction timestamps",
+      "severity": "error"
+    },
+    {
+      "code": "missing-patch",
+      "columns": [],
+      "message": "The release has no patch identifier, so future-patch evaluation is impossible",
+      "severity": "warning"
+    },
+    {
+      "code": "teamfight-proxy",
+      "columns": [
+        "y_teamfight_10",
+        "y_teamfight_20",
+        "y_teamfight_30"
+      ],
+      "message": "The legacy generator can emit several pseudo-events for one three-kill episode",
+      "severity": "warning"
+    }
+  ],
+  "matches": 2998,
+  "passed": false,
+  "positive_rates": {
+    "y_baron_10": 0.003958658144985597,
+    "y_baron_20": 0.007917316289971194,
+    "y_baron_30": 0.011875974434956789,
+    "y_dragon_10": 0.021160339077552118,
+    "y_dragon_20": 0.042320678155104235,
+    "y_dragon_30": 0.06348101723265635,
+    "y_teamfight_10": 0.03916944584981053,
+    "y_teamfight_20": 0.07042777049281887,
+    "y_teamfight_30": 0.10120700870409186
+  },
+  "rows": 484255
+}

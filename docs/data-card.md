@@ -1,0 +1,53 @@
+# Data card
+
+## Legacy v5 derived table
+
+Purpose: historical MSc exploration and non-commercial audit only.
+
+- 484,255 ten-second rows from 2,998 matches; 86 columns.
+- Separate distribution reportedly licensed CC BY-NC 4.0.
+- No patch/version field, raw payloads or collection manifest in the release.
+- Known future leakage, constant generator-default features, forward-filled
+  source frames, ambiguous teamfight episodes and contaminated legacy splits.
+- Not suitable for commercial use, player-level decisions, fairness claims or
+  future-patch conclusions.
+
+The exact audited file hash and findings are in `data/manifests/legacy-v5.yaml`
+and `reports/legacy-audit.json`.
+
+## Research v2 dataset (planned; not yet collected)
+
+Unit of sampling: complete ranked match. Unit of prediction: a genuine timeline
+observation within a match. Unit of evaluation: a distinct future event.
+
+Raw inputs:
+
+- Match-V5 detail payload;
+- Match-V5 timeline payload;
+- versioned static game/rule metadata;
+- collection and sampling manifest.
+
+Derived releases exclude Riot IDs, PUUIDs and reversible player mappings. Each
+row carries pseudonymous match ID, game version, creation time, region, native
+timestamp, feature-schema version and label-policy version.
+
+Expected representation gaps include unavailable real-time health, fog-of-war
+visibility and player intent. These are not imputed as observed facts. Position
+frames are lower frequency than events and are not advertised as ten-second
+telemetry.
+
+## Bias and representativeness
+
+The proposed high-ranked seed strategy may over-represent elite play, long
+sessions, specific regions and players connected in the match graph. Results
+must be stratified by region, patch, rank band where lawfully available, match
+duration and event prevalence. Generalization to casual, professional, other
+queues or other regions is not assumed.
+
+## Access and retention
+
+Raw payloads are private research inputs and excluded from Git. Retention,
+redistribution and deletion follow Riot's current terms and the approved
+research/product registration. Public artifacts contain code, schemas,
+aggregate results and cryptographic manifests unless redistribution is
+explicitly authorized.

@@ -1,0 +1,30 @@
+schema_version: experiment-config-v1
+experiment_id: B001
+dataset_manifest: data/manifests/legacy-v5.yaml
+seed: 20260915
+split:
+  policy: chronological-match-v1
+  train_fraction: 0.70
+  validation_fraction: 0.15
+events: [baron, dragon, teamfight]
+horizons_seconds: [30]
+baselines: [time, history, causal]
+model:
+  family: HistGradientBoostingClassifier
+  max_iter: 100
+  learning_rate: 0.08
+  max_leaf_nodes: 15
+  min_samples_leaf: 100
+  l2_regularization: 1.0
+  class_weight: balanced
+operating_policy:
+  threshold_selection: maximum event-level F1 on validation only
+  threshold_candidates: 31
+  crossing: upward
+  cooldown_seconds: 60
+  match_horizon_seconds: 30
+  event_matching: one-to-one
+command: >-
+  uv run league-ews benchmark --csv audit-data/final_dataset.csv
+  --output reports/legacy-baselines.json --baselines time,history,causal
+  --max-iter 100 --threshold-candidates 31

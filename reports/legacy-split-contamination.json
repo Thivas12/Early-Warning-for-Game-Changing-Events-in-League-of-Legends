@@ -1,0 +1,34 @@
+{
+  "augmented_copies": 3,
+  "augmented_windows": 224184,
+  "base_windows": 74728,
+  "dataset_sha256": "dd2b2dffc95ca182792ee679b458c362469e99b975f8361124900f050f64ffc0",
+  "finding": "Random splitting after windowing and augmentation contaminates evaluation. Split complete matches before either operation.",
+  "partitions": {
+    "test": {
+      "examples": 22419,
+      "family_seen_elsewhere_rate": 0.9910343904723672,
+      "match_seen_elsewhere_rate": 1.0,
+      "overlapping_window_elsewhere_rate": 1.0,
+      "source_matches": 2970
+    },
+    "train": {
+      "examples": 161412,
+      "family_seen_elsewhere_rate": 0.48472232547765964,
+      "match_seen_elsewhere_rate": 1.0,
+      "overlapping_window_elsewhere_rate": 0.9999814140212624,
+      "source_matches": 2980
+    },
+    "validation": {
+      "examples": 40353,
+      "family_seen_elsewhere_rate": 0.9683294922310609,
+      "match_seen_elsewhere_rate": 1.0,
+      "overlapping_window_elsewhere_rate": 1.0,
+      "source_matches": 2980
+    }
+  },
+  "passed": false,
+  "policy": "msc-v1-window-jitter-then-random-split",
+  "sequence_length": 40,
+  "step": 5
+}

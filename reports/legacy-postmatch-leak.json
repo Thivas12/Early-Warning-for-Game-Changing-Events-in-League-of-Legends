@@ -1,0 +1,267 @@
+{
+  "configuration": {
+    "alert_policy": "upward threshold crossing, 60s cooldown, one-to-one 30s match",
+    "baselines": [
+      "postmatch_leak"
+    ],
+    "max_iter": 100,
+    "threshold_candidates": 31,
+    "threshold_selection": "maximum event-level F1 on validation only"
+  },
+  "dataset": {
+    "matches": 2998,
+    "path_name": "final_dataset.csv",
+    "rows": 484255,
+    "sha256": "dd2b2dffc95ca182792ee679b458c362469e99b975f8361124900f050f64ffc0"
+  },
+  "partitions": {
+    "test": {
+      "matches": 450,
+      "rows": 71471
+    },
+    "train": {
+      "matches": 2098,
+      "rows": 341105
+    },
+    "validation": {
+      "matches": 450,
+      "rows": 71679
+    }
+  },
+  "policies": {
+    "features": "legacy-causal-v1",
+    "labels": "legacy-label-audit-v1",
+    "split": "chronological-match-v1",
+    "split_sha256": "c433ceb0aefc2e9604be01a89f81db858dc82aa10242365089194be2d0e23923"
+  },
+  "results": [
+    {
+      "baseline": "postmatch_leak",
+      "event": "baron",
+      "feature_count": 16,
+      "features": [
+        "kills_blue",
+        "kills_red",
+        "deaths_blue",
+        "deaths_red",
+        "assists_blue",
+        "assists_red",
+        "totdmgdealt_blue",
+        "totdmgdealt_red",
+        "totdmgtochamp_blue",
+        "totdmgtochamp_red",
+        "totheal_blue",
+        "totheal_red",
+        "wardsplaced_blue",
+        "wardsplaced_red",
+        "wardskilled_blue",
+        "wardskilled_red"
+      ],
+      "label": "y_baron_30",
+      "test": {
+        "operational": {
+          "alerts": 0,
+          "event": "baron",
+          "events": 267,
+          "f1": 0.0,
+          "false_alerts": 0,
+          "false_alerts_per_game": 0.0,
+          "false_alerts_per_hour": 0.0,
+          "hits": 0,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": null,
+          "precision": 0.0,
+          "recall": 0.0,
+          "threshold": 1.0
+        },
+        "row_metrics": {
+          "average_precision": 0.022074350382477896,
+          "brier": 0.2070543801747006,
+          "prevalence": 0.011459193239215905,
+          "roc_auc": 0.7124876529422757
+        }
+      },
+      "training_seconds": 2.5861008419997233,
+      "validation": {
+        "operational": {
+          "alerts": 0,
+          "event": "baron",
+          "events": 275,
+          "f1": 0.0,
+          "false_alerts": 0,
+          "false_alerts_per_game": 0.0,
+          "false_alerts_per_hour": 0.0,
+          "hits": 0,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": null,
+          "precision": 0.0,
+          "recall": 0.0,
+          "threshold": 1.0
+        },
+        "row_metrics": {
+          "average_precision": 0.02242932019311035,
+          "brier": 0.20778076435454224,
+          "prevalence": 0.012053739589000963,
+          "roc_auc": 0.7040285426816353
+        }
+      }
+    },
+    {
+      "baseline": "postmatch_leak",
+      "event": "dragon",
+      "feature_count": 16,
+      "features": [
+        "kills_blue",
+        "kills_red",
+        "deaths_blue",
+        "deaths_red",
+        "assists_blue",
+        "assists_red",
+        "totdmgdealt_blue",
+        "totdmgdealt_red",
+        "totdmgtochamp_blue",
+        "totdmgtochamp_red",
+        "totheal_blue",
+        "totheal_red",
+        "wardsplaced_blue",
+        "wardsplaced_red",
+        "wardskilled_blue",
+        "wardskilled_red"
+      ],
+      "label": "y_dragon_30",
+      "test": {
+        "operational": {
+          "alerts": 0,
+          "event": "dragon",
+          "events": 1252,
+          "f1": 0.0,
+          "false_alerts": 0,
+          "false_alerts_per_game": 0.0,
+          "false_alerts_per_hour": 0.0,
+          "hits": 0,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": null,
+          "precision": 0.0,
+          "recall": 0.0,
+          "threshold": 1.0
+        },
+        "row_metrics": {
+          "average_precision": 0.06860345131925202,
+          "brier": 0.24763164824121991,
+          "prevalence": 0.06388605168529893,
+          "roc_auc": 0.5251229237211529
+        }
+      },
+      "training_seconds": 1.6467301430002408,
+      "validation": {
+        "operational": {
+          "alerts": 0,
+          "event": "dragon",
+          "events": 1220,
+          "f1": 0.0,
+          "false_alerts": 0,
+          "false_alerts_per_game": 0.0,
+          "false_alerts_per_hour": 0.0,
+          "hits": 0,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": null,
+          "precision": 0.0,
+          "recall": 0.0,
+          "threshold": 1.0
+        },
+        "row_metrics": {
+          "average_precision": 0.06909141292269819,
+          "brier": 0.24706554081531024,
+          "prevalence": 0.06437031766626208,
+          "roc_auc": 0.5254991445618282
+        }
+      }
+    },
+    {
+      "baseline": "postmatch_leak",
+      "event": "teamfight",
+      "feature_count": 16,
+      "features": [
+        "kills_blue",
+        "kills_red",
+        "deaths_blue",
+        "deaths_red",
+        "assists_blue",
+        "assists_red",
+        "totdmgdealt_blue",
+        "totdmgdealt_red",
+        "totdmgtochamp_blue",
+        "totdmgtochamp_red",
+        "totheal_blue",
+        "totheal_red",
+        "wardsplaced_blue",
+        "wardsplaced_red",
+        "wardskilled_blue",
+        "wardskilled_red"
+      ],
+      "label": "y_teamfight_30",
+      "test": {
+        "operational": {
+          "alerts": 0,
+          "event": "teamfight",
+          "events": 1136,
+          "f1": 0.0,
+          "false_alerts": 0,
+          "false_alerts_per_game": 0.0,
+          "false_alerts_per_hour": 0.0,
+          "hits": 0,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": null,
+          "precision": 0.0,
+          "recall": 0.0,
+          "threshold": 1.0
+        },
+        "row_metrics": {
+          "average_precision": 0.13563324388712888,
+          "brier": 0.2468933530433038,
+          "prevalence": 0.10544136782751046,
+          "roc_auc": 0.5910204341026424
+        }
+      },
+      "training_seconds": 1.850150536000001,
+      "validation": {
+        "operational": {
+          "alerts": 0,
+          "event": "teamfight",
+          "events": 1153,
+          "f1": 0.0,
+          "false_alerts": 0,
+          "false_alerts_per_game": 0.0,
+          "false_alerts_per_hour": 0.0,
+          "hits": 0,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": null,
+          "precision": 0.0,
+          "recall": 0.0,
+          "threshold": 1.0
+        },
+        "row_metrics": {
+          "average_precision": 0.14077635054398513,
+          "brier": 0.24687442310434382,
+          "prevalence": 0.10492612899175491,
+          "roc_auc": 0.6045397315750363
+        }
+      }
+    }
+  ],
+  "runtime": {
+    "numpy": "2.5.3",
+    "pandas": "2.3.3",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "scikit_learn": "1.9.1"
+  },
+  "schema_version": "legacy-benchmark-v1",
+  "software_version": "0.1.0"
+}

@@ -1,0 +1,244 @@
+\documentclass[10pt]{article}
+
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black
+}
+
+\title{When 0.99 AUC Is Not an Early-Warning System:\\
+A Leakage and Operational-Utility Audit of\\
+League of Legends Event Forecasting}
+\author{Keerthivasan Kannan}
+\date{Working paper --- 15 September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Short-horizon event prediction in multiplayer online battle arena games is
+usually reported as row-level classification, although a deployed warning
+system acts on distinct events and can burden users with repeated false alerts.
+We audit a released League of Legends early-warning artifact containing
+484,255 timestamped rows from 2,998 matches. The original pipeline creates
+overlapping windows, makes temporal-jitter copies, and randomly splits the
+result. Reconstructing this procedure shows that 99.10\% of test examples have
+the same base-window family in another partition, 100\% share a source match,
+and 100\% overlap another partition in time. Sixteen final match-summary fields
+also appear at every timestamp, eleven intended live-state fields are constant,
+and the release lacks a patch identifier. We replace the evaluation with
+complete-match splits, causal feature exclusions, validation-only thresholds,
+upward-crossing alerts, cooldowns, and one-to-one event matching. A causal
+gradient-boosted baseline reaches row-level ROC--AUCs of 0.990, 0.959, and 0.743
+for Baron, Dragon, and a teamfight proxy, respectively, but event-level alert
+F1 scores are only 0.376, 0.415, and 0.149. Teamfight warnings generate 3.37
+false alerts per game. These results do not establish a new predictive model;
+they establish that discrimination, temporal independence, calibration, and
+operational utility must be evaluated separately. We release executable audit
+and benchmark code and preregister a future-patch research protocol.
+\end{abstract}
+
+\section{Introduction}
+
+Forecasting an objective fight or a multi-player engagement before it occurs
+could support replay review, coaching, and broadcast analysis. The same task is
+also unusually vulnerable to misleading evaluation. Objective availability is
+strongly tied to match time, observations from one match are highly dependent,
+future labels occupy several adjacent rows, and overlapping sequence windows
+share most of their input. A conventional random row split can therefore test
+recognition of a familiar match or window rather than generalization.
+
+Prior work has predicted several important events in Honor of Kings and studied
+prediction attribution \cite{yang2022events}; recent work also considers MOBA
+event prediction \cite{vardakis2026moba}. League-specific graph measures have
+been used for aggregate outcome and collective-intelligence analysis
+\cite{caldeira2025collective}, while patch-agnostic representations have been
+investigated in Dota 2 \cite{chitayat2023meta}. These precedents mean that an
+attention layer, graph representation, or event target is not by itself a novel
+contribution. Evaluation must demonstrate information beyond schedule priors
+and usefulness beyond a row-level score.
+
+This paper makes three bounded contributions. First, it provides an executable
+forensic audit of a public educational artifact. Second, it contrasts
+row-level discrimination with event-level warning utility under a stricter
+protocol. Third, it preregisters the evidence required for a future temporal
+graph and discrete-hazard study. We make no claim that the audited data support
+future-patch or player-facing deployment.
+
+\section{Artifact and audit method}
+
+The audited CSV is identified by a full SHA--256 digest in the public artifact
+manifest. It contains 86 columns and a regular ten-second time index. We traced every
+column to the released generation notebook and every split to the released
+model notebook, then encoded structural checks as tests and a command-line
+audit.
+
+\subsection{Information availability}
+
+Sixteen team aggregate fields are computed from end-of-match participant
+summaries and merged back onto every timestamp. They include final kills,
+deaths, assists, damage, healing, and ward counts. These values are unavailable
+at prediction time. Eleven further fields are constant: alive counts, low-health
+counts, and objective counts. The generator asks timeline participant frames
+for a health field they do not supply; the default zero makes alive counts zero
+and low-health counts five. Objective attribution reads a generic team field
+rather than the objective event's killer-team field.
+
+The regular ten-second table overstates source resolution. Gold and experience
+snapshots change in only 16.7\% of rows because lower-frequency frames are
+forward-filled. The teamfight proxy adds each kill that begins a ten-second
+interval containing at least three kills; a single combat episode can therefore
+produce several event timestamps. Finally, no creation time or game version is
+retained, preventing a true chronological or future-patch test.
+
+\subsection{Split reconstruction}
+
+The original model code builds length-40 windows every five rows, producing
+74,728 base windows. It creates two jittered copies plus the original, yielding
+224,184 examples, and then applies random 90/10 and 80/20 splits. We reproduced
+the exact index operations with random seed 42 and retained source match,
+base-window family, and nominal interval metadata. Table~\ref{tab:contamination}
+measures whether each example has related material in another partition.
+
+\begin{table}[ht]
+\centering
+\caption{Cross-partition contamination in the released split procedure.}
+\label{tab:contamination}
+\begin{tabular}{lrrrr}
+\toprule
+Partition & Examples & Same family & Same match & Time overlap \\
+\midrule
+Train      & 161,412 & 48.47\% & 100.00\% & 100.00\%$^{*}$ \\
+Validation &  40,353 & 96.83\% & 100.00\% & 100.00\% \\
+Test       &  22,419 & 99.10\% & 100.00\% & 100.00\% \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize $^{*}$99.998\% before rounding.}
+\end{tabular}
+\end{table}
+
+Global standardization is also fitted before splitting. Consequently, the
+reported legacy test metrics are not estimates of performance on unseen
+matches.
+
+\section{Leakage-safe baseline protocol}
+
+Because creation timestamps are absent, we sort by the numeric part of match
+ID as an explicitly imperfect chronology proxy. Complete matches are allocated
+70/15/15, giving 2,098 training, 450 validation, and 450 test matches. No match
+crosses partitions. Transformations are fitted after splitting.
+
+We evaluate three deterministic histogram gradient-boosted baselines: match
+time only; time plus prior event/history features; and 49 numeric causal
+features after removing labels, identifiers, constant generator failures, and
+post-match summaries. The target is an event in the next 30 seconds. This
+legacy target reconstruction is retained only for comparison and is not the
+planned research-v2 label source.
+
+An operating threshold is chosen by maximum event-level F1 on validation
+matches only. An alert occurs on an upward threshold crossing and triggers a
+60-second cooldown. Greedy chronological matching allows each alert and event
+to be used at most once when the alert precedes the event by at most 30 seconds.
+We report average precision because events are rare, Brier score as an initial
+probability diagnostic, and operational precision, recall, F1, false alerts per
+game, and lead time. Class balancing means these raw scores are not claimed to
+be calibrated; calibration is a separate preregistered stage.
+
+\section{Results}
+
+Table~\ref{tab:results} reports the untouched test partition. High Baron
+ROC--AUC is already achieved with match time alone (0.960), demonstrating a
+large schedule prior. History and causal state improve average precision and
+alert utility, but no event type satisfies the preregistered product gate of
+precision and recall at least 0.50. The causal Dragon model reaches precision
+0.515 but recall 0.348. The teamfight proxy is particularly weak and produces
+more than three false alerts per game.
+
+\begin{table}[ht]
+\centering
+\caption{Test discrimination and operational warning results.}
+\label{tab:results}
+\small
+\begin{tabular}{llrrrrrr}
+\toprule
+Features & Event & ROC--AUC & AP & Precision & Recall & Alert F1 & False/game \\
+\midrule
+Time    & Baron     & .960 & .143 & .213 & .225 & .219 & .49 \\
+History & Baron     & .989 & .487 & .316 & .419 & .361 & .54 \\
+Causal  & Baron     & .990 & .494 & .344 & .416 & .376 & .47 \\
+Time    & Dragon    & .672 & .101 & .097 & .125 & .109 & 3.26 \\
+History & Dragon    & .954 & .526 & .440 & .369 & .401 & 1.31 \\
+Causal  & Dragon    & .959 & .562 & .515 & .348 & .415 & .91 \\
+Time    & Teamfight & .674 & .171 & .086 & .089 & .087 & 2.39 \\
+History & Teamfight & .740 & .266 & .123 & .165 & .141 & 2.97 \\
+Causal  & Teamfight & .743 & .271 & .123 & .188 & .149 & 3.37 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Median lead time is 20 seconds for all causal models. A deliberately invalid
+diagnostic trained only on the 16 post-match summary fields produces no useful
+test alerts. This is a negative result: unavailable summaries are still
+leakage, but final totals alone do not localize the next event.
+
+\section{Implications for event-forecasting research}
+
+The gap between 0.990 row ROC--AUC and 0.376 alert F1 is not a contradiction.
+ROC--AUC evaluates ranked rows across all thresholds; the warning system emits
+distinct interventions in a dependent time stream. Many easy negative rows can
+support a high ROC--AUC while repeated or mistimed crossings remain unhelpful.
+Schedule priors make this especially severe for Baron.
+
+A credible successor should preserve exact event timestamps and native frame
+cadence, split complete matches before preprocessing, reserve future patches,
+and parameterize several horizons coherently. Temporal Graph Networks provide a
+general representation for timed interaction graphs \cite{rossi2020tgn}, but a
+graph model should be accepted only if it beats clock, history, tabular, and
+sequence baselines under paired match-level inference. Patch rules should be
+inputs rather than hard-coded constants.
+
+Our registered successor models players and objectives as dynamic nodes and
+uses discrete hazards so cumulative risk is monotone across 10, 20, 30, and 60
+seconds. It tests future-patch conditioning and OOD abstention. These are
+hypotheses, not results.
+
+\section{Limitations}
+
+The released table does not permit validation against raw event JSON, a true
+time split, patch analysis, or a strict repeat-player holdout. Match ID ordering
+is only a proxy. The teamfight label is a behavioral proxy rather than an
+official semantic event. Our alert matcher and cooldown encode one plausible
+user experience; sensitivity analysis is needed. We have not yet produced
+match-bootstrap confidence intervals. The recent Vardakis et al. article must
+be reviewed in full before final novelty claims or submission.
+
+\section{Conclusion}
+
+The audited model results should not be used as evidence for deployment. Their
+split allows almost every test example to share an augmented family and every
+test example to share a match and overlapping time with another partition.
+After enforcing match independence and evaluating distinct warnings, strong
+row discrimination does not translate into adequate alert utility. This
+negative finding provides a useful foundation: future work should earn its
+complexity through exact data provenance, future-patch generalization,
+calibration, alert burden, and falsifiable comparison with simple priors.
+
+\section*{Reproducibility statement}
+
+The repository records the dataset hash, audit findings, split policy and hash,
+runtime versions, model configuration, validation thresholds, and
+machine-readable test results. Raw and derived datasets are distributed
+separately subject to their licences. The source code is MIT licensed. AI use
+is disclosed in the repository; a human author remains responsible for every
+claim and reference.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

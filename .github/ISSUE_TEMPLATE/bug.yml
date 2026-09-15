@@ -1,0 +1,26 @@
+name: Reproducibility bug
+description: Report a code, data-contract or result-reproduction problem
+title: "[bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include credentials, PUUIDs or private raw payloads.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Observed problem
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction and expected result
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Commit, Python and operating system
+    validations:
+      required: true

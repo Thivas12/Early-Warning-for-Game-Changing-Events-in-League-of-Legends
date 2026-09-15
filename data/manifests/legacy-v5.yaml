@@ -1,0 +1,24 @@
+schema_version: dataset-manifest-v1
+dataset_id: league-ews-legacy-v5
+title: League of Legends Early-Warning Derived Dataset v5
+source_url: https://www.kaggle.com/datasets/thivas12/lol-dataset-v5
+distribution: separate; never committed to this repository
+license: CC-BY-NC-4.0
+allowed_use: non-commercial research subject to the source terms
+prohibited_transfer: commercial product training or serving
+file:
+  name: final_dataset.csv
+  bytes: 219835310
+  sha256: dd2b2dffc95ca182792ee679b458c362469e99b975f8361124900f050f64ffc0
+observations:
+  rows: 484255
+  columns: 86
+  matches: 2998
+known_limitations:
+  - sixteen post-match aggregate columns leak future information
+  - eleven generator-default columns are constant
+  - ten-second grid mostly forward-fills minute participant frames
+  - teamfight proxy can emit multiple timestamps per combat episode
+  - no game-version or creation-time field
+  - original train/validation/test construction is contaminated
+audit_report: reports/legacy-audit.json
