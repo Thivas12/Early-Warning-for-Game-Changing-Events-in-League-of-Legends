@@ -82,7 +82,7 @@
           "roc_auc": 0.7124876529422757
         }
       },
-      "training_seconds": 2.5861008419997233,
+      "training_seconds": 3.3836501280002267,
       "validation": {
         "operational": {
           "alerts": 0,
@@ -155,7 +155,7 @@
           "roc_auc": 0.5251229237211529
         }
       },
-      "training_seconds": 1.6467301430002408,
+      "training_seconds": 1.3812809350001771,
       "validation": {
         "operational": {
           "alerts": 0,
@@ -228,7 +228,7 @@
           "roc_auc": 0.5910204341026424
         }
       },
-      "training_seconds": 1.850150536000001,
+      "training_seconds": 1.9582471039993834,
       "validation": {
         "operational": {
           "alerts": 0,
@@ -263,5 +263,9 @@
     "scikit_learn": "1.9.1"
   },
   "schema_version": "legacy-benchmark-v1",
-  "software_version": "0.1.0"
+  "software_version": "0.1.0",
+  "source": {
+    "git_commit": "7f993390adf14934bf3d3060cab38f38e86acc52",
+    "tracked_files_dirty": false
+  }
 }

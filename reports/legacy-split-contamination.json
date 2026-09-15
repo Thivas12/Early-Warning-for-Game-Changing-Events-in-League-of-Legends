@@ -30,5 +30,9 @@
   "passed": false,
   "policy": "msc-v1-window-jitter-then-random-split",
   "sequence_length": 40,
+  "source": {
+    "git_commit": "7f993390adf14934bf3d3060cab38f38e86acc52",
+    "tracked_files_dirty": false
+  },
   "step": 5
 }

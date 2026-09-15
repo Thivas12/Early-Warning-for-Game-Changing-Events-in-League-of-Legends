@@ -97,5 +97,9 @@
     "y_teamfight_20": 0.07042777049281887,
     "y_teamfight_30": 0.10120700870409186
   },
-  "rows": 484255
+  "rows": 484255,
+  "source": {
+    "git_commit": "7f993390adf14934bf3d3060cab38f38e86acc52",
+    "tracked_files_dirty": false
+  }
 }

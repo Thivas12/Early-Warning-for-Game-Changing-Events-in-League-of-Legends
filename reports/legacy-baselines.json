@@ -69,7 +69,7 @@
           "roc_auc": 0.9602727952314658
         }
       },
-      "training_seconds": 0.9401231699994241,
+      "training_seconds": 0.9642058640001778,
       "validation": {
         "operational": {
           "alerts": 277,
@@ -127,7 +127,7 @@
           "roc_auc": 0.67192307376294
         }
       },
-      "training_seconds": 1.1723689740001646,
+      "training_seconds": 1.1144936319997214,
       "validation": {
         "operational": {
           "alerts": 1623,
@@ -185,7 +185,7 @@
           "roc_auc": 0.674307728938477
         }
       },
-      "training_seconds": 0.9618226140000843,
+      "training_seconds": 0.8016340649992344,
       "validation": {
         "operational": {
           "alerts": 1145,
@@ -265,7 +265,7 @@
           "roc_auc": 0.9893878296117442
         }
       },
-      "training_seconds": 1.676782104999802,
+      "training_seconds": 1.6546691049989022,
       "validation": {
         "operational": {
           "alerts": 373,
@@ -345,7 +345,7 @@
           "roc_auc": 0.9539976450156525
         }
       },
-      "training_seconds": 2.354245066999283,
+      "training_seconds": 2.774523002000933,
       "validation": {
         "operational": {
           "alerts": 1098,
@@ -425,7 +425,7 @@
           "roc_auc": 0.7403533781572547
         }
       },
-      "training_seconds": 3.6325382230006653,
+      "training_seconds": 2.3886487830004626,
       "validation": {
         "operational": {
           "alerts": 1585,
@@ -531,7 +531,7 @@
           "roc_auc": 0.9895950483053467
         }
       },
-      "training_seconds": 4.099161396999989,
+      "training_seconds": 4.747600691000116,
       "validation": {
         "operational": {
           "alerts": 352,
@@ -637,7 +637,7 @@
           "roc_auc": 0.9588250568606195
         }
       },
-      "training_seconds": 4.712841643999127,
+      "training_seconds": 5.021067662999485,
       "validation": {
         "operational": {
           "alerts": 870,
@@ -743,7 +743,7 @@
           "roc_auc": 0.7433312887690973
         }
       },
-      "training_seconds": 13.737914054001521,
+      "training_seconds": 4.5187444660004985,
       "validation": {
         "operational": {
           "alerts": 1778,
@@ -778,5 +778,9 @@
     "scikit_learn": "1.9.1"
   },
   "schema_version": "legacy-benchmark-v1",
-  "software_version": "0.1.0"
+  "software_version": "0.1.0",
+  "source": {
+    "git_commit": "7f993390adf14934bf3d3060cab38f38e86acc52",
+    "tracked_files_dirty": false
+  }
 }
