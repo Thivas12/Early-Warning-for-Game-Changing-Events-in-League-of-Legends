@@ -55,3 +55,10 @@ def test_current_legacy_notebooks_contain_no_riot_token() -> None:
     token = re.compile(r"RGAPI-[A-Za-z0-9_-]{20,}")
     for notebook in (ROOT / "legacy" / "msc-v1").glob("*.ipynb"):
         assert token.search(notebook.read_text(encoding="utf-8")) is None
+
+
+def test_authority_example_is_safe_and_fail_closed() -> None:
+    record = _yaml("configs/riot-authority.example.yaml")
+    assert record["authorization_confirmed"] is False
+    assert record["ethics_status"] == "pending"
+    assert "data/private/" in (ROOT / ".gitignore").read_text(encoding="utf-8")

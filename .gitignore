@@ -26,6 +26,7 @@ data/raw/
 data/interim/
 data/processed/
 data/external/
+data/private/
 *.csv
 *.parquet
 *.feather

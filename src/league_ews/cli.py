@@ -5,9 +5,10 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, cast
+from typing import cast
 
 from league_ews.audit import audit_legacy_frame
+from league_ews.authority import collection_preflight
 from league_ews.benchmark import run_legacy_benchmark
 from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.io import load_legacy_csv, sha256_file
@@ -16,7 +17,7 @@ from league_ews.provenance import source_provenance
 from league_ews.riot import RiotMatchClient, collect_match_bundles
 
 
-def _write_json(payload: dict[str, Any], output: Path | None) -> None:
+def _write_json(payload: object, output: Path | None) -> None:
     rendered = json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n"
     if output is None:
         print(rendered, end="")
@@ -71,6 +72,14 @@ def _diagnose_split(args: argparse.Namespace) -> int:
 
 
 def _collect(args: argparse.Namespace) -> int:
+    preflight = collection_preflight(
+        args.authority_record,
+        requested_region=args.region,
+    )
+    if not preflight["passed"]:
+        _write_json(preflight, None)
+        return 2
+
     match_ids = args.match_ids.read_text(encoding="utf-8").splitlines()
     with RiotMatchClient.from_environment(regional_route=args.region) as client:
         result = collect_match_bundles(
@@ -87,6 +96,12 @@ def _collect(args: argparse.Namespace) -> int:
         f"{args.output / 'collection-manifest.json'}"
     )
     return 0
+
+
+def _preflight_collection(args: argparse.Namespace) -> int:
+    report = collection_preflight(args.record, requested_region=args.region)
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
 
 
 def _process(args: argparse.Namespace) -> int:
@@ -127,7 +142,17 @@ def build_parser() -> argparse.ArgumentParser:
     diagnostic.add_argument("--random-state", type=int, default=42)
     diagnostic.set_defaults(handler=_diagnose_split)
 
+    preflight = subparsers.add_parser(
+        "preflight-collection",
+        help="validate private Riot collection authority without making an API request",
+    )
+    preflight.add_argument("--record", type=Path, required=True)
+    preflight.add_argument("--region", choices=("americas", "asia", "europe", "sea"), required=True)
+    preflight.add_argument("--output", type=Path)
+    preflight.set_defaults(handler=_preflight_collection)
+
     collect = subparsers.add_parser("collect", help="fetch private Match-V5 raw bundles")
+    collect.add_argument("--authority-record", type=Path, required=True)
     collect.add_argument("--match-ids", type=Path, required=True)
     collect.add_argument("--output", type=Path, default=Path("data/raw"))
     collect.add_argument("--region", choices=("americas", "asia", "europe", "sea"), required=True)

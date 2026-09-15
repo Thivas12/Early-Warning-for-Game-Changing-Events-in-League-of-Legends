@@ -1,4 +1,4 @@
-.PHONY: install format lint type test audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -16,6 +16,11 @@ type:
 
 test:
 	uv run pytest
+
+preflight:
+	uv run league-ews preflight-collection \
+		--record data/private/riot-authority.yaml \
+		--region europe
 
 audit:
 	uv run league-ews audit --csv audit-data/final_dataset.csv --output reports/local/audit.json

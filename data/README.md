@@ -13,16 +13,33 @@ To reproduce the legacy audit, obtain the separately distributed
 outside Git (the Makefile assumes `audit-data/`), then run `make audit diagnose
 benchmark`.
 
-For an authorized research-v2 collection, put one safe Match-V5 ID per line in
-an ignored local file, export `RIOT_API_KEY`, and run:
+Before any research-v2 request, copy
+`configs/riot-authority.example.yaml` to the ignored path
+`data/private/riot-authority.yaml`. Review the current Riot policies, replace
+the fail-closed placeholder values truthfully, export `RIOT_API_KEY`, and run:
 
 ```bash
-uv run league-ews collect --match-ids /private/match-ids.txt --region europe
+make preflight
 ```
 
-The collector retries rate limits/server failures, writes match/timeline pairs
-atomically, resumes existing pairs and records checksums without copying PUUIDs
-into its collection manifest.
+The example intentionally fails until ethics status and collection authority
+are resolved. The preflight makes no network request, never reads the key into
+its report and returns exit code 2 when any gate fails.
+
+Only after the preflight passes, put one safe Match-V5 ID per line in an
+ignored local file and run:
+
+```bash
+uv run league-ews collect \
+  --authority-record data/private/riot-authority.yaml \
+  --match-ids /private/match-ids.txt \
+  --region europe
+```
+
+`collect` repeats the preflight as a mandatory gate and exits before constructing
+the API client if it fails. The collector retries rate limits/server failures,
+writes match/timeline pairs atomically, resumes existing pairs and records
+checksums without copying PUUIDs into its collection manifest.
 
 Normalize the private pairs and build exact labels with:
 

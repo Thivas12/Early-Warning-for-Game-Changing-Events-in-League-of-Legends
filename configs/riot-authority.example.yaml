@@ -1,0 +1,21 @@
+# Copy this file to data/private/riot-authority.yaml and review every value.
+# Keep the private copy out of Git. Never add RIOT_API_KEY to this record.
+schema_version: riot-collection-authority-v1
+recorded_on: 2026-09-15
+policy_reviewed_on: 2026-09-15
+policy_urls:
+  - https://developer.riotgames.com/policies/general
+  - https://developer.riotgames.com/docs/lol
+purpose: non-commercial-research
+player_facing: false
+credential_tier: personal
+portal_status: pending
+regions: [europe]
+endpoints: [match-v5.match, match-v5.timeline]
+raw_storage: private
+raw_retention_days: 30
+raw_redistribution: prohibited
+derived_redistribution: not-authorized
+identifiers_in_public_artifacts: false
+ethics_status: pending
+authorization_confirmed: false
