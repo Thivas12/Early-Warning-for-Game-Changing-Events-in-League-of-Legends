@@ -4,20 +4,24 @@ from __future__ import annotations
 
 import hashlib
 import json
+from bisect import bisect_left
 from collections import Counter
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
+from itertools import pairwise
 from pathlib import Path
+from statistics import median
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from league_ews.constants import EVENTS, RIFTHAZARD_HORIZONS_SECONDS
 from league_ews.labels import extract_event_index
 from league_ews.timeline import normalise_match_timeline
 
 RAW_MANIFEST_SCHEMA_VERSION = "riot-raw-collection-v2"
-RAW_VALIDATION_SCHEMA_VERSION = "riot-raw-validation-v1"
+RAW_VALIDATION_SCHEMA_VERSION = "riot-raw-validation-v2"
 
 
 class RawBundleRecord(BaseModel):
@@ -83,6 +87,59 @@ def _patch(game_version: str) -> str:
     return ".".join(parts[:2]) if len(parts) >= 2 else game_version
 
 
+def _cadence_summary(intervals_ms: list[int]) -> dict[str, int | float | None]:
+    if not intervals_ms:
+        return {
+            "interval_count": 0,
+            "minimum": None,
+            "median": None,
+            "maximum": None,
+        }
+    return {
+        "interval_count": len(intervals_ms),
+        "minimum": min(intervals_ms),
+        "median": median(intervals_ms),
+        "maximum": max(intervals_ms),
+    }
+
+
+def _event_labelability_summary(
+    event_counts: Counter[str],
+    labelable_counts: Counter[tuple[str, int]],
+) -> dict[str, object]:
+    summary: dict[str, object] = {}
+    for event in EVENTS:
+        total = event_counts[event]
+        summary[event] = {
+            "total_events": total,
+            "by_horizon_seconds": {
+                str(horizon): {
+                    "labelable_events": labelable_counts[event, horizon],
+                    "fraction": labelable_counts[event, horizon] / total if total else None,
+                }
+                for horizon in RIFTHAZARD_HORIZONS_SECONDS
+            },
+        }
+    return summary
+
+
+def _record_labelability(
+    observation_times_ms: tuple[int, ...],
+    event_times_ms: tuple[int, ...],
+    *,
+    event: str,
+    counts: Counter[tuple[str, int]],
+) -> None:
+    for event_time_ms in event_times_ms:
+        prior_index = bisect_left(observation_times_ms, event_time_ms) - 1
+        if prior_index < 0:
+            continue
+        lead_time_ms = event_time_ms - observation_times_ms[prior_index]
+        for horizon in RIFTHAZARD_HORIZONS_SECONDS:
+            if lead_time_ms <= horizon * 1000:
+                counts[event, horizon] += 1
+
+
 def _failed_manifest_report(
     checked_at: datetime,
     *,
@@ -109,7 +166,9 @@ def _failed_manifest_report(
             "manifest_bundles": 0,
             "valid_bundles": 0,
             "observations": 0,
-            "events": {"baron": 0, "dragon": 0, "teamfight": 0},
+            "events": {event: 0 for event in EVENTS},
+            "observation_cadence_ms": _cadence_summary([]),
+            "event_labelability": _event_labelability_summary(Counter(), Counter()),
             "regional_routes": {},
             "patches": {},
         },
@@ -197,6 +256,8 @@ def validate_raw_collection(
     valid_bundles = 0
     observations = 0
     event_counts = Counter[str]()
+    labelable_counts = Counter[tuple[str, int]]()
+    cadence_intervals_ms: list[int] = []
     route_counts = Counter[str]()
     patch_counts = Counter[str]()
     for entry in available_by_id.values():
@@ -239,9 +300,21 @@ def validate_raw_collection(
         if pair_checksums_valid and pair_identity_valid and pair_metadata_valid:
             valid_bundles += 1
             observations += len(normalized.observations)
-            event_counts["baron"] += len(events.baron_ms)
-            event_counts["dragon"] += len(events.dragon_ms)
-            event_counts["teamfight"] += len(events.teamfight_ms)
+            observation_times_ms = tuple(
+                observation.timestamp_ms for observation in normalized.observations
+            )
+            cadence_intervals_ms.extend(
+                later - earlier for earlier, later in pairwise(observation_times_ms)
+            )
+            for event in EVENTS:
+                event_times_ms = events.for_event(event)
+                event_counts[event] += len(event_times_ms)
+                _record_labelability(
+                    observation_times_ms,
+                    event_times_ms,
+                    event=event,
+                    counts=labelable_counts,
+                )
             route_counts[entry.regional_route] += 1
             patch_counts[_patch(normalized.game_version)] += 1
 
@@ -301,7 +374,12 @@ def validate_raw_collection(
             "manifest_bundles": len(available_by_id),
             "valid_bundles": valid_bundles,
             "observations": observations,
-            "events": {event: event_counts[event] for event in ("baron", "dragon", "teamfight")},
+            "events": {event: event_counts[event] for event in EVENTS},
+            "observation_cadence_ms": _cadence_summary(cadence_intervals_ms),
+            "event_labelability": _event_labelability_summary(
+                event_counts,
+                labelable_counts,
+            ),
             "regional_routes": dict(sorted(route_counts.items())),
             "patches": dict(sorted(patch_counts.items())),
         },
