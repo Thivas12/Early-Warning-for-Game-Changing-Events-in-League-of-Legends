@@ -90,3 +90,106 @@ def test_split_diagnostic_cli_writes_json(tmp_path) -> None:
         == 0
     )
     assert json.loads(output.read_text(encoding="utf-8"))["passed"] is False
+
+
+def test_collect_fails_authority_gate_before_client_creation(tmp_path, monkeypatch, capsys) -> None:
+    def forbidden_client_creation(*args: object, **kwargs: object) -> None:
+        raise AssertionError("the Riot client must not be constructed")
+
+    monkeypatch.setattr(
+        "league_ews.cli.RiotMatchClient.from_environment",
+        forbidden_client_creation,
+    )
+    match_ids = tmp_path / "matches.txt"
+    match_ids.write_text("EUW1_123\n", encoding="utf-8")
+
+    exit_code = main(
+        [
+            "collect",
+            "--authority-record",
+            str(tmp_path / "missing-authority.yaml"),
+            "--match-ids",
+            str(match_ids),
+            "--region",
+            "europe",
+        ]
+    )
+
+    assert exit_code == 2
+    report = json.loads(capsys.readouterr().out)
+    assert report["passed"] is False
+    assert report["checks"][0]["check_id"] == "record-schema"
+
+
+def test_preflight_cli_writes_failure_report(tmp_path) -> None:
+    output = tmp_path / "preflight.json"
+
+    exit_code = main(
+        [
+            "preflight-collection",
+            "--record",
+            str(tmp_path / "missing-authority.yaml"),
+            "--region",
+            "europe",
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is False
+
+
+def test_collect_proceeds_after_successful_gate(tmp_path, monkeypatch, capsys) -> None:
+    events: list[str] = []
+
+    def fake_preflight(record, *, requested_region: str) -> dict[str, object]:
+        events.append("preflight")
+        assert record == tmp_path / "authority.yaml"
+        assert requested_region == "europe"
+        return {"passed": True}
+
+    class FakeClient:
+        @classmethod
+        def from_environment(cls, *, regional_route: str):
+            events.append("client")
+            assert regional_route == "europe"
+            return cls()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+    def fake_collect(match_ids, *, output_root, fetcher, overwrite):
+        events.append("collect")
+        assert list(match_ids) == ["EUW1_123"]
+        assert output_root == tmp_path / "raw"
+        assert isinstance(fetcher, FakeClient)
+        assert overwrite is False
+        return {"collected": [], "skipped_existing": []}
+
+    monkeypatch.setattr("league_ews.cli.collection_preflight", fake_preflight)
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient", FakeClient)
+    monkeypatch.setattr("league_ews.cli.collect_match_bundles", fake_collect)
+    match_ids = tmp_path / "matches.txt"
+    match_ids.write_text("EUW1_123\n", encoding="utf-8")
+
+    exit_code = main(
+        [
+            "collect",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--match-ids",
+            str(match_ids),
+            "--output",
+            str(tmp_path / "raw"),
+            "--region",
+            "europe",
+        ]
+    )
+
+    assert exit_code == 0
+    assert events == ["preflight", "client", "collect"]
+    assert "Collected 0" in capsys.readouterr().out

@@ -141,7 +141,7 @@ explicit. Health is not inferred from fields absent in the API.
 | Gate | Evidence required | Status |
 |---|---|---|
 | G0 Legacy validity | Executable audit and contamination reproduction | Passed: legacy scores rejected |
-| G1 Data authority | Fresh Riot key/product registration as applicable; written redistribution decision | Blocked externally |
+| G1 Data authority | Fresh Riot key/product registration as applicable; written redistribution decision | Preflight implemented; private authority record pending |
 | G2 Data quality | Manifest, schema checks, event spot-checks, patch coverage | Pending |
 | G3 Baselines | B0–B3 with locked splits and confidence intervals | Legacy-only floor complete |
 | G4 Method | All seeds, ablations, calibration and OOD tests | Pending v2 data |

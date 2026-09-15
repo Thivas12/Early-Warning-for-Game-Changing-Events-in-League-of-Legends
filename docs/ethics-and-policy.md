@@ -3,6 +3,15 @@
 This document is an engineering constraint, not legal advice. Policy must be
 rechecked before every public dataset, model or product release.
 
+Policy snapshot reviewed on **2026-09-15**:
+
+- [Riot Developer General Policies](https://developer.riotgames.com/policies/general)
+- [League of Legends Developer API Policy](https://developer.riotgames.com/docs/lol)
+
+The repository treats 30 days as the maximum age of a policy review before a
+new private collection. This is a project safety rule, not a Riot-stated
+interval.
+
 Riot's [General Policies](https://developer.riotgames.com/policies/general)
 require products to be registered and audited, prohibit betting and unfair
 advantages, require a free tier for monetized products, and require paid
@@ -34,6 +43,20 @@ analysis can still create privacy and profiling risks. Before collection, the
 researcher should obtain institutional ethics guidance where applicable,
 minimize data, set a retention period and document whether consent or a waiver
 is required. Public examples must not make a player discoverable.
+
+## Executable collection gate
+
+`league-ews preflight-collection` checks a private, ignored authority record
+before any API request. It requires an up-to-date policy review, a
+non-commercial research purpose, explicit Match-V5 endpoints and regions,
+private raw storage, a retention period of at most 90 days, no redistribution,
+resolved ethics status, confirmed Riot product registration/audit and a
+runtime-injected key. A production credential additionally requires an
+Approved or Acknowledged portal status. The `collect` command repeats this
+check and stops before constructing an API client when it fails.
+
+The preflight confirms that evidence was recorded; it does not grant legal or
+institutional approval. The committed example is deliberately non-operational.
 
 ## Release checklist
 
