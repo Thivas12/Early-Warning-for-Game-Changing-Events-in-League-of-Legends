@@ -4,7 +4,8 @@ import json
 from datetime import UTC, datetime
 
 from league_ews.cli import main
-from league_ews.raw_validation import validate_raw_collection
+from league_ews.processing import process_raw_collection
+from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
 from league_ews.riot import collect_match_bundles
 
 
@@ -98,6 +99,20 @@ def _failed_checks(report: dict[str, object]) -> set[str]:
     }
 
 
+def _write_spot_check(root, processed, output, *match_ids: str) -> None:
+    process_raw_collection(root, output_root=processed)
+    record = create_event_spot_check_record(
+        root,
+        processed,
+        tuple(match_ids),
+        objective_events_match_source=True,
+        teamfight_episodes_match_source=True,
+        strict_future_labels_match_processed=True,
+        reviewed_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    output.write_text(json.dumps(record), encoding="utf-8")
+
+
 def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -> None:
     _collect(tmp_path)
 
@@ -109,9 +124,12 @@ def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -
     )
 
     assert report["passed"] is True
-    assert report["schema_version"] == "riot-raw-validation-v2"
+    assert report["automated_passed"] is True
+    assert report["schema_version"] == "riot-raw-validation-v3"
     assert report["g2_complete"] is False
-    assert report["manual_event_spot_check"] == "pending"
+    spot_check = report["manual_event_spot_check"]
+    assert isinstance(spot_check, dict)
+    assert spot_check["status"] == "pending"
     assert len(str(report["manifest_sha256"])) == 64
     assert report["coverage_requirements"] == {
         "min_regional_routes": 1,
@@ -141,6 +159,130 @@ def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -
     }
     assert labelability["baron"]["by_horizon_seconds"]["60"]["fraction"] is None
     assert "private-puuid" not in json.dumps(report)
+
+
+def test_checksum_bound_manual_spot_check_passes_without_exposing_match_id(
+    tmp_path,
+) -> None:
+    _collect(tmp_path)
+    processed = tmp_path / "processed"
+    record_path = tmp_path / "private-event-spot-check.json"
+    _write_spot_check(tmp_path, processed, record_path, "EUW1_1")
+
+    report = validate_raw_collection(
+        tmp_path,
+        min_routes=1,
+        min_patches=1,
+        event_spot_check=record_path,
+        processed_root=processed,
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    spot_check = report["manual_event_spot_check"]
+    assert isinstance(spot_check, dict)
+    assert spot_check["status"] == "passed"
+    assert spot_check["sampled_bundles"] == 1
+    assert spot_check["covered_route_patch_cells"] == 1
+    assert spot_check["required_route_patch_cells"] == 1
+    assert report["g2_complete"] is False
+    rendered = json.dumps(report)
+    assert "EUW1_1" not in rendered
+    assert "private-puuid" not in rendered
+
+
+def test_manual_spot_check_fails_after_manifest_changes(tmp_path) -> None:
+    _collect(tmp_path)
+    processed = tmp_path / "processed"
+    record_path = tmp_path / "private-event-spot-check.json"
+    _write_spot_check(tmp_path, processed, record_path, "EUW1_1")
+    collect_match_bundles(
+        ["EUW1_2"],
+        regional_route="europe",
+        output_root=tmp_path,
+        fetcher=FakeFetcher(),
+        collected_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    report = validate_raw_collection(
+        tmp_path,
+        min_routes=1,
+        min_patches=1,
+        event_spot_check=record_path,
+        processed_root=processed,
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    assert report["automated_passed"] is True
+    assert report["passed"] is False
+    spot_check = report["manual_event_spot_check"]
+    assert isinstance(spot_check, dict)
+    assert spot_check["status"] == "failed"
+    failed = {check["check_id"] for check in spot_check["checks"] if check["passed"] is False}
+    assert failed == {"manifest-binding", "processing-inventory"}
+
+
+def test_manual_spot_check_detects_processed_file_tampering(tmp_path) -> None:
+    _collect(tmp_path)
+    processed = tmp_path / "processed"
+    record_path = tmp_path / "private-event-spot-check.json"
+    _write_spot_check(tmp_path, processed, record_path, "EUW1_1")
+    processed_match = processed / "matches" / "EUW1_1.json"
+    processed_match.write_text(
+        processed_match.read_text(encoding="utf-8") + " ",
+        encoding="utf-8",
+    )
+
+    report = validate_raw_collection(
+        tmp_path,
+        min_routes=1,
+        min_patches=1,
+        event_spot_check=record_path,
+        processed_root=processed,
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    assert report["automated_passed"] is True
+    assert report["passed"] is False
+    spot_check = report["manual_event_spot_check"]
+    assert isinstance(spot_check, dict)
+    failed = {check["check_id"] for check in spot_check["checks"] if check["passed"] is False}
+    assert failed == {"processed-sample-checksums"}
+
+
+def test_manual_spot_check_must_cover_every_observed_route_patch_cell(tmp_path) -> None:
+    collect_match_bundles(
+        ["EUW1_1"],
+        regional_route="europe",
+        output_root=tmp_path,
+        fetcher=FakeFetcher("16.18.1"),
+        collected_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    collect_match_bundles(
+        ["NA1_2"],
+        regional_route="americas",
+        output_root=tmp_path,
+        fetcher=FakeFetcher("16.19.1"),
+        collected_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    processed = tmp_path / "processed"
+    record_path = tmp_path / "private-event-spot-check.json"
+    _write_spot_check(tmp_path, processed, record_path, "EUW1_1")
+
+    report = validate_raw_collection(
+        tmp_path,
+        min_routes=2,
+        min_patches=2,
+        event_spot_check=record_path,
+        processed_root=processed,
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    spot_check = report["manual_event_spot_check"]
+    assert isinstance(spot_check, dict)
+    assert spot_check["status"] == "failed"
+    assert report["passed"] is False
+    assert spot_check["covered_route_patch_cells"] == 1
+    assert spot_check["required_route_patch_cells"] == 2
 
 
 def test_event_labelability_requires_a_strictly_prior_observation(tmp_path) -> None:
@@ -242,6 +384,7 @@ def test_raw_validation_fails_closed_for_missing_manifest(tmp_path) -> None:
     )
 
     assert report["passed"] is False
+    assert report["automated_passed"] is False
     assert _failed_checks(report) == {"manifest-schema"}
     assert report["summary"]["observation_cadence_ms"] == {
         "interval_count": 0,
@@ -249,6 +392,37 @@ def test_raw_validation_fails_closed_for_missing_manifest(tmp_path) -> None:
         "median": None,
         "maximum": None,
     }
+
+
+def test_record_event_spot_check_cli_writes_private_evidence(tmp_path, capsys) -> None:
+    _collect(tmp_path)
+    processed = tmp_path / "processed"
+    process_raw_collection(tmp_path, output_root=processed)
+    output = tmp_path / "event-spot-check.json"
+
+    exit_code = main(
+        [
+            "record-event-spot-check",
+            "--raw",
+            str(tmp_path),
+            "--processed",
+            str(processed),
+            "--match-id",
+            "EUW1_1",
+            "--output",
+            str(output),
+            "--confirm-objective-events",
+            "--confirm-teamfight-episodes",
+            "--confirm-future-labels",
+        ]
+    )
+
+    assert exit_code == 0
+    record = json.loads(output.read_text(encoding="utf-8"))
+    assert record["schema_version"] == "riot-event-spot-check-v1"
+    assert record["samples"][0]["match_id"] == "EUW1_1"
+    assert len(record["samples"][0]["processed_sha256"]) == 64
+    assert "EUW1_1" not in capsys.readouterr().out
 
 
 def test_validated_raw_bundle_processes_end_to_end(tmp_path) -> None:
