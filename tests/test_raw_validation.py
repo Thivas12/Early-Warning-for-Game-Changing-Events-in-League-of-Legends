@@ -9,7 +9,9 @@ from league_ews.riot import collect_match_bundles
 
 
 def _bundle(
-    match_id: str = "EUW1_1", game_version: str = "16.18.1"
+    match_id: str = "EUW1_1",
+    game_version: str = "16.18.1",
+    event_timestamp_ms: int = 55_000,
 ) -> tuple[dict[str, object], dict[str, object]]:
     detail = {
         "metadata": {"matchId": match_id, "participants": ["private-puuid"] * 10},
@@ -47,7 +49,7 @@ def _bundle(
                     "participantFrames": participant_frames(),
                     "events": [
                         {
-                            "timestamp": 55_000,
+                            "timestamp": event_timestamp_ms,
                             "type": "ELITE_MONSTER_KILL",
                             "monsterType": "DRAGON",
                             "killerTeamId": 100,
@@ -61,14 +63,19 @@ def _bundle(
 
 
 class FakeFetcher:
-    def __init__(self, game_version: str = "16.18.1") -> None:
+    def __init__(
+        self,
+        game_version: str = "16.18.1",
+        event_timestamp_ms: int = 55_000,
+    ) -> None:
         self.game_version = game_version
+        self.event_timestamp_ms = event_timestamp_ms
 
     def get_match(self, match_id: str) -> dict[str, object]:
-        return _bundle(match_id, self.game_version)[0]
+        return _bundle(match_id, self.game_version, self.event_timestamp_ms)[0]
 
     def get_timeline(self, match_id: str) -> dict[str, object]:
-        return _bundle(match_id, self.game_version)[1]
+        return _bundle(match_id, self.game_version, self.event_timestamp_ms)[1]
 
 
 def _collect(root) -> None:
@@ -102,6 +109,7 @@ def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -
     )
 
     assert report["passed"] is True
+    assert report["schema_version"] == "riot-raw-validation-v2"
     assert report["g2_complete"] is False
     assert report["manual_event_spot_check"] == "pending"
     assert len(str(report["manifest_sha256"])) == 64
@@ -114,7 +122,50 @@ def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -
     assert summary["manifest_bundles"] == 1
     assert summary["valid_bundles"] == 1
     assert summary["events"] == {"baron": 0, "dragon": 1, "teamfight": 0}
+    assert summary["observation_cadence_ms"] == {
+        "interval_count": 1,
+        "minimum": 60_000,
+        "median": 60_000,
+        "maximum": 60_000,
+    }
+    labelability = summary["event_labelability"]
+    assert isinstance(labelability, dict)
+    assert labelability["dragon"] == {
+        "total_events": 1,
+        "by_horizon_seconds": {
+            "10": {"labelable_events": 0, "fraction": 0.0},
+            "20": {"labelable_events": 0, "fraction": 0.0},
+            "30": {"labelable_events": 0, "fraction": 0.0},
+            "60": {"labelable_events": 1, "fraction": 1.0},
+        },
+    }
+    assert labelability["baron"]["by_horizon_seconds"]["60"]["fraction"] is None
     assert "private-puuid" not in json.dumps(report)
+
+
+def test_event_labelability_requires_a_strictly_prior_observation(tmp_path) -> None:
+    collect_match_bundles(
+        ["EUW1_1"],
+        regional_route="europe",
+        output_root=tmp_path,
+        fetcher=FakeFetcher(event_timestamp_ms=60_000),
+        collected_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    report = validate_raw_collection(
+        tmp_path,
+        min_routes=1,
+        min_patches=1,
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    summary = report["summary"]
+    assert isinstance(summary, dict)
+    labelability = summary["event_labelability"]
+    assert isinstance(labelability, dict)
+    dragon = labelability["dragon"]
+    assert dragon["by_horizon_seconds"]["10"]["labelable_events"] == 0
+    assert dragon["by_horizon_seconds"]["60"]["labelable_events"] == 1
 
 
 def test_raw_validation_detects_checksum_tampering(tmp_path) -> None:
@@ -192,6 +243,12 @@ def test_raw_validation_fails_closed_for_missing_manifest(tmp_path) -> None:
 
     assert report["passed"] is False
     assert _failed_checks(report) == {"manifest-schema"}
+    assert report["summary"]["observation_cadence_ms"] == {
+        "interval_count": 0,
+        "minimum": None,
+        "median": None,
+        "maximum": None,
+    }
 
 
 def test_validated_raw_bundle_processes_end_to_end(tmp_path) -> None:

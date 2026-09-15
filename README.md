@@ -73,6 +73,10 @@ and label versions, split manifest, configuration, random seed and runtime.
 Model selection uses validation data only. Test results are generated once for
 the frozen candidate and are never used for tuning.
 
+Raw-validation reports also record genuine within-match snapshot cadence and
+the event-level label opportunity at each registered horizon. These diagnostics
+do not interpolate observations and are not treated as model performance.
+
 ## Riot and data notice
 
 This project is not endorsed by Riot Games and does not reflect the views or
