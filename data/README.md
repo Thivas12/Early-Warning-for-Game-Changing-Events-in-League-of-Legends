@@ -53,6 +53,23 @@ interruption. Its terminal manifest contains only counts and checksums. It does
 not fetch match details or timelines; exact eligibility and authoritative
 `gameVersion` assignment belong to the next collection stage.
 
+After discovery completes, verify its exact checksums and authority gate, then
+start or resume deterministic detail-only eligibility screening:
+
+```bash
+make validate-candidate-pool
+make preflight-pilot-selection
+make select-pilot
+```
+
+This reads candidates in the frozen global hash order and stops when the exact
+5,000-match, 12-cell pilot allocation is full. It atomically caches private
+detail responses under `data/private/pilot-selection` and prints only counts
+and checksums. On success it freezes `selected-pool.json` plus separate Europe
+and Americas match-ID files for the later bundle collector. It does not fetch
+timelines. See `docs/pilot-selection.md` for the eligibility, reassignment,
+resume and HTTP-404 rules.
+
 For a deliberately pre-specified Match-V5 canary, put one safe ID per line in
 an ignored local file and run:
 

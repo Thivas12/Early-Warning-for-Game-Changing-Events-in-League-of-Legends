@@ -27,7 +27,8 @@ No match detail, timeline, event label, model score or downstream result is
 read to decide when discovery stops. Calendar windows only generate a buffered
 candidate pool. The next collection stage must use Match-V5 detail fields to
 assign authoritative `gameVersion` cells and apply the registered eligibility
-contract.
+contract. That deterministic stage is specified in
+`docs/pilot-selection.md`.
 
 ## Private resumable state
 
@@ -65,3 +66,12 @@ Requests are sequential and conservatively spaced by 1.25 seconds across both
 platform- and region-routed clients. Riot `429` and server responses retain the
 existing bounded retry behavior. If the shell or network stops, rerun the same
 command; do not recreate the snapshot or edit cached files.
+
+After discovery completes, validate its binding and begin the separate
+detail-only pilot selection stage:
+
+```bash
+make validate-candidate-pool
+make preflight-pilot-selection
+make select-pilot
+```
