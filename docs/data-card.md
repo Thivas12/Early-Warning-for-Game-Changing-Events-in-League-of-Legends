@@ -51,7 +51,11 @@ duration and event prevalence. Generalization to casual, professional, other
 queues or other regions is not assumed. Because the frozen ladder snapshot is
 later than the sampled historical patch windows, membership also reflects
 retrospective ladder survival and performance; future-patch evaluation applies
-to that connected cohort rather than the overall Ranked Solo population.
+to that connected cohort rather than the overall Ranked Solo population. Each
+selected player contributes at most the single 100-ID Match-V5 page returned
+for a patch window, so very high activity beyond that cap is not represented
+exhaustively and API result ordering may shape which of those matches enter the
+candidate pool.
 
 ## Access and retention
 

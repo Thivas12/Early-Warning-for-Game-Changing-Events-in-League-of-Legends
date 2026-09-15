@@ -59,6 +59,9 @@ def test_current_legacy_notebooks_contain_no_riot_token() -> None:
 
 def test_authority_example_is_safe_and_fail_closed() -> None:
     record = _yaml("configs/riot-authority.example.yaml")
+    assert record["schema_version"] == "riot-collection-authority-v2"
+    assert record["regions"] == ["europe", "americas"]
+    assert len(record["endpoints"]) == 7
     assert record["authorization_confirmed"] is False
     assert record["ethics_status"] == "pending"
     assert "data/private/" in (ROOT / ".gitignore").read_text(encoding="utf-8")

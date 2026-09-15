@@ -46,14 +46,17 @@ is required. Public examples must not make a player discoverable.
 
 ## Executable collection gate
 
-`league-ews preflight-collection` checks a private, ignored authority record
-before any API request. It requires an up-to-date policy review, a
-non-commercial research purpose, explicit Match-V5 endpoints and regions,
+`league-ews preflight-collection` and `league-ews preflight-discovery` check a
+private, ignored authority record before any API request. They require an
+up-to-date policy review, a non-commercial research purpose, explicit endpoint
+and regional scope,
 private raw storage, a retention period of at most 90 days, no redistribution,
 resolved ethics status, confirmed Riot product registration/audit and a
-runtime-injected key. A production credential additionally requires an
-Approved or Acknowledged portal status. The `collect` command repeats this
-check and stops before constructing an API client when it fails.
+runtime-injected key. Discovery additionally binds the exact sampling frame and
+stopping-plan checksums and requires all seven registered endpoints across
+europe and americas. A production credential additionally requires an Approved
+or Acknowledged portal status. Both network commands repeat their applicable
+check and stop before constructing an API client when it fails.
 
 The preflight confirms that evidence was recorded; it does not grant legal or
 institutional approval. The committed example is deliberately non-operational.

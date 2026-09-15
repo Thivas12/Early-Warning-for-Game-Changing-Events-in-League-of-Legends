@@ -54,6 +54,11 @@ The registered candidate source is a private, checksum-bound snapshot of the
 Challenger, Grandmaster and Master `RANKED_SOLO_5x5` ladders on each platform.
 Ladder summoner IDs are resolved to PUUIDs with Summoner-V4 when needed, and
 Match-history IDs are globally deduplicated before detail fetch or splitting.
+The checksum-bound operational supplement in
+`configs/rifthazard-discovery-plan.yaml` hash-orders ladder members, advances
+both platforms in equal 32-player waves and fixes the pre-detail stopping rule
+at a two-times candidate buffer in every calendar cell. See
+`docs/candidate-discovery.md`.
 Within every eligible cell, selection order is the ascending SHA-256 order
 defined by `seeded-sha256-within-cell-v1`: hash the UTF-8 bytes of decimal seed
 `20260915`, one NUL byte, and the uppercase match ID, then sort by digest with
@@ -77,12 +82,10 @@ Exactly one cutoff must then be frozen in a checksum-bound post-pilot amendment
 before final collection; final validation is deliberately blocked until that
 amendment exists.
 
-The current private authority example and collector cover only pre-specified
-Match-V5 detail/timeline IDs. Candidate discovery additionally requires the
-three League-V4 ladder endpoints, Summoner-V4 by summoner ID, Match-V5
-IDs-by-PUUID, and the americas route. Those capabilities must be implemented
-and included truthfully in the private authority preflight before any discovery
-request is made.
+Authority schema v2 can scope the three League-V4 ladder endpoints,
+Summoner-V4 by summoner ID, Match-V5 IDs-by-PUUID, Match-V5 detail/timeline and
+both regional routes. `preflight-discovery` binds that private record to the
+exact frame and discovery-plan checksums before constructing any API client.
 
 ## Offline checks
 

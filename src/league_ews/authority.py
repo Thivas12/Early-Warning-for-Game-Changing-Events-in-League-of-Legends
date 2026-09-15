@@ -4,21 +4,32 @@ from __future__ import annotations
 
 import os
 import re
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
 from datetime import UTC, date, datetime
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Self
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
-AUTHORITY_SCHEMA_VERSION = "riot-collection-authority-v1"
-PREFLIGHT_SCHEMA_VERSION = "riot-collection-preflight-v1"
+LEGACY_AUTHORITY_SCHEMA_VERSION = "riot-collection-authority-v1"
+AUTHORITY_SCHEMA_VERSION = "riot-collection-authority-v2"
+PREFLIGHT_SCHEMA_VERSION = "riot-collection-preflight-v2"
 GENERAL_POLICY_URL = "https://developer.riotgames.com/policies/general"
 LOL_POLICY_URL = "https://developer.riotgames.com/docs/lol"
 REQUIRED_POLICY_URLS = frozenset({GENERAL_POLICY_URL, LOL_POLICY_URL})
-REQUIRED_ENDPOINTS = frozenset({"match-v5.match", "match-v5.timeline"})
+MATCH_COLLECTION_ENDPOINTS = frozenset({"match-v5.match", "match-v5.timeline"})
+DISCOVERY_ENDPOINTS = frozenset(
+    {
+        "league-v4.challenger",
+        "league-v4.grandmaster",
+        "league-v4.master",
+        "summoner-v4.by-summoner-id",
+        "match-v5.ids-by-puuid",
+        *MATCH_COLLECTION_ENDPOINTS,
+    }
+)
 MAX_POLICY_AGE_DAYS = 30
 SECRET_PATTERN = re.compile(r"RGAPI-[A-Za-z0-9_-]+", re.IGNORECASE)
 SENSITIVE_KEYS = frozenset(
@@ -26,6 +37,15 @@ SENSITIVE_KEYS = frozenset(
 )
 
 Region = Literal["americas", "asia", "europe", "sea"]
+AuthorityEndpoint = Literal[
+    "league-v4.challenger",
+    "league-v4.grandmaster",
+    "league-v4.master",
+    "summoner-v4.by-summoner-id",
+    "match-v5.ids-by-puuid",
+    "match-v5.match",
+    "match-v5.timeline",
+]
 
 
 class AuthorityRecord(BaseModel):
@@ -33,7 +53,10 @@ class AuthorityRecord(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    schema_version: Literal["riot-collection-authority-v1"]
+    schema_version: Literal[
+        "riot-collection-authority-v1",
+        "riot-collection-authority-v2",
+    ]
     recorded_on: date
     policy_reviewed_on: date
     policy_urls: tuple[str, ...] = Field(min_length=2)
@@ -42,7 +65,7 @@ class AuthorityRecord(BaseModel):
     credential_tier: Literal["personal", "production"]
     portal_status: Literal["pending", "registered-and-audited", "approved", "acknowledged"]
     regions: tuple[Region, ...] = Field(min_length=1)
-    endpoints: tuple[Literal["match-v5.match", "match-v5.timeline"], ...] = Field(min_length=2)
+    endpoints: tuple[AuthorityEndpoint, ...] = Field(min_length=2)
     raw_storage: Literal["private"]
     raw_retention_days: int = Field(gt=0, le=90)
     raw_redistribution: Literal["prohibited"]
@@ -50,6 +73,22 @@ class AuthorityRecord(BaseModel):
     identifiers_in_public_artifacts: Literal[False]
     ethics_status: Literal["not-required", "approved", "pending"]
     authorization_confirmed: bool
+
+    @model_validator(mode="after")
+    def legacy_scope_is_match_only(self) -> Self:
+        """Prevent a v1 record from silently claiming v2 discovery scope."""
+
+        if self.schema_version == LEGACY_AUTHORITY_SCHEMA_VERSION and not set(
+            self.endpoints
+        ).issubset(MATCH_COLLECTION_ENDPOINTS):
+            raise ValueError("v1 authority records cannot declare discovery endpoints")
+        if self.schema_version == AUTHORITY_SCHEMA_VERSION and (
+            len(self.regions) != len(set(self.regions))
+            or len(self.endpoints) != len(set(self.endpoints))
+            or len(self.policy_urls) != len(set(self.policy_urls))
+        ):
+            raise ValueError("v2 authority scope and policy sources cannot contain duplicates")
+        return self
 
 
 @dataclass(frozen=True)
@@ -103,14 +142,30 @@ def _check(check_id: str, passed: bool, success: str, failure: str) -> Authority
 def collection_preflight(
     record_path: str | Path,
     *,
-    requested_region: str,
+    requested_region: str | None = None,
+    requested_regions: Iterable[str] | None = None,
+    required_endpoints: Iterable[str] = MATCH_COLLECTION_ENDPOINTS,
     environment: Mapping[str, str] | None = None,
     as_of: date | None = None,
 ) -> dict[str, object]:
     """Evaluate collection authority without contacting Riot or exposing credentials."""
 
-    if requested_region not in {"americas", "asia", "europe", "sea"}:
-        raise ValueError(f"Unsupported regional route: {requested_region}")
+    if requested_region is not None and requested_regions is not None:
+        raise ValueError("Supply either requested_region or requested_regions, not both")
+    raw_regions = requested_regions if requested_regions is not None else (requested_region,)
+    regions = tuple(dict.fromkeys(str(region).lower() for region in raw_regions if region))
+    if not regions:
+        raise ValueError("At least one regional route is required")
+    unsupported_regions = set(regions) - {"americas", "asia", "europe", "sea"}
+    if unsupported_regions:
+        raise ValueError(f"Unsupported regional route: {sorted(unsupported_regions)[0]}")
+
+    endpoints = frozenset(str(endpoint) for endpoint in required_endpoints)
+    unsupported_endpoints = endpoints - DISCOVERY_ENDPOINTS
+    if unsupported_endpoints:
+        raise ValueError(f"Unsupported Riot endpoint scope: {sorted(unsupported_endpoints)[0]}")
+    if not endpoints:
+        raise ValueError("At least one Riot endpoint is required")
 
     record_file = Path(record_path)
     checked_on = as_of or datetime.now(UTC).date()
@@ -136,7 +191,8 @@ def collection_preflight(
         return {
             "schema_version": PREFLIGHT_SCHEMA_VERSION,
             "checked_on": checked_on.isoformat(),
-            "requested_region": requested_region,
+            "requested_region": regions[0] if len(regions) == 1 else None,
+            "requested_regions": list(regions),
             "passed": False,
             "record": None,
             "checks": [asdict(item) for item in checks],
@@ -146,7 +202,7 @@ def collection_preflight(
         AuthorityCheck(
             check_id="record-schema",
             passed=True,
-            message=f"Authority record conforms to {AUTHORITY_SCHEMA_VERSION}",
+            message=f"Authority record conforms to {record.schema_version}",
         )
     )
 
@@ -203,17 +259,17 @@ def collection_preflight(
     checks.append(
         _check(
             "region-scope",
-            requested_region in record.regions,
-            f"Regional route {requested_region} is explicitly authorized",
-            f"Regional route {requested_region} is absent from the authority record",
+            set(regions).issubset(record.regions),
+            f"All {len(regions)} requested regional route(s) are explicitly authorized",
+            "One or more requested regional routes are absent from the authority record",
         )
     )
     checks.append(
         _check(
             "endpoint-scope",
-            REQUIRED_ENDPOINTS.issubset(record.endpoints),
-            "Match detail and timeline endpoints are explicitly scoped",
-            "Both Match-V5 detail and timeline endpoints must be scoped",
+            endpoints.issubset(record.endpoints),
+            f"All {len(endpoints)} requested Riot endpoint(s) are explicitly scoped",
+            "One or more requested Riot endpoints are absent from the authority record",
         )
     )
     checks.append(
@@ -265,7 +321,8 @@ def collection_preflight(
     return {
         "schema_version": PREFLIGHT_SCHEMA_VERSION,
         "checked_on": checked_on.isoformat(),
-        "requested_region": requested_region,
+        "requested_region": regions[0] if len(regions) == 1 else None,
+        "requested_regions": list(regions),
         "passed": passed,
         "record": safe_record,
         "checks": [asdict(item) for item in checks],

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
+from contextlib import ExitStack
 from pathlib import Path
 from typing import cast
 
@@ -11,12 +13,24 @@ from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
 from league_ews.benchmark import run_legacy_benchmark
 from league_ews.diagnostics import diagnose_legacy_sequence_split
+from league_ews.discovery import (
+    PlatformDiscoveryFetcher,
+    RegionalDiscoveryFetcher,
+    candidate_discovery_preflight,
+    discover_candidate_pool,
+    validate_discovery_plan,
+)
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
 from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
-from league_ews.riot import RiotMatchClient, collect_match_bundles
-from league_ews.sampling import validate_sampling_frame
+from league_ews.riot import (
+    RequestPacer,
+    RiotMatchClient,
+    RiotPlatformClient,
+    collect_match_bundles,
+)
+from league_ews.sampling import load_registered_sampling_frame, validate_sampling_frame
 
 
 def _write_json(payload: object, output: Path | None) -> None:
@@ -113,6 +127,65 @@ def _validate_sampling_frame(args: argparse.Namespace) -> int:
     return 0 if report["passed"] else 2
 
 
+def _validate_discovery_plan(args: argparse.Namespace) -> int:
+    report = validate_discovery_plan(args.plan, args.sampling_frame)
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _preflight_discovery(args: argparse.Namespace) -> int:
+    report = candidate_discovery_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.discovery_plan,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _discover_candidates(args: argparse.Namespace) -> int:
+    preflight = candidate_discovery_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.discovery_plan,
+    )
+    if not preflight["passed"]:
+        _write_json(preflight, None)
+        return 2
+
+    frame, _ = load_registered_sampling_frame(args.sampling_frame)
+    pacer = RequestPacer(args.request_interval)
+    with ExitStack() as stack:
+        platform_fetchers: dict[str, PlatformDiscoveryFetcher] = {
+            route.platform_id: stack.enter_context(
+                RiotPlatformClient.from_environment(
+                    platform_id=route.platform_id,
+                    pace=pacer,
+                )
+            )
+            for route in frame.route_platforms
+        }
+        regional_fetchers: dict[str, RegionalDiscoveryFetcher] = {
+            route.regional_route: stack.enter_context(
+                RiotMatchClient.from_environment(
+                    regional_route=route.regional_route,
+                    pace=pacer,
+                )
+            )
+            for route in frame.route_platforms
+        }
+        manifest = discover_candidate_pool(
+            args.sampling_frame,
+            args.discovery_plan,
+            output_root=args.output,
+            platform_fetchers=platform_fetchers,
+            regional_fetchers=regional_fetchers,
+            progress=lambda message: print(message, file=sys.stderr),
+        )
+    _write_json(manifest, None)
+    return 0 if manifest["complete"] else 2
+
+
 def _process(args: argparse.Namespace) -> int:
     validation = validate_raw_collection(
         args.raw,
@@ -205,6 +278,36 @@ def build_parser() -> argparse.ArgumentParser:
     sampling_frame.add_argument("--frame", type=Path, required=True)
     sampling_frame.add_argument("--output", type=Path)
     sampling_frame.set_defaults(handler=_validate_sampling_frame)
+
+    discovery_plan = subparsers.add_parser(
+        "validate-discovery-plan",
+        help="validate the frozen candidate-discovery supplement without network access",
+    )
+    discovery_plan.add_argument("--plan", type=Path, required=True)
+    discovery_plan.add_argument("--sampling-frame", type=Path, required=True)
+    discovery_plan.add_argument("--output", type=Path)
+    discovery_plan.set_defaults(handler=_validate_discovery_plan)
+
+    discovery_preflight = subparsers.add_parser(
+        "preflight-discovery",
+        help="validate frame-bound authority for candidate discovery without a request",
+    )
+    discovery_preflight.add_argument("--authority-record", type=Path, required=True)
+    discovery_preflight.add_argument("--sampling-frame", type=Path, required=True)
+    discovery_preflight.add_argument("--discovery-plan", type=Path, required=True)
+    discovery_preflight.add_argument("--output", type=Path)
+    discovery_preflight.set_defaults(handler=_preflight_discovery)
+
+    discover = subparsers.add_parser(
+        "discover-candidates",
+        help="build or resume the private, frame-bound candidate ID pool",
+    )
+    discover.add_argument("--authority-record", type=Path, required=True)
+    discover.add_argument("--sampling-frame", type=Path, required=True)
+    discover.add_argument("--discovery-plan", type=Path, required=True)
+    discover.add_argument("--output", type=Path, required=True)
+    discover.add_argument("--request-interval", type=float, default=1.25)
+    discover.set_defaults(handler=_discover_candidates)
 
     collect = subparsers.add_parser("collect", help="fetch private Match-V5 raw bundles")
     collect.add_argument("--authority-record", type=Path, required=True)
