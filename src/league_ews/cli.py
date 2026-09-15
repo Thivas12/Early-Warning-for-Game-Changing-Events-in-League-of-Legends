@@ -14,7 +14,7 @@ from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
-from league_ews.raw_validation import validate_raw_collection
+from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
 from league_ews.riot import RiotMatchClient, collect_match_bundles
 
 
@@ -126,9 +126,25 @@ def _validate_raw(args: argparse.Namespace) -> int:
         args.raw,
         min_routes=args.min_routes,
         min_patches=args.min_patches,
+        event_spot_check=args.event_spot_check,
+        processed_root=args.processed,
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
+
+
+def _record_event_spot_check(args: argparse.Namespace) -> int:
+    record = create_event_spot_check_record(
+        args.raw,
+        args.processed,
+        tuple(args.match_id),
+        objective_events_match_source=args.confirm_objective_events,
+        teamfight_episodes_match_source=args.confirm_teamfight_episodes,
+        strict_future_labels_match_processed=args.confirm_future_labels,
+    )
+    _write_json(record, args.output)
+    print(f"Recorded {len(args.match_id)} checksum-bound event spot-check sample(s)")
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -187,7 +203,22 @@ def build_parser() -> argparse.ArgumentParser:
     validate_raw.add_argument("--output", type=Path)
     validate_raw.add_argument("--min-routes", type=int, default=2)
     validate_raw.add_argument("--min-patches", type=int, default=6)
+    validate_raw.add_argument("--event-spot-check", type=Path)
+    validate_raw.add_argument("--processed", type=Path)
     validate_raw.set_defaults(handler=_validate_raw)
+
+    spot_check = subparsers.add_parser(
+        "record-event-spot-check",
+        help="record private human review of source events and processed labels",
+    )
+    spot_check.add_argument("--raw", type=Path, default=Path("data/raw"))
+    spot_check.add_argument("--processed", type=Path, required=True)
+    spot_check.add_argument("--match-id", action="append", required=True)
+    spot_check.add_argument("--output", type=Path, required=True)
+    spot_check.add_argument("--confirm-objective-events", action="store_true", required=True)
+    spot_check.add_argument("--confirm-teamfight-episodes", action="store_true", required=True)
+    spot_check.add_argument("--confirm-future-labels", action="store_true", required=True)
+    spot_check.set_defaults(handler=_record_event_spot_check)
 
     process = subparsers.add_parser("process", help="normalize and label private raw bundles")
     process.add_argument("--raw", type=Path, default=Path("data/raw"))

@@ -58,7 +58,41 @@ manifest SHA-256, and returns exit code 2 on failure.
 For a deliberately smaller pipeline smoke test, call `validate-raw` directly
 with lower `--min-routes` and `--min-patches` values and record that deviation.
 An automated pass does not complete G2: event timestamps still require a
-documented human spot-check against source payloads.
+documented human spot-check against source payloads. After manually comparing
+the selected source objective events, teamfight episodes and processed strict
+future labels, record that review in an ignored, checksum-bound file:
+
+```bash
+uv run league-ews record-event-spot-check \
+  --raw data/raw/pilot \
+  --processed data/processed/pilot \
+  --match-id REPLACE_WITH_REVIEWED_MATCH_ID \
+  --output data/private/pilot-event-spot-check.json \
+  --confirm-objective-events \
+  --confirm-teamfight-episodes \
+  --confirm-future-labels
+```
+
+Then supply the private record to validation:
+
+```bash
+uv run league-ews validate-raw \
+  --raw data/raw/pilot \
+  --processed data/processed/pilot \
+  --event-spot-check data/private/pilot-event-spot-check.json \
+  --output data/private/pilot-validation.json \
+  --min-routes 1 \
+  --min-patches 1
+```
+
+The record is bound to the exact raw and processing manifests plus every
+reviewed raw/processed file checksum. It must contain at least one reviewed
+match from every observed route-patch cell. The identifier-minimized
+validation summary reports only counts and check outcomes, not the reviewed
+match IDs. A canary deviation can pass its own manual review but does not
+complete the registered two-route, six-patch G2 gate. If a spot-check record is
+supplied but is stale, incomplete or invalid, validation returns exit code 2
+even when every automated raw-integrity check passes.
 
 Normalize the private pairs and build exact labels with:
 
