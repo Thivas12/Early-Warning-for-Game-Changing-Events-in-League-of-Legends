@@ -1,0 +1,22 @@
+schema_version: experiment-registry-v1
+experiments:
+  - id: A001
+    hypothesis: The released table violates causal feature availability.
+    status: completed-rejected
+    artifact: reports/legacy-audit.json
+  - id: A002
+    hypothesis: Splitting after augmentation produces cross-partition contamination.
+    status: completed-confirmed
+    artifact: reports/legacy-split-contamination.json
+  - id: B001
+    hypothesis: Causal state improves operational utility over clock and history priors.
+    status: completed-descriptive
+    artifact: reports/legacy-baselines.json
+  - id: B002
+    hypothesis: Post-match summaries alone localize future event timing.
+    status: completed-negative
+    artifact: reports/legacy-postmatch-leak.json
+  - id: M001
+    hypothesis: Temporal graph hazards clear H1-H5 in the registered plan.
+    status: blocked-external-data-authority
+    artifact: configs/rifthazard-v2.yaml

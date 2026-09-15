@@ -1,0 +1,56 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.python-version.local
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Data and model artifacts
+audit-data/
+data/raw/
+data/interim/
+data/processed/
+data/external/
+*.csv
+*.parquet
+*.feather
+*.zip
+*.onnx
+*.pt
+*.pth
+*.keras
+mlruns/
+.dvc/cache/
+
+# Generated research outputs
+reports/local/
+paper/build/
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.pdf
+
+# Local tooling
+.idea/
+.vscode/
+.DS_Store
+tmp/

@@ -1,5 +1,2 @@
-pandas
-numpy
-requests
-tqdm
-tenacity
+# Compatibility shim. The authoritative dependency specification is pyproject.toml.
+-e .

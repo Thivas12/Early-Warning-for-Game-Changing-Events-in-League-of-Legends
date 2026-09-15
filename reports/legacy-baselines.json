@@ -1,0 +1,786 @@
+{
+  "configuration": {
+    "alert_policy": "upward threshold crossing, 60s cooldown, one-to-one 30s match",
+    "baselines": [
+      "time",
+      "history",
+      "causal"
+    ],
+    "max_iter": 100,
+    "threshold_candidates": 31,
+    "threshold_selection": "maximum event-level F1 on validation only"
+  },
+  "dataset": {
+    "matches": 2998,
+    "path_name": "final_dataset.csv",
+    "rows": 484255,
+    "sha256": "dd2b2dffc95ca182792ee679b458c362469e99b975f8361124900f050f64ffc0"
+  },
+  "partitions": {
+    "test": {
+      "matches": 450,
+      "rows": 71471
+    },
+    "train": {
+      "matches": 2098,
+      "rows": 341105
+    },
+    "validation": {
+      "matches": 450,
+      "rows": 71679
+    }
+  },
+  "policies": {
+    "features": "legacy-causal-v1",
+    "labels": "legacy-label-audit-v1",
+    "split": "chronological-match-v1",
+    "split_sha256": "c433ceb0aefc2e9604be01a89f81db858dc82aa10242365089194be2d0e23923"
+  },
+  "results": [
+    {
+      "baseline": "time",
+      "event": "baron",
+      "feature_count": 1,
+      "features": [
+        "t"
+      ],
+      "label": "y_baron_30",
+      "test": {
+        "operational": {
+          "alerts": 282,
+          "event": "baron",
+          "events": 267,
+          "f1": 0.2185792349726776,
+          "false_alerts": 222,
+          "false_alerts_per_game": 0.49333333333333335,
+          "false_alerts_per_hour": 1.1182157798267829,
+          "hits": 60,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.2127659574468085,
+          "recall": 0.2247191011235955,
+          "threshold": 0.9477903586158611
+        },
+        "row_metrics": {
+          "average_precision": 0.14306021361520846,
+          "brier": 0.08280430043166787,
+          "prevalence": 0.011459193239215905,
+          "roc_auc": 0.9602727952314658
+        }
+      },
+      "training_seconds": 0.9642058640001778,
+      "validation": {
+        "operational": {
+          "alerts": 277,
+          "event": "baron",
+          "events": 275,
+          "f1": 0.22826086956521738,
+          "false_alerts": 214,
+          "false_alerts_per_game": 0.47555555555555556,
+          "false_alerts_per_hour": 1.0747917800192526,
+          "hits": 63,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.22743682310469315,
+          "recall": 0.2290909090909091,
+          "threshold": 0.9477903586158611
+        },
+        "row_metrics": {
+          "average_precision": 0.14778294450861199,
+          "brier": 0.08579749370123121,
+          "prevalence": 0.012053739589000963,
+          "roc_auc": 0.9600477639964331
+        }
+      }
+    },
+    {
+      "baseline": "time",
+      "event": "dragon",
+      "feature_count": 1,
+      "features": [
+        "t"
+      ],
+      "label": "y_dragon_30",
+      "test": {
+        "operational": {
+          "alerts": 1625,
+          "event": "dragon",
+          "events": 1252,
+          "f1": 0.10914146680570037,
+          "false_alerts": 1468,
+          "false_alerts_per_game": 3.2622222222222224,
+          "false_alerts_per_hour": 7.394327769305033,
+          "hits": 157,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.09661538461538462,
+          "recall": 0.1253993610223642,
+          "threshold": 0.6576753327696105
+        },
+        "row_metrics": {
+          "average_precision": 0.10147253729354466,
+          "brier": 0.2338779038721386,
+          "prevalence": 0.06388605168529893,
+          "roc_auc": 0.67192307376294
+        }
+      },
+      "training_seconds": 1.1144936319997214,
+      "validation": {
+        "operational": {
+          "alerts": 1623,
+          "event": "dragon",
+          "events": 1220,
+          "f1": 0.14421385860007035,
+          "false_alerts": 1418,
+          "false_alerts_per_game": 3.151111111111111,
+          "false_alerts_per_hour": 7.121751140501402,
+          "hits": 205,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.12630930375847196,
+          "recall": 0.1680327868852459,
+          "threshold": 0.6576753327696105
+        },
+        "row_metrics": {
+          "average_precision": 0.11614187984563863,
+          "brier": 0.23268138097059266,
+          "prevalence": 0.06437031766626208,
+          "roc_auc": 0.6960212502727929
+        }
+      }
+    },
+    {
+      "baseline": "time",
+      "event": "teamfight",
+      "feature_count": 1,
+      "features": [
+        "t"
+      ],
+      "label": "y_teamfight_30",
+      "test": {
+        "operational": {
+          "alerts": 1178,
+          "event": "teamfight",
+          "events": 1136,
+          "f1": 0.08729472774416597,
+          "false_alerts": 1077,
+          "false_alerts_per_game": 2.3933333333333335,
+          "false_alerts_per_hour": 5.424857634565068,
+          "hits": 101,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.08573853989813243,
+          "recall": 0.08890845070422536,
+          "threshold": 0.6656044132508748
+        },
+        "row_metrics": {
+          "average_precision": 0.17070131358392346,
+          "brier": 0.22735908336614477,
+          "prevalence": 0.10544136782751046,
+          "roc_auc": 0.674307728938477
+        }
+      },
+      "training_seconds": 0.8016340649992344,
+      "validation": {
+        "operational": {
+          "alerts": 1145,
+          "event": "teamfight",
+          "events": 1153,
+          "f1": 0.08529155787641428,
+          "false_alerts": 1047,
+          "false_alerts_per_game": 2.3266666666666667,
+          "false_alerts_per_hour": 5.25844389570167,
+          "hits": 98,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.08558951965065502,
+          "recall": 0.08499566348655681,
+          "threshold": 0.6656044132508748
+        },
+        "row_metrics": {
+          "average_precision": 0.16937361172460577,
+          "brier": 0.22848368682770548,
+          "prevalence": 0.10492612899175491,
+          "roc_auc": 0.673933724994561
+        }
+      }
+    },
+    {
+      "baseline": "history",
+      "event": "baron",
+      "feature_count": 23,
+      "features": [
+        "t",
+        "kills_30_t1",
+        "kills_30_t2",
+        "deaths_30_t1",
+        "deaths_30_t2",
+        "kills_60_t1",
+        "kills_60_t2",
+        "deaths_60_t1",
+        "deaths_60_t2",
+        "wards_placed_60_t1",
+        "wards_placed_60_t2",
+        "wards_killed_60_t1",
+        "wards_killed_60_t2",
+        "items_purchased_60_t1",
+        "items_purchased_60_t2",
+        "towers_t1",
+        "towers_t2",
+        "inhibs_t1",
+        "inhibs_t2",
+        "time_since_last_baron",
+        "time_since_last_dragon",
+        "time_since_last_teamfight",
+        "teamfight_recent_20"
+      ],
+      "label": "y_baron_30",
+      "test": {
+        "operational": {
+          "alerts": 354,
+          "event": "baron",
+          "events": 267,
+          "f1": 0.36070853462157804,
+          "false_alerts": 242,
+          "false_alerts_per_game": 0.5377777777777778,
+          "false_alerts_per_hour": 1.218955940171538,
+          "hits": 112,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.3163841807909605,
+          "recall": 0.41947565543071164,
+          "threshold": 0.9591317354491878
+        },
+        "row_metrics": {
+          "average_precision": 0.48687879469600787,
+          "brier": 0.03347094084039919,
+          "prevalence": 0.011459193239215905,
+          "roc_auc": 0.9893878296117442
+        }
+      },
+      "training_seconds": 1.6546691049989022,
+      "validation": {
+        "operational": {
+          "alerts": 373,
+          "event": "baron",
+          "events": 275,
+          "f1": 0.3703703703703704,
+          "false_alerts": 253,
+          "false_alerts_per_game": 0.5622222222222222,
+          "false_alerts_per_hour": 1.2706650483405182,
+          "hits": 120,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.32171581769436997,
+          "recall": 0.43636363636363634,
+          "threshold": 0.9591317354491878
+        },
+        "row_metrics": {
+          "average_precision": 0.4511858797770001,
+          "brier": 0.03537202706763011,
+          "prevalence": 0.012053739589000963,
+          "roc_auc": 0.9876382220496285
+        }
+      }
+    },
+    {
+      "baseline": "history",
+      "event": "dragon",
+      "feature_count": 23,
+      "features": [
+        "t",
+        "kills_30_t1",
+        "kills_30_t2",
+        "deaths_30_t1",
+        "deaths_30_t2",
+        "kills_60_t1",
+        "kills_60_t2",
+        "deaths_60_t1",
+        "deaths_60_t2",
+        "wards_placed_60_t1",
+        "wards_placed_60_t2",
+        "wards_killed_60_t1",
+        "wards_killed_60_t2",
+        "items_purchased_60_t1",
+        "items_purchased_60_t2",
+        "towers_t1",
+        "towers_t2",
+        "inhibs_t1",
+        "inhibs_t2",
+        "time_since_last_baron",
+        "time_since_last_dragon",
+        "time_since_last_teamfight",
+        "teamfight_recent_20"
+      ],
+      "label": "y_dragon_30",
+      "test": {
+        "operational": {
+          "alerts": 1051,
+          "event": "dragon",
+          "events": 1252,
+          "f1": 0.4012158054711246,
+          "false_alerts": 589,
+          "false_alerts_per_game": 1.308888888888889,
+          "false_alerts_per_hour": 2.966797722153041,
+          "hits": 462,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.439581351094196,
+          "recall": 0.36900958466453676,
+          "threshold": 0.9180344117269699
+        },
+        "row_metrics": {
+          "average_precision": 0.5261128445712331,
+          "brier": 0.09780172806734665,
+          "prevalence": 0.06388605168529893,
+          "roc_auc": 0.9539976450156525
+        }
+      },
+      "training_seconds": 2.774523002000933,
+      "validation": {
+        "operational": {
+          "alerts": 1098,
+          "event": "dragon",
+          "events": 1220,
+          "f1": 0.39775668679896464,
+          "false_alerts": 637,
+          "false_alerts_per_game": 1.4155555555555555,
+          "false_alerts_per_hour": 3.199263382580672,
+          "hits": 461,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.4198542805100182,
+          "recall": 0.3778688524590164,
+          "threshold": 0.9180344117269699
+        },
+        "row_metrics": {
+          "average_precision": 0.5142637200480973,
+          "brier": 0.0978015855001599,
+          "prevalence": 0.06437031766626208,
+          "roc_auc": 0.9524978128891834
+        }
+      }
+    },
+    {
+      "baseline": "history",
+      "event": "teamfight",
+      "feature_count": 23,
+      "features": [
+        "t",
+        "kills_30_t1",
+        "kills_30_t2",
+        "deaths_30_t1",
+        "deaths_30_t2",
+        "kills_60_t1",
+        "kills_60_t2",
+        "deaths_60_t1",
+        "deaths_60_t2",
+        "wards_placed_60_t1",
+        "wards_placed_60_t2",
+        "wards_killed_60_t1",
+        "wards_killed_60_t2",
+        "items_purchased_60_t1",
+        "items_purchased_60_t2",
+        "towers_t1",
+        "towers_t2",
+        "inhibs_t1",
+        "inhibs_t2",
+        "time_since_last_baron",
+        "time_since_last_dragon",
+        "time_since_last_teamfight",
+        "teamfight_recent_20"
+      ],
+      "label": "y_teamfight_30",
+      "test": {
+        "operational": {
+          "alerts": 1523,
+          "event": "teamfight",
+          "events": 1136,
+          "f1": 0.14140654381346374,
+          "false_alerts": 1335,
+          "false_alerts_per_game": 2.966666666666667,
+          "false_alerts_per_hour": 6.72440570301241,
+          "hits": 188,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 10.0,
+          "precision": 0.12344057780695995,
+          "recall": 0.16549295774647887,
+          "threshold": 0.7526714263244243
+        },
+        "row_metrics": {
+          "average_precision": 0.26562081687646594,
+          "brier": 0.20312348686060588,
+          "prevalence": 0.10544136782751046,
+          "roc_auc": 0.7403533781572547
+        }
+      },
+      "training_seconds": 2.3886487830004626,
+      "validation": {
+        "operational": {
+          "alerts": 1585,
+          "event": "teamfight",
+          "events": 1153,
+          "f1": 0.16216216216216217,
+          "false_alerts": 1363,
+          "false_alerts_per_game": 3.028888888888889,
+          "false_alerts_per_hour": 6.845519608253464,
+          "hits": 222,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 10.0,
+          "precision": 0.14006309148264984,
+          "recall": 0.19254119687771032,
+          "threshold": 0.7526714263244243
+        },
+        "row_metrics": {
+          "average_precision": 0.27113680341748314,
+          "brier": 0.20338551516670014,
+          "prevalence": 0.10492612899175491,
+          "roc_auc": 0.7424677273118937
+        }
+      }
+    },
+    {
+      "baseline": "causal",
+      "event": "baron",
+      "feature_count": 49,
+      "features": [
+        "t",
+        "gold_blue",
+        "gold_red",
+        "xp_blue",
+        "xp_red",
+        "gold_diff",
+        "xp_diff",
+        "cs_lane_t1",
+        "cs_lane_t2",
+        "cs_jungle_t1",
+        "cs_jungle_t2",
+        "cs_total_t1",
+        "cs_total_t2",
+        "cs_total_diff",
+        "avg_level_t1",
+        "avg_level_t2",
+        "level_diff",
+        "group_t1",
+        "group_t2",
+        "cluster_density",
+        "distance_between_teams",
+        "spread_t1",
+        "spread_t2",
+        "champs_near_baron_t1",
+        "champs_near_baron_t2",
+        "champs_near_dragon_t1",
+        "champs_near_dragon_t2",
+        "kills_30_t1",
+        "kills_30_t2",
+        "deaths_30_t1",
+        "deaths_30_t2",
+        "kills_60_t1",
+        "kills_60_t2",
+        "deaths_60_t1",
+        "deaths_60_t2",
+        "wards_placed_60_t1",
+        "wards_placed_60_t2",
+        "wards_killed_60_t1",
+        "wards_killed_60_t2",
+        "items_purchased_60_t1",
+        "items_purchased_60_t2",
+        "towers_t1",
+        "towers_t2",
+        "inhibs_t1",
+        "inhibs_t2",
+        "time_since_last_baron",
+        "time_since_last_dragon",
+        "time_since_last_teamfight",
+        "teamfight_recent_20"
+      ],
+      "label": "y_baron_30",
+      "test": {
+        "operational": {
+          "alerts": 323,
+          "event": "baron",
+          "events": 267,
+          "f1": 0.376271186440678,
+          "false_alerts": 212,
+          "false_alerts_per_game": 0.4711111111111111,
+          "false_alerts_per_hour": 1.0678456996544052,
+          "hits": 111,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.34365325077399383,
+          "recall": 0.4157303370786517,
+          "threshold": 0.954513532364068
+        },
+        "row_metrics": {
+          "average_precision": 0.4936264020159572,
+          "brier": 0.03143030494417891,
+          "prevalence": 0.011459193239215905,
+          "roc_auc": 0.9895950483053467
+        }
+      },
+      "training_seconds": 4.747600691000116,
+      "validation": {
+        "operational": {
+          "alerts": 352,
+          "event": "baron",
+          "events": 275,
+          "f1": 0.4082934609250399,
+          "false_alerts": 224,
+          "false_alerts_per_game": 0.49777777777777776,
+          "false_alerts_per_hour": 1.1250156949734234,
+          "hits": 128,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.36363636363636365,
+          "recall": 0.46545454545454545,
+          "threshold": 0.954513532364068
+        },
+        "row_metrics": {
+          "average_precision": 0.4264104619488578,
+          "brier": 0.03360637570479679,
+          "prevalence": 0.012053739589000963,
+          "roc_auc": 0.9874596464182884
+        }
+      }
+    },
+    {
+      "baseline": "causal",
+      "event": "dragon",
+      "feature_count": 49,
+      "features": [
+        "t",
+        "gold_blue",
+        "gold_red",
+        "xp_blue",
+        "xp_red",
+        "gold_diff",
+        "xp_diff",
+        "cs_lane_t1",
+        "cs_lane_t2",
+        "cs_jungle_t1",
+        "cs_jungle_t2",
+        "cs_total_t1",
+        "cs_total_t2",
+        "cs_total_diff",
+        "avg_level_t1",
+        "avg_level_t2",
+        "level_diff",
+        "group_t1",
+        "group_t2",
+        "cluster_density",
+        "distance_between_teams",
+        "spread_t1",
+        "spread_t2",
+        "champs_near_baron_t1",
+        "champs_near_baron_t2",
+        "champs_near_dragon_t1",
+        "champs_near_dragon_t2",
+        "kills_30_t1",
+        "kills_30_t2",
+        "deaths_30_t1",
+        "deaths_30_t2",
+        "kills_60_t1",
+        "kills_60_t2",
+        "deaths_60_t1",
+        "deaths_60_t2",
+        "wards_placed_60_t1",
+        "wards_placed_60_t2",
+        "wards_killed_60_t1",
+        "wards_killed_60_t2",
+        "items_purchased_60_t1",
+        "items_purchased_60_t2",
+        "towers_t1",
+        "towers_t2",
+        "inhibs_t1",
+        "inhibs_t2",
+        "time_since_last_baron",
+        "time_since_last_dragon",
+        "time_since_last_teamfight",
+        "teamfight_recent_20"
+      ],
+      "label": "y_dragon_30",
+      "test": {
+        "operational": {
+          "alerts": 847,
+          "event": "dragon",
+          "events": 1252,
+          "f1": 0.41543592186755607,
+          "false_alerts": 411,
+          "false_alerts_per_game": 0.9133333333333333,
+          "false_alerts_per_hour": 2.0702102950847197,
+          "hits": 436,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.5147579693034239,
+          "recall": 0.34824281150159747,
+          "threshold": 0.9309420910907498
+        },
+        "row_metrics": {
+          "average_precision": 0.5623077209082508,
+          "brier": 0.09269807963833232,
+          "prevalence": 0.06388605168529893,
+          "roc_auc": 0.9588250568606195
+        }
+      },
+      "training_seconds": 5.021067662999485,
+      "validation": {
+        "operational": {
+          "alerts": 870,
+          "event": "dragon",
+          "events": 1220,
+          "f1": 0.38851674641148326,
+          "false_alerts": 464,
+          "false_alerts_per_game": 1.031111111111111,
+          "false_alerts_per_hour": 2.3303896538735196,
+          "hits": 406,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.4666666666666667,
+          "recall": 0.33278688524590166,
+          "threshold": 0.9309420910907498
+        },
+        "row_metrics": {
+          "average_precision": 0.5472234089838551,
+          "brier": 0.09159709051902103,
+          "prevalence": 0.06437031766626208,
+          "roc_auc": 0.9569318138814988
+        }
+      }
+    },
+    {
+      "baseline": "causal",
+      "event": "teamfight",
+      "feature_count": 49,
+      "features": [
+        "t",
+        "gold_blue",
+        "gold_red",
+        "xp_blue",
+        "xp_red",
+        "gold_diff",
+        "xp_diff",
+        "cs_lane_t1",
+        "cs_lane_t2",
+        "cs_jungle_t1",
+        "cs_jungle_t2",
+        "cs_total_t1",
+        "cs_total_t2",
+        "cs_total_diff",
+        "avg_level_t1",
+        "avg_level_t2",
+        "level_diff",
+        "group_t1",
+        "group_t2",
+        "cluster_density",
+        "distance_between_teams",
+        "spread_t1",
+        "spread_t2",
+        "champs_near_baron_t1",
+        "champs_near_baron_t2",
+        "champs_near_dragon_t1",
+        "champs_near_dragon_t2",
+        "kills_30_t1",
+        "kills_30_t2",
+        "deaths_30_t1",
+        "deaths_30_t2",
+        "kills_60_t1",
+        "kills_60_t2",
+        "deaths_60_t1",
+        "deaths_60_t2",
+        "wards_placed_60_t1",
+        "wards_placed_60_t2",
+        "wards_killed_60_t1",
+        "wards_killed_60_t2",
+        "items_purchased_60_t1",
+        "items_purchased_60_t2",
+        "towers_t1",
+        "towers_t2",
+        "inhibs_t1",
+        "inhibs_t2",
+        "time_since_last_baron",
+        "time_since_last_dragon",
+        "time_since_last_teamfight",
+        "teamfight_recent_20"
+      ],
+      "label": "y_teamfight_30",
+      "test": {
+        "operational": {
+          "alerts": 1731,
+          "event": "teamfight",
+          "events": 1136,
+          "f1": 0.1485873735612138,
+          "false_alerts": 1518,
+          "false_alerts_per_game": 3.3733333333333335,
+          "false_alerts_per_hour": 7.6461781701669205,
+          "hits": 213,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 20.0,
+          "precision": 0.12305025996533796,
+          "recall": 0.1875,
+          "threshold": 0.733965432001065
+        },
+        "row_metrics": {
+          "average_precision": 0.2707310396912091,
+          "brier": 0.20146828261065042,
+          "prevalence": 0.10544136782751046,
+          "roc_auc": 0.7433312887690973
+        }
+      },
+      "training_seconds": 4.5187444660004985,
+      "validation": {
+        "operational": {
+          "alerts": 1778,
+          "event": "teamfight",
+          "events": 1153,
+          "f1": 0.17604912998976457,
+          "false_alerts": 1520,
+          "false_alerts_per_game": 3.3777777777777778,
+          "false_alerts_per_hour": 7.634035073033943,
+          "hits": 258,
+          "horizon_seconds": 30,
+          "matches": 450,
+          "median_lead_seconds": 10.0,
+          "precision": 0.14510686164229472,
+          "recall": 0.22376409366869038,
+          "threshold": 0.733965432001065
+        },
+        "row_metrics": {
+          "average_precision": 0.27601324834321794,
+          "brier": 0.202026423460505,
+          "prevalence": 0.10492612899175491,
+          "roc_auc": 0.7456827212970221
+        }
+      }
+    }
+  ],
+  "runtime": {
+    "numpy": "2.5.3",
+    "pandas": "2.3.3",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "scikit_learn": "1.9.1"
+  },
+  "schema_version": "legacy-benchmark-v1",
+  "software_version": "0.1.0",
+  "source": {
+    "git_commit": "7f993390adf14934bf3d3060cab38f38e86acc52",
+    "tracked_files_dirty": false
+  }
+}

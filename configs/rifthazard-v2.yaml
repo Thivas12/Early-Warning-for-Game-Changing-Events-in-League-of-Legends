@@ -1,0 +1,22 @@
+schema_version: experiment-config-v1
+experiment_id: M001
+status: blocked-until-rights-cleared-data
+seed_set: [101, 211, 307, 401, 503, 601, 701, 809, 907, 1009]
+events: [baron, dragon, teamfight]
+horizons_seconds: [10, 20, 30, 60]
+observation_policy: native-riot-timeline-frames
+label_policy: exact-future-events-v1
+split_policy: future-patch-with-player-component-sensitivity-v1
+graph:
+  nodes: [participant, objective]
+  edges: [same-team, proximity, assistance, objective-proximity]
+  patch_rules_required: true
+model:
+  encoder: temporal-graph-network
+  output: discrete-competing-hazards
+  monotone_cumulative_risk: true
+selection_metric: macro_average_precision
+uncertainty:
+  confidence_interval: whole-match-paired-bootstrap
+  bootstrap_replicates: 1000
+release_gate: docs/research-plan.md#Gates

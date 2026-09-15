@@ -1,0 +1,37 @@
+name: Research CI
+
+on:
+  push:
+    branches: [main, "research/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Install locked dependencies
+        run: uv sync --frozen --all-groups
+      - name: Check formatting and lint
+        run: make lint
+      - name: Check types
+        run: make type
+      - name: Run tests
+        run: make test
+      - name: Reject committed credentials
+        run: scripts/check-secrets.sh
