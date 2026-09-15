@@ -2,11 +2,17 @@ from __future__ import annotations
 
 import json
 from datetime import UTC, datetime
+from pathlib import Path
+
+import pytest
 
 from league_ews.cli import main
 from league_ews.processing import process_raw_collection
 from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
 from league_ews.riot import collect_match_bundles
+
+ROOT = Path(__file__).parents[1]
+SAMPLING_FRAME = ROOT / "configs" / "rifthazard-sampling-frame.yaml"
 
 
 def _bundle(
@@ -20,6 +26,10 @@ def _bundle(
             "gameVersion": game_version,
             "gameCreation": 123,
             "platformId": match_id.split("_", maxsplit=1)[0],
+            "queueId": 420,
+            "mapId": 11,
+            "gameMode": "CLASSIC",
+            "gameType": "MATCHED_GAME",
             "participants": [
                 {"participantId": participant, "teamId": 100 if participant <= 5 else 200}
                 for participant in range(1, 11)
@@ -125,7 +135,7 @@ def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -
 
     assert report["passed"] is True
     assert report["automated_passed"] is True
-    assert report["schema_version"] == "riot-raw-validation-v3"
+    assert report["schema_version"] == "riot-raw-validation-v4"
     assert report["g2_complete"] is False
     spot_check = report["manual_event_spot_check"]
     assert isinstance(spot_check, dict)
@@ -373,6 +383,80 @@ def test_raw_validation_enforces_preregistered_coverage(tmp_path) -> None:
     )
 
     assert _failed_checks(report) == {"route-coverage", "patch-coverage"}
+
+
+def test_sampling_frame_requires_full_cross_product_and_exact_stage_targets(tmp_path) -> None:
+    match_number = 1
+    for minor in range(12, 18):
+        for platform, route in (("EUW1", "europe"), ("NA1", "americas")):
+            collect_match_bundles(
+                [f"{platform}_{match_number}"],
+                regional_route=route,
+                output_root=tmp_path,
+                fetcher=FakeFetcher(f"16.{minor}.1"),
+                collected_at=datetime(2026, 9, 15, tzinfo=UTC),
+            )
+            match_number += 1
+
+    report = validate_raw_collection(
+        tmp_path,
+        sampling_frame=SAMPLING_FRAME,
+        sampling_stage="pilot",
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    assert report["passed"] is False
+    assert _failed_checks(report) == {"frame-cell-coverage"}
+    frame = report["sampling_frame"]
+    assert isinstance(frame, dict)
+    assert frame["status"] == "incomplete"
+    assert frame["expected_cells"] == 12
+    assert frame["represented_cells"] == 12
+    assert frame["target_matches"] == 5_000
+    assert frame["observed_in_frame_matches"] == 12
+
+    final_report = validate_raw_collection(
+        tmp_path,
+        sampling_frame=SAMPLING_FRAME,
+        sampling_stage="final",
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    assert "final-duration-freeze" in _failed_checks(final_report)
+    final_frame = final_report["sampling_frame"]
+    assert isinstance(final_frame, dict)
+    assert final_frame["status"] == "blocked-duration-rule"
+    assert final_report["g2_complete"] is False
+
+
+def test_sampling_frame_rejects_out_of_frame_bundle(tmp_path) -> None:
+    _collect(tmp_path)
+
+    report = validate_raw_collection(
+        tmp_path,
+        min_routes=1,
+        min_patches=1,
+        sampling_frame=SAMPLING_FRAME,
+        sampling_stage="pilot",
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    assert report["passed"] is False
+    assert {"frame-eligibility", "frame-cell-coverage"}.issubset(_failed_checks(report))
+    frame = report["sampling_frame"]
+    assert isinstance(frame, dict)
+    assert frame["unexpected_cells"] == 1
+
+
+def test_sampling_frame_and_stage_must_be_supplied_together(tmp_path) -> None:
+    _collect(tmp_path)
+
+    with pytest.raises(ValueError, match="must be supplied together"):
+        validate_raw_collection(
+            tmp_path,
+            min_routes=1,
+            min_patches=1,
+            sampling_frame=SAMPLING_FRAME,
+        )
 
 
 def test_raw_validation_fails_closed_for_missing_manifest(tmp_path) -> None:

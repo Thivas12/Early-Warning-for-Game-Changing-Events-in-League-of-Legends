@@ -245,11 +245,20 @@ def test_process_fails_raw_gate_before_writing_outputs(tmp_path, monkeypatch, ca
 def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, capsys) -> None:
     events: list[str] = []
 
-    def fake_validation(raw, *, min_routes: int, min_patches: int) -> dict[str, object]:
+    def fake_validation(
+        raw,
+        *,
+        min_routes: int,
+        min_patches: int,
+        sampling_frame,
+        sampling_stage,
+    ) -> dict[str, object]:
         events.append("validate")
         assert raw == tmp_path / "raw"
         assert min_routes == 1
         assert min_patches == 1
+        assert sampling_frame is None
+        assert sampling_stage is None
         return {"passed": True}
 
     def fake_processing(raw, *, output_root) -> dict[str, object]:

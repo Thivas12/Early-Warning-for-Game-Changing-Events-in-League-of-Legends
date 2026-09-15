@@ -1,0 +1,108 @@
+schema_version: league-ews-sampling-frame-v1
+frame_id: rifthazard-2026-09-15
+frozen_on: 2026-09-15
+status: frozen-before-pilot-details
+
+sources:
+  reviewed_on: 2026-09-15
+  api_reference: https://developer.riotgames.com/apis
+  routing_values: https://developer.riotgames.com/docs/lol#routing-values
+  patch_schedule: https://support.riotgames.com/en-us/league-of-legends/gameplay/patch-schedule-league-of-legends/
+  queue_ids: https://static-developer.riotgames.com/docs/lol/queues.json
+  maps: https://static-developer.riotgames.com/docs/lol/maps.json
+  game_modes: https://static-developer.riotgames.com/docs/lol/gameModes.json
+  game_types: https://static-developer.riotgames.com/docs/lol/gameTypes.json
+  data_dragon_versions: https://ddragon.leagueoflegends.com/api/versions.json
+
+route_platforms:
+  - regional_route: europe
+    platform_id: EUW1
+  - regional_route: americas
+    platform_id: NA1
+
+# Riot's 2026 public schedule uses 26.x labels. Match-V5 gameVersion and
+# Data Dragon use the corresponding internal 16.x prefixes used below.
+patches:
+  - public_patch: "26.12"
+    game_version_patch: "16.12"
+    released_on: 2026-06-10
+    closed_on: 2026-06-24
+  - public_patch: "26.13"
+    game_version_patch: "16.13"
+    released_on: 2026-06-24
+    closed_on: 2026-07-15
+  - public_patch: "26.14"
+    game_version_patch: "16.14"
+    released_on: 2026-07-15
+    closed_on: 2026-07-29
+  - public_patch: "26.15"
+    game_version_patch: "16.15"
+    released_on: 2026-07-29
+    closed_on: 2026-08-12
+  - public_patch: "26.16"
+    game_version_patch: "16.16"
+    released_on: 2026-08-12
+    closed_on: 2026-08-26
+  - public_patch: "26.17"
+    game_version_patch: "16.17"
+    released_on: 2026-08-26
+    closed_on: 2026-09-10
+
+eligibility:
+  queue_id: 420
+  map_id: 11
+  game_mode: CLASSIC
+  game_type: MATCHED_GAME
+  participant_count: 10
+  match_detail_required: true
+  timeline_required: true
+  game_version_required: true
+  game_creation_required: true
+
+candidates:
+  method: ranked-ladder-puuid-match-history-v1
+  ladder_queue: RANKED_SOLO_5x5
+  ladder_tiers: [CHALLENGER, GRANDMASTER, MASTER]
+  ladder_snapshot: private-checksum-before-match-id-discovery
+  candidate_order: seeded-sha256-within-cell-v1
+  candidate_hash_material: decimal-seed-nul-match-id-utf8-v1
+  deduplicate_match_ids: globally-before-detail-fetch-and-split
+  required_endpoints:
+    - league-v4.challenger
+    - league-v4.grandmaster
+    - league-v4.master
+    - summoner-v4.by-summoner-id
+    - match-v5.ids-by-puuid
+    - match-v5.match
+    - match-v5.timeline
+
+duration:
+  pilot_minimum_seconds: null
+  pilot_rule: observe-without-duration-exclusion
+  final_minimum_seconds: null
+  final_rule_status: pending-pilot-freeze
+  freeze_rule: set-once-after-pilot-before-final-collection
+
+selection:
+  sampling_unit: complete-match
+  random_seed: 20260915
+  cell_order: patch-then-platform-v1
+  pilot_use: infrastructure-and-duration-rule-only
+  pilot_match_ids_excluded_from_final: true
+  forbidden_exclusions:
+    - future-event-label
+    - model-score
+    - downstream-performance
+  pilot:
+    target_matches: 5000
+    allocation: balanced-largest-remainder-v1
+    matches_per_cell: null
+  final:
+    target_matches: 36000
+    allocation: equal-per-cell-v1
+    matches_per_cell: 3000
+
+split:
+  training_patches: ["16.12", "16.13", "16.14", "16.15"]
+  calibration_patch: "16.16"
+  final_test_patch: "16.17"

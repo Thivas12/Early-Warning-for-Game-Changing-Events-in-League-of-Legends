@@ -36,13 +36,22 @@ visibility and player intent. These are not imputed as observed facts. Position
 frames are lower frequency than events and are not advertised as ten-second
 telemetry.
 
+The frozen frame is EUW1/europe plus NA1/americas, queue 420, over completed
+Match-V5 patches 16.12-16.17. The operational 5,000-match pilot is balanced
+across all 12 route-patch cells and is excluded from final claims. The final
+target remains 3,000 matches per cell. Exact allocations, patch windows and
+selection controls are documented in `docs/sampling-frame.md`.
+
 ## Bias and representativeness
 
 The proposed high-ranked seed strategy may over-represent elite play, long
 sessions, specific regions and players connected in the match graph. Results
 must be stratified by region, patch, rank band where lawfully available, match
 duration and event prevalence. Generalization to casual, professional, other
-queues or other regions is not assumed.
+queues or other regions is not assumed. Because the frozen ladder snapshot is
+later than the sampled historical patch windows, membership also reflects
+retrospective ladder survival and performance; future-patch evaluation applies
+to that connected cohort rather than the overall Ranked Solo population.
 
 ## Access and retention
 

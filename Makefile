@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight validate-sampling-frame validate-pilot validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -21,6 +21,19 @@ preflight:
 	uv run league-ews preflight-collection \
 		--record data/private/riot-authority.yaml \
 		--region europe
+
+validate-sampling-frame:
+	uv run league-ews validate-sampling-frame \
+		--frame configs/rifthazard-sampling-frame.yaml
+
+validate-pilot:
+	uv run league-ews validate-raw \
+		--raw data/raw/pilot \
+		--output data/private/pilot-validation.json \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--sampling-stage pilot \
+		--min-routes 2 \
+		--min-patches 6
 
 validate-raw:
 	uv run league-ews validate-raw \
