@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -65,12 +65,51 @@ select-pilot:
 		--discovery-root data/private/pilot-discovery \
 		--output data/private/pilot-selection
 
+validate-pilot-selection:
+	uv run league-ews validate-pilot-selection \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--discovery-root data/private/pilot-discovery \
+		--selection-root data/private/pilot-selection
+
+preflight-pilot-collection:
+	uv run league-ews preflight-pilot-collection \
+		--authority-record data/private/riot-authority.yaml \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--discovery-root data/private/pilot-discovery \
+		--selection-root data/private/pilot-selection
+
+collect-selected-pilot:
+	uv run league-ews collect-selected-pilot \
+		--authority-record data/private/riot-authority.yaml \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--discovery-root data/private/pilot-discovery \
+		--selection-root data/private/pilot-selection \
+		--output data/raw/registered-pilot
+
 validate-pilot:
 	uv run league-ews validate-raw \
-		--raw data/raw/pilot \
+		--raw data/raw/registered-pilot \
 		--output data/private/pilot-validation.json \
 		--sampling-frame configs/rifthazard-sampling-frame.yaml \
 		--sampling-stage pilot \
+		--discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--discovery-root data/private/pilot-discovery \
+		--selection-root data/private/pilot-selection \
+		--min-routes 2 \
+		--min-patches 6
+
+process-pilot:
+	uv run league-ews process \
+		--raw data/raw/registered-pilot \
+		--output data/processed/registered-pilot \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--sampling-stage pilot \
+		--discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--discovery-root data/private/pilot-discovery \
+		--selection-root data/private/pilot-selection \
 		--min-routes 2 \
 		--min-patches 6
 

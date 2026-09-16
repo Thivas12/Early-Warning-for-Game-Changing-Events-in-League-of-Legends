@@ -6,7 +6,7 @@ import hashlib
 import json
 import re
 from collections import Counter
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import asdict, dataclass
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -337,6 +337,20 @@ def _load_bound_candidate_pool(
     )
 
 
+def load_bound_candidate_pool(
+    sampling_frame_path: str | Path,
+    discovery_plan_path: str | Path,
+    discovery_root: str | Path,
+) -> BoundCandidatePool:
+    """Load the completed discovery pool after every registered binding check."""
+
+    return _load_bound_candidate_pool(
+        sampling_frame_path,
+        discovery_plan_path,
+        discovery_root,
+    )
+
+
 def validate_candidate_pool(
     sampling_frame_path: str | Path,
     discovery_plan_path: str | Path,
@@ -634,6 +648,40 @@ def _selection_state(
         if len(selected[outcome.eligible_cell]) < targets[outcome.eligible_cell]:
             selected[outcome.eligible_cell].append(outcome)
     return selected, eligible_counts, rejection_reasons
+
+
+def load_cached_screen_outcomes(
+    output_root: str | Path,
+    bound: BoundCandidatePool,
+) -> tuple[ScreenOutcome, ...]:
+    """Load and validate the deterministic prefix of private detail-screen records."""
+
+    return tuple(_load_cached_outcomes(Path(output_root), bound))
+
+
+def derive_pilot_selection_state(
+    bound: BoundCandidatePool,
+    outcomes: Sequence[ScreenOutcome],
+) -> tuple[
+    dict[tuple[str, str, str], tuple[ScreenOutcome, ...]],
+    dict[tuple[str, str, str], int],
+    dict[str, int],
+]:
+    """Recompute the exact cell selection and identifier-free screening counts."""
+
+    selected, eligible_counts, rejection_reasons = _selection_state(bound, list(outcomes))
+    return (
+        {key: tuple(values) for key, values in selected.items()},
+        dict(eligible_counts),
+        dict(rejection_reasons),
+    )
+
+
+def screening_cache_sha256(output_root: str | Path) -> str:
+    """Hash every private detail-screen record with its relative path binding."""
+
+    root = Path(output_root)
+    return _aggregate_digest(root, list((root / "details").rglob("*.json")))
 
 
 def _selection_complete(

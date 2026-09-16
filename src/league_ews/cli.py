@@ -21,6 +21,12 @@ from league_ews.discovery import (
     validate_discovery_plan,
 )
 from league_ews.io import load_legacy_csv, sha256_file
+from league_ews.pilot_collection import (
+    TimelineFetcher,
+    collect_selected_pilot_bundles,
+    pilot_collection_preflight,
+    validate_frozen_pilot_selection,
+)
 from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
 from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
@@ -249,6 +255,67 @@ def _select_pilot(args: argparse.Namespace) -> int:
     return 0 if manifest["complete"] else 2
 
 
+def _validate_pilot_selection(args: argparse.Namespace) -> int:
+    report = validate_frozen_pilot_selection(
+        args.sampling_frame,
+        args.discovery_plan,
+        args.discovery_root,
+        args.selection_root,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _preflight_pilot_collection(args: argparse.Namespace) -> int:
+    report = pilot_collection_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.discovery_plan,
+        args.discovery_root,
+        args.selection_root,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _collect_selected_pilot(args: argparse.Namespace) -> int:
+    preflight = pilot_collection_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.discovery_plan,
+        args.discovery_root,
+        args.selection_root,
+    )
+    if not preflight["passed"]:
+        _write_json(preflight, None)
+        return 2
+
+    frame, _ = load_registered_sampling_frame(args.sampling_frame)
+    pacer = RequestPacer(args.request_interval)
+    with ExitStack() as stack:
+        regional_fetchers: dict[str, TimelineFetcher] = {
+            route.regional_route: stack.enter_context(
+                RiotMatchClient.from_environment(
+                    regional_route=route.regional_route,
+                    pace=pacer,
+                )
+            )
+            for route in frame.route_platforms
+        }
+        binding = collect_selected_pilot_bundles(
+            args.sampling_frame,
+            args.discovery_plan,
+            args.discovery_root,
+            args.selection_root,
+            output_root=args.output,
+            regional_fetchers=regional_fetchers,
+            max_new_requests=args.max_new_requests,
+            progress=lambda message: print(message, file=sys.stderr),
+        )
+    _write_json(binding, None)
+    return 0 if binding["complete"] else 2
+
+
 def _process(args: argparse.Namespace) -> int:
     validation = validate_raw_collection(
         args.raw,
@@ -256,6 +323,9 @@ def _process(args: argparse.Namespace) -> int:
         min_patches=args.min_patches,
         sampling_frame=args.sampling_frame,
         sampling_stage=args.sampling_stage,
+        discovery_plan=args.discovery_plan,
+        discovery_root=args.discovery_root,
+        selection_root=args.selection_root,
     )
     if not validation["passed"]:
         _write_json(validation, None)
@@ -275,6 +345,9 @@ def _validate_raw(args: argparse.Namespace) -> int:
         processed_root=args.processed,
         sampling_frame=args.sampling_frame,
         sampling_stage=args.sampling_stage,
+        discovery_plan=args.discovery_plan,
+        discovery_root=args.discovery_root,
+        selection_root=args.selection_root,
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
@@ -406,6 +479,43 @@ def build_parser() -> argparse.ArgumentParser:
     select_pilot.add_argument("--max-new-requests", type=int)
     select_pilot.set_defaults(handler=_select_pilot)
 
+    validate_selection = subparsers.add_parser(
+        "validate-pilot-selection",
+        help="validate the checksum-bound frozen pilot selection without network access",
+    )
+    validate_selection.add_argument("--sampling-frame", type=Path, required=True)
+    validate_selection.add_argument("--discovery-plan", type=Path, required=True)
+    validate_selection.add_argument("--discovery-root", type=Path, required=True)
+    validate_selection.add_argument("--selection-root", type=Path, required=True)
+    validate_selection.add_argument("--output", type=Path)
+    validate_selection.set_defaults(handler=_validate_pilot_selection)
+
+    collection_preflight = subparsers.add_parser(
+        "preflight-pilot-collection",
+        help="validate authority and frozen selection before timeline requests",
+    )
+    collection_preflight.add_argument("--authority-record", type=Path, required=True)
+    collection_preflight.add_argument("--sampling-frame", type=Path, required=True)
+    collection_preflight.add_argument("--discovery-plan", type=Path, required=True)
+    collection_preflight.add_argument("--discovery-root", type=Path, required=True)
+    collection_preflight.add_argument("--selection-root", type=Path, required=True)
+    collection_preflight.add_argument("--output", type=Path)
+    collection_preflight.set_defaults(handler=_preflight_pilot_collection)
+
+    collect_selected = subparsers.add_parser(
+        "collect-selected-pilot",
+        help="resume timeline collection for the exact frozen registered pilot",
+    )
+    collect_selected.add_argument("--authority-record", type=Path, required=True)
+    collect_selected.add_argument("--sampling-frame", type=Path, required=True)
+    collect_selected.add_argument("--discovery-plan", type=Path, required=True)
+    collect_selected.add_argument("--discovery-root", type=Path, required=True)
+    collect_selected.add_argument("--selection-root", type=Path, required=True)
+    collect_selected.add_argument("--output", type=Path, required=True)
+    collect_selected.add_argument("--request-interval", type=float, default=1.25)
+    collect_selected.add_argument("--max-new-requests", type=int)
+    collect_selected.set_defaults(handler=_collect_selected_pilot)
+
     collect = subparsers.add_parser("collect", help="fetch private Match-V5 raw bundles")
     collect.add_argument("--authority-record", type=Path, required=True)
     collect.add_argument("--match-ids", type=Path, required=True)
@@ -426,6 +536,9 @@ def build_parser() -> argparse.ArgumentParser:
     validate_raw.add_argument("--processed", type=Path)
     validate_raw.add_argument("--sampling-frame", type=Path)
     validate_raw.add_argument("--sampling-stage", choices=("pilot", "final"))
+    validate_raw.add_argument("--discovery-plan", type=Path)
+    validate_raw.add_argument("--discovery-root", type=Path)
+    validate_raw.add_argument("--selection-root", type=Path)
     validate_raw.set_defaults(handler=_validate_raw)
 
     spot_check = subparsers.add_parser(
@@ -448,6 +561,9 @@ def build_parser() -> argparse.ArgumentParser:
     process.add_argument("--min-patches", type=int, default=6)
     process.add_argument("--sampling-frame", type=Path)
     process.add_argument("--sampling-stage", choices=("pilot", "final"))
+    process.add_argument("--discovery-plan", type=Path)
+    process.add_argument("--discovery-root", type=Path)
+    process.add_argument("--selection-root", type=Path)
     process.set_defaults(handler=_process)
     return parser
 

@@ -440,6 +440,193 @@ def test_select_pilot_builds_regional_clients_after_preflight(
     assert events[4] == "select"
 
 
+def test_validate_frozen_pilot_selection_cli_writes_report(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    output = tmp_path / "validation.json"
+    monkeypatch.setattr(
+        "league_ews.cli.validate_frozen_pilot_selection",
+        lambda *args: {"passed": True, "summary": {"selected_match_ids": 5_000}},
+    )
+
+    exit_code = main(
+        [
+            "validate-pilot-selection",
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--discovery-root",
+            str(tmp_path / "discovery"),
+            "--selection-root",
+            str(tmp_path / "selection"),
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 0
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
+
+
+def test_pilot_collection_preflight_cli_writes_failure(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    output = tmp_path / "preflight.json"
+    monkeypatch.setattr(
+        "league_ews.cli.pilot_collection_preflight",
+        lambda *args: {"passed": False},
+    )
+
+    exit_code = main(
+        [
+            "preflight-pilot-collection",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--discovery-root",
+            str(tmp_path / "discovery"),
+            "--selection-root",
+            str(tmp_path / "selection"),
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is False
+
+
+def test_collect_selected_pilot_gates_before_client_creation(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    monkeypatch.setattr(
+        "league_ews.cli.pilot_collection_preflight",
+        lambda *args: {"passed": False},
+    )
+
+    def forbidden_client(*args: object, **kwargs: object) -> None:
+        raise AssertionError("Riot clients must not be created before pilot preflight")
+
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient.from_environment", forbidden_client)
+    exit_code = main(
+        [
+            "collect-selected-pilot",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--discovery-root",
+            str(tmp_path / "discovery"),
+            "--selection-root",
+            str(tmp_path / "selection"),
+            "--output",
+            str(tmp_path / "raw"),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(capsys.readouterr().out)["passed"] is False
+
+
+def test_collect_selected_pilot_builds_clients_after_preflight(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    events: list[str] = []
+    monkeypatch.setattr(
+        "league_ews.cli.pilot_collection_preflight",
+        lambda *args: {"passed": True},
+    )
+
+    class FakeClient:
+        def __init__(self, route: str) -> None:
+            self.route = route
+
+        @classmethod
+        def from_environment(cls, *, regional_route: str, pace):
+            assert callable(pace)
+            events.append(f"create:{regional_route}")
+            return cls(regional_route)
+
+        def __enter__(self):
+            events.append(f"enter:{self.route}")
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            events.append(f"exit:{self.route}")
+
+    def fake_collect(
+        frame,
+        plan,
+        discovery_root,
+        selection_root,
+        *,
+        output_root,
+        regional_fetchers,
+        max_new_requests,
+        progress,
+    ):
+        events.append("collect")
+        assert set(regional_fetchers) == {"europe", "americas"}
+        assert discovery_root == tmp_path / "discovery"
+        assert selection_root == tmp_path / "selection"
+        assert output_root == tmp_path / "raw"
+        assert max_new_requests == 7
+        progress("safe progress")
+        return {
+            "complete": True,
+            "available_bundles": 5_000,
+            "identifiers_in_summary": False,
+        }
+
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient", FakeClient)
+    monkeypatch.setattr("league_ews.cli.collect_selected_pilot_bundles", fake_collect)
+    exit_code = main(
+        [
+            "collect-selected-pilot",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--discovery-root",
+            str(tmp_path / "discovery"),
+            "--selection-root",
+            str(tmp_path / "selection"),
+            "--output",
+            str(tmp_path / "raw"),
+            "--request-interval",
+            "0",
+            "--max-new-requests",
+            "7",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert json.loads(captured.out)["available_bundles"] == 5_000
+    assert "safe progress" in captured.err
+    assert events[:4] == [
+        "create:europe",
+        "enter:europe",
+        "create:americas",
+        "enter:americas",
+    ]
+    assert events[4] == "collect"
+
+
 def test_collect_proceeds_after_successful_gate(tmp_path, monkeypatch, capsys) -> None:
     events: list[str] = []
 
@@ -552,6 +739,9 @@ def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, caps
         min_patches: int,
         sampling_frame,
         sampling_stage,
+        discovery_plan,
+        discovery_root,
+        selection_root,
     ) -> dict[str, object]:
         events.append("validate")
         assert raw == tmp_path / "raw"
@@ -559,6 +749,9 @@ def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, caps
         assert min_patches == 1
         assert sampling_frame is None
         assert sampling_stage is None
+        assert discovery_plan is None
+        assert discovery_root is None
+        assert selection_root is None
         return {"passed": True}
 
     def fake_processing(raw, *, output_root) -> dict[str, object]:

@@ -103,3 +103,30 @@ complete two-times buffer in every cell. No candidate detail, duration,
 timeline, label or model outcome was inspected. This implementation does not
 change a hypothesis, population rule, seed, quota, event definition, horizon,
 split or pass criterion.
+
+## 2026-09-16 — bind timeline collection to the frozen pilot
+
+**Stage:** after deterministic detail screening filled all 12 pilot cells;
+before any selected timeline request, duration inspection, event extraction,
+model fitting, threshold selection or outcome analysis.
+
+The selected pilot is now materialized by a checksum-bound, resumable collector
+rather than by passing editable route files to the generic collector. Before a
+request, it revalidates the full deterministic screening prefix, screening
+digest, selected pool, regional ID files and discovery provenance. It reuses
+the already-frozen Match-V5 details and requests only one timeline for each of
+the 5,000 selected matches. Existing raw pairs must be an exact selected-prefix
+inventory; a single timeline-only next bundle can be recovered after a crash,
+while gaps, substitutions, extra bundle files or changed checksums stop the run.
+
+The raw collection manifest remains private because it contains match IDs. A
+separate identifier-free binding records the selected-pool and raw-manifest
+checksums. Registered-pilot validation requires exact selected identities and
+metadata in addition to the previously frozen route-patch quotas.
+
+The only newly available evidence was the outcome-blind selection summary:
+24,976 candidates yielded 7,687 screened details, 7,677 eligible details, ten
+out-of-frame game-version exclusions and the exact 5,000-match allocation. No
+timeline, event, label, duration distribution or model result was inspected.
+This operational safeguard changes no population rule, selection order, quota,
+hypothesis, outcome, horizon, split or pass criterion.

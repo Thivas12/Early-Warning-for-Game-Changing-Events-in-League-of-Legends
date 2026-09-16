@@ -422,6 +422,12 @@ def _canonical_json(payload: Mapping[str, Any]) -> bytes:
     return (json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n").encode()
 
 
+def canonical_riot_json(payload: Mapping[str, Any]) -> bytes:
+    """Return the canonical bytes used for private Riot payload storage."""
+
+    return _canonical_json(payload)
+
+
 def _atomic_write(path: Path, content: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".partial")
@@ -477,6 +483,27 @@ def _bundle_record(
         game_creation_ms=game_creation_ms,
         match_sha256=hashlib.sha256(match_content).hexdigest(),
         timeline_sha256=hashlib.sha256(timeline_content).hexdigest(),
+    )
+
+
+def collected_match_from_payloads(
+    match_id: str,
+    *,
+    regional_route: str,
+    match_content: bytes,
+    timeline_content: bytes,
+    match_payload: Mapping[str, Any],
+    timeline_payload: Mapping[str, Any],
+) -> CollectedMatch:
+    """Build checksum provenance for one identity-matched detail/timeline pair."""
+
+    return _bundle_record(
+        match_id,
+        regional_route=regional_route,
+        match_content=match_content,
+        timeline_content=timeline_content,
+        match_payload=match_payload,
+        timeline_payload=timeline_payload,
     )
 
 

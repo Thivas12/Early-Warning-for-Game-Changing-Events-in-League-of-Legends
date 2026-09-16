@@ -12,12 +12,13 @@ from datetime import UTC, datetime
 from itertools import pairwise
 from pathlib import Path
 from statistics import median
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from league_ews.constants import EVENTS, RIFTHAZARD_HORIZONS_SECONDS
 from league_ews.labels import extract_event_index
+from league_ews.pilot_collection import RawRecordLike, validate_pilot_collection_binding
 from league_ews.sampling import (
     SamplingFrame,
     SamplingStage,
@@ -27,7 +28,7 @@ from league_ews.sampling import (
 from league_ews.timeline import normalise_match_timeline
 
 RAW_MANIFEST_SCHEMA_VERSION = "riot-raw-collection-v2"
-RAW_VALIDATION_SCHEMA_VERSION = "riot-raw-validation-v4"
+RAW_VALIDATION_SCHEMA_VERSION = "riot-raw-validation-v5"
 EVENT_SPOT_CHECK_SCHEMA_VERSION: Literal["riot-event-spot-check-v1"] = "riot-event-spot-check-v1"
 
 
@@ -580,6 +581,7 @@ def _failed_manifest_report(
     min_routes: int,
     min_patches: int,
     spot_check_requested: bool,
+    pilot_selection_requested: bool,
     sampling_frame_summary: Mapping[str, object],
 ) -> dict[str, object]:
     check = RawValidationCheck(
@@ -613,6 +615,10 @@ def _failed_manifest_report(
             "blocked" if spot_check_requested else "pending",
             required_cells=0,
         ),
+        "pilot_selection": {
+            "status": "blocked" if pilot_selection_requested else "not-supplied",
+            "summary": None,
+        },
         "sampling_frame": dict(sampling_frame_summary),
     }
 
@@ -626,12 +632,23 @@ def validate_raw_collection(
     processed_root: str | Path | None = None,
     sampling_frame: str | Path | None = None,
     sampling_stage: SamplingStage | None = None,
+    discovery_plan: str | Path | None = None,
+    discovery_root: str | Path | None = None,
+    selection_root: str | Path | None = None,
     checked_at: datetime | None = None,
 ) -> dict[str, object]:
     """Validate raw inventory, provenance and normalized shape without network access."""
 
     if min_routes < 1 or min_patches < 1:
         raise ValueError("Coverage minima must be positive")
+    pilot_selection_inputs = (discovery_plan, discovery_root, selection_root)
+    pilot_selection_requested = all(value is not None for value in pilot_selection_inputs)
+    if any(value is not None for value in pilot_selection_inputs) and not pilot_selection_requested:
+        raise ValueError(
+            "Pilot binding requires discovery_plan, discovery_root and selection_root together"
+        )
+    if pilot_selection_requested and (sampling_frame is None or sampling_stage != "pilot"):
+        raise ValueError("Pilot binding requires a sampling frame and sampling_stage='pilot'")
     timestamp = checked_at or datetime.now(UTC)
     if timestamp.tzinfo is None:
         raise ValueError("checked_at must be timezone-aware")
@@ -647,6 +664,7 @@ def validate_raw_collection(
             min_routes=min_routes,
             min_patches=min_patches,
             spot_check_requested=event_spot_check is not None,
+            pilot_selection_requested=pilot_selection_requested,
             sampling_frame_summary=frame_summary,
         )
 
@@ -818,6 +836,36 @@ def validate_raw_collection(
             ),
         ]
     )
+    if pilot_selection_requested:
+        assert sampling_frame is not None
+        assert discovery_plan is not None
+        assert discovery_root is not None
+        assert selection_root is not None
+        pilot_binding = validate_pilot_collection_binding(
+            root,
+            sampling_frame,
+            discovery_plan,
+            discovery_root,
+            selection_root,
+            manifest_content=manifest_content,
+            available_by_id=cast(Mapping[str, RawRecordLike], available_by_id),
+        )
+        checks.append(
+            RawValidationCheck(
+                check_id="pilot-selection-binding",
+                passed=bool(pilot_binding["passed"]),
+                message=str(pilot_binding["message"]),
+            )
+        )
+        pilot_selection_summary: dict[str, object] = {
+            "status": "passed" if pilot_binding["passed"] else "failed",
+            "summary": pilot_binding["summary"],
+        }
+    else:
+        pilot_selection_summary = {
+            "status": "not-supplied",
+            "summary": None,
+        }
     if sampling_frame is not None:
         frame_valid = frame is not None
         checks.append(
@@ -915,5 +963,6 @@ def validate_raw_collection(
             "patches": dict(sorted(patch_counts.items())),
         },
         "manual_event_spot_check": spot_check,
+        "pilot_selection": pilot_selection_summary,
         "sampling_frame": frame_summary,
     }

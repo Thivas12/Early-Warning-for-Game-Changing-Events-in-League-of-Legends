@@ -70,6 +70,25 @@ and Americas match-ID files for the later bundle collector. It does not fetch
 timelines. See `docs/pilot-selection.md` for the eligibility, reassignment,
 resume and HTTP-404 rules.
 
+Before timeline collection, revalidate the complete screening cache and repeat
+the authority gate. Then start or resume the exact selected pilot:
+
+```bash
+make validate-pilot-selection
+make preflight-pilot-collection
+make collect-selected-pilot
+```
+
+The registered collector reuses the 5,000 frozen Match-V5 detail payloads and
+requests only their timelines. It writes private pairs under
+`data/raw/registered-pilot`, never under the canary path. Existing pairs must be
+an exact contiguous prefix of the selected pool. A rerun checksum-validates and
+skips that prefix. One timeline-only next bundle is recoverable after an
+interruption; gaps, match-only bundles, unselected bundles, unexpected partials,
+identity changes and selection drift stop the run. Progress and the terminal
+`selection-binding.json` contain counts and checksums only. See
+`docs/pilot-collection.md`.
+
 For a deliberately pre-specified Match-V5 canary, put one safe ID per line in
 an ignored local file and run:
 
@@ -77,6 +96,7 @@ an ignored local file and run:
 uv run league-ews collect \
   --authority-record data/private/riot-authority.yaml \
   --match-ids /private/match-ids.txt \
+  --output data/raw/canary \
   --region europe
 ```
 
@@ -103,9 +123,10 @@ For a deliberately smaller pipeline smoke test, call `validate-raw` directly
 with lower `--min-routes` and `--min-patches` values and record that deviation.
 
 For the registered pilot, use `make validate-pilot`. This binds validation to
-the exact sampling-frame checksum and requires all 12 route-patch cells to meet
-their deterministic 416/417-match quotas. Merely observing two routes and six
-patches cannot pass the frame-bound check.
+the exact sampling frame, discovery artifacts and frozen selected-pool
+checksums, and requires all 12 route-patch cells to meet their deterministic
+416/417-match quotas. Merely observing two routes and six patches—or even the
+right cell counts with different match identities—cannot pass.
 An automated pass does not complete G2: event timestamps still require a
 documented human spot-check against source payloads. After manually comparing
 the selected source objective events, teamfight episodes and processed strict
@@ -115,8 +136,8 @@ route-patch cells:
 
 ```bash
 uv run league-ews record-event-spot-check \
-  --raw data/raw/pilot \
-  --processed data/processed/pilot \
+  --raw data/raw/registered-pilot \
+  --processed data/processed/registered-pilot \
   --match-id REPLACE_WITH_REVIEWED_MATCH_ID \
   --output data/private/pilot-event-spot-check.json \
   --confirm-objective-events \
@@ -128,11 +149,14 @@ Then supply the private record to validation:
 
 ```bash
 uv run league-ews validate-raw \
-  --raw data/raw/pilot \
-  --processed data/processed/pilot \
+  --raw data/raw/registered-pilot \
+  --processed data/processed/registered-pilot \
   --event-spot-check data/private/pilot-event-spot-check.json \
   --sampling-frame configs/rifthazard-sampling-frame.yaml \
   --sampling-stage pilot \
+  --discovery-plan configs/rifthazard-discovery-plan.yaml \
+  --discovery-root data/private/pilot-discovery \
+  --selection-root data/private/pilot-selection \
   --output data/private/pilot-validation.json \
   --min-routes 2 \
   --min-patches 6
@@ -154,18 +178,13 @@ collecting or validating the final 36,000-match sample.
 Normalize the private pairs and build exact labels with:
 
 ```bash
-uv run league-ews process \
-  --raw data/raw/pilot \
-  --output data/processed/pilot \
-  --sampling-frame configs/rifthazard-sampling-frame.yaml \
-  --sampling-stage pilot \
-  --min-routes 2 \
-  --min-patches 6
+make process-pilot
 ```
 
-`process` repeats the same frame-bound automated gate before writing derived
-files. Canary deviations remain separate from this registered pilot path.
+`process-pilot` repeats the same frame- and selection-bound automated gate
+before writing derived files. Canary deviations remain separate from this
+registered pilot path.
 
-Processed match files contain the supported causal timeline fields and labels,
-not Riot IDs or PUUIDs. They remain ignored until redistribution is explicitly
-approved.
+Processed match files retain match IDs for provenance but contain only the
+supported causal timeline fields and labels, with no player identifier fields
+such as PUUIDs. They remain ignored until redistribution is explicitly approved.
