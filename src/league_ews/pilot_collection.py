@@ -722,8 +722,7 @@ def _load_existing_checkpoint(
             and binding.complete == (len(available) == len(frozen.selected_matches))
             and binding.collection_manifest_sha256 == manifest_sha256
             and binding.available_bundles == len(available)
-            and binding.new_timeline_requests + binding.recovered_unpaired_bundles
-            <= len(available)
+            and binding.new_timeline_requests + binding.recovered_unpaired_bundles <= len(available)
         )
         if not binding_provenance_valid or not (
             binding_matches_manifest or pending_matches_manifest
@@ -998,8 +997,7 @@ def validate_pilot_collection_binding(
         and binding.expected_selected_match_ids == len(expected)
         and binding.available_bundles == len(expected)
         and manifest.requested == len(expected)
-        and binding.new_timeline_requests + binding.recovered_unpaired_bundles
-        <= len(expected)
+        and binding.new_timeline_requests + binding.recovered_unpaired_bundles <= len(expected)
     )
     passed = inventory_valid and binding_valid
     return {
