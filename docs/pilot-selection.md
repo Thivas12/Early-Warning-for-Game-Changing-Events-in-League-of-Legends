@@ -68,5 +68,6 @@ For an intentionally bounded work session, invoke the CLI with
 `--max-new-requests N`. An incomplete bounded run writes a safe progress
 manifest and exits with code 2; rerun without changing any private artifacts.
 
-This stage deliberately does not fetch timelines. Complete detail/timeline
-bundle collection from the frozen route files is the next protocol stage.
+This stage deliberately does not fetch timelines. The next protocol stage is
+the selection-bound collector in [`pilot-collection.md`](pilot-collection.md),
+which reuses these exact detail payloads and requests only the 5,000 timelines.

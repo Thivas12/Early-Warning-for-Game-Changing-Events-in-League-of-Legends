@@ -101,14 +101,17 @@ Bind a completed pilot raw validation to the exact frame with:
 
 ```bash
 uv run league-ews validate-raw \
-  --raw data/raw/pilot \
+  --raw data/raw/registered-pilot \
   --sampling-frame configs/rifthazard-sampling-frame.yaml \
   --sampling-stage pilot \
+  --discovery-plan configs/rifthazard-discovery-plan.yaml \
+  --discovery-root data/private/pilot-discovery \
+  --selection-root data/private/pilot-selection \
   --min-routes 2 \
   --min-patches 6
 ```
 
-This requires all 12 cells and their exact pilot quotas. A count of two routes
-and six patches is no longer sufficient when a frame is supplied. It still
-does not complete G2 without checksum-bound processed output and human event
-review for every observed route-patch cell.
+This requires all 12 cells, their exact pilot quotas and exact identity with
+the checksum-bound selected pool. A count of two routes and six patches is no
+longer sufficient. It still does not complete G2 without checksum-bound
+processed output and human event review for every observed route-patch cell.

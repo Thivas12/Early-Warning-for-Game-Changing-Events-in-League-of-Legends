@@ -135,7 +135,8 @@ def test_raw_validation_accepts_integral_pilot_and_summarizes_events(tmp_path) -
 
     assert report["passed"] is True
     assert report["automated_passed"] is True
-    assert report["schema_version"] == "riot-raw-validation-v4"
+    assert report["schema_version"] == "riot-raw-validation-v5"
+    assert report["pilot_selection"] == {"status": "not-supplied", "summary": None}
     assert report["g2_complete"] is False
     spot_check = report["manual_event_spot_check"]
     assert isinstance(spot_check, dict)

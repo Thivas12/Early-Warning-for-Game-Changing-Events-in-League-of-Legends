@@ -41,7 +41,9 @@ two-route, six-patch population and allocation are in
 pre-detail crawl and stopping supplement is in
 [`docs/candidate-discovery.md`](docs/candidate-discovery.md). Checksum-bound
 detail eligibility and exact pilot selection are documented in
-[`docs/pilot-selection.md`](docs/pilot-selection.md).
+[`docs/pilot-selection.md`](docs/pilot-selection.md). Selection-bound,
+resumable timeline collection is specified in
+[`docs/pilot-collection.md`](docs/pilot-collection.md).
 
 ## Quick start
 
@@ -55,6 +57,7 @@ uv run league-ews benchmark --csv /path/to/final_dataset.csv --output reports/lo
 uv run league-ews validate-sampling-frame --frame configs/rifthazard-sampling-frame.yaml
 make validate-discovery-plan
 make validate-candidate-pool
+make validate-pilot-selection
 uv run pytest
 ```
 
@@ -87,6 +90,9 @@ the event-level label opportunity at each registered horizon. These diagnostics
 do not interpolate observations and are not treated as model performance.
 When a sampling frame is supplied, validation additionally requires the exact
 route-platform/patch cross-product and stage-specific count in every cell.
+Registered-pilot validation also proves that the raw inventory exactly
+materializes the checksum-bound frozen selection; route and patch counts alone
+cannot substitute for that identity binding.
 
 ## Riot and data notice
 
