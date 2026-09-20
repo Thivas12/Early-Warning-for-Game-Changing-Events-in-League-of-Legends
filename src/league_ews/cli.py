@@ -20,6 +20,7 @@ from league_ews.discovery import (
     discover_candidate_pool,
     validate_discovery_plan,
 )
+from league_ews.duration import analyze_pilot_duration
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.pilot_collection import (
     TimelineFetcher,
@@ -367,6 +368,31 @@ def _record_event_spot_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def _analyze_pilot_duration(args: argparse.Namespace) -> int:
+    validation = validate_raw_collection(
+        args.raw,
+        min_routes=2,
+        min_patches=6,
+        processed_root=args.processed,
+        sampling_frame=args.sampling_frame,
+        sampling_stage="pilot",
+        discovery_plan=args.discovery_plan,
+        discovery_root=args.discovery_root,
+        selection_root=args.selection_root,
+    )
+    if not validation["passed"]:
+        _write_json(validation, None)
+        return 2
+    report = analyze_pilot_duration(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+    )
+    _write_json(report, args.output)
+    print(f"Wrote checksum-bound pilot duration analysis: {args.output}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="league-ews")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -553,6 +579,19 @@ def build_parser() -> argparse.ArgumentParser:
     spot_check.add_argument("--confirm-teamfight-episodes", action="store_true", required=True)
     spot_check.add_argument("--confirm-future-labels", action="store_true", required=True)
     spot_check.set_defaults(handler=_record_event_spot_check)
+
+    duration = subparsers.add_parser(
+        "analyze-pilot-duration",
+        help="describe the registered pilot duration distribution without outcome inputs",
+    )
+    duration.add_argument("--raw", type=Path, required=True)
+    duration.add_argument("--processed", type=Path, required=True)
+    duration.add_argument("--sampling-frame", type=Path, required=True)
+    duration.add_argument("--discovery-plan", type=Path, required=True)
+    duration.add_argument("--discovery-root", type=Path, required=True)
+    duration.add_argument("--selection-root", type=Path, required=True)
+    duration.add_argument("--output", type=Path, required=True)
+    duration.set_defaults(handler=_analyze_pilot_duration)
 
     process = subparsers.add_parser("process", help="normalize and label private raw bundles")
     process.add_argument("--raw", type=Path, default=Path("data/raw"))

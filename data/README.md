@@ -185,6 +185,20 @@ make process-pilot
 before writing derived files. Canary deviations remain separate from this
 registered pilot path.
 
+After all 5,000 processed files reconcile with the manifest, create the
+identifier-free, checksum-bound duration/remake report:
+
+```bash
+make analyze-pilot-duration
+```
+
+This repeats registered-pilot validation and writes the ignored
+`data/private/pilot-duration-analysis.json`. Only Match-V5 `gameDuration` and
+the two surrender flags enter the diagnostic; timeline events, labels, winners
+and model outputs do not. Candidate minimums are reported descriptively and do
+not become a rule until one is frozen in a post-pilot supplement. See
+`docs/pilot-duration.md`.
+
 Processed match files retain match IDs for provenance but contain only the
 supported causal timeline fields and labels, with no player identifier fields
 such as PUUIDs. They remain ignored until redistribution is explicitly approved.

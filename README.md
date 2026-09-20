@@ -43,7 +43,9 @@ pre-detail crawl and stopping supplement is in
 detail eligibility and exact pilot selection are documented in
 [`docs/pilot-selection.md`](docs/pilot-selection.md). Selection-bound,
 resumable timeline collection is specified in
-[`docs/pilot-collection.md`](docs/pilot-collection.md).
+[`docs/pilot-collection.md`](docs/pilot-collection.md). The outcome-blind,
+checksum-bound post-pilot duration inspection is documented in
+[`docs/pilot-duration.md`](docs/pilot-duration.md).
 
 ## Quick start
 

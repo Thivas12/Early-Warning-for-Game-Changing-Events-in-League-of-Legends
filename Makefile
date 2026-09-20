@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -112,6 +112,16 @@ process-pilot:
 		--selection-root data/private/pilot-selection \
 		--min-routes 2 \
 		--min-patches 6
+
+analyze-pilot-duration:
+	uv run league-ews analyze-pilot-duration \
+		--raw data/raw/registered-pilot \
+		--processed data/processed/registered-pilot \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--discovery-root data/private/pilot-discovery \
+		--selection-root data/private/pilot-selection \
+		--output data/private/pilot-duration-analysis.json
 
 validate-raw:
 	uv run league-ews validate-raw \
