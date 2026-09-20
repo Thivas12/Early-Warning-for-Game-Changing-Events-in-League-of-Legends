@@ -10,6 +10,9 @@ LEGACY_HORIZONS_SECONDS: tuple[int, ...] = (10, 20, 30)
 # Frozen in docs/research-plan.md and configs/rifthazard-v2.yaml.
 RIFTHAZARD_HORIZONS_SECONDS: tuple[int, ...] = (10, 20, 30, 60)
 
+# Riot's 2026 top-lane role quest raises the champion level cap from 18 to 20.
+RIFTHAZARD_MAX_CHAMPION_LEVEL: int = 20
+
 LEGACY_LABEL_COLUMNS: tuple[str, ...] = tuple(
     f"y_{event}_{horizon}" for event in EVENTS for horizon in LEGACY_HORIZONS_SECONDS
 )
