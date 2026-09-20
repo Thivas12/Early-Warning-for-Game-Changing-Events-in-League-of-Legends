@@ -130,3 +130,30 @@ out-of-frame game-version exclusions and the exact 5,000-match allocation. No
 timeline, event, label, duration distribution or model result was inspected.
 This operational safeguard changes no population rule, selection order, quota,
 hypothesis, outcome, horizon, split or pass criterion.
+
+
+## 2026-09-20 — support the 2026 top-lane level cap
+
+**Stage:** after completing the checksum-bound 5,000-match pilot and its first
+raw validation; before pilot processing, the duration-rule decision, feature
+analysis, model fitting, threshold selection or test-set access.
+
+The first full-pilot validation accepted 3,514 bundles and rejected 1,486 for
+one reason only: the normalized participant schema still imposed the historic
+level-18 cap. The failures were present in every route-patch cell. Riot's
+[2026 Season One gameplay preview](https://www.leagueoflegends.com/en-gb/news/dev/dev-2026-season-one-gameplay-preview/)
+states that the top-lane role quest increases the level cap, and the official
+[Patch 26.1 notes](https://www.leagueoflegends.com/en-gb/news/game-updates/patch-26-1-notes/)
+explicitly identify level 20 as the new cap.
+
+The normalized participant contract is therefore widened from levels 1-18 to
+1-20, while values above 20 remain invalid. Graph input scaling now divides
+level by 20 so the registered maximum remains 1.0. Regression tests require
+level 20 to normalize and scale correctly and level 21 to fail validation.
+
+This is an implementation-conformance correction to match the rules in force
+throughout the already-frozen 2026 patch frame. It changes no raw bytes,
+selected identities, population, quota, outcome, label, horizon, split or
+pass criterion. Aggregate event diagnostics for the previously accepted
+subset had been produced, but no processed pilot feature analysis or model
+result was available or used to choose this correction.
