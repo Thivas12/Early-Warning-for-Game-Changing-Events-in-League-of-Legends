@@ -45,7 +45,8 @@ detail eligibility and exact pilot selection are documented in
 resumable timeline collection is specified in
 [`docs/pilot-collection.md`](docs/pilot-collection.md). The outcome-blind,
 checksum-bound post-pilot duration inspection is documented in
-[`docs/pilot-duration.md`](docs/pilot-duration.md).
+[`docs/pilot-duration.md`](docs/pilot-duration.md), with the frozen final rule
+in [`configs/rifthazard-duration-rule.yaml`](configs/rifthazard-duration-rule.yaml).
 
 ## Quick start
 

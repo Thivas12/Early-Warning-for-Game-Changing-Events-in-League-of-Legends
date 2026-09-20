@@ -175,10 +175,39 @@ features, predictions or downstream performance, and it does not choose a
 cutoff automatically.
 
 The original frame remains unchanged because pilot discovery, selection and
-collection are already bound to its checksum. The eventual single cutoff must
-therefore be recorded in a separate post-pilot supplement bound to both that
+collection are already bound to its checksum. The single cutoff was therefore
+required to be recorded in a separate post-pilot supplement bound to both that
 frame and this private analysis report before final collection starts.
 Aggregate event counts and label-opportunity diagnostics were already
 available from validation, but they are forbidden duration-decision inputs.
 This inspection mechanism changes no hypothesis, outcome, event definition,
 horizon, split, quota or pass criterion.
+
+## 2026-09-20 — freeze the final minimum-duration rule
+
+**Stage:** after generating the checksum-bound, identifier-free duration report
+from the complete registered pilot; before final candidate screening, final
+timeline collection, model fitting, threshold selection or test-set access.
+
+The private report contained 5,000 matches across all 12 registered cells and
+has SHA-256
+`3cab09e4f305bb67b089e28a35276cee1fe67add9584baef6552d78b7a12c9c5`.
+At the predeclared 180-second candidate, all 90 early-surrender-flagged matches
+were excluded and no other matches were excluded, retaining 4,910 (98.2%).
+Every higher positive candidate discarded additional non-early-surrender
+matches without excluding another early-surrender case. The final eligibility
+rule is therefore frozen as the inclusive condition
+`info.gameDuration >= 180` seconds.
+
+The public supplement `configs/rifthazard-duration-rule.yaml` records the rule,
+aggregate evidence and private report checksum without publishing match or
+player identifiers. The original sampling frame remains unchanged so its
+discovery, selection and collection bindings stay valid. Final validation now
+requires both documents and checks the duration of every final match.
+
+Only `gameDuration` and Riot's two surrender flags informed this decision.
+Event prevalence, future labels, winners, features, predictions and model
+performance were not used. The pilot and all pilot match IDs remain excluded
+from final claims. The rule becomes immutable when final collection starts and
+changes no hypothesis, outcome, event definition, horizon, split, cell quota or
+pass criterion.

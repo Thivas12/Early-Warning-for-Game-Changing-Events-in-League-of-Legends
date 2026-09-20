@@ -65,3 +65,14 @@ def test_authority_example_is_safe_and_fail_closed() -> None:
     assert record["authorization_confirmed"] is False
     assert record["ethics_status"] == "pending"
     assert "data/private/" in (ROOT / ".gitignore").read_text(encoding="utf-8")
+
+
+def test_duration_rule_contains_only_private_evidence_binding() -> None:
+    rule = _yaml("configs/rifthazard-duration-rule.yaml")
+    decision = rule["decision"]
+    analysis = rule["pilot_analysis"]
+    assert isinstance(decision, dict)
+    assert isinstance(analysis, dict)
+    assert decision["final_minimum_seconds"] == 180
+    assert len(str(analysis["sha256"])) == 64
+    assert analysis["identifiers_in_summary"] is False

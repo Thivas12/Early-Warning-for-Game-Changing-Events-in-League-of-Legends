@@ -11,12 +11,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from league_ews.duration_rule import (
+    CANDIDATE_MINIMUM_SECONDS,
+    DURATION_ANALYSIS_SCHEMA_VERSION,
+)
 from league_ews.pilot_collection import PilotCollectionBinding
 from league_ews.raw_validation import RawCollectionManifest
 from league_ews.sampling import load_registered_sampling_frame, sampling_cells
 
-DURATION_ANALYSIS_SCHEMA_VERSION = "league-ews-pilot-duration-analysis-v1"
-CANDIDATE_MINIMUM_SECONDS = (0, 180, 300, 600, 900, 1_200)
 PERCENTILES = (1, 5, 10, 25, 50, 75, 90, 95, 99)
 
 

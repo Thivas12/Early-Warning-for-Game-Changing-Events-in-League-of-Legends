@@ -1,0 +1,37 @@
+schema_version: league-ews-duration-rule-v1
+rule_id: rifthazard-duration-2026-09-20
+frozen_on: 2026-09-20
+status: frozen-after-registered-pilot-before-final-collection
+
+frame:
+  frame_id: rifthazard-2026-09-15
+  frame_sha256: 2355ec26182aa6862e8a110ff94f0ab402e9a4e77c0a52a0a5c81f1892033f6b
+
+pilot_analysis:
+  schema_version: league-ews-pilot-duration-analysis-v1
+  sha256: 3cab09e4f305bb67b089e28a35276cee1fe67add9584baef6552d78b7a12c9c5
+  matches: 5000
+  represented_cells: 12
+  identifiers_in_summary: false
+
+decision:
+  duration_field: info.gameDuration
+  comparison: greater-than-or-equal
+  final_minimum_seconds: 180
+  candidate_minimum_seconds: [0, 180, 300, 600, 900, 1200]
+  selection_rule: lowest-candidate-excluding-all-early-surrenders-and-no-other-matches-v1
+  evidence:
+    early_surrender_matches: 90
+    excluded_matches: 90
+    excluded_early_surrender_matches: 90
+    excluded_other_matches: 0
+    retained_matches: 4910
+
+controls:
+  pilot_excluded_from_final_claims: true
+  pilot_match_ids_excluded_from_final: true
+  chosen_before_final_collection: true
+  immutable_after_final_collection_starts: true
+  event_labels_used: false
+  model_outputs_used: false
+  winner_used: false

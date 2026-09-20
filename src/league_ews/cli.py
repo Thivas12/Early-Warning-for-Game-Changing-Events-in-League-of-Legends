@@ -21,6 +21,7 @@ from league_ews.discovery import (
     validate_discovery_plan,
 )
 from league_ews.duration import analyze_pilot_duration
+from league_ews.duration_rule import validate_duration_rule
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.pilot_collection import (
     TimelineFetcher,
@@ -327,6 +328,8 @@ def _process(args: argparse.Namespace) -> int:
         discovery_plan=args.discovery_plan,
         discovery_root=args.discovery_root,
         selection_root=args.selection_root,
+        duration_rule=args.duration_rule,
+        duration_analysis=args.duration_analysis,
     )
     if not validation["passed"]:
         _write_json(validation, None)
@@ -349,6 +352,8 @@ def _validate_raw(args: argparse.Namespace) -> int:
         discovery_plan=args.discovery_plan,
         discovery_root=args.discovery_root,
         selection_root=args.selection_root,
+        duration_rule=args.duration_rule,
+        duration_analysis=args.duration_analysis,
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
@@ -391,6 +396,16 @@ def _analyze_pilot_duration(args: argparse.Namespace) -> int:
     _write_json(report, args.output)
     print(f"Wrote checksum-bound pilot duration analysis: {args.output}")
     return 0
+
+
+def _validate_duration_rule(args: argparse.Namespace) -> int:
+    report = validate_duration_rule(
+        args.rule,
+        args.sampling_frame,
+        args.analysis,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -565,6 +580,8 @@ def build_parser() -> argparse.ArgumentParser:
     validate_raw.add_argument("--discovery-plan", type=Path)
     validate_raw.add_argument("--discovery-root", type=Path)
     validate_raw.add_argument("--selection-root", type=Path)
+    validate_raw.add_argument("--duration-rule", type=Path)
+    validate_raw.add_argument("--duration-analysis", type=Path)
     validate_raw.set_defaults(handler=_validate_raw)
 
     spot_check = subparsers.add_parser(
@@ -593,6 +610,16 @@ def build_parser() -> argparse.ArgumentParser:
     duration.add_argument("--output", type=Path, required=True)
     duration.set_defaults(handler=_analyze_pilot_duration)
 
+    duration_rule = subparsers.add_parser(
+        "validate-duration-rule",
+        help="validate the frozen final-duration rule against private pilot evidence",
+    )
+    duration_rule.add_argument("--rule", type=Path, required=True)
+    duration_rule.add_argument("--sampling-frame", type=Path, required=True)
+    duration_rule.add_argument("--analysis", type=Path, required=True)
+    duration_rule.add_argument("--output", type=Path)
+    duration_rule.set_defaults(handler=_validate_duration_rule)
+
     process = subparsers.add_parser("process", help="normalize and label private raw bundles")
     process.add_argument("--raw", type=Path, default=Path("data/raw"))
     process.add_argument("--output", type=Path, default=Path("data/processed"))
@@ -603,6 +630,8 @@ def build_parser() -> argparse.ArgumentParser:
     process.add_argument("--discovery-plan", type=Path)
     process.add_argument("--discovery-root", type=Path)
     process.add_argument("--selection-root", type=Path)
+    process.add_argument("--duration-rule", type=Path)
+    process.add_argument("--duration-analysis", type=Path)
     process.set_defaults(handler=_process)
     return parser
 
