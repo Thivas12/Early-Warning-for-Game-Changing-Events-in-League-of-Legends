@@ -44,7 +44,9 @@ across all 12 route-patch cells and is excluded from final claims. The final
 target remains 3,000 matches per cell. Exact allocations, patch windows and
 selection controls are documented in `docs/sampling-frame.md`. The pilot-only
 duration inspection subsequently froze `gameDuration >= 180` seconds for final
-eligibility; the pilot remains excluded from final claims.
+eligibility; the pilot remains excluded from final claims. A separate final
+candidate crawl removes all frozen pilot IDs before measuring its two-times
+per-cell screening reserve.
 
 ## Bias and representativeness
 

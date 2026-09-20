@@ -208,6 +208,27 @@ make validate-duration-rule
 The validation output remains ignored at
 `data/private/duration-rule-validation.json`. See `docs/pilot-duration.md`.
 
+Once that validation passes, freeze and verify the separate final-discovery
+contract before making another API request:
+
+```bash
+make validate-final-discovery-plan
+make preflight-final-discovery
+```
+
+The final plan takes a new checksum-bound ladder snapshot, removes all 5,000
+frozen pilot IDs before counting candidates and stops only after every cell has
+at least 6,000 IDs. Build or resume it and verify the resulting private pool:
+
+```bash
+make discover-final-candidates
+make validate-final-candidate-pool
+```
+
+All identifier-bearing outputs remain ignored under
+`data/private/final-discovery`. This stage fetches IDs only, not match details
+or timelines. See `docs/final-discovery.md`.
+
 Processed match files retain match IDs for provenance but contain only the
 supported causal timeline fields and labels, with no player identifier fields
 such as PUUIDs. They remain ignored until redistribution is explicitly approved.

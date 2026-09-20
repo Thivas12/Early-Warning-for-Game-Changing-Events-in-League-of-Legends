@@ -76,3 +76,20 @@ def test_duration_rule_contains_only_private_evidence_binding() -> None:
     assert decision["final_minimum_seconds"] == 180
     assert len(str(analysis["sha256"])) == 64
     assert analysis["identifiers_in_summary"] is False
+
+
+def test_final_discovery_plan_is_pilot_isolated_and_outcome_blind() -> None:
+    plan = _yaml("configs/rifthazard-final-discovery-plan.yaml")
+    stopping = plan["stopping"]
+    pilot = plan["pilot_selection"]
+    duration = plan["duration_rule"]
+    assert isinstance(stopping, dict)
+    assert isinstance(pilot, dict)
+    assert isinstance(duration, dict)
+    assert stopping["stage"] == "final"
+    assert stopping["candidate_multiplier_per_cell"] == 2
+    assert stopping["exclude_pilot_match_ids_before_stop"] is True
+    assert stopping["inspect_match_details_before_stop"] is False
+    assert stopping["inspect_labels_before_stop"] is False
+    assert pilot["selected_match_ids"] == 5_000
+    assert duration["final_minimum_seconds"] == 180

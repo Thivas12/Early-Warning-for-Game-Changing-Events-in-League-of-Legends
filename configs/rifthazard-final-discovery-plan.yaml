@@ -1,0 +1,52 @@
+schema_version: league-ews-final-discovery-plan-v1
+plan_id: rifthazard-final-discovery-2026-09-20
+frozen_on: 2026-09-20
+status: frozen-after-duration-rule-before-final-details
+
+sampling_frame:
+  frame_id: rifthazard-2026-09-15
+  sha256: 2355ec26182aa6862e8a110ff94f0ab402e9a4e77c0a52a0a5c81f1892033f6b
+
+duration_rule:
+  rule_id: rifthazard-duration-2026-09-20
+  rule_sha256: b957947597e9fa64dec89bcd2b762ca9c37f4d3941ff26be02e59c09cf8856fe
+  analysis_sha256: 3cab09e4f305bb67b089e28a35276cee1fe67add9584baef6552d78b7a12c9c5
+  final_minimum_seconds: 180
+
+pilot_selection:
+  discovery_plan_id: rifthazard-pilot-discovery-2026-09-15
+  discovery_plan_sha256: f2d1fb7460b5bb9466e3ee9adc9aa66cfea252845a1d3f7bf41cf20440a52c85
+  discovery_manifest_sha256: bf82edbdb062ec3a65452023d021af09a3eac7ca652f36037c7e911c84377cc8
+  candidate_pool_sha256: c3a2688cc72ffc77596271dbf9d61e7abf91e24521c5276c0511af0a5a6be111
+  selected_pool_sha256: 05f566c3c36d5402a9f2ef26bd3c63dae33737bd550dae0c735dbe5f87a656eb
+  selected_match_ids: 5000
+
+ladder:
+  member_identity: prefer-puuid-else-resolve-summoner-id-v1
+  member_order: seeded-sha256-platform-kind-identifier-v1
+  hash_material: decimal-seed-nul-platform-nul-kind-nul-identifier-utf8-v1
+  wave_size_per_platform: 32
+  max_players_per_platform: 512
+  equal_platform_waves: true
+
+history:
+  queue_id: 420
+  start_index: 0
+  count_per_player_window: 100
+  patch_windows: sampling-frame-half-open-utc-v1
+  pagination: one-bounded-page-per-player-window-v1
+
+stopping:
+  stage: final
+  candidate_multiplier_per_cell: 2
+  rule: first-complete-balanced-wave-v1
+  exclude_pilot_match_ids_before_stop: true
+  inspect_match_details_before_stop: false
+  inspect_labels_before_stop: false
+
+outputs:
+  storage: private
+  snapshot: checksum-bound-canonical-json-v1
+  resumable_history_cache: true
+  candidate_pool: globally-deduplicated-checksum-bound-v1
+  identifiers_in_public_summary: false

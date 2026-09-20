@@ -86,6 +86,12 @@ checksum. The original frame remains immutable. Final validation requires the
 supplement and private analysis, and rejects every match with
 `gameDuration < 180`.
 
+The final candidate expansion is separately frozen in
+`configs/rifthazard-final-discovery-plan.yaml`. It removes the exact 5,000
+pilot IDs before applying its pre-detail stopping rule, requires 6,000
+candidates per route-patch cell and leaves the registered final allocation at
+3,000 matches per cell. See `docs/final-discovery.md`.
+
 Authority schema v2 can scope the three League-V4 ladder endpoints,
 Summoner-V4 by summoner ID, Match-V5 IDs-by-PUUID, Match-V5 detail/timeline and
 both regional routes. `preflight-discovery` binds that private record to the

@@ -47,6 +47,8 @@ resumable timeline collection is specified in
 checksum-bound post-pilot duration inspection is documented in
 [`docs/pilot-duration.md`](docs/pilot-duration.md), with the frozen final rule
 in [`configs/rifthazard-duration-rule.yaml`](configs/rifthazard-duration-rule.yaml).
+The pilot-isolated, outcome-blind expansion to the final candidate pool is in
+[`docs/final-discovery.md`](docs/final-discovery.md).
 
 ## Quick start
 
@@ -61,6 +63,7 @@ uv run league-ews validate-sampling-frame --frame configs/rifthazard-sampling-fr
 make validate-discovery-plan
 make validate-candidate-pool
 make validate-pilot-selection
+make validate-final-discovery-plan
 uv run pytest
 ```
 
