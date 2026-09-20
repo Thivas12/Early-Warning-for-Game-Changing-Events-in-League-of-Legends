@@ -15,7 +15,7 @@ Purpose: historical MSc exploration and non-commercial audit only.
 The exact audited file hash and findings are in `data/manifests/legacy-v5.yaml`
 and `reports/legacy-audit.json`.
 
-## Research v2 dataset (planned; not yet collected)
+## Research v2 dataset (registered pilot collected; final not yet collected)
 
 Unit of sampling: complete ranked match. Unit of prediction: a genuine timeline
 observation within a match. Unit of evaluation: a distinct future event.
@@ -34,7 +34,9 @@ timestamp, feature-schema version and label-policy version.
 Expected representation gaps include unavailable real-time health, fog-of-war
 visibility and player intent. These are not imputed as observed facts. Position
 frames are lower frequency than events and are not advertised as ten-second
-telemetry.
+telemetry. For the sampled 2026 patches, participant level is valid from 1 to
+20 because Riot's top-lane role quest can raise the historical level-18 cap;
+levels above 20 remain invalid.
 
 The frozen frame is EUW1/europe plus NA1/americas, queue 420, over completed
 Match-V5 patches 16.12-16.17. The operational 5,000-match pilot is balanced
