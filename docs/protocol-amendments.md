@@ -157,3 +157,28 @@ selected identities, population, quota, outcome, label, horizon, split or
 pass criterion. Aggregate event diagnostics for the previously accepted
 subset had been produced, but no processed pilot feature analysis or model
 result was available or used to choose this correction.
+
+## 2026-09-20 — constrain the post-pilot duration inspection
+
+**Stage:** after the complete 5,000-match pilot passed automated raw validation
+and processing; before inspecting its duration/remake distribution, fixing the
+minimum-duration rule, collecting the final sample, fitting a model or
+selecting a threshold.
+
+The one permitted pilot data decision is implemented as a checksum-bound,
+identifier-free report. It first revalidates the exact registered selection
+and processed inventory, then reads only Match-V5 `gameDuration`,
+`gameEndedInEarlySurrender` and `gameEndedInSurrender`. It reports duration
+percentiles and retention under a fixed descriptive grid of candidate minimums
+overall and by route-patch cell. It does not read event labels, winners,
+features, predictions or downstream performance, and it does not choose a
+cutoff automatically.
+
+The original frame remains unchanged because pilot discovery, selection and
+collection are already bound to its checksum. The eventual single cutoff must
+therefore be recorded in a separate post-pilot supplement bound to both that
+frame and this private analysis report before final collection starts.
+Aggregate event counts and label-opportunity diagnostics were already
+available from validation, but they are forbidden duration-decision inputs.
+This inspection mechanism changes no hypothesis, outcome, event definition,
+horizon, split, quota or pass criterion.
