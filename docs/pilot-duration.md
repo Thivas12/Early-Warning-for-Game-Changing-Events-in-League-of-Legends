@@ -31,17 +31,36 @@ used only to establish exact inventory identity and bind its checksum.
 The report gives nearest-rank duration percentiles and descriptive retention
 counts for candidate minimums of 0, 180, 300, 600, 900 and 1,200 seconds,
 overall and within each registered route-patch cell. These rows are decision
-evidence, not an automatically selected cutoff.
+evidence; the analysis command does not select a cutoff automatically.
+
+## Frozen decision
+
+The checksum-bound pilot report contained 5,000 matches across all 12 cells.
+The 180-second candidate excluded all 90 matches carrying Riot's early-surrender
+flag and no other matches, retaining 4,910 (98.2%). Every higher positive
+candidate excluded additional matches without removing another early-surrender
+case. The final population rule is therefore:
+
+```text
+retain if info.gameDuration >= 180 seconds
+```
+
+`configs/rifthazard-duration-rule.yaml` freezes this choice and binds it to the
+original frame plus private analysis SHA-256
+`3cab09e4f305bb67b089e28a35276cee1fe67add9584baef6552d78b7a12c9c5`.
+Validate the public rule and local private report together with:
+
+```bash
+make validate-duration-rule
+```
 
 ## Freeze boundary
 
-After reviewing the identifier-free report, exactly one minimum-duration rule
-must be recorded in a checksum-bound post-pilot supplement before any final
-candidate detail or timeline is collected. The original pre-pilot sampling
-frame remains immutable because discovery, selection and raw collection are
-already bound to its SHA-256 digest. The supplement must reference that frame,
-the duration-analysis report and its input manifest checksums.
+The original pre-pilot sampling frame remains immutable because discovery,
+selection and raw collection are already bound to its SHA-256 digest. The
+separate duration supplement references that frame and the exact private
+analysis report. Final-stage validation requires both and enforces the inclusive
+180-second boundary on every final match.
 
-No cutoff may be chosen from event prevalence, labels, model scores or model
-performance. Once frozen, the rule cannot be revised after final collection
-begins.
+The cutoff was not chosen from event prevalence, labels, model scores or model
+performance. It cannot be revised after final collection begins.

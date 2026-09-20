@@ -17,6 +17,7 @@ from typing import Any, Literal, cast
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from league_ews.constants import EVENTS, RIFTHAZARD_HORIZONS_SECONDS
+from league_ews.duration_rule import validate_duration_rule
 from league_ews.labels import extract_event_index
 from league_ews.pilot_collection import RawRecordLike, validate_pilot_collection_binding
 from league_ews.sampling import (
@@ -179,6 +180,17 @@ def _frame_eligibility_matches(
         and isinstance(metadata_participants, list)
         and len(metadata_participants) == frame.eligibility.participant_count
     )
+
+
+def _duration_eligibility_matches(
+    match_payload: Mapping[str, Any],
+    minimum_seconds: int,
+) -> bool:
+    info = match_payload.get("info")
+    if not isinstance(info, Mapping):
+        return False
+    value = info.get("gameDuration")
+    return isinstance(value, int) and not isinstance(value, bool) and value >= minimum_seconds
 
 
 def _sampling_frame_context(
@@ -635,6 +647,8 @@ def validate_raw_collection(
     discovery_plan: str | Path | None = None,
     discovery_root: str | Path | None = None,
     selection_root: str | Path | None = None,
+    duration_rule: str | Path | None = None,
+    duration_analysis: str | Path | None = None,
     checked_at: datetime | None = None,
 ) -> dict[str, object]:
     """Validate raw inventory, provenance and normalized shape without network access."""
@@ -649,10 +663,34 @@ def validate_raw_collection(
         )
     if pilot_selection_requested and (sampling_frame is None or sampling_stage != "pilot"):
         raise ValueError("Pilot binding requires a sampling frame and sampling_stage='pilot'")
+    duration_inputs = (duration_rule, duration_analysis)
+    duration_rule_requested = all(value is not None for value in duration_inputs)
+    if any(value is not None for value in duration_inputs) and not duration_rule_requested:
+        raise ValueError(
+            "Final duration binding requires duration_rule and duration_analysis together"
+        )
+    if duration_rule_requested and (sampling_frame is None or sampling_stage != "final"):
+        raise ValueError("Duration binding requires a sampling frame and sampling_stage='final'")
     timestamp = checked_at or datetime.now(UTC)
     if timestamp.tzinfo is None:
         raise ValueError("checked_at must be timezone-aware")
     frame, frame_summary = _sampling_frame_context(sampling_frame, sampling_stage)
+    duration_validation: dict[str, object] | None = None
+    duration_minimum_seconds: int | None = None
+    if duration_rule_requested:
+        assert duration_rule is not None
+        assert duration_analysis is not None
+        assert sampling_frame is not None
+        duration_validation = validate_duration_rule(
+            duration_rule,
+            sampling_frame,
+            duration_analysis,
+        )
+        duration_summary = duration_validation.get("summary")
+        if duration_validation["passed"] and isinstance(duration_summary, Mapping):
+            minimum = duration_summary.get("final_minimum_seconds")
+            if isinstance(minimum, int) and not isinstance(minimum, bool):
+                duration_minimum_seconds = minimum
 
     root = Path(raw_root)
     try:
@@ -728,6 +766,7 @@ def validate_raw_collection(
     patch_counts = Counter[str]()
     frame_cell_counts = Counter[tuple[str, str, str]]()
     frame_eligibility_valid = True
+    duration_eligibility_valid = duration_minimum_seconds is not None
     valid_by_id: dict[str, RawBundleRecord] = {}
     for entry in available_by_id.values():
         match_path = match_files.get(entry.match_id)
@@ -794,6 +833,14 @@ def validate_raw_collection(
                     match_payload,
                     entry,
                     frame,
+                )
+            if sampling_stage == "final" and duration_minimum_seconds is not None:
+                duration_eligibility_valid = (
+                    duration_eligibility_valid
+                    and _duration_eligibility_matches(
+                        match_payload,
+                        duration_minimum_seconds,
+                    )
                 )
 
     checks.extend(
@@ -907,19 +954,50 @@ def validate_raw_collection(
             ]
         )
         if sampling_stage == "final":
+            duration_rule_passed = bool(
+                duration_validation is not None and duration_validation["passed"]
+            )
             checks.append(
                 RawValidationCheck(
                     check_id="final-duration-freeze",
-                    passed=False,
+                    passed=duration_rule_passed,
                     message=(
-                        "Final collection is blocked until the pilot fixes one minimum-duration "
-                        "rule in a post-pilot sampling-frame amendment"
+                        "The checksum-bound post-pilot duration rule is valid"
+                        if duration_rule_passed
+                        else "Final collection requires the valid checksum-bound 180-second rule"
                     ),
                 )
             )
+            checks.append(
+                _check(
+                    "final-duration-eligibility",
+                    duration_rule_passed and duration_eligibility_valid,
+                    "Every final match satisfies gameDuration >= 180 seconds",
+                    "One or more final matches fail the frozen minimum-duration rule",
+                )
+            )
+            frame_summary["duration_rule"] = {
+                "status": "passed" if duration_rule_passed else "missing-or-invalid",
+                "rule_id": (
+                    duration_validation.get("rule_id") if duration_validation is not None else None
+                ),
+                "rule_sha256": (
+                    duration_validation.get("rule_sha256")
+                    if duration_validation is not None
+                    else None
+                ),
+                "final_minimum_seconds": duration_minimum_seconds,
+            }
         frame_summary.update(coverage)
         if frame_valid and sampling_stage == "final":
-            frame_summary["status"] = "blocked-duration-rule"
+            frame_summary["status"] = (
+                "passed"
+                if coverage["passed"] is True
+                and duration_validation is not None
+                and duration_validation["passed"]
+                and duration_eligibility_valid
+                else "incomplete-or-duration-blocked"
+            )
         elif frame_valid:
             frame_summary["status"] = "passed" if coverage["passed"] is True else "incomplete"
     automated_passed = all(check.passed for check in checks)

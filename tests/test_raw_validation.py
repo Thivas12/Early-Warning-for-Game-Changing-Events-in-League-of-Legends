@@ -8,7 +8,11 @@ import pytest
 
 from league_ews.cli import main
 from league_ews.processing import process_raw_collection
-from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
+from league_ews.raw_validation import (
+    _duration_eligibility_matches,
+    create_event_spot_check_record,
+    validate_raw_collection,
+)
 from league_ews.riot import collect_match_bundles
 
 ROOT = Path(__file__).parents[1]
@@ -23,6 +27,7 @@ def _bundle(
     detail = {
         "metadata": {"matchId": match_id, "participants": ["private-puuid"] * 10},
         "info": {
+            "gameDuration": 1_200,
             "gameVersion": game_version,
             "gameCreation": 123,
             "platformId": match_id.split("_", maxsplit=1)[0],
@@ -423,10 +428,79 @@ def test_sampling_frame_requires_full_cross_product_and_exact_stage_targets(tmp_
         checked_at=datetime(2026, 9, 15, tzinfo=UTC),
     )
     assert "final-duration-freeze" in _failed_checks(final_report)
+    assert "final-duration-eligibility" in _failed_checks(final_report)
     final_frame = final_report["sampling_frame"]
     assert isinstance(final_frame, dict)
-    assert final_frame["status"] == "blocked-duration-rule"
+    assert final_frame["status"] == "incomplete-or-duration-blocked"
     assert final_report["g2_complete"] is False
+
+
+def test_final_validation_accepts_bound_duration_gate(tmp_path, monkeypatch) -> None:
+    match_number = 1
+    for minor in range(12, 18):
+        for platform, route in (("EUW1", "europe"), ("NA1", "americas")):
+            collect_match_bundles(
+                [f"{platform}_{match_number}"],
+                regional_route=route,
+                output_root=tmp_path,
+                fetcher=FakeFetcher(f"16.{minor}.1"),
+                collected_at=datetime(2026, 9, 15, tzinfo=UTC),
+            )
+            match_number += 1
+    monkeypatch.setattr(
+        "league_ews.raw_validation.validate_duration_rule",
+        lambda *args: {
+            "passed": True,
+            "rule_id": "rifthazard-duration-2026-09-20",
+            "rule_sha256": "a" * 64,
+            "summary": {"final_minimum_seconds": 180},
+        },
+    )
+
+    report = validate_raw_collection(
+        tmp_path,
+        sampling_frame=SAMPLING_FRAME,
+        sampling_stage="final",
+        duration_rule=tmp_path / "rule.yaml",
+        duration_analysis=tmp_path / "analysis.json",
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    failed = _failed_checks(report)
+    assert "final-duration-freeze" not in failed
+    assert "final-duration-eligibility" not in failed
+    assert "frame-cell-coverage" in failed
+    frame = report["sampling_frame"]
+    assert isinstance(frame, dict)
+    assert frame["duration_rule"]["final_minimum_seconds"] == 180
+
+
+def test_duration_binding_arguments_are_atomic(tmp_path) -> None:
+    _collect(tmp_path)
+
+    with pytest.raises(ValueError, match="requires duration_rule and duration_analysis"):
+        validate_raw_collection(
+            tmp_path,
+            sampling_frame=SAMPLING_FRAME,
+            sampling_stage="final",
+            duration_rule=tmp_path / "rule.yaml",
+        )
+
+    with pytest.raises(ValueError, match="sampling_stage='final'"):
+        validate_raw_collection(
+            tmp_path,
+            sampling_frame=SAMPLING_FRAME,
+            sampling_stage="pilot",
+            duration_rule=tmp_path / "rule.yaml",
+            duration_analysis=tmp_path / "analysis.json",
+        )
+
+
+def test_duration_eligibility_uses_inclusive_integer_boundary() -> None:
+    assert _duration_eligibility_matches({"info": {"gameDuration": 180}}, 180)
+    assert not _duration_eligibility_matches({"info": {"gameDuration": 179}}, 180)
+    assert not _duration_eligibility_matches({"info": {"gameDuration": True}}, 180)
+    assert not _duration_eligibility_matches({}, 180)
 
 
 def test_sampling_frame_rejects_out_of_frame_bundle(tmp_path) -> None:

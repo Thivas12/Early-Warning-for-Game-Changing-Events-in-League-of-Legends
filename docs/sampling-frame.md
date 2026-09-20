@@ -78,11 +78,13 @@ player-component analyses in the data card and registered plan.
 
 ## Duration and collection boundary
 
-No duration threshold exists for the pilot. All otherwise eligible short games
-remain in the pilot so their duration/remake distribution can be inspected.
-Exactly one cutoff must then be frozen in a checksum-bound post-pilot amendment
-before final collection; final validation is deliberately blocked until that
-amendment exists.
+No duration threshold existed for the pilot. All otherwise eligible short
+games remained so their duration/remake distribution could be inspected. The
+post-pilot supplement in `configs/rifthazard-duration-rule.yaml` now freezes an
+inclusive 180-second final minimum and binds it to the private pilot-analysis
+checksum. The original frame remains immutable. Final validation requires the
+supplement and private analysis, and rejects every match with
+`gameDuration < 180`.
 
 Authority schema v2 can scope the three League-V4 ladder endpoints,
 Summoner-V4 by summoner ID, Match-V5 IDs-by-PUUID, Match-V5 detail/timeline and

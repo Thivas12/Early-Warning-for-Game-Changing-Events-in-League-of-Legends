@@ -171,9 +171,10 @@ complete the registered two-route, six-patch G2 gate. If a spot-check record is
 supplied but is stale, incomplete or invalid, validation returns exit code 2
 even when every automated raw-integrity check passes.
 
-The pre-pilot frame intentionally blocks `--sampling-stage final`: the minimum
-duration rule is still unset. Freeze that rule in a post-pilot amendment before
-collecting or validating the final 36,000-match sample.
+The immutable pre-pilot frame leaves its duration field unset. Final-stage
+commands must therefore also supply the frozen post-pilot supplement and its
+private analysis binding; without both, the final 36,000-match workflow remains
+blocked.
 
 Normalize the private pairs and build exact labels with:
 
@@ -196,8 +197,16 @@ This repeats registered-pilot validation and writes the ignored
 `data/private/pilot-duration-analysis.json`. Only Match-V5 `gameDuration` and
 the two surrender flags enter the diagnostic; timeline events, labels, winners
 and model outputs do not. Candidate minimums are reported descriptively and do
-not become a rule until one is frozen in a post-pilot supplement. See
-`docs/pilot-duration.md`.
+not become a rule automatically. The registered 180-second decision is frozen
+in `configs/rifthazard-duration-rule.yaml`. Bind that public supplement back to
+the exact local report with:
+
+```bash
+make validate-duration-rule
+```
+
+The validation output remains ignored at
+`data/private/duration-rule-validation.json`. See `docs/pilot-duration.md`.
 
 Processed match files retain match IDs for provenance but contain only the
 supported causal timeline fields and labels, with no player identifier fields
