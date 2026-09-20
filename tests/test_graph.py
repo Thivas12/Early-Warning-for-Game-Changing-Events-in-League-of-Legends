@@ -5,14 +5,14 @@ from league_ews.graph import ObjectiveRules, build_interaction_graph
 from league_ews.timeline import Observation, ParticipantState, Position
 
 
-def _observation() -> Observation:
+def _observation(*, level: int = 2) -> Observation:
     participants = tuple(
         ParticipantState(
             participant_id=participant_id,
             team_id=100 if participant_id <= 5 else 200,
             total_gold=1000,
             xp=500,
-            level=2,
+            level=level,
             lane_minions=10,
             jungle_minions=0,
             position=Position(x=5000 + participant_id * 10, y=10470 + participant_id * 10),
@@ -57,3 +57,9 @@ def test_invalid_objective_rules_are_rejected() -> None:
             baron_spawn_seconds=0,
             dragon_spawn_seconds=300,
         )
+
+
+def test_level_20_scales_to_one() -> None:
+    graph = build_interaction_graph(_observation(level=20), objective_rules=_rules())
+    level_index = graph.feature_names.index("level_scaled")
+    assert graph.node_features[0, level_index] == pytest.approx(1.0)
