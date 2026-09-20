@@ -13,6 +13,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from league_ews.constants import RIFTHAZARD_MAX_CHAMPION_LEVEL
+
 
 class Position(BaseModel):
     model_config = ConfigDict(frozen=True)
@@ -28,7 +30,7 @@ class ParticipantState(BaseModel):
     team_id: int
     total_gold: float = Field(ge=0)
     xp: float = Field(ge=0)
-    level: int = Field(ge=1, le=18)
+    level: int = Field(ge=1, le=RIFTHAZARD_MAX_CHAMPION_LEVEL)
     lane_minions: float = Field(ge=0)
     jungle_minions: float = Field(ge=0)
     position: Position | None = None
