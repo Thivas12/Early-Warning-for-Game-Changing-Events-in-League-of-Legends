@@ -1,6 +1,7 @@
 from typing import Any
 
 import pytest
+from pydantic import ValidationError
 
 from league_ews.timeline import normalise_match_timeline, participant_team_map
 
@@ -92,4 +93,18 @@ def test_non_increasing_frames_are_rejected() -> None:
     timeline = _timeline()
     timeline["info"]["frames"][1]["timestamp"] = 0
     with pytest.raises(ValueError, match="increase"):
+        normalise_match_timeline(_match_detail(), timeline)
+
+
+def test_2026_top_lane_level_cap_is_supported() -> None:
+    timeline = _timeline()
+    timeline["info"]["frames"][1]["participantFrames"]["1"]["level"] = 20
+    normalized = normalise_match_timeline(_match_detail(), timeline)
+    assert normalized.observations[1].participants[0].level == 20
+
+
+def test_level_above_registered_cap_is_rejected() -> None:
+    timeline = _timeline()
+    timeline["info"]["frames"][1]["participantFrames"]["1"]["level"] = 21
+    with pytest.raises(ValidationError, match="less than or equal to 20"):
         normalise_match_timeline(_match_detail(), timeline)
