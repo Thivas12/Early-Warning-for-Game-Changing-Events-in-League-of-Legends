@@ -306,6 +306,226 @@ def test_candidate_pool_validation_cli_writes_safe_report(tmp_path, monkeypatch)
     assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
 
 
+def test_final_discovery_plan_validation_cli_writes_report(tmp_path) -> None:
+    output = tmp_path / "final-plan.json"
+
+    exit_code = main(
+        [
+            "validate-final-discovery-plan",
+            "--plan",
+            "configs/rifthazard-final-discovery-plan.yaml",
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--output",
+            str(output),
+        ]
+    )
+
+    report = json.loads(output.read_text(encoding="utf-8"))
+    assert exit_code == 0
+    assert report["passed"] is True
+    assert report["summary"]["pilot_match_ids_excluded"] == 5_000
+
+
+def test_final_discover_cli_repeats_gate_before_client_creation(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    monkeypatch.setattr(
+        "league_ews.cli.final_candidate_discovery_preflight",
+        lambda *args, **kwargs: {"passed": False},
+    )
+
+    def forbidden_client(*args: object, **kwargs: object) -> None:
+        raise AssertionError("Riot clients must not be created before final preflight")
+
+    monkeypatch.setattr("league_ews.cli.RiotPlatformClient.from_environment", forbidden_client)
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient.from_environment", forbidden_client)
+    exit_code = main(
+        [
+            "discover-final-candidates",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--final-discovery-plan",
+            "configs/rifthazard-final-discovery-plan.yaml",
+            "--duration-rule",
+            "configs/rifthazard-duration-rule.yaml",
+            "--duration-analysis",
+            str(tmp_path / "duration.json"),
+            "--pilot-discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--pilot-discovery-root",
+            str(tmp_path / "pilot-discovery"),
+            "--pilot-selection-root",
+            str(tmp_path / "pilot-selection"),
+            "--output",
+            str(tmp_path / "final-discovery"),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(capsys.readouterr().out)["passed"] is False
+
+
+def test_final_discovery_preflight_cli_writes_private_report(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    output = tmp_path / "preflight.json"
+    monkeypatch.setattr(
+        "league_ews.cli.final_candidate_discovery_preflight",
+        lambda *args: {"passed": True, "bindings": {"pilot_match_ids_excluded": 5_000}},
+    )
+
+    exit_code = main(
+        [
+            "preflight-final-discovery",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--final-discovery-plan",
+            "configs/rifthazard-final-discovery-plan.yaml",
+            "--duration-rule",
+            "configs/rifthazard-duration-rule.yaml",
+            "--duration-analysis",
+            str(tmp_path / "duration.json"),
+            "--pilot-discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--pilot-discovery-root",
+            str(tmp_path / "pilot-discovery"),
+            "--pilot-selection-root",
+            str(tmp_path / "pilot-selection"),
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 0
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
+
+
+def test_final_discover_cli_builds_all_clients_after_preflight(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    events: list[str] = []
+    monkeypatch.setattr(
+        "league_ews.cli.final_candidate_discovery_preflight",
+        lambda *args, **kwargs: {"passed": True},
+    )
+
+    class FakeClient:
+        def __init__(self, name: str) -> None:
+            self.name = name
+
+        def __enter__(self):
+            events.append(f"enter:{self.name}")
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            events.append(f"exit:{self.name}")
+
+    class FakePlatformClient:
+        @classmethod
+        def from_environment(cls, *, platform_id: str, pace):
+            assert callable(pace)
+            return FakeClient(platform_id)
+
+    class FakeMatchClient:
+        @classmethod
+        def from_environment(cls, *, regional_route: str, pace):
+            assert callable(pace)
+            return FakeClient(regional_route)
+
+    def fake_discover(*args, output_root, platform_fetchers, regional_fetchers, progress):
+        events.append("discover")
+        assert len(args) == 7
+        assert output_root == tmp_path / "final-discovery"
+        assert set(platform_fetchers) == {"EUW1", "NA1"}
+        assert set(regional_fetchers) == {"europe", "americas"}
+        progress("safe final progress")
+        return {"complete": True, "candidate_match_ids": 72_000}
+
+    monkeypatch.setattr("league_ews.cli.RiotPlatformClient", FakePlatformClient)
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient", FakeMatchClient)
+    monkeypatch.setattr("league_ews.cli.discover_final_candidate_pool", fake_discover)
+
+    exit_code = main(
+        [
+            "discover-final-candidates",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--final-discovery-plan",
+            "configs/rifthazard-final-discovery-plan.yaml",
+            "--duration-rule",
+            "configs/rifthazard-duration-rule.yaml",
+            "--duration-analysis",
+            str(tmp_path / "duration.json"),
+            "--pilot-discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--pilot-discovery-root",
+            str(tmp_path / "pilot-discovery"),
+            "--pilot-selection-root",
+            str(tmp_path / "pilot-selection"),
+            "--output",
+            str(tmp_path / "final-discovery"),
+            "--request-interval",
+            "0",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert json.loads(captured.out)["complete"] is True
+    assert "safe final progress" in captured.err
+    assert events[:4] == ["enter:EUW1", "enter:NA1", "enter:europe", "enter:americas"]
+
+
+def test_final_candidate_pool_validation_cli_writes_safe_report(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    output = tmp_path / "final-validation.json"
+    monkeypatch.setattr(
+        "league_ews.cli.validate_final_candidate_pool",
+        lambda *args: {"passed": True, "summary": {"candidate_match_ids": 72_000}},
+    )
+
+    exit_code = main(
+        [
+            "validate-final-candidate-pool",
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--final-discovery-plan",
+            "configs/rifthazard-final-discovery-plan.yaml",
+            "--duration-rule",
+            "configs/rifthazard-duration-rule.yaml",
+            "--duration-analysis",
+            str(tmp_path / "duration.json"),
+            "--pilot-discovery-plan",
+            "configs/rifthazard-discovery-plan.yaml",
+            "--pilot-discovery-root",
+            str(tmp_path / "pilot-discovery"),
+            "--pilot-selection-root",
+            str(tmp_path / "pilot-selection"),
+            "--final-discovery-root",
+            str(tmp_path / "final-discovery"),
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 0
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
+
+
 def test_pilot_selection_preflight_cli_fails_closed(tmp_path) -> None:
     output = tmp_path / "selection-preflight.json"
     exit_code = main(

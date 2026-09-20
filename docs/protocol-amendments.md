@@ -211,3 +211,29 @@ performance were not used. The pilot and all pilot match IDs remain excluded
 from final claims. The rule becomes immutable when final collection starts and
 changes no hypothesis, outcome, event definition, horizon, split, cell quota or
 pass criterion.
+
+## 2026-09-20 — freeze pilot-isolated final candidate discovery
+
+**Stage:** after the duration rule and its private evidence passed their exact
+checksum gate; before a final match detail, timeline, event label or model
+output was requested or inspected.
+
+The registered pilot candidate pool contains 24,976 IDs and is too small to
+supply 3,000 final matches in every one of the 12 cells. The final population
+therefore requires a separate candidate crawl. Its public plan is
+`configs/rifthazard-final-discovery-plan.yaml` and is bound to the immutable
+sampling frame, the 180-second duration-rule checksum and the exact frozen
+5,000-match pilot selected-pool checksum.
+
+The crawl takes a new private EUW1/NA1 top-ladder snapshot, processes members
+in seeded equal 32-player waves and removes all frozen pilot match IDs before
+evaluating capacity. It stops at the first complete wave with at least 6,000
+remaining candidate IDs in every cell, subject to a predeclared ceiling of 512
+players per platform. The two-times buffer anticipates later detail
+eligibility screening; it does not alter the final 3,000-per-cell allocation.
+
+This stage reads no match details, timelines, events, labels, winners, model
+features, predictions or performance measures. Its identifier-bearing caches
+remain private, atomic and resumable. Identifier-free manifests expose only
+counts and cryptographic bindings. The new crawl changes no hypothesis,
+outcome, event definition, horizon, split, final quota or pass criterion.
