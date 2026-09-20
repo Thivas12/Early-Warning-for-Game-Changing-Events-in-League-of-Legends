@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import NDArray
 
+from league_ews.constants import RIFTHAZARD_MAX_CHAMPION_LEVEL
 from league_ews.timeline import Observation, ParticipantState, Position
 
 MAP_SCALE = 15000.0
@@ -55,7 +56,7 @@ def _participant_features(state: ParticipantState) -> list[float]:
         -1.0 if state.team_id == 100 else 1.0,
         state.total_gold / 20000.0,
         state.xp / 25000.0,
-        state.level / 18.0,
+        state.level / RIFTHAZARD_MAX_CHAMPION_LEVEL,
         state.lane_minions / 400.0,
         state.jungle_minions / 300.0,
         position.x / MAP_SCALE if position else 0.0,
