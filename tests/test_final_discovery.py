@@ -52,9 +52,17 @@ class FakePlatformFetcher:
 
 
 class FakeRegionalFetcher:
-    def __init__(self, platform_id: str, pilot_id: str, *, fail: bool = False) -> None:
+    def __init__(
+        self,
+        platform_id: str,
+        pilot_id: str,
+        *,
+        foreign_platform_id: str | None = None,
+        fail: bool = False,
+    ) -> None:
         self.platform_id = platform_id
         self.pilot_id = pilot_id
+        self.foreign_platform_id = foreign_platform_id
         self.fail = fail
         self.calls = 0
 
@@ -78,6 +86,10 @@ class FakeRegionalFetcher:
             material = f"{puuid}:{start_time}:{index}".encode()
             numeric = int(hashlib.sha256(material).hexdigest()[:15], 16)
             identifiers.append(f"{self.platform_id}_{numeric}")
+        if self.foreign_platform_id is not None:
+            material = f"foreign:{puuid}:{start_time}".encode()
+            numeric = int(hashlib.sha256(material).hexdigest()[:15], 16)
+            identifiers.append(f"{self.foreign_platform_id}_{numeric}")
         return tuple(identifiers)
 
 
@@ -181,8 +193,8 @@ def test_final_candidate_discovery_excludes_pilot_and_resumes(
 
     euw_platform = FakePlatformFetcher("EUW1")
     na_platform = FakePlatformFetcher("NA1")
-    europe = FakeRegionalFetcher("EUW1", "EUW1_999")
-    americas = FakeRegionalFetcher("NA1", "NA1_888")
+    europe = FakeRegionalFetcher("EUW1", "EUW1_999", foreign_platform_id="NA1")
+    americas = FakeRegionalFetcher("NA1", "NA1_888", foreign_platform_id="EUW1")
     progress: list[str] = []
     manifest = discover_final_candidate_pool(
         FRAME,
@@ -217,6 +229,10 @@ def test_final_candidate_discovery_excludes_pilot_and_resumes(
     assert "EUW1_999" not in candidate_ids
     assert "NA1_888" not in candidate_ids
     assert {cell["minimum_candidates"] for cell in pool["cells"]} == {4}
+    for platform_id in ("EUW1", "NA1"):
+        for path in (output / "histories" / platform_id).rglob("*.json"):
+            history = json.loads(path.read_text(encoding="utf-8"))
+            assert all(match_id.startswith(f"{platform_id}_") for match_id in history["match_ids"])
 
     validation = validate_final_candidate_pool(
         FRAME,

@@ -237,3 +237,30 @@ features, predictions or performance measures. Its identifier-bearing caches
 remain private, atomic and resumable. Identifier-free manifests expose only
 counts and cryptographic bindings. The new crawl changes no hypothesis,
 outcome, event definition, horizon, split, final quota or pass criterion.
+
+## 2026-09-21 — filter transferred-account history by platform
+
+**Stage:** during ID-only final candidate discovery, after two complete
+balanced waves; before requesting or inspecting any final match detail,
+timeline, event label, feature, prediction or model result.
+
+A subsequent Match-V5 history response contained a well-formed match ID whose
+platform prefix differed from the current ladder platform. This is consistent
+with Riot's
+[documented identifier behavior](https://www.riotgames.com/en/DevRel/player-universally-unique-identifiers-and-a-new-security-layer):
+a PUUID can remain associated with accounts across regions after a player
+transfer. The history endpoint is region-routed, so rejecting the entire
+bounded page would make a transferred ladder account halt the deterministic
+crawl.
+
+Discovery now validates every returned ID, rejects malformed values, and
+caches only IDs whose embedded platform prefix matches the registered
+route-platform cell. Valid off-platform IDs are discarded without replacement
+or extra pagination. Previously cached target-platform pages remain valid and
+resumable; the response that triggered the exception was never written.
+
+This correction makes the already-registered route-platform assignment
+executable for transferred accounts. It does not inspect outcomes or alter the
+frozen ladder order, query windows, one-page bound, balanced waves, two-times
+buffer, final quota, pilot exclusion, duration rule, hypothesis, outcome,
+horizon, split or pass criterion.
