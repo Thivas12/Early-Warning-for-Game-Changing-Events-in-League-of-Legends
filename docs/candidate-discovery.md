@@ -16,7 +16,10 @@ was frozen before any pilot candidate request.
    `20260915`, platform, identifier kind and identifier.
 4. Advance both platforms together in 32-player waves. For every included
    player, request one queue-420 Match-V5 ID page capped at 100 IDs for each of
-   the six frozen half-open UTC discovery windows.
+   the six frozen half-open UTC discovery windows. Because a PUUID can retain
+   matches from a previous platform after an account transfer, retain only
+   well-formed IDs whose platform prefix matches the registered platform. A
+   filtered ID is not replaced with another request or page.
 5. Globally deduplicate match IDs and stop after the first complete equal wave
    in which every route-window cell contains at least twice its pilot quota:
    834 candidates for each 417-match cell and 832 for each 416-match cell.

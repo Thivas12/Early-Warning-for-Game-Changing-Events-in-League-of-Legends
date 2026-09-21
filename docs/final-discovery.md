@@ -22,6 +22,13 @@ the sampling frame and processed in equal 32-player waves. For every member,
 the command requests one bounded queue-420 Match-V5 ID page for each of the six
 registered half-open patch windows.
 
+Match-V5 history is region-routed, while a PUUID can remain associated with
+accounts across platforms after a transfer. Each bounded response is therefore
+validated and reduced to well-formed match IDs carrying the cell's registered
+platform prefix before it is cached or counted. Off-platform IDs are discarded
+without replacement or additional pagination, so the frozen one-page request
+budget and outcome-blind stopping rule are unchanged.
+
 Before a cell count is evaluated, every frozen pilot match ID is removed. The
 command stops at the first complete balanced wave for which every cell has at
 least 6,000 remaining IDs, twice its final target. It may process at most 512

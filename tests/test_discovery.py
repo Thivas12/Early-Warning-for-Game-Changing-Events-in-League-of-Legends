@@ -80,8 +80,17 @@ class FakePlatformFetcher:
 
 
 class FakeRegionalFetcher:
-    def __init__(self, platform_id: str, *, fail: bool = False) -> None:
+    def __init__(
+        self,
+        platform_id: str,
+        *,
+        foreign_platform_id: str | None = None,
+        malformed_match_id: bool = False,
+        fail: bool = False,
+    ) -> None:
         self.platform_id = platform_id
+        self.foreign_platform_id = foreign_platform_id
+        self.malformed_match_id = malformed_match_id
         self.fail = fail
         self.calls = 0
 
@@ -105,6 +114,12 @@ class FakeRegionalFetcher:
             material = f"{puuid}:{start_time}:{index}".encode()
             numeric = int(hashlib.sha256(material).hexdigest()[:15], 16)
             identifiers.append(f"{self.platform_id}_{numeric}")
+        if self.foreign_platform_id is not None:
+            material = f"foreign:{puuid}:{start_time}".encode()
+            numeric = int(hashlib.sha256(material).hexdigest()[:15], 16)
+            identifiers.append(f"{self.foreign_platform_id}_{numeric}")
+        if self.malformed_match_id:
+            identifiers.append("not-a-match-id")
         return tuple(identifiers)
 
 
@@ -175,8 +190,8 @@ def test_discovery_preflight_requires_v2_scope(tmp_path) -> None:
 def test_candidate_discovery_is_balanced_private_and_resumable(tmp_path) -> None:
     euw_platform = FakePlatformFetcher("EUW1")
     na_platform = FakePlatformFetcher("NA1")
-    europe = FakeRegionalFetcher("EUW1")
-    americas = FakeRegionalFetcher("NA1")
+    europe = FakeRegionalFetcher("EUW1", foreign_platform_id="NA1")
+    americas = FakeRegionalFetcher("NA1", foreign_platform_id="EUW1")
     progress: list[str] = []
 
     manifest = discover_candidate_pool(
@@ -206,6 +221,10 @@ def test_candidate_discovery_is_balanced_private_and_resumable(tmp_path) -> None
     assert (tmp_path / "candidate-pool.json").is_file()
     assert (tmp_path / "discovery-manifest.json").is_file()
     assert not list(tmp_path.rglob("*.partial"))
+    for platform_id in ("EUW1", "NA1"):
+        for path in (tmp_path / "histories" / platform_id).rglob("*.json"):
+            history = json.loads(path.read_text(encoding="utf-8"))
+            assert all(match_id.startswith(f"{platform_id}_") for match_id in history["match_ids"])
 
     resumed = discover_candidate_pool(
         FRAME,
@@ -270,4 +289,22 @@ def test_discovery_rejects_partial_state_and_naive_timestamp(tmp_path) -> None:
             output_root=tmp_path,
             platform_fetchers=platform_fetchers,
             regional_fetchers=regional_fetchers,
+        )
+
+
+def test_discovery_rejects_malformed_history_match_id(tmp_path) -> None:
+    with pytest.raises(ValueError, match="malformed match ID"):
+        discover_candidate_pool(
+            FRAME,
+            PLAN,
+            output_root=tmp_path,
+            platform_fetchers={
+                "EUW1": FakePlatformFetcher("EUW1"),
+                "NA1": FakePlatformFetcher("NA1"),
+            },
+            regional_fetchers={
+                "europe": FakeRegionalFetcher("EUW1", malformed_match_id=True),
+                "americas": FakeRegionalFetcher("NA1"),
+            },
+            discovered_at=datetime(2026, 9, 15, 12, tzinfo=UTC),
         )

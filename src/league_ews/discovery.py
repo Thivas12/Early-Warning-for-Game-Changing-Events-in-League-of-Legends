@@ -16,6 +16,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from league_ews.authority import DISCOVERY_ENDPOINTS, collection_preflight
 from league_ews.riot import LadderTier
 from league_ews.sampling import (
+    MATCH_ID_PATTERN,
     SamplingFrame,
     load_registered_sampling_frame,
     order_candidate_match_ids,
@@ -718,9 +719,16 @@ def _load_or_fetch_history(
             start=plan.history.start_index,
             count=plan.history.count_per_player_window,
         )
+        if any(MATCH_ID_PATTERN.fullmatch(match_id) is None for match_id in match_ids):
+            raise ValueError("Match history returned a malformed match ID")
         expected_prefix = f"{platform_id}_"
-        if any(not match_id.startswith(expected_prefix) for match_id in match_ids):
-            raise ValueError("Match history returned an ID for a different platform")
+        # Match-V5 history is regional and a PUUID can retain matches from a
+        # previous platform after an account transfer. Keep the bounded page
+        # unchanged, but only assign IDs from the registered platform to this
+        # route-platform cell. Foreign IDs are not replaced or paginated.
+        platform_match_ids = (
+            match_id for match_id in match_ids if match_id.startswith(expected_prefix)
+        )
         history = HistoryPage(
             schema_version="riot-match-history-page-v1",
             frame_sha256=frame_sha256,
@@ -735,7 +743,7 @@ def _load_or_fetch_history(
             queue_id=plan.history.queue_id,
             start_index=plan.history.start_index,
             count_limit=plan.history.count_per_player_window,
-            match_ids=tuple(dict.fromkeys(match_ids)),
+            match_ids=tuple(dict.fromkeys(platform_match_ids)),
         )
         _atomic_write(path, _canonical_json(history.model_dump(mode="json")))
 
