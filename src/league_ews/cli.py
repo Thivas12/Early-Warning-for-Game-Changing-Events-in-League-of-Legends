@@ -28,6 +28,12 @@ from league_ews.final_discovery import (
     validate_final_candidate_pool,
     validate_final_discovery_plan,
 )
+from league_ews.final_selection import (
+    final_selection_preflight,
+    select_final_matches,
+    validate_final_selection_plan,
+    validate_frozen_final_selection,
+)
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.pilot_collection import (
     TimelineFetcher,
@@ -300,6 +306,99 @@ def _validate_final_candidate_pool(args: argparse.Namespace) -> int:
         args.pilot_discovery_root,
         args.pilot_selection_root,
         args.final_discovery_root,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _validate_final_selection_plan(args: argparse.Namespace) -> int:
+    report = validate_final_selection_plan(
+        args.plan,
+        args.sampling_frame,
+        args.final_discovery_plan,
+        args.duration_rule,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _preflight_final_selection(args: argparse.Namespace) -> int:
+    report = final_selection_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.final_selection_plan,
+        args.final_discovery_plan,
+        args.duration_rule,
+        args.duration_analysis,
+        args.pilot_discovery_plan,
+        args.pilot_discovery_root,
+        args.pilot_selection_root,
+        args.final_discovery_root,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _select_final(args: argparse.Namespace) -> int:
+    preflight = final_selection_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.final_selection_plan,
+        args.final_discovery_plan,
+        args.duration_rule,
+        args.duration_analysis,
+        args.pilot_discovery_plan,
+        args.pilot_discovery_root,
+        args.pilot_selection_root,
+        args.final_discovery_root,
+    )
+    if not preflight["passed"]:
+        _write_json(preflight, None)
+        return 2
+
+    frame, _ = load_registered_sampling_frame(args.sampling_frame)
+    pacer = RequestPacer(args.request_interval)
+    with ExitStack() as stack:
+        regional_fetchers: dict[str, DetailScreenFetcher] = {
+            route.regional_route: stack.enter_context(
+                RiotMatchClient.from_environment(
+                    regional_route=route.regional_route,
+                    pace=pacer,
+                )
+            )
+            for route in frame.route_platforms
+        }
+        manifest = select_final_matches(
+            args.sampling_frame,
+            args.final_selection_plan,
+            args.final_discovery_plan,
+            args.duration_rule,
+            args.duration_analysis,
+            args.pilot_discovery_plan,
+            args.pilot_discovery_root,
+            args.pilot_selection_root,
+            args.final_discovery_root,
+            output_root=args.output,
+            regional_fetchers=regional_fetchers,
+            max_new_requests=args.max_new_requests,
+            progress=lambda message: print(message, file=sys.stderr),
+        )
+    _write_json(manifest, None)
+    return 0 if manifest["complete"] else 2
+
+
+def _validate_final_selection(args: argparse.Namespace) -> int:
+    report = validate_frozen_final_selection(
+        args.sampling_frame,
+        args.final_selection_plan,
+        args.final_discovery_plan,
+        args.duration_rule,
+        args.duration_analysis,
+        args.pilot_discovery_plan,
+        args.pilot_discovery_root,
+        args.pilot_selection_root,
+        args.final_discovery_root,
+        args.final_selection_root,
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
@@ -645,6 +744,82 @@ def build_parser() -> argparse.ArgumentParser:
     final_pool.add_argument("--final-discovery-root", type=Path, required=True)
     final_pool.add_argument("--output", type=Path)
     final_pool.set_defaults(handler=_validate_final_candidate_pool)
+
+    final_selection_plan = subparsers.add_parser(
+        "validate-final-selection-plan",
+        help="validate the frozen final detail-screening and allocation contract",
+    )
+    final_selection_plan.add_argument("--plan", type=Path, required=True)
+    final_selection_plan.add_argument("--sampling-frame", type=Path, required=True)
+    final_selection_plan.add_argument("--final-discovery-plan", type=Path, required=True)
+    final_selection_plan.add_argument("--duration-rule", type=Path, required=True)
+    final_selection_plan.add_argument("--output", type=Path)
+    final_selection_plan.set_defaults(handler=_validate_final_selection_plan)
+
+    final_selection_preflight_parser = subparsers.add_parser(
+        "preflight-final-selection",
+        help="validate authority and all frozen inputs before final detail screening",
+    )
+    final_selection_preflight_parser.add_argument("--authority-record", type=Path, required=True)
+    final_selection_preflight_parser.add_argument("--sampling-frame", type=Path, required=True)
+    final_selection_preflight_parser.add_argument(
+        "--final-selection-plan", type=Path, required=True
+    )
+    final_selection_preflight_parser.add_argument(
+        "--final-discovery-plan", type=Path, required=True
+    )
+    final_selection_preflight_parser.add_argument("--duration-rule", type=Path, required=True)
+    final_selection_preflight_parser.add_argument("--duration-analysis", type=Path, required=True)
+    final_selection_preflight_parser.add_argument(
+        "--pilot-discovery-plan", type=Path, required=True
+    )
+    final_selection_preflight_parser.add_argument(
+        "--pilot-discovery-root", type=Path, required=True
+    )
+    final_selection_preflight_parser.add_argument(
+        "--pilot-selection-root", type=Path, required=True
+    )
+    final_selection_preflight_parser.add_argument(
+        "--final-discovery-root", type=Path, required=True
+    )
+    final_selection_preflight_parser.add_argument("--output", type=Path)
+    final_selection_preflight_parser.set_defaults(handler=_preflight_final_selection)
+
+    select_final = subparsers.add_parser(
+        "select-final",
+        help="screen candidate details and freeze the exact 36,000-match final sample",
+    )
+    select_final.add_argument("--authority-record", type=Path, required=True)
+    select_final.add_argument("--sampling-frame", type=Path, required=True)
+    select_final.add_argument("--final-selection-plan", type=Path, required=True)
+    select_final.add_argument("--final-discovery-plan", type=Path, required=True)
+    select_final.add_argument("--duration-rule", type=Path, required=True)
+    select_final.add_argument("--duration-analysis", type=Path, required=True)
+    select_final.add_argument("--pilot-discovery-plan", type=Path, required=True)
+    select_final.add_argument("--pilot-discovery-root", type=Path, required=True)
+    select_final.add_argument("--pilot-selection-root", type=Path, required=True)
+    select_final.add_argument("--final-discovery-root", type=Path, required=True)
+    select_final.add_argument("--output", type=Path, required=True)
+    select_final.add_argument("--request-interval", type=float, default=1.25)
+    select_final.add_argument("--max-new-requests", type=int)
+    select_final.set_defaults(handler=_select_final)
+
+    validate_final_selection = subparsers.add_parser(
+        "validate-final-selection",
+        help="validate the checksum-bound frozen final selection without network access",
+    )
+    validate_final_selection.add_argument("--sampling-frame", type=Path, required=True)
+    validate_final_selection.add_argument("--final-selection-plan", type=Path, required=True)
+    validate_final_selection.add_argument("--final-discovery-plan", type=Path, required=True)
+    validate_final_selection.add_argument("--duration-rule", type=Path, required=True)
+    validate_final_selection.add_argument("--duration-analysis", type=Path, required=True)
+    validate_final_selection.add_argument("--pilot-discovery-plan", type=Path, required=True)
+    validate_final_selection.add_argument("--pilot-discovery-root", type=Path, required=True)
+    validate_final_selection.add_argument("--pilot-selection-root", type=Path, required=True)
+    validate_final_selection.add_argument("--final-discovery-root", type=Path, required=True)
+    validate_final_selection.add_argument("--final-selection-root", type=Path, required=True)
+    validate_final_selection.add_argument("--output", type=Path)
+    validate_final_selection.set_defaults(handler=_validate_final_selection)
 
     selection_preflight = subparsers.add_parser(
         "preflight-pilot-selection",

@@ -39,6 +39,14 @@ The two-times pool is a screening reserve, not a change to the final sample
 size. Later detail screening must still enforce the registered population,
 the inclusive 180-second rule and exactly 3,000 selected matches per cell.
 
+The actual crawl reached the first complete stopping point after nine balanced
+waves (288 players per platform). It retained 110,838 unique candidate IDs and
+observed 4,292 frozen-pilot IDs, which were removed before cell counts. The
+smallest cell contained 6,574 candidates. These aggregate results and the exact
+manifest/pool checksums are frozen in
+`configs/rifthazard-final-selection-plan.yaml`; the next stage is specified in
+`docs/final-selection.md`.
+
 ## Commands and private outputs
 
 Validate the public plan and all local private bindings before any request:

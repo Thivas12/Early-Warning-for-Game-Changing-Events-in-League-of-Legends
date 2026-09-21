@@ -229,6 +229,32 @@ All identifier-bearing outputs remain ignored under
 `data/private/final-discovery`. This stage fetches IDs only, not match details
 or timelines. See `docs/final-discovery.md`.
 
+The completed crawl reached its first valid stop after nine balanced waves:
+110,838 pilot-excluded candidate IDs across all 12 cells. Before requesting a
+final detail, validate the post-discovery selection freeze and its exact local
+bindings:
+
+```bash
+make validate-final-selection-plan
+make preflight-final-selection
+```
+
+Then start or resume the deterministic detail-only screen and validate the
+frozen 36,000-match result:
+
+```bash
+make select-final
+make validate-final-selection
+```
+
+The selector reads candidates in one seeded global order, enforces the frozen
+`gameDuration >= 180` rule and the other registered Match-V5 eligibility
+fields, uses detail `gameVersion` for authoritative patch assignment, and
+stops only at exactly 3,000 matches in every route-patch cell. It never requests
+a timeline. Detail records, selected IDs and manifests remain ignored under
+`data/private/final-selection`; reruns verify and resume the exact contiguous
+prefix. See `docs/final-selection.md`.
+
 Processed match files retain match IDs for provenance but contain only the
 supported causal timeline fields and labels, with no player identifier fields
 such as PUUIDs. They remain ignored until redistribution is explicitly approved.

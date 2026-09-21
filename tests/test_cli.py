@@ -526,6 +526,200 @@ def test_final_candidate_pool_validation_cli_writes_safe_report(
     assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
 
 
+def _final_selection_args(tmp_path) -> list[str]:
+    return [
+        "--sampling-frame",
+        "configs/rifthazard-sampling-frame.yaml",
+        "--final-selection-plan",
+        "configs/rifthazard-final-selection-plan.yaml",
+        "--final-discovery-plan",
+        "configs/rifthazard-final-discovery-plan.yaml",
+        "--duration-rule",
+        "configs/rifthazard-duration-rule.yaml",
+        "--duration-analysis",
+        str(tmp_path / "duration.json"),
+        "--pilot-discovery-plan",
+        "configs/rifthazard-discovery-plan.yaml",
+        "--pilot-discovery-root",
+        str(tmp_path / "pilot-discovery"),
+        "--pilot-selection-root",
+        str(tmp_path / "pilot-selection"),
+        "--final-discovery-root",
+        str(tmp_path / "final-discovery"),
+    ]
+
+
+def test_final_selection_plan_validation_cli_writes_report(tmp_path) -> None:
+    output = tmp_path / "final-selection-plan.json"
+    exit_code = main(
+        [
+            "validate-final-selection-plan",
+            "--plan",
+            "configs/rifthazard-final-selection-plan.yaml",
+            "--sampling-frame",
+            "configs/rifthazard-sampling-frame.yaml",
+            "--final-discovery-plan",
+            "configs/rifthazard-final-discovery-plan.yaml",
+            "--duration-rule",
+            "configs/rifthazard-duration-rule.yaml",
+            "--output",
+            str(output),
+        ]
+    )
+
+    report = json.loads(output.read_text(encoding="utf-8"))
+    assert exit_code == 0
+    assert report["passed"] is True
+    assert report["summary"]["target_matches"] == 36_000
+
+
+def test_final_selection_preflight_cli_writes_private_report(tmp_path, monkeypatch) -> None:
+    output = tmp_path / "final-selection-preflight.json"
+    monkeypatch.setattr(
+        "league_ews.cli.final_selection_preflight",
+        lambda *args: {"passed": True, "bindings": {"target_matches": 36_000}},
+    )
+    exit_code = main(
+        [
+            "preflight-final-selection",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            *_final_selection_args(tmp_path),
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 0
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
+
+
+def test_select_final_repeats_gate_before_client_creation(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    monkeypatch.setattr(
+        "league_ews.cli.final_selection_preflight",
+        lambda *args, **kwargs: {"passed": False},
+    )
+
+    def forbidden_client(*args: object, **kwargs: object) -> None:
+        raise AssertionError("Riot clients must not be created before final selection preflight")
+
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient.from_environment", forbidden_client)
+    exit_code = main(
+        [
+            "select-final",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            *_final_selection_args(tmp_path),
+            "--output",
+            str(tmp_path / "final-selection"),
+        ]
+    )
+
+    assert exit_code == 2
+    assert json.loads(capsys.readouterr().out)["passed"] is False
+
+
+def test_select_final_builds_regional_clients_after_preflight(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    events: list[str] = []
+    monkeypatch.setattr(
+        "league_ews.cli.final_selection_preflight",
+        lambda *args, **kwargs: {"passed": True},
+    )
+
+    class FakeClient:
+        def __init__(self, route: str) -> None:
+            self.route = route
+
+        @classmethod
+        def from_environment(cls, *, regional_route: str, pace):
+            assert callable(pace)
+            events.append(f"create:{regional_route}")
+            return cls(regional_route)
+
+        def __enter__(self):
+            events.append(f"enter:{self.route}")
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            events.append(f"exit:{self.route}")
+
+    def fake_select(
+        *args,
+        output_root,
+        regional_fetchers,
+        max_new_requests,
+        progress,
+    ):
+        events.append("select")
+        assert len(args) == 9
+        assert output_root == tmp_path / "final-selection"
+        assert set(regional_fetchers) == {"europe", "americas"}
+        assert max_new_requests == 250
+        progress("safe final selection progress")
+        return {"complete": True, "selected_match_ids": 36_000}
+
+    monkeypatch.setattr("league_ews.cli.RiotMatchClient", FakeClient)
+    monkeypatch.setattr("league_ews.cli.select_final_matches", fake_select)
+    exit_code = main(
+        [
+            "select-final",
+            "--authority-record",
+            str(tmp_path / "authority.yaml"),
+            *_final_selection_args(tmp_path),
+            "--output",
+            str(tmp_path / "final-selection"),
+            "--request-interval",
+            "0",
+            "--max-new-requests",
+            "250",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert json.loads(captured.out)["selected_match_ids"] == 36_000
+    assert "safe final selection progress" in captured.err
+    assert events[:4] == [
+        "create:europe",
+        "enter:europe",
+        "create:americas",
+        "enter:americas",
+    ]
+    assert events[4] == "select"
+
+
+def test_validate_frozen_final_selection_cli_writes_report(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    output = tmp_path / "final-selection-validation.json"
+    monkeypatch.setattr(
+        "league_ews.cli.validate_frozen_final_selection",
+        lambda *args: {"passed": True, "summary": {"selected_match_ids": 36_000}},
+    )
+    exit_code = main(
+        [
+            "validate-final-selection",
+            *_final_selection_args(tmp_path),
+            "--final-selection-root",
+            str(tmp_path / "final-selection"),
+            "--output",
+            str(output),
+        ]
+    )
+
+    assert exit_code == 0
+    assert json.loads(output.read_text(encoding="utf-8"))["passed"] is True
+
+
 def test_pilot_selection_preflight_cli_fails_closed(tmp_path) -> None:
     output = tmp_path / "selection-preflight.json"
     exit_code = main(
