@@ -186,13 +186,21 @@ def test_discovery_error_redacts_player_identifier_and_validates_shapes() -> Non
         )
 
     class BrokenTransport:
+        def __init__(self) -> None:
+            self.calls = 0
+
         def get(self, url: str, *, headers: dict[str, str]) -> TransportResponse:
+            self.calls += 1
             raise OSError(f"network failed for {url}")
 
+    delays: list[float] = []
+    broken = BrokenTransport()
     disconnected = RiotMatchClient(
         "secret",
         regional_route="europe",
-        transport=BrokenTransport(),
+        retry_policy=RetryPolicy(max_attempts=3),
+        transport=broken,
+        sleep=delays.append,
     )
     with pytest.raises(RiotAPIError) as transport_error:
         disconnected.get_match_ids_by_puuid(
@@ -202,6 +210,34 @@ def test_discovery_error_redacts_player_identifier_and_validates_shapes() -> Non
             queue_id=420,
         )
     assert private_puuid not in str(transport_error.value)
+    assert broken.calls == 3
+    assert delays == [1.0, 2.0]
+
+
+def test_riot_client_recovers_from_transient_transport_failure() -> None:
+    class FlakyTransport:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def get(self, url: str, *, headers: dict[str, str]) -> TransportResponse:
+            self.calls += 1
+            if self.calls == 1:
+                raise OSError("temporary network interruption")
+            return _response(200, {"metadata": {"matchId": "EUW1_1"}})
+
+    delays: list[float] = []
+    transport = FlakyTransport()
+    client = RiotMatchClient(
+        "secret",
+        regional_route="europe",
+        retry_policy=RetryPolicy(max_attempts=2),
+        transport=transport,
+        sleep=delays.append,
+    )
+
+    assert client.get_match("EUW1_1")["metadata"]["matchId"] == "EUW1_1"
+    assert transport.calls == 2
+    assert delays == [1.0]
 
 
 def test_invalid_retry_after_falls_back_to_exponential_delay() -> None:

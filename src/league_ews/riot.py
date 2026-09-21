@@ -189,7 +189,11 @@ class _RiotAPIClient:
                     },
                 )
             except OSError:
-                raise RiotAPIError(f"Riot API transport failed for {safe_endpoint}") from None
+                if attempt == self._retry.max_attempts:
+                    raise RiotAPIError(f"Riot API transport failed for {safe_endpoint}") from None
+                delay = self._retry.base_delay_seconds * (2 ** (attempt - 1))
+                self._sleep(min(delay, self._retry.max_delay_seconds))
+                continue
             if response.status_code == 200:
                 try:
                     payload = json.loads(response.body)
