@@ -1,0 +1,70 @@
+schema_version: league-ews-final-selection-plan-v1
+plan_id: rifthazard-final-selection-2026-09-21
+frozen_on: 2026-09-21
+status: frozen-after-final-candidate-validation-before-final-detail-screening
+
+sampling_frame:
+  frame_id: rifthazard-2026-09-15
+  sha256: 2355ec26182aa6862e8a110ff94f0ab402e9a4e77c0a52a0a5c81f1892033f6b
+
+duration_rule:
+  rule_id: rifthazard-duration-2026-09-20
+  rule_sha256: b957947597e9fa64dec89bcd2b762ca9c37f4d3941ff26be02e59c09cf8856fe
+  final_minimum_seconds: 180
+  comparison: greater-than-or-equal
+
+pilot_selection:
+  selected_pool_sha256: 05f566c3c36d5402a9f2ef26bd3c63dae33737bd550dae0c735dbe5f87a656eb
+  selected_match_ids: 5000
+  exclude_from_final: true
+
+final_discovery:
+  schema_version: riot-final-candidate-discovery-manifest-v1
+  plan_id: rifthazard-final-discovery-2026-09-20
+  plan_sha256: e8fcdf0781e080fd19259db77ce2304e946dd62ed9d47296924a731c78794c1a
+  manifest_sha256: f8a9afd2332632a59f774bd841f31a40f349cd104414481c4cecb5a15762cdb0
+  candidate_pool_sha256: b452e60496dc4bb38e4f7d79a2057aaf2a6e05f93ff826859695dfeda1fedecc
+  candidate_match_ids: 110838
+  excluded_pilot_match_ids_discovered: 4292
+  players_processed_per_platform: 288
+  balanced_waves_completed: 9
+  cells:
+    - {regional_route: europe, platform_id: EUW1, game_version_patch: "16.12", candidate_count: 9234}
+    - {regional_route: americas, platform_id: NA1, game_version_patch: "16.12", candidate_count: 6574}
+    - {regional_route: europe, platform_id: EUW1, game_version_patch: "16.13", candidate_count: 12116}
+    - {regional_route: americas, platform_id: NA1, game_version_patch: "16.13", candidate_count: 9486}
+    - {regional_route: europe, platform_id: EUW1, game_version_patch: "16.14", candidate_count: 8442}
+    - {regional_route: americas, platform_id: NA1, game_version_patch: "16.14", candidate_count: 7811}
+    - {regional_route: europe, platform_id: EUW1, game_version_patch: "16.15", candidate_count: 9604}
+    - {regional_route: americas, platform_id: NA1, game_version_patch: "16.15", candidate_count: 8302}
+    - {regional_route: europe, platform_id: EUW1, game_version_patch: "16.16", candidate_count: 10611}
+    - {regional_route: americas, platform_id: NA1, game_version_patch: "16.16", candidate_count: 8739}
+    - {regional_route: europe, platform_id: EUW1, game_version_patch: "16.17", candidate_count: 10699}
+    - {regional_route: americas, platform_id: NA1, game_version_patch: "16.17", candidate_count: 9220}
+
+selection:
+  stage: final
+  target_matches: 36000
+  matches_per_cell: 3000
+  registered_cells: 12
+  candidate_order: seeded-sha256-global-prefix-v1
+  authoritative_cell_source: match-v5-detail-platform-gameVersion-v1
+  provisional_patch_mismatch: reassign-within-registered-frame-v1
+  unavailable_detail: reject-and-continue-v1
+  stopping_rule: first-3000-eligible-per-authoritative-cell-v1
+
+controls:
+  eligibility_source: sampling-frame-plus-duration-rule-v1
+  inspect_timeline: false
+  inspect_event_labels: false
+  inspect_winner: false
+  inspect_features: false
+  inspect_model_outputs: false
+  inspect_downstream_performance: false
+
+outputs:
+  storage: private
+  detail_cache: atomic-contiguous-global-prefix-v1
+  selected_pool: checksum-bound-exact-cell-allocation-v1
+  identifiers_in_public_summary: false
+  redistribution: not-authorized

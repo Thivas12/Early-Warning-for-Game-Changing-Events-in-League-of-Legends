@@ -93,3 +93,28 @@ def test_final_discovery_plan_is_pilot_isolated_and_outcome_blind() -> None:
     assert stopping["inspect_labels_before_stop"] is False
     assert pilot["selected_match_ids"] == 5_000
     assert duration["final_minimum_seconds"] == 180
+
+
+def test_final_selection_plan_is_exact_duration_bound_and_outcome_blind() -> None:
+    plan = _yaml("configs/rifthazard-final-selection-plan.yaml")
+    discovery = plan["final_discovery"]
+    selection = plan["selection"]
+    controls = plan["controls"]
+    duration = plan["duration_rule"]
+    pilot = plan["pilot_selection"]
+    assert isinstance(discovery, dict)
+    assert isinstance(selection, dict)
+    assert isinstance(controls, dict)
+    assert isinstance(duration, dict)
+    assert isinstance(pilot, dict)
+    assert discovery["candidate_match_ids"] == 110_838
+    assert discovery["balanced_waves_completed"] == 9
+    assert len(discovery["cells"]) == 12
+    assert selection["target_matches"] == 36_000
+    assert selection["matches_per_cell"] == 3_000
+    assert selection["candidate_order"] == "seeded-sha256-global-prefix-v1"
+    assert duration["final_minimum_seconds"] == 180
+    assert pilot["selected_match_ids"] == 5_000
+    assert pilot["exclude_from_final"] is True
+    assert all(value is False for key, value in controls.items() if key.startswith("inspect_"))
+    assert (ROOT / "docs" / "final-selection.md").is_file()

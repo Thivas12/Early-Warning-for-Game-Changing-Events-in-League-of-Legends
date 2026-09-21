@@ -15,7 +15,7 @@ Purpose: historical MSc exploration and non-commercial audit only.
 The exact audited file hash and findings are in `data/manifests/legacy-v5.yaml`
 and `reports/legacy-audit.json`.
 
-## Research v2 dataset (registered pilot collected; final not yet collected)
+## Research v2 dataset (pilot collected; final candidates validated)
 
 Unit of sampling: complete ranked match. Unit of prediction: a genuine timeline
 observation within a match. Unit of evaluation: a distinct future event.
@@ -46,7 +46,10 @@ selection controls are documented in `docs/sampling-frame.md`. The pilot-only
 duration inspection subsequently froze `gameDuration >= 180` seconds for final
 eligibility; the pilot remains excluded from final claims. A separate final
 candidate crawl removes all frozen pilot IDs before measuring its two-times
-per-cell screening reserve.
+per-cell screening reserve. That crawl completed after nine balanced waves
+with 110,838 remaining unique IDs and at least 6,000 in every cell. The final
+detail-screening rule is now frozen, but no final selected sample or timeline
+collection is claimed until its private checksum validation passes.
 
 ## Bias and representativeness
 

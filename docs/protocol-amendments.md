@@ -264,3 +264,35 @@ executable for transferred accounts. It does not inspect outcomes or alter the
 frozen ladder order, query windows, one-page bound, balanced waves, two-times
 buffer, final quota, pilot exclusion, duration rule, hypothesis, outcome,
 horizon, split or pass criterion.
+
+## 2026-09-21 — freeze final detail screening and exact selection
+
+**Stage:** after the completed final candidate pool passed its checksum and
+capacity validation; before any final Match-V5 detail, timeline, event label,
+feature, prediction or model result was requested or inspected.
+
+The first valid final-discovery stopping point occurred after nine balanced
+waves, or 288 processed ladder members per platform. After global
+deduplication and removal of every discovered frozen-pilot ID, the pool contains
+110,838 candidates. All 12 cells exceed the registered 6,000-ID reserve; cell
+counts range from 6,574 to 12,116. The identifier-free discovery manifest is
+bound as
+`f8a9afd2332632a59f774bd841f31a40f349cd104414481c4cecb5a15762cdb0`
+and the private candidate pool as
+`b452e60496dc4bb38e4f7d79a2057aaf2a6e05f93ff826859695dfeda1fedecc`.
+
+The new public supplement
+`configs/rifthazard-final-selection-plan.yaml` freezes the next stage against
+those exact artifacts, the immutable sampling frame, the inclusive 180-second
+duration rule and the frozen 5,000-match pilot exclusion. All candidates enter
+one seeded SHA-256 order using IDs only. Detail `platformId` and `gameVersion`
+provide authoritative cell assignment; other frame fields and
+`info.gameDuration >= 180` determine eligibility. A 404 or ineligible detail is
+skipped, and the first 3,000 eligible matches for each authoritative cell are
+selected. Screening stops only when all 12 quotas are exact.
+
+Detail records are private, atomic and resumable, and are retained so selected
+payloads can be reused during later timeline collection. Timelines, event
+labels, winners, model features, predictions and downstream performance are
+forbidden selection inputs. This executable selection stage changes no
+hypothesis, event definition, horizon, split, final quota or pass criterion.

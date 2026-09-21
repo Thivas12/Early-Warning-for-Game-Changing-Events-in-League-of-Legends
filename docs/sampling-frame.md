@@ -90,7 +90,13 @@ The final candidate expansion is separately frozen in
 `configs/rifthazard-final-discovery-plan.yaml`. It removes the exact 5,000
 pilot IDs before applying its pre-detail stopping rule, requires 6,000
 candidates per route-patch cell and leaves the registered final allocation at
-3,000 matches per cell. See `docs/final-discovery.md`.
+3,000 matches per cell. It completed at nine balanced waves with 110,838
+globally deduplicated remaining candidates. The subsequent selection contract
+in `configs/rifthazard-final-selection-plan.yaml` binds that exact manifest and
+pool before any final detail request. It screens one seeded global candidate
+prefix, assigns cells from detail `platformId` and `gameVersion`, enforces the
+inclusive duration minimum and stops only at all 12 exact quotas. See
+`docs/final-discovery.md` and `docs/final-selection.md`.
 
 Authority schema v2 can scope the three League-V4 ladder endpoints,
 Summoner-V4 by summoner ID, Match-V5 IDs-by-PUUID, Match-V5 detail/timeline and

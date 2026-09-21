@@ -142,6 +142,25 @@ class CandidateReference:
     platform_id: str
 
 
+class DetailScreenBound(Protocol):
+    """Common provenance surface for pilot and final detail screening."""
+
+    @property
+    def frame(self) -> SamplingFrame: ...
+
+    @property
+    def frame_sha256(self) -> str: ...
+
+    @property
+    def discovery_manifest_sha256(self) -> str: ...
+
+    @property
+    def candidate_pool_sha256(self) -> str: ...
+
+    @property
+    def ordered_candidates(self) -> tuple[CandidateReference, ...]: ...
+
+
 @dataclass(frozen=True)
 class BoundCandidatePool:
     frame: SamplingFrame
@@ -164,6 +183,7 @@ class ScreenOutcome:
     eligible_cell: tuple[str, str, str] | None
     game_version: str | None
     game_creation_ms: int | None
+    game_duration_seconds: int | None
     rejection_reasons: tuple[str, ...]
 
 
@@ -460,6 +480,7 @@ def _classify_detail(
     frame: SamplingFrame,
     *,
     screen_record_sha256: str,
+    minimum_duration_seconds: int | None = None,
 ) -> ScreenOutcome:
     if record.fetch_status == "not-found":
         if record.payload is not None:
@@ -472,6 +493,7 @@ def _classify_detail(
             eligible_cell=None,
             game_version=None,
             game_creation_ms=None,
+            game_duration_seconds=None,
             rejection_reasons=("not-found",),
         )
     if record.payload is None:
@@ -489,6 +511,7 @@ def _classify_detail(
             record.candidate_rank_sha256,
             screen_record_sha256,
             _sha256(_canonical_json(payload)),
+            None,
             None,
             None,
             None,
@@ -531,6 +554,18 @@ def _classify_detail(
     if game_creation_ms <= 0:
         reasons_list.append("game-creation")
 
+    raw_duration = info.get("gameDuration")
+    game_duration_seconds = (
+        raw_duration
+        if isinstance(raw_duration, int) and not isinstance(raw_duration, bool) and raw_duration > 0
+        else 0
+    )
+    if minimum_duration_seconds is not None:
+        if game_duration_seconds <= 0:
+            reasons_list.append("game-duration")
+        elif game_duration_seconds < minimum_duration_seconds:
+            reasons_list.append("duration-minimum")
+
     eligible_cell = None
     if not reasons_list:
         eligible_cell = (record.regional_route, record.platform_id, game_patch)
@@ -542,11 +577,17 @@ def _classify_detail(
         eligible_cell=eligible_cell,
         game_version=game_version or None,
         game_creation_ms=game_creation_ms or None,
+        game_duration_seconds=game_duration_seconds or None,
         rejection_reasons=tuple(reasons_list),
     )
 
 
-def _load_cached_outcomes(root: Path, bound: BoundCandidatePool) -> list[ScreenOutcome]:
+def _load_cached_outcomes(
+    root: Path,
+    bound: DetailScreenBound,
+    *,
+    minimum_duration_seconds: int | None = None,
+) -> list[ScreenOutcome]:
     if list(root.rglob("*.partial")):
         raise ValueError("Pilot-selection cache contains an incomplete partial file")
     paths = set((root / "details").rglob("*.json"))
@@ -581,17 +622,23 @@ def _load_cached_outcomes(root: Path, bound: BoundCandidatePool) -> list[ScreenO
         if not expected:
             raise ValueError("Detail-screen cache record does not match its frozen candidate")
         outcomes.append(
-            _classify_detail(record, bound.frame, screen_record_sha256=_sha256(content))
+            _classify_detail(
+                record,
+                bound.frame,
+                screen_record_sha256=_sha256(content),
+                minimum_duration_seconds=minimum_duration_seconds,
+            )
         )
     return outcomes
 
 
 def _new_screen_record(
-    bound: BoundCandidatePool,
+    bound: DetailScreenBound,
     reference: CandidateReference,
     payload: Mapping[str, Any] | None,
     *,
     fetched_at: datetime,
+    minimum_duration_seconds: int | None = None,
 ) -> tuple[bytes, ScreenOutcome]:
     record = DetailScreenRecord(
         schema_version=DETAIL_SCREEN_SCHEMA_VERSION,
@@ -607,7 +654,12 @@ def _new_screen_record(
         payload=dict(payload) if payload is not None else None,
     )
     content = _canonical_json(record.model_dump(mode="json"))
-    outcome = _classify_detail(record, bound.frame, screen_record_sha256=_sha256(content))
+    outcome = _classify_detail(
+        record,
+        bound.frame,
+        screen_record_sha256=_sha256(content),
+        minimum_duration_seconds=minimum_duration_seconds,
+    )
     return content, outcome
 
 
