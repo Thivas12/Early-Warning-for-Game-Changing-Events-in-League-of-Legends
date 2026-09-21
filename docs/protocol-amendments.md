@@ -296,3 +296,21 @@ payloads can be reused during later timeline collection. Timelines, event
 labels, winners, model features, predictions and downstream performance are
 forbidden selection inputs. This executable selection stage changes no
 hypothesis, event definition, horizon, split, final quota or pass criterion.
+
+## 2026-09-21 — retry transient Riot transport failures
+
+**Stage:** during final detail screening, after 3,200 complete records had been
+cached; before any final timeline, event label, feature, prediction or model
+result was requested or inspected.
+
+An endpoint transport interruption stopped a long-running selection command.
+The shared Riot client already retried HTTP 429 and 5xx responses, but an
+operating-system transport error stopped immediately. Transport errors now use
+the same bounded five-attempt exponential retry policy. Only a successful 200
+response or explicit 404 marker can become a detail-screen record; failed
+attempts write nothing.
+
+The 3,200 existing records remain the exact atomic prefix and are reused on
+resume. This resilience correction changes no candidate order, eligibility
+rule, authoritative cell assignment, quota, duration rule, timeline boundary,
+hypothesis, outcome, horizon, split or pass criterion.
