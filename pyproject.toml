@@ -13,7 +13,7 @@ authors = [{ name = "Keerthivasan Kannan" }]
 dependencies = [
   "joblib>=1.4,<2",
   "numpy>=2.0,<3",
-  "pandas>=2.2,<3",
+  "pandas>=2.2,<4",
   "pydantic>=2.10,<3",
   "PyYAML>=6.0,<7",
   "scikit-learn>=1.5,<2",
@@ -23,7 +23,7 @@ dependencies = [
 research = [
   "matplotlib>=3.9,<4",
   "mlflow>=3.0,<4",
-  "pyarrow>=18,<24",
+  "pyarrow>=18,<26",
 ]
 graph = [
   "torch>=2.6,<3",
@@ -32,7 +32,7 @@ graph = [
 
 [dependency-groups]
 dev = [
-  "mypy>=1.15,<2",
+  "mypy>=1.15,<3",
   "pandas-stubs>=2.2",
   "pytest>=8.3,<10",
   "pytest-cov>=6,<8",
