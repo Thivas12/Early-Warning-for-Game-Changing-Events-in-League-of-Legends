@@ -22,6 +22,13 @@ from league_ews.discovery import (
 )
 from league_ews.duration import analyze_pilot_duration
 from league_ews.duration_rule import validate_duration_rule
+from league_ews.final_collection import (
+    TimelineFetcher as FinalTimelineFetcher,
+)
+from league_ews.final_collection import (
+    collect_selected_final_bundles,
+    final_collection_preflight,
+)
 from league_ews.final_discovery import (
     discover_final_candidate_pool,
     final_candidate_discovery_preflight,
@@ -404,6 +411,74 @@ def _validate_final_selection(args: argparse.Namespace) -> int:
     return 0 if report["passed"] else 2
 
 
+def _preflight_final_collection(args: argparse.Namespace) -> int:
+    report = final_collection_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.final_selection_plan,
+        args.final_discovery_plan,
+        args.duration_rule,
+        args.duration_analysis,
+        args.pilot_discovery_plan,
+        args.pilot_discovery_root,
+        args.pilot_selection_root,
+        args.final_discovery_root,
+        args.final_selection_root,
+    )
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
+def _collect_selected_final(args: argparse.Namespace) -> int:
+    preflight = final_collection_preflight(
+        args.authority_record,
+        args.sampling_frame,
+        args.final_selection_plan,
+        args.final_discovery_plan,
+        args.duration_rule,
+        args.duration_analysis,
+        args.pilot_discovery_plan,
+        args.pilot_discovery_root,
+        args.pilot_selection_root,
+        args.final_discovery_root,
+        args.final_selection_root,
+    )
+    if not preflight["passed"]:
+        _write_json(preflight, None)
+        return 2
+
+    frame, _ = load_registered_sampling_frame(args.sampling_frame)
+    pacer = RequestPacer(args.request_interval)
+    with ExitStack() as stack:
+        regional_fetchers: dict[str, FinalTimelineFetcher] = {
+            route.regional_route: stack.enter_context(
+                RiotMatchClient.from_environment(
+                    regional_route=route.regional_route,
+                    pace=pacer,
+                )
+            )
+            for route in frame.route_platforms
+        }
+        binding = collect_selected_final_bundles(
+            args.sampling_frame,
+            args.final_selection_plan,
+            args.final_discovery_plan,
+            args.duration_rule,
+            args.duration_analysis,
+            args.pilot_discovery_plan,
+            args.pilot_discovery_root,
+            args.pilot_selection_root,
+            args.final_discovery_root,
+            args.final_selection_root,
+            output_root=args.output,
+            regional_fetchers=regional_fetchers,
+            max_new_requests=args.max_new_requests,
+            progress=lambda message: print(message, file=sys.stderr),
+        )
+    _write_json(binding, None)
+    return 0 if binding["complete"] else 2
+
+
 def _preflight_pilot_selection(args: argparse.Namespace) -> int:
     report = pilot_selection_preflight(
         args.authority_record,
@@ -600,6 +675,20 @@ def _validate_duration_rule(args: argparse.Namespace) -> int:
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
+
+
+def _add_final_collection_provenance_args(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--authority-record", type=Path, required=True)
+    parser.add_argument("--sampling-frame", type=Path, required=True)
+    parser.add_argument("--final-selection-plan", type=Path, required=True)
+    parser.add_argument("--final-discovery-plan", type=Path, required=True)
+    parser.add_argument("--duration-rule", type=Path, required=True)
+    parser.add_argument("--duration-analysis", type=Path, required=True)
+    parser.add_argument("--pilot-discovery-plan", type=Path, required=True)
+    parser.add_argument("--pilot-discovery-root", type=Path, required=True)
+    parser.add_argument("--pilot-selection-root", type=Path, required=True)
+    parser.add_argument("--final-discovery-root", type=Path, required=True)
+    parser.add_argument("--final-selection-root", type=Path, required=True)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -820,6 +909,24 @@ def build_parser() -> argparse.ArgumentParser:
     validate_final_selection.add_argument("--final-selection-root", type=Path, required=True)
     validate_final_selection.add_argument("--output", type=Path)
     validate_final_selection.set_defaults(handler=_validate_final_selection)
+
+    preflight_final_collection = subparsers.add_parser(
+        "preflight-final-collection",
+        help="validate authority and the frozen final selection before timeline requests",
+    )
+    _add_final_collection_provenance_args(preflight_final_collection)
+    preflight_final_collection.add_argument("--output", type=Path)
+    preflight_final_collection.set_defaults(handler=_preflight_final_collection)
+
+    collect_final = subparsers.add_parser(
+        "collect-selected-final",
+        help="resume timeline collection for the exact frozen final sample",
+    )
+    _add_final_collection_provenance_args(collect_final)
+    collect_final.add_argument("--output", type=Path, required=True)
+    collect_final.add_argument("--request-interval", type=float, default=1.25)
+    collect_final.add_argument("--max-new-requests", type=int)
+    collect_final.set_defaults(handler=_collect_selected_final)
 
     selection_preflight = subparsers.add_parser(
         "preflight-pilot-selection",

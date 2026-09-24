@@ -255,6 +255,21 @@ a timeline. Detail records, selected IDs and manifests remain ignored under
 `data/private/final-selection`; reruns verify and resume the exact contiguous
 prefix. See `docs/final-selection.md`.
 
+After the final selection is frozen and validated, gate and materialize its
+exact 36,000 timelines with:
+
+```bash
+make validate-final-selection
+make preflight-final-collection
+make collect-selected-final
+```
+
+The final collector reuses checksum-bound screening details, requests only
+timelines, and resumes a verified contiguous prefix under
+`data/raw/registered-final`. Use `--max-new-requests` with the full CLI command
+for bounded sessions; exit code 2 means the checkpoint is consistent but the
+sample is incomplete. See `docs/final-collection.md`.
+
 Processed match files retain match IDs for provenance but contain only the
 supported causal timeline fields and labels, with no player identifier fields
 such as PUUIDs. They remain ignored until redistribution is explicitly approved.
