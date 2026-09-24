@@ -171,10 +171,24 @@ complete the registered two-route, six-patch G2 gate. If a spot-check record is
 supplied but is stale, incomplete or invalid, validation returns exit code 2
 even when every automated raw-integrity check passes.
 
-The immutable pre-pilot frame leaves its duration field unset. Final-stage
-commands must therefore also supply the frozen post-pilot supplement and its
-private analysis binding; without both, the final 36,000-match workflow remains
-blocked.
+The pre-pilot frame intentionally blocks `--sampling-stage final`: the minimum
+duration rule is still unset. Freeze that rule in a post-pilot amendment before
+collecting or validating the final 36,000-match sample.
+
+After the final selection is frozen and validated, gate and materialize its
+exact 36,000 timelines with:
+
+```bash
+make validate-final-selection
+make preflight-final-collection
+make collect-selected-final
+```
+
+The final collector reuses checksum-bound screening details, requests only
+timelines, and resumes a verified contiguous prefix under
+`data/raw/registered-final`. Use `--max-new-requests` with the full CLI command
+for bounded sessions; exit code 2 means the checkpoint is consistent but the
+sample is incomplete. See `docs/final-collection.md`.
 
 Normalize the private pairs and build exact labels with:
 
@@ -197,63 +211,8 @@ This repeats registered-pilot validation and writes the ignored
 `data/private/pilot-duration-analysis.json`. Only Match-V5 `gameDuration` and
 the two surrender flags enter the diagnostic; timeline events, labels, winners
 and model outputs do not. Candidate minimums are reported descriptively and do
-not become a rule automatically. The registered 180-second decision is frozen
-in `configs/rifthazard-duration-rule.yaml`. Bind that public supplement back to
-the exact local report with:
-
-```bash
-make validate-duration-rule
-```
-
-The validation output remains ignored at
-`data/private/duration-rule-validation.json`. See `docs/pilot-duration.md`.
-
-Once that validation passes, freeze and verify the separate final-discovery
-contract before making another API request:
-
-```bash
-make validate-final-discovery-plan
-make preflight-final-discovery
-```
-
-The final plan takes a new checksum-bound ladder snapshot, removes all 5,000
-frozen pilot IDs before counting candidates and stops only after every cell has
-at least 6,000 IDs. Build or resume it and verify the resulting private pool:
-
-```bash
-make discover-final-candidates
-make validate-final-candidate-pool
-```
-
-All identifier-bearing outputs remain ignored under
-`data/private/final-discovery`. This stage fetches IDs only, not match details
-or timelines. See `docs/final-discovery.md`.
-
-The completed crawl reached its first valid stop after nine balanced waves:
-110,838 pilot-excluded candidate IDs across all 12 cells. Before requesting a
-final detail, validate the post-discovery selection freeze and its exact local
-bindings:
-
-```bash
-make validate-final-selection-plan
-make preflight-final-selection
-```
-
-Then start or resume the deterministic detail-only screen and validate the
-frozen 36,000-match result:
-
-```bash
-make select-final
-make validate-final-selection
-```
-
-The selector reads candidates in one seeded global order, enforces the frozen
-`gameDuration >= 180` rule and the other registered Match-V5 eligibility
-fields, uses detail `gameVersion` for authoritative patch assignment, and
-stops only at exactly 3,000 matches in every route-patch cell. It never requests
-a timeline. Detail records, selected IDs and manifests remain ignored under
-`data/private/final-selection`; reruns verify and resume the exact contiguous
-prefix. See `docs/final-selection.md`.
+not become a rule until one is frozen in a post-pilot supplement. See
+`docs/pilot-duration.md`.
 
 Processed match files retain match IDs for provenance but contain only the
 supported causal timeline fields and labels, with no player identifier fields
