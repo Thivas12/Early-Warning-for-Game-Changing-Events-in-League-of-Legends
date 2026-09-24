@@ -50,7 +50,9 @@ in [`configs/rifthazard-duration-rule.yaml`](configs/rifthazard-duration-rule.ya
 The pilot-isolated, outcome-blind expansion to the final candidate pool is in
 [`docs/final-discovery.md`](docs/final-discovery.md). Its checksum-bound,
 detail-only final eligibility screen and exact 36,000-match allocation are in
-[`docs/final-selection.md`](docs/final-selection.md).
+[`docs/final-selection.md`](docs/final-selection.md). Its selection-bound,
+resumable timeline materialization is specified in
+[`docs/final-collection.md`](docs/final-collection.md).
 
 ## Quick start
 
@@ -67,6 +69,7 @@ make validate-candidate-pool
 make validate-pilot-selection
 make validate-final-discovery-plan
 make validate-final-selection-plan
+make preflight-final-collection
 uv run pytest
 ```
 
