@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -293,6 +293,33 @@ validate-final-processed:
 		--processed data/processed/registered-final \
 		--raw-validation data/private/final-validation.json \
 		--output data/private/final-processed-validation.json
+
+prepare-final-event-review:
+	uv run league-ews prepare-final-event-review \
+		--raw data/raw/registered-final \
+		--processed data/processed/registered-final \
+		--processed-audit data/private/final-processed-validation.json \
+		--output data/private/final-event-review-packet.json
+
+validate-final-g2:
+	uv run league-ews validate-raw \
+		--raw data/raw/registered-final \
+		--processed data/processed/registered-final \
+		--event-spot-check data/private/final-event-spot-check.json \
+		--output data/private/final-g2-validation.json \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--sampling-stage final \
+		--duration-rule configs/rifthazard-duration-rule.yaml \
+		--duration-analysis data/private/pilot-duration-analysis.json \
+		--final-selection-plan configs/rifthazard-final-selection-plan.yaml \
+		--final-discovery-plan configs/rifthazard-final-discovery-plan.yaml \
+		--pilot-discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--pilot-discovery-root data/private/pilot-discovery \
+		--pilot-selection-root data/private/pilot-selection \
+		--final-discovery-root data/private/final-discovery \
+		--final-selection-root data/private/final-selection \
+		--min-routes 2 \
+		--min-patches 6
 
 validate-raw:
 	uv run league-ews validate-raw \
