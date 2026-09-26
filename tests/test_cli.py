@@ -1158,6 +1158,13 @@ def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, caps
         selection_root,
         duration_rule,
         duration_analysis,
+        final_selection_plan,
+        final_discovery_plan,
+        pilot_discovery_plan,
+        pilot_discovery_root,
+        pilot_selection_root,
+        final_discovery_root,
+        final_selection_root,
     ) -> dict[str, object]:
         events.append("validate")
         assert raw == tmp_path / "raw"
@@ -1170,6 +1177,13 @@ def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, caps
         assert selection_root is None
         assert duration_rule is None
         assert duration_analysis is None
+        assert final_selection_plan is None
+        assert final_discovery_plan is None
+        assert pilot_discovery_plan is None
+        assert pilot_discovery_root is None
+        assert pilot_selection_root is None
+        assert final_discovery_root is None
+        assert final_selection_root is None
         return {"passed": True}
 
     def fake_processing(raw, *, output_root) -> dict[str, object]:

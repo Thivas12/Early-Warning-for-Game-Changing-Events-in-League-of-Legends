@@ -599,6 +599,13 @@ def _process(args: argparse.Namespace) -> int:
         selection_root=args.selection_root,
         duration_rule=args.duration_rule,
         duration_analysis=args.duration_analysis,
+        final_selection_plan=args.final_selection_plan,
+        final_discovery_plan=args.final_discovery_plan,
+        pilot_discovery_plan=args.pilot_discovery_plan,
+        pilot_discovery_root=args.pilot_discovery_root,
+        pilot_selection_root=args.pilot_selection_root,
+        final_discovery_root=args.final_discovery_root,
+        final_selection_root=args.final_selection_root,
     )
     if not validation["passed"]:
         _write_json(validation, None)
@@ -623,6 +630,13 @@ def _validate_raw(args: argparse.Namespace) -> int:
         selection_root=args.selection_root,
         duration_rule=args.duration_rule,
         duration_analysis=args.duration_analysis,
+        final_selection_plan=args.final_selection_plan,
+        final_discovery_plan=args.final_discovery_plan,
+        pilot_discovery_plan=args.pilot_discovery_plan,
+        pilot_discovery_root=args.pilot_discovery_root,
+        pilot_selection_root=args.pilot_selection_root,
+        final_discovery_root=args.final_discovery_root,
+        final_selection_root=args.final_selection_root,
     )
     _write_json(report, args.output)
     return 0 if report["passed"] else 2
@@ -1014,6 +1028,13 @@ def build_parser() -> argparse.ArgumentParser:
     validate_raw.add_argument("--selection-root", type=Path)
     validate_raw.add_argument("--duration-rule", type=Path)
     validate_raw.add_argument("--duration-analysis", type=Path)
+    validate_raw.add_argument("--final-selection-plan", type=Path)
+    validate_raw.add_argument("--final-discovery-plan", type=Path)
+    validate_raw.add_argument("--pilot-discovery-plan", type=Path)
+    validate_raw.add_argument("--pilot-discovery-root", type=Path)
+    validate_raw.add_argument("--pilot-selection-root", type=Path)
+    validate_raw.add_argument("--final-discovery-root", type=Path)
+    validate_raw.add_argument("--final-selection-root", type=Path)
     validate_raw.set_defaults(handler=_validate_raw)
 
     spot_check = subparsers.add_parser(
@@ -1064,6 +1085,13 @@ def build_parser() -> argparse.ArgumentParser:
     process.add_argument("--selection-root", type=Path)
     process.add_argument("--duration-rule", type=Path)
     process.add_argument("--duration-analysis", type=Path)
+    process.add_argument("--final-selection-plan", type=Path)
+    process.add_argument("--final-discovery-plan", type=Path)
+    process.add_argument("--pilot-discovery-plan", type=Path)
+    process.add_argument("--pilot-discovery-root", type=Path)
+    process.add_argument("--pilot-selection-root", type=Path)
+    process.add_argument("--final-discovery-root", type=Path)
+    process.add_argument("--final-selection-root", type=Path)
     process.set_defaults(handler=_process)
     return parser
 

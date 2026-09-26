@@ -486,6 +486,70 @@ def test_duration_binding_arguments_are_atomic(tmp_path) -> None:
             duration_rule=tmp_path / "rule.yaml",
         )
 
+
+def test_final_selection_binding_is_required_atomically_and_reported(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    _collect(tmp_path)
+    monkeypatch.setattr(
+        "league_ews.raw_validation.validate_duration_rule",
+        lambda *args: {
+            "passed": True,
+            "rule_id": "rifthazard-duration-2026-09-20",
+            "rule_sha256": "a" * 64,
+            "summary": {"final_minimum_seconds": 180},
+        },
+    )
+    observed: dict[str, object] = {}
+
+    def fake_final_binding(*args, **kwargs):
+        observed["args"] = args
+        observed["kwargs"] = kwargs
+        return {
+            "passed": True,
+            "message": "exact final selection",
+            "summary": {"expected_selected_match_ids": 36_000},
+        }
+
+    monkeypatch.setattr(
+        "league_ews.raw_validation.validate_final_collection_binding",
+        fake_final_binding,
+    )
+    common = {
+        "sampling_frame": SAMPLING_FRAME,
+        "sampling_stage": "final",
+        "duration_rule": tmp_path / "duration-rule.yaml",
+        "duration_analysis": tmp_path / "duration-analysis.json",
+    }
+
+    with pytest.raises(ValueError, match="all final provenance inputs together"):
+        validate_raw_collection(
+            tmp_path,
+            **common,
+            final_selection_plan=tmp_path / "selection-plan.yaml",
+        )
+
+    report = validate_raw_collection(
+        tmp_path,
+        **common,
+        final_selection_plan=tmp_path / "selection-plan.yaml",
+        final_discovery_plan=tmp_path / "final-discovery-plan.yaml",
+        pilot_discovery_plan=tmp_path / "pilot-discovery-plan.yaml",
+        pilot_discovery_root=tmp_path / "pilot-discovery",
+        pilot_selection_root=tmp_path / "pilot-selection",
+        final_discovery_root=tmp_path / "final-discovery",
+        final_selection_root=tmp_path / "final-selection",
+        checked_at=datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    assert report["final_selection"] == {
+        "status": "passed",
+        "summary": {"expected_selected_match_ids": 36_000},
+    }
+    assert "final-selection-binding" not in _failed_checks(report)
+    assert "kwargs" in observed
+
     with pytest.raises(ValueError, match="sampling_stage='final'"):
         validate_raw_collection(
             tmp_path,

@@ -18,6 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from league_ews.constants import EVENTS, RIFTHAZARD_HORIZONS_SECONDS
 from league_ews.duration_rule import validate_duration_rule
+from league_ews.final_collection import validate_final_collection_binding
 from league_ews.labels import extract_event_index
 from league_ews.pilot_collection import RawRecordLike, validate_pilot_collection_binding
 from league_ews.sampling import (
@@ -594,6 +595,7 @@ def _failed_manifest_report(
     min_patches: int,
     spot_check_requested: bool,
     pilot_selection_requested: bool,
+    final_selection_requested: bool,
     sampling_frame_summary: Mapping[str, object],
 ) -> dict[str, object]:
     check = RawValidationCheck(
@@ -631,6 +633,10 @@ def _failed_manifest_report(
             "status": "blocked" if pilot_selection_requested else "not-supplied",
             "summary": None,
         },
+        "final_selection": {
+            "status": "blocked" if final_selection_requested else "not-supplied",
+            "summary": None,
+        },
         "sampling_frame": dict(sampling_frame_summary),
     }
 
@@ -649,6 +655,13 @@ def validate_raw_collection(
     selection_root: str | Path | None = None,
     duration_rule: str | Path | None = None,
     duration_analysis: str | Path | None = None,
+    final_selection_plan: str | Path | None = None,
+    final_discovery_plan: str | Path | None = None,
+    pilot_discovery_plan: str | Path | None = None,
+    pilot_discovery_root: str | Path | None = None,
+    pilot_selection_root: str | Path | None = None,
+    final_discovery_root: str | Path | None = None,
+    final_selection_root: str | Path | None = None,
     checked_at: datetime | None = None,
 ) -> dict[str, object]:
     """Validate raw inventory, provenance and normalized shape without network access."""
@@ -671,6 +684,24 @@ def validate_raw_collection(
         )
     if duration_rule_requested and (sampling_frame is None or sampling_stage != "final"):
         raise ValueError("Duration binding requires a sampling frame and sampling_stage='final'")
+    final_selection_inputs = (
+        final_selection_plan,
+        final_discovery_plan,
+        pilot_discovery_plan,
+        pilot_discovery_root,
+        pilot_selection_root,
+        final_discovery_root,
+        final_selection_root,
+    )
+    final_selection_requested = all(value is not None for value in final_selection_inputs)
+    if any(value is not None for value in final_selection_inputs) and not final_selection_requested:
+        raise ValueError("Final selection binding requires all final provenance inputs together")
+    if final_selection_requested and (
+        sampling_frame is None or sampling_stage != "final" or not duration_rule_requested
+    ):
+        raise ValueError(
+            "Final selection binding requires sampling_stage='final' and the duration binding"
+        )
     timestamp = checked_at or datetime.now(UTC)
     if timestamp.tzinfo is None:
         raise ValueError("checked_at must be timezone-aware")
@@ -703,6 +734,7 @@ def validate_raw_collection(
             min_patches=min_patches,
             spot_check_requested=event_spot_check is not None,
             pilot_selection_requested=pilot_selection_requested,
+            final_selection_requested=final_selection_requested,
             sampling_frame_summary=frame_summary,
         )
 
@@ -913,6 +945,45 @@ def validate_raw_collection(
             "status": "not-supplied",
             "summary": None,
         }
+    if final_selection_requested:
+        assert sampling_frame is not None
+        assert final_selection_plan is not None
+        assert final_discovery_plan is not None
+        assert duration_rule is not None
+        assert duration_analysis is not None
+        assert pilot_discovery_plan is not None
+        assert pilot_discovery_root is not None
+        assert pilot_selection_root is not None
+        assert final_discovery_root is not None
+        assert final_selection_root is not None
+        final_binding = validate_final_collection_binding(
+            root,
+            sampling_frame,
+            final_selection_plan,
+            final_discovery_plan,
+            duration_rule,
+            duration_analysis,
+            pilot_discovery_plan,
+            pilot_discovery_root,
+            pilot_selection_root,
+            final_discovery_root,
+            final_selection_root,
+            manifest_content=manifest_content,
+            available_by_id=cast(Mapping[str, RawRecordLike], available_by_id),
+        )
+        checks.append(
+            RawValidationCheck(
+                check_id="final-selection-binding",
+                passed=bool(final_binding["passed"]),
+                message=str(final_binding["message"]),
+            )
+        )
+        final_selection_summary: dict[str, object] = {
+            "status": "passed" if final_binding["passed"] else "failed",
+            "summary": final_binding["summary"],
+        }
+    else:
+        final_selection_summary = {"status": "not-supplied", "summary": None}
     if sampling_frame is not None:
         frame_valid = frame is not None
         checks.append(
@@ -1042,5 +1113,6 @@ def validate_raw_collection(
         },
         "manual_event_spot_check": spot_check,
         "pilot_selection": pilot_selection_summary,
+        "final_selection": final_selection_summary,
         "sampling_frame": frame_summary,
     }
