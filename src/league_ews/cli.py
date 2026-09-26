@@ -9,6 +9,7 @@ from contextlib import ExitStack
 from pathlib import Path
 from typing import cast
 
+from league_ews.alert_policy import run_alert_policy, summarize_alert_policy
 from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
 from league_ews.baseline_floor import LABELS, run_final_baseline_floor
@@ -17,6 +18,7 @@ from league_ews.calibration_bootstrap import (
     run_calibration_bootstrap,
     summarize_calibration_bootstrap,
 )
+from league_ews.constants import EVENTS
 from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.discovery import (
     PlatformDiscoveryFetcher,
@@ -754,6 +756,44 @@ def _summarize_calibration_bootstrap(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_alert_policy(args: argparse.Namespace) -> int:
+    report = run_alert_policy(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+        args.g2_report,
+        args.processed_audit,
+        args.split,
+        args.floor_root,
+        args.tabular_root,
+        args.output,
+        args.event,
+    )
+    print(
+        json.dumps(
+            {
+                key: report[key]
+                for key in (
+                    "schema_version",
+                    "event",
+                    "selected_threshold",
+                    "calibration_event_metrics",
+                    "test_matches_unread",
+                    "split_sha256",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _summarize_alert_policy(args: argparse.Namespace) -> int:
+    print(json.dumps(summarize_alert_policy(args.output), indent=2, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1230,6 +1270,27 @@ def build_parser() -> argparse.ArgumentParser:
     )
     bootstrap_summary.add_argument("--output", type=Path, required=True)
     bootstrap_summary.set_defaults(handler=_summarize_calibration_bootstrap)
+
+    alert = subparsers.add_parser(
+        "select-alert-policy", help="choose a 60-second B3 alert threshold on calibration only"
+    )
+    alert.add_argument("--raw", type=Path, required=True)
+    alert.add_argument("--processed", type=Path, required=True)
+    alert.add_argument("--sampling-frame", type=Path, required=True)
+    alert.add_argument("--g2-report", type=Path, required=True)
+    alert.add_argument("--processed-audit", type=Path, required=True)
+    alert.add_argument("--split", type=Path, required=True)
+    alert.add_argument("--floor-root", type=Path, required=True)
+    alert.add_argument("--tabular-root", type=Path, required=True)
+    alert.add_argument("--output", type=Path, required=True)
+    alert.add_argument("--event", choices=EVENTS, required=True)
+    alert.set_defaults(handler=_run_alert_policy)
+
+    alert_summary = subparsers.add_parser(
+        "summarize-alert-policy", help="summarize frozen B3 calibration operating points"
+    )
+    alert_summary.add_argument("--output", type=Path, required=True)
+    alert_summary.set_defaults(handler=_summarize_alert_policy)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"

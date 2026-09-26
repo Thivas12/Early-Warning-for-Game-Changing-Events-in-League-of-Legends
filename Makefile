@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 freeze-final-split final-baseline-floor final-tabular final-tabular-all summarize-final-tabular calibration-bootstrap calibration-bootstrap-all summarize-calibration-bootstrap discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 freeze-final-split final-baseline-floor final-tabular final-tabular-all summarize-final-tabular calibration-bootstrap calibration-bootstrap-all summarize-calibration-bootstrap select-alert-policy select-alert-policy-all summarize-alert-policy discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -390,6 +390,29 @@ calibration-bootstrap-all:
 summarize-calibration-bootstrap:
 	uv run league-ews summarize-calibration-bootstrap \
 		--output data/private/calibration-bootstrap
+
+select-alert-policy:
+	uv run league-ews select-alert-policy \
+		--raw data/raw/registered-final \
+		--processed data/processed/registered-final \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--g2-report data/private/final-g2-validation.json \
+		--processed-audit data/private/final-processed-validation.json \
+		--split data/private/final-split.json \
+		--floor-root data/private/final-baselines \
+		--tabular-root data/private/final-tabular \
+		--output data/private/alert-policy \
+		--event $(EVENT)
+
+select-alert-policy-all:
+	@set -e; for event in baron dragon teamfight; do \
+		$(MAKE) select-alert-policy EVENT=$$event; \
+	done
+	$(MAKE) summarize-alert-policy
+
+summarize-alert-policy:
+	uv run league-ews summarize-alert-policy \
+		--output data/private/alert-policy
 
 validate-raw:
 	uv run league-ews validate-raw \
