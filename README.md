@@ -33,7 +33,10 @@ The `research/v2` programme starts again from a falsifiable protocol:
 6. hold out future patches and publish negative results.
 
 See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan and
-[`docs/legacy-audit.md`](docs/legacy-audit.md) for the evidence that motivated
+[`reports/rifthazard-calibration-2026-09-26.md`](reports/rifthazard-calibration-2026-09-26.md)
+for the first registered calibration results, including the negative B3
+event-level alert-utility finding. The future-patch test is still untouched.
+See [`docs/legacy-audit.md`](docs/legacy-audit.md) for the evidence that motivated
 the reset. Post-freeze corrections are recorded in
 [`docs/protocol-amendments.md`](docs/protocol-amendments.md). The executable
 two-route, six-patch population and allocation are in

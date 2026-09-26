@@ -143,7 +143,7 @@ explicit. Health is not inferred from fields absent in the API.
 | G0 Legacy validity | Executable audit and contamination reproduction | Passed: legacy scores rejected |
 | G1 Data authority | Fresh Riot key/product registration as applicable; written redistribution decision | Private authority preflight passed; record and credential remain private |
 | G2 Data quality | Manifest, schema checks, event spot-checks, patch coverage | Private final validation passed on 36,000 matches with 12-cell human spot-check; report remains private |
-| G3 Baselines | B0–B3 with locked splits and confidence intervals | Split frozen; B0–B3 calibration completed privately; B3 versus B2 paired calibration macro AP gain 0.13609 (95% whole-match interval 0.13061–0.14182); operational threshold and final test pending |
+| G3 Baselines | B0–B3 with locked splits and confidence intervals | B0–B3 calibration and paired uncertainty complete; B3 versus B2 macro AP gain 0.13609 (95% whole-match interval 0.13061–0.14182). Three B3 alert thresholds frozen; none meets H5 on calibration. Final test pending. See [`reports/rifthazard-calibration-2026-09-26.md`](../reports/rifthazard-calibration-2026-09-26.md). |
 | G4 Method | All seeds, ablations, calibration and OOD tests | Pending v2 data |
 | G5 Paper | Claims trace to tables; negative results included; independent review | Pending |
 | G6 Transfer | H5 utility plus policy, privacy and model-card approval | Pending; product repo not created |
