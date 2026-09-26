@@ -50,3 +50,19 @@ exclusion, final discovery, final selection plan and exact selected-pool
 checksum. The public-style binding summary contains counts and checksums only;
 the raw files and identifier-bearing inventory remain private and are not
 authorized for redistribution.
+
+## Offline validation and processing
+
+After all 36,000 pairs are present, run:
+
+```bash
+make validate-final
+make process-final
+```
+
+`validate-final` checks every payload checksum, identity, causal schema,
+route-patch allocation and inclusive duration rule. It additionally proves
+that the raw inventory exactly materializes the frozen final selected pool;
+matching aggregate counts alone cannot pass. `process-final` repeats that gate
+before producing identifier-free normalized observations and strict future
+labels under `data/processed/registered-final`.
