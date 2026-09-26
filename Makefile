@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -249,6 +249,42 @@ collect-selected-final:
 		--final-discovery-root data/private/final-discovery \
 		--final-selection-root data/private/final-selection \
 		--output data/raw/registered-final
+
+validate-final:
+	uv run league-ews validate-raw \
+		--raw data/raw/registered-final \
+		--output data/private/final-validation.json \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--sampling-stage final \
+		--duration-rule configs/rifthazard-duration-rule.yaml \
+		--duration-analysis data/private/pilot-duration-analysis.json \
+		--final-selection-plan configs/rifthazard-final-selection-plan.yaml \
+		--final-discovery-plan configs/rifthazard-final-discovery-plan.yaml \
+		--pilot-discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--pilot-discovery-root data/private/pilot-discovery \
+		--pilot-selection-root data/private/pilot-selection \
+		--final-discovery-root data/private/final-discovery \
+		--final-selection-root data/private/final-selection \
+		--min-routes 2 \
+		--min-patches 6
+
+process-final:
+	uv run league-ews process \
+		--raw data/raw/registered-final \
+		--output data/processed/registered-final \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--sampling-stage final \
+		--duration-rule configs/rifthazard-duration-rule.yaml \
+		--duration-analysis data/private/pilot-duration-analysis.json \
+		--final-selection-plan configs/rifthazard-final-selection-plan.yaml \
+		--final-discovery-plan configs/rifthazard-final-discovery-plan.yaml \
+		--pilot-discovery-plan configs/rifthazard-discovery-plan.yaml \
+		--pilot-discovery-root data/private/pilot-discovery \
+		--pilot-selection-root data/private/pilot-selection \
+		--final-discovery-root data/private/final-discovery \
+		--final-selection-root data/private/final-selection \
+		--min-routes 2 \
+		--min-patches 6
 
 validate-raw:
 	uv run league-ews validate-raw \
