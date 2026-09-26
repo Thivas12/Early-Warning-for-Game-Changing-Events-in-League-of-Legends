@@ -75,3 +75,11 @@ that the raw inventory exactly materializes the frozen final selected pool;
 matching aggregate counts alone cannot pass. `process-final` repeats that gate
 before producing identifier-free normalized observations and strict future
 labels under `data/processed/registered-final`.
+
+Once processing finishes, run `make validate-final-processed`. The offline
+report in `data/private/final-processed-validation.json` binds to the passed
+raw validation report and audits all 36,000 processed files: inventory,
+checksums, schema and identity, event indexes in normalized timelines,
+strict future labels and player identifier fields. A passing automated report
+precedes the separate human event spot-check for the 12 route-patch cells;
+it does not attest that review on the researcher's behalf.

@@ -48,6 +48,7 @@ from league_ews.pilot_collection import (
     pilot_collection_preflight,
     validate_frozen_pilot_selection,
 )
+from league_ews.processed_validation import validate_processed_collection
 from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
 from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
@@ -652,6 +653,12 @@ def _validate_raw(args: argparse.Namespace) -> int:
     return 0 if report["passed"] else 2
 
 
+def _validate_processed(args: argparse.Namespace) -> int:
+    report = validate_processed_collection(args.raw, args.processed, args.raw_validation)
+    _write_json(report, args.output)
+    return 0 if report["passed"] else 2
+
+
 def _record_event_spot_check(args: argparse.Namespace) -> int:
     record = create_event_spot_check_record(
         args.raw,
@@ -1046,6 +1053,15 @@ def build_parser() -> argparse.ArgumentParser:
     validate_raw.add_argument("--final-discovery-root", type=Path)
     validate_raw.add_argument("--final-selection-root", type=Path)
     validate_raw.set_defaults(handler=_validate_raw)
+
+    validate_processed = subparsers.add_parser(
+        "validate-processed", help="audit all processed file hashes, events and future labels"
+    )
+    validate_processed.add_argument("--raw", type=Path, required=True)
+    validate_processed.add_argument("--processed", type=Path, required=True)
+    validate_processed.add_argument("--raw-validation", type=Path, required=True)
+    validate_processed.add_argument("--output", type=Path, required=True)
+    validate_processed.set_defaults(handler=_validate_processed)
 
     spot_check = subparsers.add_parser(
         "record-event-spot-check",
