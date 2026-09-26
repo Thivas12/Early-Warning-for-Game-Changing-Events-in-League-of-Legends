@@ -284,7 +284,8 @@ process-final:
 		--final-discovery-root data/private/final-discovery \
 		--final-selection-root data/private/final-selection \
 		--min-routes 2 \
-		--min-patches 6
+		--min-patches 6 \
+		--max-new-matches 2000
 
 validate-raw:
 	uv run league-ews validate-raw \

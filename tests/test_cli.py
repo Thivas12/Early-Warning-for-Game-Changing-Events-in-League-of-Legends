@@ -1186,10 +1186,11 @@ def test_process_runs_only_after_successful_raw_gate(tmp_path, monkeypatch, caps
         assert final_selection_root is None
         return {"passed": True}
 
-    def fake_processing(raw, *, output_root) -> dict[str, object]:
+    def fake_processing(raw, *, output_root, max_new_matches) -> dict[str, object]:
         events.append("process")
         assert raw == tmp_path / "raw"
         assert output_root == tmp_path / "processed"
+        assert max_new_matches is None
         return {"matches": []}
 
     monkeypatch.setattr("league_ews.cli.validate_raw_collection", fake_validation)

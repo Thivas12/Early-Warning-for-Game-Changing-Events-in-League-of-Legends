@@ -60,6 +60,15 @@ make validate-final
 make process-final
 ```
 
+`process-final` processes at most 2,000 new matches per invocation. Rerun it
+until it exits with status 0 and writes
+`data/processed/registered-final/processing-manifest.json`. An incomplete but
+successful chunk exits with status 2 and prints the available count. The
+processor checks the existing processed files form the exact sorted prefix,
+reads their identities and labels, then resumes after them. It does not
+overwrite the completed files. Each invocation repeats raw validation before
+processing; no Riot API key or network request is needed.
+
 `validate-final` checks every payload checksum, identity, causal schema,
 route-patch allocation and inclusive duration rule. It additionally proves
 that the raw inventory exactly materializes the frozen final selected pool;

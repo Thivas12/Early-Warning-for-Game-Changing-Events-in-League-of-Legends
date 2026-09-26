@@ -94,3 +94,51 @@ def test_processing_requires_raw_pairs(tmp_path) -> None:
     _write_raw(raw, with_timeline=False)
     with pytest.raises(FileNotFoundError, match="Missing timeline"):
         process_raw_collection(raw, output_root=tmp_path / "out")
+
+
+def test_processing_resumes_prefix_and_finalizes_without_rewriting(tmp_path) -> None:
+    raw = tmp_path / "raw"
+    output = tmp_path / "processed"
+    for match_id in ("EUW1_1", "EUW1_2"):
+        detail, timeline = _raw_payloads(match_id)
+        for kind, payload in (("matches", detail), ("timelines", timeline)):
+            directory = raw / kind
+            directory.mkdir(parents=True, exist_ok=True)
+            (directory / f"{match_id}.json").write_text(json.dumps(payload), encoding="utf-8")
+
+    first = process_raw_collection(raw, output_root=output, max_new_matches=1)
+    assert first["complete"] is False
+    assert first["new_matches"] == 1
+    assert not (output / "processing-manifest.json").exists()
+    saved = (output / "matches" / "EUW1_1.json").read_bytes()
+
+    second = process_raw_collection(raw, output_root=output, max_new_matches=1)
+    assert second["complete"] is True
+    assert second["new_matches"] == 1
+    assert (output / "matches" / "EUW1_1.json").read_bytes() == saved
+    on_disk = json.loads((output / "processing-manifest.json").read_text(encoding="utf-8"))
+    assert len(on_disk["matches"]) == 2
+    assert "complete" not in on_disk
+    assert process_raw_collection(raw, output_root=output, max_new_matches=1)["new_matches"] == 0
+
+
+def test_processing_rejects_gaps_and_corrupt_existing_match(tmp_path) -> None:
+    raw = tmp_path / "raw"
+    output = tmp_path / "processed"
+    for match_id in ("EUW1_1", "EUW1_2"):
+        detail, timeline = _raw_payloads(match_id)
+        for kind, payload in (("matches", detail), ("timelines", timeline)):
+            directory = raw / kind
+            directory.mkdir(parents=True, exist_ok=True)
+            (directory / f"{match_id}.json").write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="positive"):
+        process_raw_collection(raw, output_root=output, max_new_matches=0)
+    process_raw_collection(raw, output_root=output, max_new_matches=1)
+    saved = output / "matches" / "EUW1_1.json"
+    (output / "matches" / "EUW1_2.json").write_bytes(saved.read_bytes())
+    with pytest.raises(ValueError, match="identity"):
+        process_raw_collection(raw, output_root=output)
+    (output / "matches" / "EUW1_2.json").unlink()
+    saved.rename(output / "matches" / "EUW1_2.json")
+    with pytest.raises(ValueError, match="contiguous prefix"):
+        process_raw_collection(raw, output_root=output)

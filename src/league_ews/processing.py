@@ -42,12 +42,59 @@ def _atomic_write(path: Path, content: bytes) -> None:
     partial.replace(path)
 
 
+def _existing_record(path: Path, expected_match_id: str) -> ProcessedMatch:
+    content = path.read_bytes()
+    payload = json.loads(content)
+    if (
+        not isinstance(payload, dict)
+        or payload.get("schema_version") != "league-ews-processed-match-v1"
+    ):
+        raise ValueError(f"Invalid existing processed match: {path.name}")
+    timeline = payload.get("timeline")
+    events = payload.get("event_index")
+    labels = payload.get("labels")
+    if (
+        not isinstance(timeline, dict)
+        or not isinstance(events, dict)
+        or not isinstance(labels, list)
+    ):
+        raise ValueError(f"Invalid existing processed match: {path.name}")
+    observations = timeline.get("observations")
+    game_version = timeline.get("game_version")
+    if (
+        timeline.get("match_id") != expected_match_id
+        or not isinstance(game_version, str)
+        or not isinstance(observations, list)
+        or len(observations) != len(labels)
+    ):
+        raise ValueError(f"Existing processed match identity or labels differ: {path.name}")
+    counts: dict[str, int] = {}
+    for event_type in ("baron", "dragon", "teamfight"):
+        values = events.get(f"{event_type}_ms")
+        if not isinstance(values, list) or not all(isinstance(value, int) for value in values):
+            raise ValueError(f"Invalid existing event index: {path.name}")
+        counts[event_type] = len(values)
+    return ProcessedMatch(
+        match_id=expected_match_id,
+        game_version=game_version,
+        observations=len(observations),
+        baron_events=counts["baron"],
+        dragon_events=counts["dragon"],
+        teamfight_events=counts["teamfight"],
+        sha256=hashlib.sha256(content).hexdigest(),
+    )
+
+
 def process_raw_collection(
     raw_root: str | Path,
     *,
     output_root: str | Path,
+    max_new_matches: int | None = None,
 ) -> dict[str, object]:
-    """Normalize complete raw pairs and create exact future labels."""
+    """Resume a contiguous processed prefix and create exact future labels."""
+
+    if max_new_matches is not None and max_new_matches < 1:
+        raise ValueError("max_new_matches must be positive")
 
     raw = Path(raw_root)
     output = Path(output_root)
@@ -55,8 +102,19 @@ def process_raw_collection(
     if not match_paths:
         raise ValueError("Raw collection contains no match payloads")
 
-    records: list[ProcessedMatch] = []
-    for match_path in match_paths:
+    processed_dir = output / "matches"
+    existing_paths = sorted(processed_dir.glob("*.json"))
+    if existing_paths != [processed_dir / path.name for path in match_paths[: len(existing_paths)]]:
+        raise ValueError("Existing processed files are not a contiguous prefix of raw matches")
+    partials = list(processed_dir.glob("*.partial"))
+    if partials:
+        raise ValueError("Unfinished processed files require inspection before resuming")
+    if len(existing_paths) < len(match_paths) and (output / "processing-manifest.json").exists():
+        raise ValueError("A final processing manifest exists for an incomplete collection")
+    records = [_existing_record(path, path.stem) for path in existing_paths]
+    remaining = match_paths[len(existing_paths) :]
+    work = remaining if max_new_matches is None else remaining[:max_new_matches]
+    for match_path in work:
         timeline_path = raw / "timelines" / match_path.name
         if not timeline_path.is_file():
             raise FileNotFoundError(f"Missing timeline pair for {match_path.stem}")
@@ -104,5 +162,10 @@ def process_raw_collection(
         "matches": [asdict(record) for record in records],
         "contains_player_identifiers": False,
     }
-    _atomic_write(output / "processing-manifest.json", _serialized(manifest))
+    complete = len(records) == len(match_paths)
+    if complete:
+        _atomic_write(output / "processing-manifest.json", _serialized(manifest))
+    manifest["complete"] = complete
+    manifest["new_matches"] = len(work)
+    manifest["expected_matches"] = len(match_paths)
     return manifest
