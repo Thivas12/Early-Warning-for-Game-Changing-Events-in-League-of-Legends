@@ -96,6 +96,26 @@ The console prints counts and patch names without private match IDs. Keep the
 manifest private; downstream modeling must use its memberships and must not
 use the test patch for fitting or threshold selection.
 
+## First baseline floor
+
+With the private split frozen, run `make final-baseline-floor`. It trains B0
+(training observation prevalence), B1 (minute of match clock) and B2 (clock
+plus observed objective history or recent kills). Clock and history tables use
+a fixed 20-count prior to reduce sparse-bin noise. Historical controls use
+only event timestamps already visible at prediction time; the retrospectively
+defined teamfight-onset index is never used as a history feature. This
+distinction prevents a third kill from confirming an earlier teamfight before
+that third kill is observable.
+
+The command reads all 24,000 training processed matches and 6,000 calibration
+matches, checking each against the audited processing manifest. It validates
+the frozen split and never opens any of the 6,000 test match files. The ignored
+`data/private/final-baselines/` directory holds an identifier-free fitted
+table and calibration metrics for all 12 event/horizon targets. The command
+prints a compact identifier-free summary. It does not select alert thresholds,
+claim test performance, or complete G3; B3 and whole-match uncertainty remain
+to be implemented before the future-patch test can be evaluated.
+
 Run `make prepare-final-event-review` after a passing processed audit. It
 creates the ignored `data/private/final-event-review-packet.json` with one
 event-rich match from every route-patch cell. Within each cell it chooses the
