@@ -24,3 +24,23 @@ secondary sequence control; the registered H1 comparison is M1 against B3.
 
 This chunk establishes and tests the causal window contract. It does not fit
 a neural model or create a private artifact, and needs no Riot credential.
+
+## Bounded private staging
+
+After the final processed audit and frozen split, `make stage-b4-sequences
+MAX_NEW_SHARDS=1` stages one 500-match canary shard. If it completes, `make
+stage-b4-sequences-all` finishes the 24,000 training and 6,000 calibration
+matches in four-shard process chunks. A normal partial invocation returns
+success with `complete: false`; rerunning resumes at the next shard. Each
+shard is an atomic compressed NumPy file with sequence inputs, masks, labels
+and match row offsets, without match or player identifiers. The ignored
+`data/private/b4-sequences/staging-manifest.json` binds every shard checksum to
+the audited processed manifest, frozen split and feature contract. An orphan
+shard after a process interruption is rechecked against freshly reconstructed
+source arrays before it can be recorded. Changed inputs or unexpected files
+fail closed. No test-patch payload is opened and no Riot key is required.
+
+The resulting sequence values are not normalized and are not yet a B4 model.
+The trainer must derive scaling from staged training shards only, fit all
+registered seeds, and score calibration shards while preserving the final
+test holdout.

@@ -12,6 +12,7 @@ from typing import cast
 from league_ews.alert_policy import run_alert_policy, summarize_alert_policy
 from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
+from league_ews.b4_staging import stage_b4_sequences
 from league_ews.baseline_floor import LABELS, run_final_baseline_floor
 from league_ews.benchmark import run_legacy_benchmark
 from league_ews.calibration_bootstrap import (
@@ -794,6 +795,21 @@ def _summarize_alert_policy(args: argparse.Namespace) -> int:
     return 0
 
 
+def _stage_b4_sequences(args: argparse.Namespace) -> int:
+    report = stage_b4_sequences(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+        args.g2_report,
+        args.processed_audit,
+        args.split,
+        args.output,
+        max_new_shards=args.max_new_shards,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1291,6 +1307,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     alert_summary.add_argument("--output", type=Path, required=True)
     alert_summary.set_defaults(handler=_summarize_alert_policy)
+
+    b4_stage = subparsers.add_parser(
+        "stage-b4-sequences", help="stage bounded private B4 train/calibration shards"
+    )
+    b4_stage.add_argument("--raw", type=Path, required=True)
+    b4_stage.add_argument("--processed", type=Path, required=True)
+    b4_stage.add_argument("--sampling-frame", type=Path, required=True)
+    b4_stage.add_argument("--g2-report", type=Path, required=True)
+    b4_stage.add_argument("--processed-audit", type=Path, required=True)
+    b4_stage.add_argument("--split", type=Path, required=True)
+    b4_stage.add_argument("--output", type=Path, required=True)
+    b4_stage.add_argument("--max-new-shards", type=int, default=4)
+    b4_stage.set_defaults(handler=_stage_b4_sequences)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
