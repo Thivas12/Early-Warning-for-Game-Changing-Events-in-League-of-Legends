@@ -13,6 +13,10 @@ from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
 from league_ews.baseline_floor import LABELS, run_final_baseline_floor
 from league_ews.benchmark import run_legacy_benchmark
+from league_ews.calibration_bootstrap import (
+    run_calibration_bootstrap,
+    summarize_calibration_bootstrap,
+)
 from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.discovery import (
     PlatformDiscoveryFetcher,
@@ -727,6 +731,29 @@ def _summarize_final_tabular(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_calibration_bootstrap(args: argparse.Namespace) -> int:
+    report = run_calibration_bootstrap(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+        args.g2_report,
+        args.processed_audit,
+        args.split,
+        args.floor_root,
+        args.tabular_root,
+        args.output,
+        args.label,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
+def _summarize_calibration_bootstrap(args: argparse.Namespace) -> int:
+    report = summarize_calibration_bootstrap(args.output)
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1182,6 +1209,27 @@ def build_parser() -> argparse.ArgumentParser:
     tabular_summary.add_argument("--floor-root", type=Path, required=True)
     tabular_summary.add_argument("--output", type=Path, required=True)
     tabular_summary.set_defaults(handler=_summarize_final_tabular)
+
+    bootstrap = subparsers.add_parser(
+        "calibration-bootstrap", help="resample whole calibration matches for one B3/B2 target"
+    )
+    bootstrap.add_argument("--raw", type=Path, required=True)
+    bootstrap.add_argument("--processed", type=Path, required=True)
+    bootstrap.add_argument("--sampling-frame", type=Path, required=True)
+    bootstrap.add_argument("--g2-report", type=Path, required=True)
+    bootstrap.add_argument("--processed-audit", type=Path, required=True)
+    bootstrap.add_argument("--split", type=Path, required=True)
+    bootstrap.add_argument("--floor-root", type=Path, required=True)
+    bootstrap.add_argument("--tabular-root", type=Path, required=True)
+    bootstrap.add_argument("--output", type=Path, required=True)
+    bootstrap.add_argument("--label", choices=LABELS, required=True)
+    bootstrap.set_defaults(handler=_run_calibration_bootstrap)
+
+    bootstrap_summary = subparsers.add_parser(
+        "summarize-calibration-bootstrap", help="aggregate 12 paired whole-match calibration CIs"
+    )
+    bootstrap_summary.add_argument("--output", type=Path, required=True)
+    bootstrap_summary.set_defaults(handler=_summarize_calibration_bootstrap)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"

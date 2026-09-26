@@ -136,6 +136,27 @@ teamfight event index as a feature or opens test-patch files. These are
 calibration results only; alert thresholds, match-level confidence intervals
 and a locked final test evaluation remain separate steps.
 
+## Paired uncertainty on the calibration patch
+
+After all 12 B3 targets are complete, run `make calibration-bootstrap-all`.
+Each invocation checks the frozen split, original B2/B3 model and report
+checksums, and audited processed match hashes. It reads only the 6,000
+calibration matches and uses each model to reconstruct the original
+calibration predictions. It first checks that recomputed AP agrees with the
+saved B2 and B3 reports. Then it resamples complete matches with replacement
+1,000 times; the same seeded draw is used for both methods and all targets.
+An exact average-precision calculation handles tied scores and repeated
+matches. The 12 target files and macro summary contain point estimates and
+percentile 95% intervals for B2, B3 and their paired AP difference. They are
+ignored private numeric artifacts without match or player identifiers.
+
+`make calibration-bootstrap LABEL=y_dragon_30` runs one target. The all-target
+target uses separate processes and verified reruns skip finished targets. A
+positive calibration interval is evidence about this calibration patch only;
+it is not a claim about the still untouched 16.17 test patch or the proposed
+graph model. Event-level alert thresholds and the final test policy remain
+separate, locked decisions.
+
 Run `make prepare-final-event-review` after a passing processed audit. It
 creates the ignored `data/private/final-event-review-packet.json` with one
 event-rich match from every route-patch cell. Within each cell it chooses the
