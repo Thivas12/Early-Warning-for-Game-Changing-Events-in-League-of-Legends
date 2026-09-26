@@ -42,6 +42,7 @@ from league_ews.final_selection import (
     validate_final_selection_plan,
     validate_frozen_final_selection,
 )
+from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.pilot_collection import (
     TimelineFetcher,
@@ -660,6 +661,20 @@ def _validate_processed(args: argparse.Namespace) -> int:
     return 0 if report["passed"] else 2
 
 
+def _freeze_final_split(args: argparse.Namespace) -> int:
+    manifest = freeze_final_split(
+        args.raw, args.processed, args.sampling_frame, args.g2_report, args.processed_audit
+    )
+    if args.output.exists():
+        existing = json.loads(args.output.read_text(encoding="utf-8"))
+        if existing != manifest:
+            raise ValueError("Existing frozen split differs; refusing to overwrite it")
+    else:
+        _write_json(manifest, args.output)
+    print(json.dumps({"output": str(args.output), "summary": manifest["summary"]}, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1071,6 +1086,17 @@ def build_parser() -> argparse.ArgumentParser:
     validate_processed.add_argument("--raw-validation", type=Path, required=True)
     validate_processed.add_argument("--output", type=Path, required=True)
     validate_processed.set_defaults(handler=_validate_processed)
+
+    final_split = subparsers.add_parser(
+        "freeze-final-split", help="freeze private patch partitions after G2 and processed audit"
+    )
+    final_split.add_argument("--raw", type=Path, required=True)
+    final_split.add_argument("--processed", type=Path, required=True)
+    final_split.add_argument("--sampling-frame", type=Path, required=True)
+    final_split.add_argument("--g2-report", type=Path, required=True)
+    final_split.add_argument("--processed-audit", type=Path, required=True)
+    final_split.add_argument("--output", type=Path, required=True)
+    final_split.set_defaults(handler=_freeze_final_split)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
