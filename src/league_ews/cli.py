@@ -610,10 +610,20 @@ def _process(args: argparse.Namespace) -> int:
     if not validation["passed"]:
         _write_json(validation, None)
         return 2
-    result = process_raw_collection(args.raw, output_root=args.output)
+    result = process_raw_collection(
+        args.raw, output_root=args.output, max_new_matches=args.max_new_matches
+    )
     matches = cast(list[object], result["matches"])
-    print(f"Processed {len(matches)} matches; manifest: {args.output / 'processing-manifest.json'}")
-    return 0
+    if result.get("complete", True):
+        manifest_path = args.output / "processing-manifest.json"
+        print(f"Processed {len(matches)} matches; manifest: {manifest_path}")
+        return 0
+    print(
+        f"Processed {result['new_matches']} new matches; "
+        f"available {len(matches)}/{result['expected_matches']}. "
+        "Rerun the same command to continue."
+    )
+    return 2
 
 
 def _validate_raw(args: argparse.Namespace) -> int:
@@ -1076,6 +1086,7 @@ def build_parser() -> argparse.ArgumentParser:
     process = subparsers.add_parser("process", help="normalize and label private raw bundles")
     process.add_argument("--raw", type=Path, default=Path("data/raw"))
     process.add_argument("--output", type=Path, default=Path("data/processed"))
+    process.add_argument("--max-new-matches", type=int)
     process.add_argument("--min-routes", type=int, default=2)
     process.add_argument("--min-patches", type=int, default=6)
     process.add_argument("--sampling-frame", type=Path)
