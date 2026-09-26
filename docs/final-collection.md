@@ -84,6 +84,18 @@ strict future labels and player identifier fields. A passing automated report
 precedes the separate human event spot-check for the 12 route-patch cells;
 it does not attest that review on the researcher's behalf.
 
+After the final G2 report passes with the human spot-check, run
+`make freeze-final-split`. It writes an ignored private membership manifest at
+`data/private/final-split.json`, ordered by game creation time and match ID.
+The exact frozen patch allocation is 24,000 training matches (16.12–16.15),
+6,000 calibration matches (16.16) and 6,000 untouched test matches (16.17).
+This step reads manifest metadata and passed report bindings only; it does not
+open outcomes, labels, features or model scores. It refuses an incomplete G2,
+stale audit, wrong cell counts or an attempted change to an existing split.
+The console prints counts and patch names without private match IDs. Keep the
+manifest private; downstream modeling must use its memberships and must not
+use the test patch for fitting or threshold selection.
+
 Run `make prepare-final-event-review` after a passing processed audit. It
 creates the ignored `data/private/final-event-review-packet.json` with one
 event-rich match from every route-patch cell. Within each cell it chooses the
