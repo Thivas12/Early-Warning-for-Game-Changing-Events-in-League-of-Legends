@@ -83,3 +83,44 @@ checksums, schema and identity, event indexes in normalized timelines,
 strict future labels and player identifier fields. A passing automated report
 precedes the separate human event spot-check for the 12 route-patch cells;
 it does not attest that review on the researcher's behalf.
+
+Run `make prepare-final-event-review` after a passing processed audit. It
+creates the ignored `data/private/final-event-review-packet.json` with one
+event-rich match from every route-patch cell. Within each cell it chooses the
+smallest SHA-256 of the raw manifest checksum and match ID. This quality
+control selection does not change the frozen research sample. The packet lists
+source objective timestamps, qualifying kill episodes, processed event indexes
+and 10/20/30/60-second label witnesses. The referenced raw timeline and
+processed file paths let the researcher inspect the source fields directly.
+
+After manually comparing all 12 source matches and labels, create the
+checksum-bound attestation. The confirmation flags assert that the researcher
+actually checked all listed event types and future labels:
+
+```bash
+mapfile -t review_ids < <(uv run python - <<'PY'
+import json
+from pathlib import Path
+packet = json.loads(Path('data/private/final-event-review-packet.json').read_text())
+for sample in packet['samples']:
+    print(sample['match_id'])
+PY
+)
+review_args=()
+for match_id in "${review_ids[@]}"; do
+  review_args+=(--match-id "$match_id")
+done
+uv run league-ews record-event-spot-check \
+  --raw data/raw/registered-final \
+  --processed data/processed/registered-final \
+  "${review_args[@]}" \
+  --output data/private/final-event-spot-check.json \
+  --confirm-objective-events \
+  --confirm-teamfight-episodes \
+  --confirm-future-labels
+make validate-final-g2
+```
+
+The validation report must say `passed: true`, `g2_complete: true`, and
+`manual_event_spot_check.status: passed`. Keep the packet and attestation
+private; neither belongs in Git.

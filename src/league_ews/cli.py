@@ -22,6 +22,7 @@ from league_ews.discovery import (
 )
 from league_ews.duration import analyze_pilot_duration
 from league_ews.duration_rule import validate_duration_rule
+from league_ews.event_review import create_final_event_review_packet
 from league_ews.final_collection import (
     TimelineFetcher as FinalTimelineFetcher,
 )
@@ -659,6 +660,14 @@ def _validate_processed(args: argparse.Namespace) -> int:
     return 0 if report["passed"] else 2
 
 
+def _prepare_final_event_review(args: argparse.Namespace) -> int:
+    packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
+    _write_json(packet, args.output)
+    samples = cast(list[object], packet["samples"])
+    print(f"Prepared {len(samples)} private route-patch review samples: {args.output}")
+    return 0
+
+
 def _record_event_spot_check(args: argparse.Namespace) -> int:
     record = create_event_spot_check_record(
         args.raw,
@@ -1062,6 +1071,15 @@ def build_parser() -> argparse.ArgumentParser:
     validate_processed.add_argument("--raw-validation", type=Path, required=True)
     validate_processed.add_argument("--output", type=Path, required=True)
     validate_processed.set_defaults(handler=_validate_processed)
+
+    final_review = subparsers.add_parser(
+        "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
+    )
+    final_review.add_argument("--raw", type=Path, required=True)
+    final_review.add_argument("--processed", type=Path, required=True)
+    final_review.add_argument("--processed-audit", type=Path, required=True)
+    final_review.add_argument("--output", type=Path, required=True)
+    final_review.set_defaults(handler=_prepare_final_event_review)
 
     spot_check = subparsers.add_parser(
         "record-event-spot-check",
