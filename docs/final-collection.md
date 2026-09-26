@@ -113,8 +113,28 @@ the frozen split and never opens any of the 6,000 test match files. The ignored
 `data/private/final-baselines/` directory holds an identifier-free fitted
 table and calibration metrics for all 12 event/horizon targets. The command
 prints a compact identifier-free summary. It does not select alert thresholds,
-claim test performance, or complete G3; B3 and whole-match uncertainty remain
-to be implemented before the future-patch test can be evaluated.
+claim test performance or complete G3; whole-match uncertainty remains before
+the future-patch test can be evaluated.
+
+## Causal tabular baseline B3
+
+Run `make final-tabular-all` after the B0–B2 artifacts exist. This invokes
+12 separate processes, one per event and horizon. Each process rereads only
+the frozen training and calibration matches, validates their file hashes,
+fits a fixed `HistGradientBoostingClassifier` with a natural class prior,
+and saves its model and calibration metrics under the ignored
+`data/private/final-tabular/` directory. A rerun verifies and skips a complete
+target; incomplete or changed artifacts fail closed. Progress is printed every
+1,000 matches. The independent processes bound memory use on WSL.
+
+For a single target use `make final-tabular LABEL=y_dragon_30`; after all
+12 targets, `make summarize-final-tabular` compares macro average precision
+with B0–B2. B3 uses the match clock, team gold, XP, levels, minions, jungle
+minions, observed kills and objectives, and current frame positions. Unknown
+position or last objective remains missing. It never reads the retrospective
+teamfight event index as a feature or opens test-patch files. These are
+calibration results only; alert thresholds, match-level confidence intervals
+and a locked final test evaluation remain separate steps.
 
 Run `make prepare-final-event-review` after a passing processed audit. It
 creates the ignored `data/private/final-event-review-packet.json` with one

@@ -143,7 +143,7 @@ explicit. Health is not inferred from fields absent in the API.
 | G0 Legacy validity | Executable audit and contamination reproduction | Passed: legacy scores rejected |
 | G1 Data authority | Fresh Riot key/product registration as applicable; written redistribution decision | Private authority preflight passed; record and credential remain private |
 | G2 Data quality | Manifest, schema checks, event spot-checks, patch coverage | Private final validation passed on 36,000 matches with 12-cell human spot-check; report remains private |
-| G3 Baselines | B0–B3 with locked splits and confidence intervals | Split frozen; B0–B2 training/calibration command available; B3, uncertainty and final test pending |
+| G3 Baselines | B0–B3 with locked splits and confidence intervals | Split frozen; B0–B2 calibration completed privately; bounded B3 command available; uncertainty and final test pending |
 | G4 Method | All seeds, ablations, calibration and OOD tests | Pending v2 data |
 | G5 Paper | Claims trace to tables; negative results included; independent review | Pending |
 | G6 Transfer | H5 utility plus policy, privacy and model-card approval | Pending; product repo not created |
