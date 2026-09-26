@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -286,6 +286,13 @@ process-final:
 		--min-routes 2 \
 		--min-patches 6 \
 		--max-new-matches 2000
+
+validate-final-processed:
+	uv run league-ews validate-processed \
+		--raw data/raw/registered-final \
+		--processed data/processed/registered-final \
+		--raw-validation data/private/final-validation.json \
+		--output data/private/final-processed-validation.json
 
 validate-raw:
 	uv run league-ews validate-raw \
