@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 freeze-final-split discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 freeze-final-split final-baseline-floor discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -329,6 +329,16 @@ freeze-final-split:
 		--g2-report data/private/final-g2-validation.json \
 		--processed-audit data/private/final-processed-validation.json \
 		--output data/private/final-split.json
+
+final-baseline-floor:
+	uv run league-ews final-baseline-floor \
+		--raw data/raw/registered-final \
+		--processed data/processed/registered-final \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--g2-report data/private/final-g2-validation.json \
+		--processed-audit data/private/final-processed-validation.json \
+		--split data/private/final-split.json \
+		--output data/private/final-baselines
 
 validate-raw:
 	uv run league-ews validate-raw \

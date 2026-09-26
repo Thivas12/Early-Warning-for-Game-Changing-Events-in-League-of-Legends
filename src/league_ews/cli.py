@@ -11,6 +11,7 @@ from typing import cast
 
 from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
+from league_ews.baseline_floor import run_final_baseline_floor
 from league_ews.benchmark import run_legacy_benchmark
 from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.discovery import (
@@ -675,6 +676,20 @@ def _freeze_final_split(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_final_baseline_floor(args: argparse.Namespace) -> int:
+    summary = run_final_baseline_floor(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+        args.g2_report,
+        args.processed_audit,
+        args.split,
+        args.output,
+    )
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1097,6 +1112,18 @@ def build_parser() -> argparse.ArgumentParser:
     final_split.add_argument("--processed-audit", type=Path, required=True)
     final_split.add_argument("--output", type=Path, required=True)
     final_split.set_defaults(handler=_freeze_final_split)
+
+    baseline_floor = subparsers.add_parser(
+        "final-baseline-floor", help="fit B0-B2 using train and assess calibration only"
+    )
+    baseline_floor.add_argument("--raw", type=Path, required=True)
+    baseline_floor.add_argument("--processed", type=Path, required=True)
+    baseline_floor.add_argument("--sampling-frame", type=Path, required=True)
+    baseline_floor.add_argument("--g2-report", type=Path, required=True)
+    baseline_floor.add_argument("--processed-audit", type=Path, required=True)
+    baseline_floor.add_argument("--split", type=Path, required=True)
+    baseline_floor.add_argument("--output", type=Path, required=True)
+    baseline_floor.set_defaults(handler=_run_final_baseline_floor)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
