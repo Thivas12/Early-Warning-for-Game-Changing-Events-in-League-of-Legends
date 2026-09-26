@@ -44,3 +44,15 @@ The resulting sequence values are not normalized and are not yet a B4 model.
 The trainer must derive scaling from staged training shards only, fit all
 registered seeds, and score calibration shards while preserving the final
 test holdout.
+
+## Training-only normalization
+
+After staging completes, `make fit-b4-normalizer` checks the frozen 60-shard
+inventory and every shard checksum. It then reads only the 48 training shard
+arrays. Each training observation contributes its current frame once, ignoring
+missing values; repeated historical frames do not change the feature moments.
+Zero-variance or entirely missing features use an identity transform. The
+ignored private `normalizer.json` binds the feature order and fitted statistics
+to the staging manifest and frozen split. Applying it scales present numeric
+values at real timesteps, preserving missingness bits, age and padding. The
+calibration and final test arrays remain unread. This step does not train B4.
