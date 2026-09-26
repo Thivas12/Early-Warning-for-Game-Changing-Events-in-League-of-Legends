@@ -11,7 +11,7 @@ from typing import cast
 
 from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
-from league_ews.baseline_floor import run_final_baseline_floor
+from league_ews.baseline_floor import LABELS, run_final_baseline_floor
 from league_ews.benchmark import run_legacy_benchmark
 from league_ews.diagnostics import diagnose_legacy_sequence_split
 from league_ews.discovery import (
@@ -68,6 +68,7 @@ from league_ews.selection import (
     select_pilot_matches,
     validate_candidate_pool,
 )
+from league_ews.tabular_baseline import run_final_tabular, summarize_final_tabular
 
 
 def _write_json(payload: object, output: Path | None) -> None:
@@ -690,6 +691,42 @@ def _run_final_baseline_floor(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_final_tabular(args: argparse.Namespace) -> int:
+    report = run_final_tabular(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+        args.g2_report,
+        args.processed_audit,
+        args.split,
+        args.floor_root,
+        args.output,
+        args.label,
+    )
+    summary = {
+        key: report[key]
+        for key in (
+            "schema_version",
+            "label",
+            "metrics",
+            "train_matches",
+            "calibration_matches",
+            "test_matches_unread",
+            "model_sha256",
+            "split_sha256",
+            "identifiers_in_report",
+        )
+    }
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    return 0
+
+
+def _summarize_final_tabular(args: argparse.Namespace) -> int:
+    report = summarize_final_tabular(args.output, args.floor_root)
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1124,6 +1161,27 @@ def build_parser() -> argparse.ArgumentParser:
     baseline_floor.add_argument("--split", type=Path, required=True)
     baseline_floor.add_argument("--output", type=Path, required=True)
     baseline_floor.set_defaults(handler=_run_final_baseline_floor)
+
+    tabular = subparsers.add_parser(
+        "final-tabular", help="fit one B3 event/horizon target on the frozen training patches"
+    )
+    tabular.add_argument("--raw", type=Path, required=True)
+    tabular.add_argument("--processed", type=Path, required=True)
+    tabular.add_argument("--sampling-frame", type=Path, required=True)
+    tabular.add_argument("--g2-report", type=Path, required=True)
+    tabular.add_argument("--processed-audit", type=Path, required=True)
+    tabular.add_argument("--split", type=Path, required=True)
+    tabular.add_argument("--floor-root", type=Path, required=True)
+    tabular.add_argument("--output", type=Path, required=True)
+    tabular.add_argument("--label", choices=LABELS, required=True)
+    tabular.set_defaults(handler=_run_final_tabular)
+
+    tabular_summary = subparsers.add_parser(
+        "summarize-final-tabular", help="compare all 12 B3 calibration scores with B0-B2"
+    )
+    tabular_summary.add_argument("--floor-root", type=Path, required=True)
+    tabular_summary.add_argument("--output", type=Path, required=True)
+    tabular_summary.set_defaults(handler=_summarize_final_tabular)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
