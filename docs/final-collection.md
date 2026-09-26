@@ -157,6 +157,29 @@ it is not a claim about the still untouched 16.17 test patch or the proposed
 graph model. Event-level alert thresholds and the final test policy remain
 separate, locked decisions.
 
+## B3 event-level calibration policy
+
+Run `make select-alert-policy-all` after fitting B3. It selects one threshold
+for each event type at the registered 60-second horizon on patch 16.16. The
+60-second horizon was introduced from pilot timeline cadence before the final
+sample was selected. Candidate thresholds are fixed at 101 logarithmically
+spaced values from 0.00001 through 1. The selection rule maximizes event-level
+F1, then minimizes false alerts, then prefers the higher threshold. An alert
+requires a score at or above threshold. Repeated alerts for the same event
+type are suppressed through 60 seconds after an alert. Chronological alerts
+are greedily matched one-to-one to the first unmatched event onset strictly
+after the alert and within 60 seconds. All event onsets count in recall,
+including events without a preceding observation. The report records event
+precision, recall, F1, false alerts per game and lead time. One match is one
+game in this metric.
+
+Each of the three processes verifies the audited split, processed file hashes,
+and saved B3 AP before writing its ignored, numeric-only policy artifact. A
+verified rerun skips completed events. This is threshold selection on the
+calibration patch, so its event metrics are descriptive and may be optimistic.
+The policy artifacts cannot be replaced silently; the final test stays unread.
+`make select-alert-policy EVENT=dragon` runs a single event.
+
 Run `make prepare-final-event-review` after a passing processed audit. It
 creates the ignored `data/private/final-event-review-packet.json` with one
 event-rich match from every route-patch cell. Within each cell it chooses the
