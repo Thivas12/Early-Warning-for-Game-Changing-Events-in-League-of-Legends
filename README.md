@@ -70,6 +70,7 @@ make validate-pilot-selection
 make validate-final-discovery-plan
 make validate-final-selection-plan
 make preflight-final-collection
+make validate-final
 uv run pytest
 ```
 
