@@ -119,6 +119,10 @@ a product asset.
 | M2 | M1 + patch/rule representation | Patch-robust candidate |
 | M3 | M2 + OOD score/abstention | Selective prediction candidate |
 
+The B4 causal sequence input contract and training boundary are documented in
+[`docs/b4-temporal-baseline.md`](b4-temporal-baseline.md). This input contract
+does not change the frozen final split or the H1 comparison against B3.
+
 The graph has player and objective nodes; edges encode team membership,
 proximity, assistance and objective proximity. Feature availability is
 explicit. Health is not inferred from fields absent in the API.
