@@ -7,6 +7,10 @@ from collections.abc import Sequence
 import numpy as np
 from numpy.typing import NDArray
 
+from league_ews.labels import EventIndex
+
+EVENT_TYPES = ("baron", "dragon", "teamfight")
+
 
 def cumulative_risk(hazards: NDArray[np.floating]) -> NDArray[np.float64]:
     """Convert conditional hazards into monotonically non-decreasing risk."""
@@ -60,3 +64,35 @@ def discrete_hazard_target(
     if index < bins:
         target[index] = 1.0
     return target
+
+
+def event_hazard_targets(
+    observation_time_ms: int,
+    event_index: EventIndex,
+    *,
+    bin_seconds: int = 10,
+    bins: int = 6,
+) -> NDArray[np.float64]:
+    """Encode the next strictly future event independently for each event type.
+
+    Multiple event types can occur in one bin. These are cause-specific binary
+    hazards, not mutually exclusive outcomes of a single softmax.
+    """
+
+    if observation_time_ms < 0:
+        raise ValueError("Observation time must be non-negative")
+    if bin_seconds <= 0 or bins <= 0:
+        raise ValueError("bin_seconds and bins must be positive")
+    targets = np.zeros((len(EVENT_TYPES), bins), dtype=np.float64)
+    for row, event_type in enumerate(EVENT_TYPES):
+        times = np.asarray(event_index.for_event(event_type), dtype=np.int64)
+        if (times < 0).any() or (np.diff(times) <= 0).any():
+            raise ValueError("Event times must be non-negative and strictly increasing")
+        next_index = int(np.searchsorted(times, observation_time_ms, side="right"))
+        if next_index < len(times):
+            targets[row] = discrete_hazard_target(
+                (int(times[next_index]) - observation_time_ms) / 1000,
+                bin_seconds=bin_seconds,
+                bins=bins,
+            )
+    return targets

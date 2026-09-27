@@ -1,0 +1,15 @@
+schema_version: league-ews-m1-hazard-supplement-v1
+experiment_id: M001
+supersedes_model_output: discrete-competing-hazards
+model_output: independent-event-specific-discrete-hazards
+events: [baron, dragon, teamfight]
+bin_seconds: 10
+bins: 6
+horizons_seconds: [10, 20, 30, 60]
+time_origin: genuine-observation-timestamp
+event_boundary: strictly-future-through-inclusive-horizon
+target: first-future-event-of-each-type
+training_at_risk: until-first-event-of-that-type-or-horizon-end
+cross_event_constraint: none
+calibration_partition: patch-16.16
+test_partition: patch-16.17-unread-until-model-and-policy-freeze
