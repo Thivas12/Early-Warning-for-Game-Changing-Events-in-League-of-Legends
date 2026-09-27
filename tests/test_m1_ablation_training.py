@@ -125,9 +125,7 @@ def test_variants_keep_separate_checkpoints(tmp_path, monkeypatch, variant):
 def test_reject_unfrozen_and_unimplemented_variants(tmp_path, monkeypatch):
     _, arguments = _inputs(tmp_path, monkeypatch)
     with pytest.raises(ValueError, match="supported 12-node"):
-        runner.train_m1_graph_ablation_seed(
-            *arguments, variant="no-objective-nodes", seed=20260915
-        )
+        runner.train_m1_graph_ablation_seed(*arguments, variant="no-objective-nodes", seed=20260915)
     arguments[6].unlink()
     with pytest.raises(ValueError, match="freeze must be created"):
         runner.train_m1_graph_ablation_seed(
