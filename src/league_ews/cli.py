@@ -58,6 +58,7 @@ from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
 from league_ews.m1_normalizer import fit_m1_normalizer
+from league_ews.m1_training import train_m1_seed
 from league_ews.m1_training_plan import freeze_m1_training_plan
 from league_ews.pilot_collection import (
     TimelineFetcher,
@@ -863,6 +864,22 @@ def _freeze_m1_training(args: argparse.Namespace) -> int:
     return 0
 
 
+def _train_m1_seed(args: argparse.Namespace) -> int:
+    report = train_m1_seed(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.hazards,
+        args.freeze,
+        args.output,
+        seed=args.seed,
+        device=args.device,
+        max_new_shards=args.max_new_shards,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1513,6 +1530,14 @@ def build_parser() -> argparse.ArgumentParser:
     for name in ("staging-root", "normalizer", "plan", "hazards", "output"):
         m1_training.add_argument(f"--{name}", type=Path, required=True)
     m1_training.set_defaults(handler=_freeze_m1_training)
+
+    m1_train = subparsers.add_parser("train-m1-seed", help="resume one frozen M1 seed")
+    for name in ("staging-root", "normalizer", "plan", "hazards", "freeze", "output"):
+        m1_train.add_argument(f"--{name}", type=Path, required=True)
+    m1_train.add_argument("--seed", type=int, required=True)
+    m1_train.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    m1_train.add_argument("--max-new-shards", type=int, default=1)
+    m1_train.set_defaults(handler=_train_m1_seed)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"
