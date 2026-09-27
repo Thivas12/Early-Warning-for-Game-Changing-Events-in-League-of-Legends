@@ -58,6 +58,7 @@ from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.m1_ablation_calibration import score_m1_graph_ablation_seed
 from league_ews.m1_ablation_plan import freeze_m1_ablations
+from league_ews.m1_ablation_summary import summarize_m1_graph_ablation
 from league_ews.m1_ablation_training import SUPPORTED_VARIANTS, train_m1_graph_ablation_seed
 from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
@@ -963,6 +964,44 @@ def _score_m1_graph_ablation_seed(args: argparse.Namespace) -> int:
     return 0
 
 
+def _summarize_m1_graph_ablation(args: argparse.Namespace) -> int:
+    summary = summarize_m1_graph_ablation(
+        args.staging_root,
+        args.normalizer,
+        args.training_plan,
+        args.hazards,
+        args.training_freeze,
+        args.ablation_plan,
+        args.ablation_freeze,
+        args.calibration_summary,
+        args.alert_summary,
+        args.training_root,
+        args.calibration_root,
+        variant=args.variant,
+    )
+    print(
+        json.dumps(
+            {
+                key: summary[key]
+                for key in (
+                    "schema_version",
+                    "variant",
+                    "seed_count",
+                    "calibration_matches",
+                    "macro_average_precision",
+                    "original_m1_macro_average_precision",
+                    "mean_delta_vs_m1",
+                    "selected_seed",
+                    "test_matches_unread",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _train_m1_seed(args: argparse.Namespace) -> int:
     report = train_m1_seed(
         args.staging_root,
@@ -1832,6 +1871,26 @@ def build_parser() -> argparse.ArgumentParser:
     m1_ablation_score.add_argument("--variant", choices=SUPPORTED_VARIANTS, required=True)
     m1_ablation_score.add_argument("--seed", type=int, required=True)
     m1_ablation_score.set_defaults(handler=_score_m1_graph_ablation_seed)
+
+    m1_ablation_summary = subparsers.add_parser(
+        "summarize-m1-graph-ablation", help="audit ten graph removal calibration seeds"
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "training-plan",
+        "hazards",
+        "training-freeze",
+        "ablation-plan",
+        "ablation-freeze",
+        "calibration-summary",
+        "alert-summary",
+        "training-root",
+        "calibration-root",
+    ):
+        m1_ablation_summary.add_argument(f"--{name}", type=Path, required=True)
+    m1_ablation_summary.add_argument("--variant", choices=SUPPORTED_VARIANTS, required=True)
+    m1_ablation_summary.set_defaults(handler=_summarize_m1_graph_ablation)
 
     m1_train = subparsers.add_parser("train-m1-seed", help="resume one frozen M1 seed")
     for name in ("staging-root", "normalizer", "plan", "hazards", "freeze", "output"):

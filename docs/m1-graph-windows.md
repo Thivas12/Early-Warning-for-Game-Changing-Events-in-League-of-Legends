@@ -189,3 +189,10 @@ match offsets for later alert evaluation and are bound to all ten checkpoints.
 Reruns verify the report and scores; an interrupted write can regenerate the
 report from the same inputs. No test shard is staged or opened, and no seed is
 chosen from calibration results. Summaries and alert comparisons follow.
+
+`make summarize-m1-graph-ablation VARIANT=no-objective-nodes` audits all ten
+saved probability arrays, recalculates twelve AP metrics for each seed and
+checks identical calibration truth and match order. It reports the ten-seed
+mean, spread and per-target ranges against the frozen original M1 calibration
+mean. This descriptive comparison selects no seed and leaves patch 16.17
+sealed. Alert policies and the remaining registered controls follow.
