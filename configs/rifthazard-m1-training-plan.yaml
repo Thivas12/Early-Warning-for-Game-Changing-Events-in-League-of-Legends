@@ -1,0 +1,49 @@
+schema_version: league-ews-m1-training-plan-v1
+freeze_stage: before-m1-training-or-calibration-scoring
+input:
+  history_steps: 8
+  nodes: 12
+  node_features: 11
+  edge_types: [same-team, proximity, assistance, near-baron, near-dragon]
+  age_units: minutes
+  normalizer: training-only-participant-numeric
+model:
+  family: relation-aware-temporal-graph-gru
+  message_layers: 2
+  message_hidden_units: 64
+  relation_aggregation: masked-mean-per-edge-type
+  temporal_hidden_units: 64
+  temporal_layers: 1
+  temporal_readout: last-real-frame
+  dropout: 0.1
+  output: independent-event-specific-discrete-hazards
+  event_order: [baron, dragon, teamfight]
+  hazard_bins: 6
+  hazard_bin_seconds: 10
+training:
+  seeds: [20260915, 20260916, 20260917, 20260918, 20260919, 20260920, 20260921, 20260922, 20260923, 20260924]
+  epochs: 3
+  batch_size: 256
+  optimizer: adamw
+  learning_rate: 0.001
+  weight_decay: 0.01
+  loss: mean-bce-with-logits-over-at-risk-bins
+  at_risk: per-event-through-first-event-bin-inclusive
+  checkpoint_unit: completed-training-shard
+  shard_order: registered-order-with-seeded-within-shard-permutation
+  training_patches: ["16.12", "16.13", "16.14", "16.15"]
+  model_selection: report-all-ten-seeds-no-calibration-seed-selection
+calibration:
+  patch: "16.16"
+  use: thresholds-and-reporting-only
+  horizon_seconds: [10, 20, 30, 60]
+test:
+  patch: "16.17"
+  release: once-after-model-and-policy-freeze
+registered_m1_ablations:
+  - no-positions-or-proximity
+  - no-interaction-edges
+  - no-objective-nodes
+  - no-assistance-history
+  - independent-horizon-heads
+  - fixed-minute-grid
