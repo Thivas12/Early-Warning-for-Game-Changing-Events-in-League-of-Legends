@@ -493,6 +493,22 @@ summarize-m1-calibration:
 		--floor-root data/private/final-baselines \
 		--tabular-root data/private/final-tabular
 
+select-m1-alert-policy:
+	uv run --no-sync league-ews select-m1-alert-policy \
+		--staging-root data/private/m1-graph-staging \
+		--normalizer data/private/m1-graph-staging/normalizer.json \
+		--plan configs/rifthazard-m1-training-plan.yaml \
+		--hazards configs/rifthazard-m1-hazards.yaml \
+		--freeze data/private/m1-training-freeze.json \
+		--training-root data/private/m1-training \
+		--calibration-root data/private/m1-calibration \
+		--floor-root data/private/final-baselines \
+		--tabular-root data/private/final-tabular \
+		--processed data/processed/registered-final \
+		--split data/private/final-split.json \
+		--output data/private/m1-alert-policy \
+		--seed $(or $(SEED),20260915)
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \
