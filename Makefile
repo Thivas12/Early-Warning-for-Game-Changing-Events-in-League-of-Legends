@@ -445,6 +445,11 @@ stage-m1-graphs:
 		--output data/private/m1-graph-staging \
 		--max-new-shards $(or $(MAX_NEW_SHARDS),1)
 
+fit-m1-normalizer:
+	uv run --no-sync league-ews fit-m1-normalizer \
+		--staging-root data/private/m1-graph-staging \
+		--output data/private/m1-graph-staging/normalizer.json
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \

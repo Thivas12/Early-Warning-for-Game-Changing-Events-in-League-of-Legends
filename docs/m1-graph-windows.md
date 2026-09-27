@@ -42,3 +42,19 @@ private data, calibration predictions or test-patch data are read by this
 pure input-contract implementation. Later staging must bind the frozen
 36,000-match split and use only the 24,000 training matches to fit any
 normalizer; calibration remains confined to patch 16.16.
+
+## Training-only participant scaling
+
+After all 300 train and calibration shards are staged, run `make
+fit-m1-normalizer`. It checks the complete ordered inventory and every
+checksum, including calibration shard bytes, then decodes only the 240
+training shard arrays. One current frame per observation contributes to
+the statistics, so repeated history does not change the moments. Only the
+ten participant nodes' seven numeric channels (gold, XP, level, lane and
+jungle minions, x and y) are fitted. Missing x/y values do not contribute;
+the position availability bit, team sign, node roles, objective anchors,
+edges, frame ages and padding are never scaled. Zero-variance channels use
+an identity transform. The private, immutable normalizer binds its moments
+to the staging manifest, graph plan, split, processing manifest and freeze.
+The calibration arrays and final test patch remain unread by the fit. No
+Riot credential or CUDA runtime is needed.
