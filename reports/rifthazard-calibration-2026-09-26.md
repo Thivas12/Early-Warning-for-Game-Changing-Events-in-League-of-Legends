@@ -28,6 +28,7 @@ unread by the calibration commands.
 | B1 match clock | 0.11133 |
 | B2 observed event history | 0.23985 |
 | B3 causal tabular gradient boosting | 0.37594 |
+| B4 eight-frame GRU, ten-seed mean | 0.32382 |
 
 The paired B3 minus B2 macro AP gain was **0.13609**. Resampling all 6,000
 complete calibration matches 1,000 times with identical draws for both methods
@@ -35,6 +36,35 @@ gave a percentile 95% interval of **0.13061–0.14182**. All 12 target-specific
 paired intervals were above zero. These intervals estimate uncertainty within
 this calibration sample. Repeated appearances of players across matches and
 future-patch drift are not captured by this match-level resampling.
+
+The ten prespecified B4 seeds all completed three training epochs on the
+24,000 training matches. On the same 6,000-match calibration partition, their
+macro AP mean was **0.32382**, sample standard deviation **0.00701**, and
+range **0.31349–0.33485**. The B4 mean trails B3 by **0.05212** absolute macro
+AP. All ten seed results remain in the ignored private summary; no seed was
+selected from calibration performance. The per-target values below are rounded
+transcriptions supplied from the private reports, not fresh measurements in
+this public checkout.
+
+| Target | B3 AP | B4 mean AP | B4 − B3 |
+|---|---:|---:|---:|
+| Baron 10 s | 0.2367 | 0.1320 | −0.1047 |
+| Baron 20 s | 0.3712 | 0.2365 | −0.1347 |
+| Baron 30 s | 0.3985 | 0.2801 | −0.1184 |
+| Baron 60 s | 0.4512 | 0.3716 | −0.0796 |
+| Dragon 10 s | 0.3110 | 0.2515 | −0.0595 |
+| Dragon 20 s | 0.4925 | 0.4256 | −0.0669 |
+| Dragon 30 s | 0.5885 | 0.5393 | −0.0492 |
+| Dragon 60 s | 0.7507 | 0.7242 | −0.0265 |
+| Teamfight 10 s | 0.1286 | 0.1233 | −0.0053 |
+| Teamfight 20 s | 0.1867 | 0.1920 | +0.0053 |
+| Teamfight 30 s | 0.2313 | 0.2403 | +0.0091 |
+| Teamfight 60 s | 0.3645 | 0.3695 | +0.0050 |
+
+B4 trails B3 on every Baron and Dragon target. The small Teamfight gains at
+20–60 seconds have no paired uncertainty interval yet and do not establish an
+improvement. B4 remains a secondary control; the registered H1 comparison is
+the graph model M1 against B3.
 
 ## Event-level 60-second alert policy on calibration
 
@@ -58,7 +88,7 @@ points meets the complete gate.** Baron and teamfight precision fall below
 the selected B3 policy, not a final test result for B3 or a result for the
 proposed graph model. No product utility claim follows from it.
 
-The next modeling stage is B4 temporal sequence context, followed by the
-registered graph and hazard ablations. Model and alert-policy decisions must
+The next modeling stage is the registered graph and hazard ablations. Model and
+alert-policy decisions must
 remain on the training and calibration patches until the one-time future-patch
 evaluation is frozen.

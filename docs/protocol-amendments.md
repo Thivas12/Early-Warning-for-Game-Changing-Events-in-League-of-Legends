@@ -4,6 +4,28 @@ This file records changes made after `docs/research-plan.md` was frozen. An
 amendment states when it occurred, what evidence was available and whether it
 changes a hypothesis, outcome or decision rule.
 
+## 2026-09-27 — clarify M1 hazards for overlapping event types
+
+**Stage:** after B3 and B4 calibration results on patch 16.16; before M1 input
+staging, fitting or calibration scoring. Patch 16.17 remains unread.
+
+The historical M001 configuration calls the output
+`discrete-competing-hazards`. The frozen labels independently record Baron,
+Dragon and teamfight onsets. Different types may overlap in the same 60-second
+window or 10-second hazard interval. A mutually exclusive first-event softmax
+would change these outcomes by discarding a later event of another type.
+`configs/rifthazard-m1-hazards.yaml` therefore supplements that configuration
+with one discrete conditional hazard sequence per event type. The first
+strictly future onset per type supplies its own target and at-risk mask;
+within-type cumulative risks remain monotone. There is no cross-type sum-to-one
+constraint. `docs/m1-hazard-contract.md` gives the executable interpretation.
+
+This corrects the output parameterization before M1 training. It preserves
+the registered event definitions, four horizons, split, B3 comparator, H1
+gain criterion, H2 Brier margin and all remaining decision rules. B4 trailed
+B3 on calibration for all Baron and Dragon targets; that descriptive finding
+did not determine the hazard correction, which follows from the label logic.
+
 ## 2026-09-15 — align processed horizons with the registered protocol
 
 **Stage:** after one operational Match-V5 canary; before the research pilot,
