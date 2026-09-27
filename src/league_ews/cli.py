@@ -57,6 +57,7 @@ from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
+from league_ews.m1_normalizer import fit_m1_normalizer
 from league_ews.pilot_collection import (
     TimelineFetcher,
     collect_selected_pilot_bundles,
@@ -843,6 +844,11 @@ def _stage_m1_graphs(args: argparse.Namespace) -> int:
     return 0
 
 
+def _fit_m1_normalizer(args: argparse.Namespace) -> int:
+    print(json.dumps(fit_m1_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1479,6 +1485,13 @@ def build_parser() -> argparse.ArgumentParser:
         m1_stage.add_argument(f"--{name}", type=Path, required=True)
     m1_stage.add_argument("--max-new-shards", type=int, default=1)
     m1_stage.set_defaults(handler=_stage_m1_graphs)
+
+    m1_normalizer = subparsers.add_parser(
+        "fit-m1-normalizer", help="fit M1 participant scaling on frozen train shards only"
+    )
+    m1_normalizer.add_argument("--staging-root", type=Path, required=True)
+    m1_normalizer.add_argument("--output", type=Path, required=True)
+    m1_normalizer.set_defaults(handler=_fit_m1_normalizer)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"

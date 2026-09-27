@@ -11,6 +11,19 @@ from league_ews.constants import RIFTHAZARD_MAX_CHAMPION_LEVEL
 from league_ews.timeline import Observation, ParticipantState, Position
 
 MAP_SCALE = 15000.0
+FEATURE_NAMES = (
+    "is_participant",
+    "is_objective",
+    "team_sign",
+    "total_gold_scaled",
+    "xp_scaled",
+    "level_scaled",
+    "lane_minions_scaled",
+    "jungle_minions_scaled",
+    "x_scaled",
+    "y_scaled",
+    "position_observed_or_initial_spawn_elapsed",
+)
 
 
 @dataclass(frozen=True)
@@ -164,17 +177,5 @@ def build_interaction_graph(
         node_features=np.asarray(node_features, dtype=np.float32),
         edge_index=edge_index,
         edge_types=tuple(edge_types),
-        feature_names=(
-            "is_participant",
-            "is_objective",
-            "team_sign",
-            "total_gold_scaled",
-            "xp_scaled",
-            "level_scaled",
-            "lane_minions_scaled",
-            "jungle_minions_scaled",
-            "x_scaled",
-            "y_scaled",
-            "position_observed_or_initial_spawn_elapsed",
-        ),
+        feature_names=FEATURE_NAMES,
     )
