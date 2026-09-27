@@ -1,0 +1,51 @@
+schema_version: league-ews-m1-ablation-plan-v1
+freeze_stage: after-m1-calibration-before-ablation-fitting
+reference: frozen-m1-ten-seed-calibration-and-alert-policies
+common:
+  seeds: [20260915, 20260916, 20260917, 20260918, 20260919, 20260920, 20260921, 20260922, 20260923, 20260924]
+  train_patches: ["16.12", "16.13", "16.14", "16.15"]
+  calibration_patch: "16.16"
+  test_patch: "16.17"
+  test_release: once-after-all-model-and-policy-freezes
+  same_shard_order_epochs_optimizer_and_threshold_rule_as_m1: true
+  no_calibration_seed_selection: true
+variants:
+  no-positions-or-proximity:
+    source: frozen-m1-graph-shards
+    remove_participant_features: [x_scaled, y_scaled, position_observed_or_initial_spawn_elapsed]
+    remove_objective_features: [x_scaled, y_scaled]
+    preserve_objective_spawn_clock_bit: true
+    remove_relations: [proximity, near-baron, near-dragon]
+    retain_node_count: 12
+  no-interaction-edges:
+    source: frozen-m1-graph-shards
+    remove_relations: [same-team, proximity, assistance, near-baron, near-dragon]
+    retain_all_node_features: true
+    retain_node_count: 12
+  no-objective-nodes:
+    source: frozen-m1-graph-shards
+    retain_nodes: first-ten-participants
+    graph_pool_denominator: 10
+    retain_participant_features: true
+    retain_participant_relations: [same-team, proximity, assistance]
+  no-assistance-history:
+    source: frozen-m1-graph-shards
+    remove_relations: [assistance]
+    retain_all_node_features: true
+    retain_node_count: 12
+  independent-horizon-heads:
+    source: frozen-m1-graph-shards
+    encoder: identical-to-m1
+    output: twelve-independent-sigmoid-logits
+    targets: stored-exact-future-labels
+    loss: mean-bce-over-twelve-labels
+    monotonicity_constraint: none
+  fixed-minute-grid:
+    source: audited-processed-train-and-calibration-only
+    prediction_rows: genuine-observations-unchanged
+    anchors: current-real-timestamp-minus-k-times-60000-ms-for-k-0-through-7
+    history_selection: latest-genuine-observation-at-or-before-each-anchor
+    repeated-observation: deduplicate-and-left-pad
+    unavailable-history: left-pad
+    targets: same-genuine-observation-future-labels
+    encoder: identical-to-m1

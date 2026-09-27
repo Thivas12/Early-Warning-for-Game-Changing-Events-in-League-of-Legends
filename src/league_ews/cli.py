@@ -55,6 +55,7 @@ from league_ews.final_selection import (
 )
 from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
+from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
@@ -868,6 +869,24 @@ def _freeze_m1_training(args: argparse.Namespace) -> int:
     return 0
 
 
+def _freeze_m1_ablations(args: argparse.Namespace) -> int:
+    print(
+        json.dumps(
+            freeze_m1_ablations(
+                args.ablation_plan,
+                args.training_plan,
+                args.training_freeze,
+                args.calibration_summary,
+                args.alert_summary,
+                args.output,
+            ),
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _train_m1_seed(args: argparse.Namespace) -> int:
     report = train_m1_seed(
         args.staging_root,
@@ -1665,6 +1684,20 @@ def build_parser() -> argparse.ArgumentParser:
     for name in ("staging-root", "normalizer", "plan", "hazards", "output"):
         m1_training.add_argument(f"--{name}", type=Path, required=True)
     m1_training.set_defaults(handler=_freeze_m1_training)
+
+    m1_ablations = subparsers.add_parser(
+        "freeze-m1-ablations", help="bind six registered variants to frozen M1 calibration"
+    )
+    for name in (
+        "ablation-plan",
+        "training-plan",
+        "training-freeze",
+        "calibration-summary",
+        "alert-summary",
+        "output",
+    ):
+        m1_ablations.add_argument(f"--{name}", type=Path, required=True)
+    m1_ablations.set_defaults(handler=_freeze_m1_ablations)
 
     m1_train = subparsers.add_parser("train-m1-seed", help="resume one frozen M1 seed")
     for name in ("staging-root", "normalizer", "plan", "hazards", "freeze", "output"):
