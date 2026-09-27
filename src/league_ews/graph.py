@@ -138,6 +138,16 @@ def build_interaction_graph(
             ):
                 add_bidirectional(left, right, "proximity")
 
+    teams = {participant.participant_id: participant.team_id for participant in ordered}
+    for event in observation.events:
+        if event.timestamp_ms > observation.timestamp_ms:
+            raise ValueError("Graph observation contains a future event")
+        if event.event_type != "CHAMPION_KILL" or event.killer_id not in teams:
+            continue
+        for assistant in sorted(set(event.assisting_participant_ids)):
+            if assistant != event.killer_id and teams.get(assistant) == teams[event.killer_id]:
+                add_bidirectional(event.killer_id - 1, assistant - 1, "assistance")
+
     for participant_index, participant in enumerate(ordered):
         if participant.position is None:
             continue
