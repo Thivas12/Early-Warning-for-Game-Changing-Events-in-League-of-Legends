@@ -105,3 +105,13 @@ against the frozen inputs; an interrupted run after writing predictions can
 regenerate its report. This stage does not choose a winning seed or read the
 final test patch. The ten-seed aggregate and operational alert policies
 follow in separate chunks.
+
+Run `make summarize-m1-calibration` once all ten reports exist. It checks
+every checkpoint, report and score checksum, recalculates metrics from the
+saved probabilities, compares label arrays and match order across seeds, and
+checks that each event risk is nondecreasing over the four horizons. It binds
+the B3 calibration reports to the same frozen split and reports the mean M1
+macro AP, the sample standard deviation, per-target ranges and the descriptive
+mean delta from B3. No seed is selected and the test partition stays sealed.
+The calibration delta alone does not satisfy the preregistered H1 hypothesis;
+the future-patch paired bootstrap is still required.

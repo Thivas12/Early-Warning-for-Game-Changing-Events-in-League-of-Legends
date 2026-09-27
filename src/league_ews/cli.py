@@ -59,6 +59,7 @@ from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
 from league_ews.m1_normalizer import fit_m1_normalizer
+from league_ews.m1_summary import summarize_m1_calibration
 from league_ews.m1_training import train_m1_seed
 from league_ews.m1_training_plan import freeze_m1_training_plan
 from league_ews.pilot_collection import (
@@ -915,6 +916,41 @@ def _score_m1_calibration(args: argparse.Namespace) -> int:
     return 0
 
 
+def _summarize_m1_calibration(args: argparse.Namespace) -> int:
+    summary = summarize_m1_calibration(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.hazards,
+        args.freeze,
+        args.training_root,
+        args.calibration_root,
+        args.floor_root,
+        args.tabular_root,
+    )
+    print(
+        json.dumps(
+            {
+                key: summary[key]
+                for key in (
+                    "schema_version",
+                    "seed_count",
+                    "calibration_matches",
+                    "calibration_observations",
+                    "macro_average_precision",
+                    "b3_macro_average_precision",
+                    "mean_delta_vs_b3",
+                    "selected_seed",
+                    "test_matches_unread",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1589,6 +1625,23 @@ def build_parser() -> argparse.ArgumentParser:
         m1_score.add_argument(f"--{name}", type=Path, required=True)
     m1_score.add_argument("--seed", type=int, required=True)
     m1_score.set_defaults(handler=_score_m1_calibration)
+
+    m1_summary = subparsers.add_parser(
+        "summarize-m1-calibration", help="audit all ten M1 seeds against frozen B3 calibration"
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "plan",
+        "hazards",
+        "freeze",
+        "training-root",
+        "calibration-root",
+        "floor-root",
+        "tabular-root",
+    ):
+        m1_summary.add_argument(f"--{name}", type=Path, required=True)
+    m1_summary.set_defaults(handler=_summarize_m1_calibration)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"
