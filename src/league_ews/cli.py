@@ -13,6 +13,7 @@ from league_ews.alert_policy import run_alert_policy, summarize_alert_policy
 from league_ews.audit import audit_legacy_frame
 from league_ews.authority import collection_preflight
 from league_ews.b4_normalizer import fit_b4_normalizer
+from league_ews.b4_plan import freeze_b4_plan
 from league_ews.b4_staging import stage_b4_sequences
 from league_ews.baseline_floor import LABELS, run_final_baseline_floor
 from league_ews.benchmark import run_legacy_benchmark
@@ -816,6 +817,17 @@ def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     return 0
 
 
+def _freeze_b4_plan(args: argparse.Namespace) -> int:
+    print(
+        json.dumps(
+            freeze_b4_plan(args.staging_root, args.normalizer, args.plan, args.output),
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1333,6 +1345,15 @@ def build_parser() -> argparse.ArgumentParser:
     b4_normalizer.add_argument("--staging-root", type=Path, required=True)
     b4_normalizer.add_argument("--output", type=Path, required=True)
     b4_normalizer.set_defaults(handler=_fit_b4_normalizer)
+
+    b4_plan = subparsers.add_parser(
+        "freeze-b4-plan", help="bind B4 training settings before fitting"
+    )
+    b4_plan.add_argument("--staging-root", type=Path, required=True)
+    b4_plan.add_argument("--normalizer", type=Path, required=True)
+    b4_plan.add_argument("--plan", type=Path, required=True)
+    b4_plan.add_argument("--output", type=Path, required=True)
+    b4_plan.set_defaults(handler=_freeze_b4_plan)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
