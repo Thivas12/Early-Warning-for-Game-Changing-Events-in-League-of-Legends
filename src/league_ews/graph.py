@@ -175,6 +175,6 @@ def build_interaction_graph(
             "jungle_minions_scaled",
             "x_scaled",
             "y_scaled",
-            "observed_or_available",
+            "position_observed_or_initial_spawn_elapsed",
         ),
     )
