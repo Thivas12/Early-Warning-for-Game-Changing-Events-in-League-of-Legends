@@ -58,3 +58,18 @@ an identity transform. The private, immutable normalizer binds its moments
 to the staging manifest, graph plan, split, processing manifest and freeze.
 The calibration arrays and final test patch remain unread by the fit. No
 Riot credential or CUDA runtime is needed.
+
+## Frozen graph-hazard training settings
+
+Run `make freeze-m1-training` after the normalizer is fitted. The command
+checks the full staged inventory, binds the normalizer to that exact manifest,
+and writes an ignored private freeze containing the graph, split, processing,
+training plan and hazard supplement checksums. It does not open calibration
+arrays or test matches. The registered primary model has two relation-aware
+message layers, an eight-frame 64-unit GRU, and independent six-bin hazards
+for Baron, Dragon and teamfight. Training uses three epochs and all ten fixed
+seeds; it masks bins after the first event of each type. Calibration may set
+alert thresholds and report every seed, but cannot select one seed as the
+headline model. The six M1 ablations are also named in the frozen plan.
+This step freezes specifications only; the neural trainer follows in a
+separate code chunk. It needs no Riot key or PyTorch import.

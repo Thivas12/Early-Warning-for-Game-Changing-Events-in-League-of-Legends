@@ -450,6 +450,14 @@ fit-m1-normalizer:
 		--staging-root data/private/m1-graph-staging \
 		--output data/private/m1-graph-staging/normalizer.json
 
+freeze-m1-training:
+	uv run --no-sync league-ews freeze-m1-training \
+		--staging-root data/private/m1-graph-staging \
+		--normalizer data/private/m1-graph-staging/normalizer.json \
+		--plan configs/rifthazard-m1-training-plan.yaml \
+		--hazards configs/rifthazard-m1-hazards.yaml \
+		--output data/private/m1-training-freeze.json
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \
