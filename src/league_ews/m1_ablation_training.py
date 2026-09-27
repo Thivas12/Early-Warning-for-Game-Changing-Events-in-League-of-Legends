@@ -10,8 +10,8 @@ from typing import Any
 from league_ews.m1_ablation_inputs import ablate_graph_inputs
 from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_backend import TorchM1Backend
+from league_ews.m1_normalizer import TRAIN_SHARDS
 from league_ews.m1_training import (
-    TRAIN_SHARDS,
     UNITS_PER_SEED,
     _bound_inputs,
     _training_shard,
