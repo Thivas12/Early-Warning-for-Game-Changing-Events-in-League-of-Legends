@@ -557,6 +557,22 @@ train-m1-graph-ablation-seed:
 		--device $(or $(DEVICE),cpu) \
 		--max-new-shards $(or $(MAX_NEW_SHARDS),1)
 
+score-m1-graph-ablation-seed:
+	uv run --no-sync league-ews score-m1-graph-ablation-seed \
+		--staging-root data/private/m1-graph-staging \
+		--normalizer data/private/m1-graph-staging/normalizer.json \
+		--training-plan configs/rifthazard-m1-training-plan.yaml \
+		--hazards configs/rifthazard-m1-hazards.yaml \
+		--training-freeze data/private/m1-training-freeze.json \
+		--ablation-plan configs/rifthazard-m1-ablation-plan.yaml \
+		--ablation-freeze data/private/m1-ablation-freeze.json \
+		--calibration-summary data/private/m1-calibration/ten-seed-summary.json \
+		--alert-summary data/private/m1-alert-policy/ten-seed-alert-summary.json \
+		--training-root data/private/m1-ablation-training \
+		--output data/private/m1-ablation-calibration \
+		--variant $(or $(VARIANT),no-objective-nodes) \
+		--seed $(or $(SEED),20260915)
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \

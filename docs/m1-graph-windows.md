@@ -178,3 +178,14 @@ three relation channels. Its checkpoint binds these dimensions; existing
 checkpoints for the other variants resume with the original architecture.
 Independent heads and fixed-minute-grid need their own implementations.
 Do not treat a completed checkpoint as a calibration or test result.
+
+`make score-m1-graph-ablation-seed VARIANT=no-objective-nodes SEED=20260915`
+scores one graph removal seed only after **all ten seeds for that variant**
+have completed training. It checks their checkpoint and freeze bindings first,
+then verifies each calibration shard against the frozen manifest, applies the
+same feature normalization and registered graph removal as training, and
+reports all twelve label AP values and macro AP. Private predictions include
+match offsets for later alert evaluation and are bound to all ten checkpoints.
+Reruns verify the report and scores; an interrupted write can regenerate the
+report from the same inputs. No test shard is staged or opened, and no seed is
+chosen from calibration results. Summaries and alert comparisons follow.
