@@ -91,3 +91,17 @@ every completed shard. Rerunning advances without replaying completed work.
 One seed requires 240 shards × 3 epochs = 720 resumable units. Only one
 process should train a seed at a time; a per-seed lock enforces this. The
 calibration arrays and final test patch remain unread by training.
+
+## Calibration scoring after ten seeds
+
+`make score-m1-calibration SEED=20260915` requires completed checkpoints
+for **all ten** registered seeds before opening any calibration arrays.
+For each seed it checks each calibration shard checksum and compares its
+hazard targets with the twelve registered labels, then derives 10, 20, 30
+and 60-second event probabilities from cumulative conditional hazards.
+It writes private, de-identified predictions and a bound report containing
+per-target AP, ROC-AUC and Brier score. Existing score files are checked
+against the frozen inputs; an interrupted run after writing predictions can
+regenerate its report. This stage does not choose a winning seed or read the
+final test patch. The ten-seed aggregate and operational alert policies
+follow in separate chunks.

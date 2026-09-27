@@ -10,6 +10,7 @@ from typing import Any, cast
 import numpy as np
 
 from league_ews.graph import FEATURE_NAMES
+from league_ews.hazards import risk_at_horizons
 from league_ews.m1_graph_window import EDGE_TYPES, STEPS
 
 
@@ -183,6 +184,33 @@ class TorchM1Backend:
             total_loss += float(loss.detach()) * weight
             total_weight += weight
         return total_loss / total_weight, len(nodes)
+
+    def predict_shard(
+        self, nodes: np.ndarray, edges: np.ndarray, mask: np.ndarray, ages: np.ndarray
+    ) -> np.ndarray:
+        """Return coherent 10/20/30/60-second risk for all three event types."""
+
+        if not len(nodes):
+            raise ValueError("M1 prediction shard is empty")
+        x, e, a, lengths = right_pad_graphs(nodes, edges, mask, ages)
+        self.model.eval()
+        scores: list[np.ndarray] = []
+        with self.torch.inference_mode():
+            for start in range(0, len(nodes), 256):
+                end = min(start + 256, len(nodes))
+                logits = self.model(
+                    self.torch.from_numpy(x[start:end]).to(self.device),
+                    self.torch.from_numpy(e[start:end]).to(self.device),
+                    self.torch.from_numpy(a[start:end]).to(self.device),
+                    self.torch.from_numpy(lengths[start:end]),
+                )
+                hazards = self.torch.sigmoid(logits).cpu().numpy()
+                risks = risk_at_horizons(hazards, bin_seconds=10, horizons_seconds=(10, 20, 30, 60))
+                scores.append(risks.reshape(end - start, 12).astype(np.float32))
+        result = np.concatenate(scores)
+        if result.shape != (len(nodes), 12) or not np.isfinite(result).all():
+            raise ValueError("M1 predictions differ from frozen hazard output")
+        return result
 
     def state_dict(self) -> dict[str, Any]:
         return {
