@@ -160,3 +160,18 @@ are removed and missing slots left padded. Prediction rows and labels remain
 the same real observations. The same ten seeds, training schedule and
 calibration policy apply to each variant. This chunk freezes the contract;
 variant training is a separate step.
+
+## Bounded training for three graph removal variants
+
+`make train-m1-graph-ablation-seed VARIANT=no-positions-or-proximity SEED=20260915 DEVICE=cuda MAX_NEW_SHARDS=1`
+trains one canary shard on the frozen training partition. Rerun with a larger
+`MAX_NEW_SHARDS` to resume up to 720 units per seed. Separate private
+checkpoints are written under `data/private/m1-ablation-training/<variant>/seed-<seed>`
+with the ablation freeze hash, original training freeze hash and seed.
+The code verifies each frozen training shard before scaling and masking; no
+calibration or test shard is decoded. The same 12-node architecture, 256-row
+batches, three epochs and seed order as M1 are used. The supported variants
+in this chunk are no positions or proximity, no interaction edges and no
+assistance history. Objective-node removal requires a ten-node backend;
+independent heads and fixed-minute-grid need their own implementations.
+Do not treat a completed checkpoint as a calibration or test result.

@@ -56,6 +56,7 @@ from league_ews.final_selection import (
 from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.m1_ablation_plan import freeze_m1_ablations
+from league_ews.m1_ablation_training import train_m1_graph_ablation_seed
 from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
@@ -887,6 +888,27 @@ def _freeze_m1_ablations(args: argparse.Namespace) -> int:
     return 0
 
 
+def _train_m1_graph_ablation_seed(args: argparse.Namespace) -> int:
+    report = train_m1_graph_ablation_seed(
+        args.staging_root,
+        args.normalizer,
+        args.training_plan,
+        args.hazards,
+        args.training_freeze,
+        args.ablation_plan,
+        args.ablation_freeze,
+        args.calibration_summary,
+        args.alert_summary,
+        args.output,
+        variant=args.variant,
+        seed=args.seed,
+        device=args.device,
+        max_new_shards=args.max_new_shards,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _train_m1_seed(args: argparse.Namespace) -> int:
     report = train_m1_seed(
         args.staging_root,
@@ -1698,6 +1720,37 @@ def build_parser() -> argparse.ArgumentParser:
     ):
         m1_ablations.add_argument(f"--{name}", type=Path, required=True)
     m1_ablations.set_defaults(handler=_freeze_m1_ablations)
+
+    m1_ablation_train = subparsers.add_parser(
+        "train-m1-graph-ablation-seed",
+        help="resume one frozen 12-node M1 graph removal seed",
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "training-plan",
+        "hazards",
+        "training-freeze",
+        "ablation-plan",
+        "ablation-freeze",
+        "calibration-summary",
+        "alert-summary",
+        "output",
+    ):
+        m1_ablation_train.add_argument(f"--{name}", type=Path, required=True)
+    m1_ablation_train.add_argument(
+        "--variant",
+        choices=(
+            "no-positions-or-proximity",
+            "no-interaction-edges",
+            "no-assistance-history",
+        ),
+        required=True,
+    )
+    m1_ablation_train.add_argument("--seed", type=int, required=True)
+    m1_ablation_train.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    m1_ablation_train.add_argument("--max-new-shards", type=int, default=1)
+    m1_ablation_train.set_defaults(handler=_train_m1_graph_ablation_seed)
 
     m1_train = subparsers.add_parser("train-m1-seed", help="resume one frozen M1 seed")
     for name in ("staging-root", "normalizer", "plan", "hazards", "freeze", "output"):
