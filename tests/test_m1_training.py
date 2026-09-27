@@ -98,6 +98,20 @@ def test_cpu_graph_trains_deterministically_and_restores_checkpoint(tmp_path):
     assert duplicate_loss == loss
 
 
+def test_objective_free_backend_trains_and_scores_ten_nodes():
+    pytest.importorskip("torch")
+    nodes, edges, mask, ages, hazards, _ = _batch(2)
+    nodes = nodes[:, :, :10].copy()
+    edges = edges[:, :, :3, :10, :10].copy()
+    backend = TorchM1Backend(20260915, node_count=10, relation_count=3)
+    loss, rows = backend.train_shard(nodes, edges, mask, ages, hazards, seed=20260915)
+    predictions = backend.predict_shard(nodes, edges, mask, ages)
+    assert rows == 2 and np.isfinite(loss)
+    assert predictions.shape == (2, 12) and np.isfinite(predictions).all()
+    with pytest.raises(ValueError, match="frozen causal window shapes"):
+        backend.predict_shard(_batch(2)[0], edges, mask, ages)
+
+
 class _FakeBackend:
     calls = 0
 

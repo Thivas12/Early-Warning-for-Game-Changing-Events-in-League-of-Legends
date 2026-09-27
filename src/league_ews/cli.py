@@ -1746,7 +1746,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     m1_ablation_train = subparsers.add_parser(
         "train-m1-graph-ablation-seed",
-        help="resume one frozen 12-node M1 graph removal seed",
+        help="resume one frozen M1 graph removal seed",
     )
     for name in (
         "staging-root",
