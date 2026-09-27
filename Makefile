@@ -509,6 +509,20 @@ select-m1-alert-policy:
 		--output data/private/m1-alert-policy \
 		--seed $(or $(SEED),20260915)
 
+summarize-m1-alert-policies:
+	uv run --no-sync league-ews summarize-m1-alert-policies \
+		--staging-root data/private/m1-graph-staging \
+		--normalizer data/private/m1-graph-staging/normalizer.json \
+		--plan configs/rifthazard-m1-training-plan.yaml \
+		--hazards configs/rifthazard-m1-hazards.yaml \
+		--freeze data/private/m1-training-freeze.json \
+		--training-root data/private/m1-training \
+		--calibration-root data/private/m1-calibration \
+		--floor-root data/private/final-baselines \
+		--tabular-root data/private/final-tabular \
+		--policy-root data/private/m1-alert-policy \
+		--b3-policy-root data/private/alert-policy
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \
