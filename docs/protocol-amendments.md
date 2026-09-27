@@ -4,6 +4,25 @@ This file records changes made after `docs/research-plan.md` was frozen. An
 amendment states when it occurred, what evidence was available and whether it
 changes a hypothesis, outcome or decision rule.
 
+## 2026-09-27 — freeze M1 graph input priors before private staging
+
+**Stage:** after B3 and B4 calibration results, before any M1 graph shards,
+training or calibration scoring; the final test patch is unread.
+
+`configs/rifthazard-m1-graph-plan.yaml` fixes eight native frames, a 2,500-map
+unit proximity radius, approximate Baron and Dragon pit centers already used
+in the graph tests, and initial spawn-clock priors of 1,200 and 300 seconds.
+Riot's [patch 26.1 notes](https://www.leagueoflegends.com/en-sg/news/game-updates/patch-26-1-notes/)
+confirm the 20-minute regular-Summoner's-Rift Baron spawn. The dragon time
+and pit centers are explicit modeling assumptions, not asserted official
+coordinates. The objective-node and position/proximity ablations will expose
+whether the results depend on these priors. The bit after initial spawn does
+not claim that an objective is alive after a later kill.
+
+This locks a previously open implementation choice before M1 features are
+materialized. It changes no event labels, horizons, split, comparison against
+B3, H1/H2 decision rule or test policy.
+
 ## 2026-09-27 — clarify M1 hazards for overlapping event types
 
 **Stage:** after B3 and B4 calibration results on patch 16.16; before M1 input

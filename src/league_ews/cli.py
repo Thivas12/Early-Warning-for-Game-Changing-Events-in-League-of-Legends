@@ -55,6 +55,8 @@ from league_ews.final_selection import (
 )
 from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
+from league_ews.m1_graph_plan import freeze_graph_plan
+from league_ews.m1_graph_staging import stage_m1_graphs
 from league_ews.pilot_collection import (
     TimelineFetcher,
     collect_selected_pilot_bundles,
@@ -813,6 +815,34 @@ def _stage_b4_sequences(args: argparse.Namespace) -> int:
     return 0
 
 
+def _freeze_m1_graph(args: argparse.Namespace) -> int:
+    print(
+        json.dumps(
+            freeze_graph_plan(args.plan, args.split, args.processed, args.output),
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _stage_m1_graphs(args: argparse.Namespace) -> int:
+    report = stage_m1_graphs(
+        args.raw,
+        args.processed,
+        args.sampling_frame,
+        args.g2_report,
+        args.processed_audit,
+        args.split,
+        args.plan,
+        args.freeze,
+        args.output,
+        max_new_shards=args.max_new_shards,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1422,6 +1452,33 @@ def build_parser() -> argparse.ArgumentParser:
     b4_stage.add_argument("--output", type=Path, required=True)
     b4_stage.add_argument("--max-new-shards", type=int, default=4)
     b4_stage.set_defaults(handler=_stage_b4_sequences)
+
+    m1_freeze = subparsers.add_parser(
+        "freeze-m1-graph", help="bind M1 graph rules before private staging"
+    )
+    m1_freeze.add_argument("--plan", type=Path, required=True)
+    m1_freeze.add_argument("--split", type=Path, required=True)
+    m1_freeze.add_argument("--processed", type=Path, required=True)
+    m1_freeze.add_argument("--output", type=Path, required=True)
+    m1_freeze.set_defaults(handler=_freeze_m1_graph)
+
+    m1_stage = subparsers.add_parser(
+        "stage-m1-graphs", help="stage bounded private M1 train/calibration graph shards"
+    )
+    for name in (
+        "raw",
+        "processed",
+        "sampling-frame",
+        "g2-report",
+        "processed-audit",
+        "split",
+        "plan",
+        "freeze",
+        "output",
+    ):
+        m1_stage.add_argument(f"--{name}", type=Path, required=True)
+    m1_stage.add_argument("--max-new-shards", type=int, default=1)
+    m1_stage.set_defaults(handler=_stage_m1_graphs)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"

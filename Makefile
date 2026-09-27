@@ -425,6 +425,26 @@ stage-b4-sequences:
 		--output data/private/b4-sequences \
 		--max-new-shards $(or $(MAX_NEW_SHARDS),4)
 
+freeze-m1-graph:
+	uv run --no-sync league-ews freeze-m1-graph \
+		--plan configs/rifthazard-m1-graph-plan.yaml \
+		--split data/private/final-split.json \
+		--processed data/processed/registered-final \
+		--output data/private/m1-graph-freeze.json
+
+stage-m1-graphs:
+	uv run --no-sync league-ews stage-m1-graphs \
+		--raw data/raw/registered-final \
+		--processed data/processed/registered-final \
+		--sampling-frame configs/rifthazard-sampling-frame.yaml \
+		--g2-report data/private/final-g2-validation.json \
+		--processed-audit data/private/final-processed-validation.json \
+		--split data/private/final-split.json \
+		--plan configs/rifthazard-m1-graph-plan.yaml \
+		--freeze data/private/m1-graph-freeze.json \
+		--output data/private/m1-graph-staging \
+		--max-new-shards $(or $(MAX_NEW_SHARDS),1)
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \

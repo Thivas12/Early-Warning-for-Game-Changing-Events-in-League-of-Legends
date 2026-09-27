@@ -1,0 +1,19 @@
+schema_version: league-ews-m1-graph-plan-v1
+freeze_stage: before-private-graph-staging
+applicable_patches: ["16.12", "16.13", "16.14", "16.15", "16.16"]
+history_steps: 8
+nodes: [participant, objective]
+edges: [same-team, proximity, assistance, near-baron, near-dragon]
+proximity_radius_units: 2500
+objective_rules:
+  baron_position: [5007, 10471]
+  dragon_position: [9866, 4414]
+  baron_spawn_seconds: 1200
+  dragon_spawn_seconds: 300
+source_notes:
+  baron_spawn: riot-patch-26.1-regular-summoners-rift
+  dragon_spawn: fixed-300-second-engineering-prior
+  positions: approximate-anchors-from-existing-graph-test
+  sensitivity: ablate-objective-nodes-and-proximity
+test_patch: "16.17"
+test_status: sealed
