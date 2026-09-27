@@ -196,7 +196,7 @@ def test_cli_exposes_bounded_variant_options():
             "--output",
             "private",
             "--variant",
-            "no-interaction-edges",
+            "no-objective-nodes",
             "--seed",
             "20260915",
             "--device",
@@ -205,5 +205,5 @@ def test_cli_exposes_bounded_variant_options():
             "1",
         ]
     )
-    assert args.variant == "no-interaction-edges"
+    assert args.variant == "no-objective-nodes"
     assert args.device == "cuda"

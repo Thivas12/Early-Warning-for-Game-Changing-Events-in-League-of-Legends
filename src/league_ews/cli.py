@@ -57,7 +57,7 @@ from league_ews.final_selection import (
 from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
 from league_ews.m1_ablation_plan import freeze_m1_ablations
-from league_ews.m1_ablation_training import train_m1_graph_ablation_seed
+from league_ews.m1_ablation_training import SUPPORTED_VARIANTS, train_m1_graph_ablation_seed
 from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
@@ -1763,11 +1763,7 @@ def build_parser() -> argparse.ArgumentParser:
         m1_ablation_train.add_argument(f"--{name}", type=Path, required=True)
     m1_ablation_train.add_argument(
         "--variant",
-        choices=(
-            "no-positions-or-proximity",
-            "no-interaction-edges",
-            "no-assistance-history",
-        ),
+        choices=SUPPORTED_VARIANTS,
         required=True,
     )
     m1_ablation_train.add_argument("--seed", type=int, required=True)
