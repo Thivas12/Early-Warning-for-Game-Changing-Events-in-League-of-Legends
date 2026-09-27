@@ -69,3 +69,27 @@ calibration on patch 16.16 is reserved for threshold selection and reporting,
 and cannot be used to select a training seed. The test patch remains sealed.
 The trainer will checkpoint after whole shards to bound memory and allow
 recovery from WSL interruptions. This freeze step needs no neural runtime.
+
+## Resumable B4 training
+
+After the freeze succeeds, `uv sync --frozen --all-groups --extra b4` installs
+the locked CPU-only PyTorch wheel for a stability canary. `make train-b4-seed
+SEED=20260915 DEVICE=cpu MAX_NEW_SHARDS=1` runs one 500-match training shard.
+The trainer also accepts `DEVICE=cuda` when an NVIDIA driver and CUDA-enabled
+PyTorch wheel are available in WSL. The Make target uses `uv run --no-sync` so
+it preserves a separately installed CUDA wheel; a seed checkpoint records its
+device and torch version and cannot resume under a different runtime. The trainer
+loads exactly one training shard at a time, scales with the frozen normalizer,
+right-pads real observations for the packed GRU, shuffles rows deterministically
+within that shard, and checkpoints the model, AdamW optimizer and RNG state
+atomically after each whole shard. Each seed has 48 shards per epoch and three
+epochs (144 resumable units). Repeating the same command advances the next
+unit. A complete seed has `complete: true`. A process interruption during a
+shard replays only that shard from the preceding checkpoint. Only one process
+should train a seed at a time; the command also holds a private per-seed lock.
+
+The current chunk trains one specified seed and does not score calibration or
+test data. All ten frozen seeds must complete and be reported before comparing
+or choosing an alert policy. CPU training remains an option for diagnosis.
+Check GPU visibility in WSL and choose the matching official PyTorch CUDA wheel
+before starting a GPU seed.
