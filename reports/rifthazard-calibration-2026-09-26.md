@@ -88,7 +88,35 @@ points meets the complete gate.** Baron and teamfight precision fall below
 the selected B3 policy, not a final test result for B3 or a result for the
 proposed graph model. No product utility claim follows from it.
 
-The next modeling stage is the registered graph and hazard ablations. Model and
-alert-policy decisions must
-remain on the training and calibration patches until the one-time future-patch
-evaluation is frozen.
+## M1 graph-hazard model on calibration
+
+The ten registered M1 seeds completed three epochs each. Their mean macro AP
+over the twelve event/horizon targets was **0.49112** (sample SD **0.00622**,
+range **0.47963–0.49952**), compared with **0.37594** for B3. The descriptive
+mean delta is **+0.11518** absolute. No seed was selected from calibration;
+the future-patch paired interval needed for H1 has not been calculated.
+
+The same fixed 60-second alert-policy rule selected an operating point for
+each M1 seed and event on the 6,000 calibration matches. The ten-seed means
+below are rounded transcriptions of the private, checksum-bound audit; B3 is
+the earlier calibration operating point on those same matches. These are
+calibration-selected results, not future-patch estimates.
+
+| Event | Method | Precision | Recall | Event F1 | False alerts/game |
+|---|---|---:|---:|---:|---:|
+| Baron | B3 | 0.36610 | 0.68667 | 0.47758 | 1.28767 |
+| Baron | M1 mean | 0.48761 | 0.51085 | 0.49852 | 0.58347 |
+| Dragon | B3 | 0.65539 | 0.77891 | 0.71183 | 1.55200 |
+| Dragon | M1 mean | 0.55153 | 0.63018 | 0.58807 | 1.94413 |
+| Teamfight proxy | B3 | 0.29704 | 0.75086 | 0.42568 | 11.85267 |
+| Teamfight proxy | M1 mean | 0.32815 | 0.67829 | 0.44203 | 9.27712 |
+
+M1 gives a modestly higher event F1 and fewer false alerts for Baron and
+teamfight, but lower recall for both. For Dragon it has lower precision,
+recall and F1, with more false alerts. Teamfight still produces over nine
+false alerts per game on average. These results do not establish H5, and the
+test patch 16.17 remains unread. The registered ablations come before its
+one-time evaluation.
+
+Model and alert-policy decisions must remain on the training and calibration
+patches until the one-time future-patch evaluation is frozen.

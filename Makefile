@@ -523,6 +523,15 @@ summarize-m1-alert-policies:
 		--policy-root data/private/m1-alert-policy \
 		--b3-policy-root data/private/alert-policy
 
+freeze-m1-ablations:
+	uv run --no-sync league-ews freeze-m1-ablations \
+		--ablation-plan configs/rifthazard-m1-ablation-plan.yaml \
+		--training-plan configs/rifthazard-m1-training-plan.yaml \
+		--training-freeze data/private/m1-training-freeze.json \
+		--calibration-summary data/private/m1-calibration/ten-seed-summary.json \
+		--alert-summary data/private/m1-alert-policy/ten-seed-alert-summary.json \
+		--output data/private/m1-ablation-freeze.json
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \

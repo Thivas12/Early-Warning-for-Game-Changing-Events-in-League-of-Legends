@@ -135,3 +135,28 @@ then writes one private, identifier-free report with ten-seed mean and spread
 for each event's precision, recall, F1 and false alerts per game. B3 is shown
 on the same calibration matches for descriptive comparison only. The sealed
 test patch stays unread.
+
+## Registered M1 ablation implementation freeze
+
+After all ten calibration alert policies pass their checksum audit, run
+`make freeze-m1-ablations`. The private freeze binds the original M1 training
+freeze, ten-seed calibration and alert summaries, and the public six-variant
+plan in `configs/rifthazard-m1-ablation-plan.yaml`. It reads summary files,
+never raw matches or patch 16.17. The six variant names were already registered
+in the original training plan; this file fixes their exact implementation.
+
+The four graph input removals reuse frozen train/calibration graph shards:
+positions remove participant coordinates and availability, objective anchors
+and the three proximity relations while retaining the objective spawn bit;
+interaction edges remove all five relation channels but retain node features;
+objective removal retains the ten participants and pools over ten rather than
+twelve nodes; assistance removal clears only that relation channel. The
+independent-head control keeps the encoder and uses twelve separate sigmoid
+outputs with direct BCE against the stored strict-future labels. The minute
+grid control rebuilds only train/calibration histories from processed genuine
+observations. Each anchor at the current real timestamp minus an integer
+minute selects the latest observation no later than that anchor; duplicates
+are removed and missing slots left padded. Prediction rows and labels remain
+the same real observations. The same ten seeds, training schedule and
+calibration policy apply to each variant. This chunk freezes the contract;
+variant training is a separate step.
