@@ -73,3 +73,21 @@ alert thresholds and report every seed, but cannot select one seed as the
 headline model. The six M1 ablations are also named in the frozen plan.
 This step freezes specifications only; the neural trainer follows in a
 separate code chunk. It needs no Riot key or PyTorch import.
+
+## Bounded M1 training
+
+`make train-m1-seed SEED=20260915 DEVICE=cuda MAX_NEW_SHARDS=1` trains one
+100-match shard for a CUDA canary. The installed PyTorch wheel must expose
+CUDA in WSL; `uv run --no-sync` preserves the existing CUDA installation.
+The trainer verifies the frozen plan, normalizer, manifest and each requested
+training shard checksum. The relation-aware encoder averages observed
+neighbors separately for each of five edge types, applies two message layers,
+pools twelve nodes per real frame and sends those frames plus their actual
+ages through a 64-unit GRU. Three independent six-bin hazard heads train with
+binary cross-entropy only while each event type is at risk, through its first
+event bin inclusive. Its frozen seed controls deterministic within-shard
+shuffling and it checkpoints weights, optimizer and RNG state atomically after
+every completed shard. Rerunning advances without replaying completed work.
+One seed requires 240 shards × 3 epochs = 720 resumable units. Only one
+process should train a seed at a time; a per-seed lock enforces this. The
+calibration arrays and final test patch remain unread by training.
