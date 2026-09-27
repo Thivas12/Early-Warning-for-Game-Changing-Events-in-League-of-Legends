@@ -879,6 +879,39 @@ def _score_b4_calibration(args: argparse.Namespace) -> int:
     return 0
 
 
+def _summarize_b4_calibration(args: argparse.Namespace) -> int:
+    from league_ews.b4_summary import summarize_b4_calibration
+
+    summary = summarize_b4_calibration(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.freeze,
+        args.training_root,
+        args.calibration_root,
+    )
+    print(
+        json.dumps(
+            {
+                key: summary[key]
+                for key in (
+                    "schema_version",
+                    "seed_count",
+                    "calibration_matches",
+                    "calibration_observations",
+                    "macro_average_precision",
+                    "seed_results",
+                    "selected_seed",
+                    "test_matches_unread",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1428,6 +1461,17 @@ def build_parser() -> argparse.ArgumentParser:
     b4_calibration.add_argument("--output", type=Path, required=True)
     b4_calibration.add_argument("--seed", type=int, required=True)
     b4_calibration.set_defaults(handler=_score_b4_calibration)
+
+    b4_summary = subparsers.add_parser(
+        "summarize-b4-calibration", help="verify and report all ten B4 calibration seeds"
+    )
+    b4_summary.add_argument("--staging-root", type=Path, required=True)
+    b4_summary.add_argument("--normalizer", type=Path, required=True)
+    b4_summary.add_argument("--plan", type=Path, required=True)
+    b4_summary.add_argument("--freeze", type=Path, required=True)
+    b4_summary.add_argument("--training-root", type=Path, required=True)
+    b4_summary.add_argument("--calibration-root", type=Path, required=True)
+    b4_summary.set_defaults(handler=_summarize_b4_calibration)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
