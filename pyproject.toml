@@ -29,6 +29,15 @@ graph = [
   "torch>=2.6,<3",
   "torch-geometric>=2.6,<3",
 ]
+b4 = ["torch>=2.6,<3"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
 
 [dependency-groups]
 dev = [

@@ -26,7 +26,7 @@ jobs:
         with:
           python-version-file: .python-version
       - name: Install locked dependencies
-        run: uv sync --frozen --all-groups
+        run: uv sync --frozen --all-groups --extra b4
       - name: Check formatting and lint
         run: make lint
       - name: Check types

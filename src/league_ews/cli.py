@@ -15,6 +15,7 @@ from league_ews.authority import collection_preflight
 from league_ews.b4_normalizer import fit_b4_normalizer
 from league_ews.b4_plan import freeze_b4_plan
 from league_ews.b4_staging import stage_b4_sequences
+from league_ews.b4_training import train_b4_seed
 from league_ews.baseline_floor import LABELS, run_final_baseline_floor
 from league_ews.benchmark import run_legacy_benchmark
 from league_ews.calibration_bootstrap import (
@@ -828,6 +829,21 @@ def _freeze_b4_plan(args: argparse.Namespace) -> int:
     return 0
 
 
+def _train_b4_seed(args: argparse.Namespace) -> int:
+    report = train_b4_seed(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.freeze,
+        args.output,
+        seed=args.seed,
+        device=args.device,
+        max_new_shards=args.max_new_shards,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1354,6 +1370,17 @@ def build_parser() -> argparse.ArgumentParser:
     b4_plan.add_argument("--plan", type=Path, required=True)
     b4_plan.add_argument("--output", type=Path, required=True)
     b4_plan.set_defaults(handler=_freeze_b4_plan)
+
+    b4_train = subparsers.add_parser("train-b4-seed", help="resume one frozen B4 seed")
+    b4_train.add_argument("--staging-root", type=Path, required=True)
+    b4_train.add_argument("--normalizer", type=Path, required=True)
+    b4_train.add_argument("--plan", type=Path, required=True)
+    b4_train.add_argument("--freeze", type=Path, required=True)
+    b4_train.add_argument("--output", type=Path, required=True)
+    b4_train.add_argument("--seed", type=int, required=True)
+    b4_train.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    b4_train.add_argument("--max-new-shards", type=int, default=1)
+    b4_train.set_defaults(handler=_train_b4_seed)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
