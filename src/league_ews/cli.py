@@ -33,6 +33,7 @@ from league_ews.discovery import (
 )
 from league_ews.duration import analyze_pilot_duration
 from league_ews.duration_rule import validate_duration_rule
+from league_ews.eda import write_eda
 from league_ews.event_review import create_final_event_review_packet
 from league_ews.final_collection import (
     TimelineFetcher as FinalTimelineFetcher,
@@ -108,6 +109,18 @@ def _audit(args: argparse.Namespace) -> int:
     report["source"] = source_provenance()
     _write_json(report, args.output)
     return 2 if args.strict and not report["passed"] else 0
+
+
+def _render_research_eda(args: argparse.Namespace) -> int:
+    summary = write_eda(
+        args.g2_report, args.split, args.processed_audit, args.processed, args.output
+    )
+    print(f"Rendered audited, identifier-free EDA: {args.output}")
+    print(
+        f"{summary['matches']} matches; {summary['observations']} snapshots; "
+        f"test outcomes unread: {summary['test_outcomes_unread']}"
+    )
+    return 0
 
 
 def _benchmark(args: argparse.Namespace) -> int:
@@ -1229,6 +1242,16 @@ def _add_final_collection_provenance_args(parser: argparse.ArgumentParser) -> No
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="league-ews")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    eda = subparsers.add_parser(
+        "render-research-eda", help="render identifier-free figures from audited final aggregates"
+    )
+    eda.add_argument("--g2-report", type=Path, required=True)
+    eda.add_argument("--split", type=Path, required=True)
+    eda.add_argument("--processed-audit", type=Path, required=True)
+    eda.add_argument("--processed", type=Path, required=True)
+    eda.add_argument("--output", type=Path, required=True)
+    eda.set_defaults(handler=_render_research_eda)
 
     audit = subparsers.add_parser("audit", help="audit a legacy derived CSV")
     audit.add_argument("--csv", type=Path, required=True)

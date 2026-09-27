@@ -32,7 +32,9 @@ The `research/v2` programme starts again from a falsifiable protocol:
 5. test calibration, alert burden and lead time;
 6. hold out future patches and publish negative results.
 
-See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan and
+See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan,
+[`docs/research-eda.md`](docs/research-eda.md) for the offline audited data atlas,
+and
 [`reports/rifthazard-calibration-2026-09-26.md`](reports/rifthazard-calibration-2026-09-26.md)
 for the first registered calibration results, including the negative B3
 event-level alert-utility finding. The future-patch test is still untouched.
