@@ -109,3 +109,11 @@ the normalizer and the score file. The score file contains no match or player
 identifiers. It can be reused for a later event-level alert policy, which must
 be frozen before reading test-patch data. All ten seed results are retained;
 the calibration scores must not be used to choose a preferred seed.
+
+Once every seed has a calibration report, `make summarize-b4-calibration`
+verifies the score-file checksums, all ten frozen checkpoints, target truth and
+match order across seeds, and recomputes each target's metrics from its saved
+probabilities. The ignored private `ten-seed-summary.json` reports all ten
+macro AP values and their mean, sample standard deviation and range, with the
+same statistics per target. No seed is selected, no final test file is read,
+and a changed or missing artifact prevents the summary from being written.

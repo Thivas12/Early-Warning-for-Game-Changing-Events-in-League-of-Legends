@@ -1,4 +1,4 @@
-.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 freeze-final-split final-baseline-floor final-tabular final-tabular-all summarize-final-tabular calibration-bootstrap calibration-bootstrap-all summarize-calibration-bootstrap select-alert-policy select-alert-policy-all summarize-alert-policy stage-b4-sequences stage-b4-sequences-all fit-b4-normalizer freeze-b4-plan train-b4-seed score-b4-calibration discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
+.PHONY: install format lint type test preflight preflight-discovery validate-sampling-frame validate-discovery-plan validate-duration-rule validate-final-discovery-plan preflight-final-discovery discover-final-candidates validate-final-candidate-pool validate-final-selection-plan preflight-final-selection select-final validate-final-selection preflight-final-collection collect-selected-final validate-final process-final validate-final-processed prepare-final-event-review validate-final-g2 freeze-final-split final-baseline-floor final-tabular final-tabular-all summarize-final-tabular calibration-bootstrap calibration-bootstrap-all summarize-calibration-bootstrap select-alert-policy select-alert-policy-all summarize-alert-policy stage-b4-sequences stage-b4-sequences-all fit-b4-normalizer freeze-b4-plan train-b4-seed score-b4-calibration summarize-b4-calibration discover-candidates validate-candidate-pool preflight-pilot-selection select-pilot validate-pilot-selection preflight-pilot-collection collect-selected-pilot validate-pilot process-pilot analyze-pilot-duration validate-raw audit diagnose benchmark paper security check
 
 install:
 	uv sync --all-groups
@@ -463,6 +463,15 @@ score-b4-calibration:
 		--training-root data/private/b4-training \
 		--output data/private/b4-calibration \
 		--seed $(or $(SEED),20260915)
+
+summarize-b4-calibration:
+	uv run --no-sync league-ews summarize-b4-calibration \
+		--staging-root data/private/b4-sequences \
+		--normalizer data/private/b4-sequences/normalizer.json \
+		--plan configs/b4-temporal-plan.yaml \
+		--freeze data/private/b4-sequences/experiment-freeze.json \
+		--training-root data/private/b4-training \
+		--calibration-root data/private/b4-calibration
 
 validate-raw:
 	uv run league-ews validate-raw \
