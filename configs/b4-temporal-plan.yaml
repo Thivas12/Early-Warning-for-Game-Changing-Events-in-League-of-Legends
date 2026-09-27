@@ -1,0 +1,27 @@
+schema_version: league-ews-b4-experiment-plan-v1
+freeze_stage: before-neural-training-and-calibration
+model:
+  family: masked-gru
+  input_channels: 55
+  history_steps: 8
+  hidden_units: 48
+  recurrent_layers: 1
+  output_targets: 12
+training:
+  seeds: [20260915, 20260916, 20260917, 20260918, 20260919, 20260920, 20260921, 20260922, 20260923, 20260924]
+  epochs: 3
+  batch_size: 1024
+  optimizer: adamw
+  learning_rate: 0.001
+  weight_decay: 0.01
+  loss: unweighted-binary-cross-entropy-with-logits
+  checkpoint_unit: completed-training-shard
+  training_patch_scope: ["16.12", "16.13", "16.14", "16.15"]
+calibration:
+  patch: "16.16"
+  use: threshold-selection-and-reporting-only
+  select_training_seed: false
+  horizon_seconds: 60
+test:
+  patch: "16.17"
+  release: once-after-all-model-and-alert-policies-frozen

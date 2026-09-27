@@ -56,3 +56,16 @@ ignored private `normalizer.json` binds the feature order and fitted statistics
 to the staging manifest and frozen split. Applying it scales present numeric
 values at real timesteps, preserving missingness bits, age and padding. The
 calibration and final test arrays remain unread. This step does not train B4.
+
+## Frozen neural training settings
+
+`make freeze-b4-plan` validates the complete staging inventory, the training
+normalizer and `configs/b4-temporal-plan.yaml`, then writes an ignored private
+freeze record bound to their exact checksums. This happens before any B4 model
+is fitted or calibration predictions are scored. The fixed control is a
+mask-aware, 48-unit GRU with twelve outputs, three epochs, AdamW, and ten
+specified seeds. Every seed will train on the 24,000 earlier-patch matches;
+calibration on patch 16.16 is reserved for threshold selection and reporting,
+and cannot be used to select a training seed. The test patch remains sealed.
+The trainer will checkpoint after whole shards to bound memory and allow
+recovery from WSL interruptions. This freeze step needs no neural runtime.
