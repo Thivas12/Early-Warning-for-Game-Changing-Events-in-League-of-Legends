@@ -11,7 +11,7 @@ import numpy as np
 
 from league_ews.graph import FEATURE_NAMES
 from league_ews.hazards import risk_at_horizons
-from league_ews.m1_graph_window import EDGE_TYPES, STEPS
+from league_ews.m1_graph_window import STEPS
 
 
 def right_pad_graphs(
@@ -19,13 +19,17 @@ def right_pad_graphs(
     edges: np.ndarray,
     mask: np.ndarray,
     ages: np.ndarray,
+    *,
+    node_count: int = 12,
+    relation_count: int = 5,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Move real left-padded frames to the front for a packed GRU."""
 
     rows = len(nodes)
     if (
-        nodes.shape != (rows, STEPS, 12, len(FEATURE_NAMES))
-        or edges.shape != (rows, STEPS, len(EDGE_TYPES), 12, 12)
+        (node_count, relation_count) not in ((12, 5), (10, 3))
+        or nodes.shape != (rows, STEPS, node_count, len(FEATURE_NAMES))
+        or edges.shape != (rows, STEPS, relation_count, node_count, node_count)
         or mask.shape != (rows, STEPS)
         or ages.shape != (rows, STEPS)
         or nodes.dtype != np.float32
@@ -86,9 +90,20 @@ def _batches(indices: np.ndarray, batch_size: int) -> Iterator[np.ndarray]:
 class TorchM1Backend:
     """Keep neural imports out of non-training CLI commands."""
 
-    def __init__(self, seed: int, device: str = "cpu") -> None:
+    def __init__(
+        self,
+        seed: int,
+        device: str = "cpu",
+        *,
+        node_count: int = 12,
+        relation_count: int = 5,
+    ) -> None:
         if device not in ("cpu", "cuda"):
             raise ValueError("M1 device must be cpu or cuda")
+        if (node_count, relation_count) not in ((12, 5), (10, 3)):
+            raise ValueError("M1 graph architecture differs from registered node variants")
+        self.node_count = node_count
+        self.relation_count = relation_count
         os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
         try:
             torch = importlib.import_module("torch")
@@ -112,7 +127,7 @@ class TorchM1Backend:
                 self.input = torch.nn.Linear(len(FEATURE_NAMES), 64)
                 self.self_updates = torch.nn.ModuleList([torch.nn.Linear(64, 64) for _ in range(2)])
                 self.relation_updates = torch.nn.ModuleList(
-                    [torch.nn.Linear(len(EDGE_TYPES) * 64, 64) for _ in range(2)]
+                    [torch.nn.Linear(relation_count * 64, 64) for _ in range(2)]
                 )
                 self.dropout = torch.nn.Dropout(0.1)
                 self.temporal = torch.nn.GRU(65, 64, batch_first=True)
@@ -129,7 +144,7 @@ class TorchM1Backend:
                 for own, relation in zip(self.self_updates, self.relation_updates, strict=True):
                     messages = torch.einsum("bteij,btjh->bteih", adjacency, hidden)
                     messages = messages.permute(0, 1, 3, 2, 4).reshape(
-                        len(nodes), STEPS, 12, len(EDGE_TYPES) * 64
+                        len(nodes), STEPS, node_count, relation_count * 64
                     )
                     hidden = self.dropout(torch.relu(own(hidden) + relation(messages)))
                     hidden = hidden * mask[:, :, None, None]
@@ -157,7 +172,12 @@ class TorchM1Backend:
         """Train on one shard with independent event hazards and at-risk masking."""
 
         packed_nodes, packed_edges, packed_ages, lengths = right_pad_graphs(
-            nodes, edges, mask, ages
+            nodes,
+            edges,
+            mask,
+            ages,
+            node_count=self.node_count,
+            relation_count=self.relation_count,
         )
         risk = at_risk_mask(targets)
         self.model.train()
@@ -192,7 +212,14 @@ class TorchM1Backend:
 
         if not len(nodes):
             raise ValueError("M1 prediction shard is empty")
-        x, e, a, lengths = right_pad_graphs(nodes, edges, mask, ages)
+        x, e, a, lengths = right_pad_graphs(
+            nodes,
+            edges,
+            mask,
+            ages,
+            node_count=self.node_count,
+            relation_count=self.relation_count,
+        )
         self.model.eval()
         scores: list[np.ndarray] = []
         with self.torch.inference_mode():

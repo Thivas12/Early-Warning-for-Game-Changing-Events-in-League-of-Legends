@@ -1,4 +1,4 @@
-"""Resume one registered 12-node M1 graph ablation at a time."""
+"""Resume one registered M1 graph removal ablation at a time."""
 
 from __future__ import annotations
 
@@ -18,11 +18,10 @@ from league_ews.m1_training import (
 )
 from league_ews.m1_training_plan import SEEDS
 
-# Objective removal changes the node count and relation count. Its backend is
-# implemented separately; never silently use the 12-node M1 architecture.
 SUPPORTED_VARIANTS = (
     "no-positions-or-proximity",
     "no-interaction-edges",
+    "no-objective-nodes",
     "no-assistance-history",
 )
 
@@ -33,6 +32,10 @@ def _sha(data: bytes) -> str:
 
 def _new_backend(seed: int, device: str) -> TorchM1Backend:
     return TorchM1Backend(seed, device)
+
+
+def _new_objective_free_backend(seed: int, device: str) -> TorchM1Backend:
+    return TorchM1Backend(seed, device, node_count=10, relation_count=3)
 
 
 def train_m1_graph_ablation_seed(
@@ -55,7 +58,7 @@ def train_m1_graph_ablation_seed(
     """Train on the original shard order; never decode calibration or test."""
 
     if variant not in SUPPORTED_VARIANTS:
-        raise ValueError("M1 graph ablation variant needs a supported 12-node backend")
+        raise ValueError("M1 graph ablation variant needs a supported backend")
     if seed not in SEEDS or max_new_shards < 1:
         raise ValueError("M1 ablation seed or shard budget differs from frozen plan")
     frozen_path = Path(ablation_freeze_path)
@@ -88,7 +91,12 @@ def train_m1_graph_ablation_seed(
     checkpoint = folder / "checkpoint.pt"
     with (folder / "training.lock").open("a+b") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        backend = _new_backend(seed, device)
+        node_count, relation_count = (10, 3) if variant == "no-objective-nodes" else (12, 5)
+        backend = (
+            _new_objective_free_backend(seed, device)
+            if variant == "no-objective-nodes"
+            else _new_backend(seed, device)
+        )
         if checkpoint.exists():
             saved = backend.load(str(checkpoint))
             completed = saved.get("completed_shards")
@@ -100,6 +108,8 @@ def train_m1_graph_ablation_seed(
                 or saved.get("seed") != seed
                 or saved.get("device") != backend.device
                 or saved.get("torch_version") != backend.version
+                or saved.get("node_count", 12) != node_count
+                or saved.get("relation_count", 5) != relation_count
                 or type(completed) is not int
                 or not 0 <= completed <= UNITS_PER_SEED
             ):
@@ -126,6 +136,8 @@ def train_m1_graph_ablation_seed(
                 "seed": seed,
                 "device": backend.device,
                 "torch_version": backend.version,
+                "node_count": node_count,
+                "relation_count": relation_count,
                 "completed_shards": unit + 1,
                 "backend": backend.state_dict(),
             }
@@ -144,6 +156,8 @@ def train_m1_graph_ablation_seed(
             "seed": seed,
             "device": backend.device,
             "torch_version": backend.version,
+            "node_count": node_count,
+            "relation_count": relation_count,
             "completed_shards": progress,
             "total_shards": UNITS_PER_SEED,
             "complete": progress == UNITS_PER_SEED,
