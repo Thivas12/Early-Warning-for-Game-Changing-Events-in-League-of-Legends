@@ -93,3 +93,19 @@ test data. All ten frozen seeds must complete and be reported before comparing
 or choosing an alert policy. CPU training remains an option for diagnosis.
 Check GPU visibility in WSL and choose the matching official PyTorch CUDA wheel
 before starting a GPU seed.
+
+## Calibration scoring after ten complete seeds
+
+After all ten seeds reach 144/144 with the same frozen inputs and PyTorch
+runtime, `make score-b4-calibration SEED=20260915` scores one seed on the twelve
+staged calibration shards. Repeat for each frozen seed. This command refuses
+to score if even one seed is incomplete. It reads only patch 16.16 arrays,
+applies the training-only normalizer, and writes an ignored private
+`data/private/b4-calibration/seed-*/calibration-scores.npz` with twelve
+probabilities per observation, binary targets and match offsets. The companion
+report records AP, ROC AUC, Brier score and prevalence for every target, plus
+macro AP; it binds every checkpoint checksum, the freeze, the staging manifest,
+the normalizer and the score file. The score file contains no match or player
+identifiers. It can be reused for a later event-level alert policy, which must
+be frozen before reading test-patch data. All ten seed results are retained;
+the calibration scores must not be used to choose a preferred seed.

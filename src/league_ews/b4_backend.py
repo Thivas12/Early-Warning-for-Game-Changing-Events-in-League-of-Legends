@@ -100,6 +100,27 @@ class TorchBackend:
             batches += len(indices)
         return total_loss / batches, batches
 
+    def predict_shard(self, inputs: np.ndarray, mask: np.ndarray) -> np.ndarray:
+        """Score one staged shard in bounded batches without updating the model."""
+
+        if not len(inputs):
+            raise ValueError("B4 prediction shard is empty")
+        packed, lengths = right_pad_sequences(inputs, mask)
+        self.gru.eval()
+        self.head.eval()
+        scores: list[np.ndarray] = []
+        with self.torch.inference_mode():
+            for start in range(0, len(inputs), 1024):
+                end = min(start + 1024, len(inputs))
+                batch = self.torch.from_numpy(packed[start:end]).to(self.device)
+                size = self.torch.from_numpy(lengths[start:end])
+                risk = self.torch.sigmoid(self._logits(batch, size))
+                scores.append(risk.cpu().numpy())
+        result = np.concatenate(scores).astype(np.float32, copy=False)
+        if result.shape != (len(inputs), len(LABELS)) or not np.isfinite(result).all():
+            raise ValueError("B4 predictions differ from the frozen target contract")
+        return result
+
     def state_dict(self) -> dict[str, Any]:
         return {
             "gru": self.gru.state_dict(),

@@ -844,6 +844,41 @@ def _train_b4_seed(args: argparse.Namespace) -> int:
     return 0
 
 
+def _score_b4_calibration(args: argparse.Namespace) -> int:
+    from league_ews.b4_calibration import score_b4_calibration_seed
+
+    report = score_b4_calibration_seed(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.freeze,
+        args.training_root,
+        args.output,
+        seed=args.seed,
+    )
+    print(
+        json.dumps(
+            {
+                key: report[key]
+                for key in (
+                    "schema_version",
+                    "seed",
+                    "device",
+                    "calibration_matches",
+                    "calibration_observations",
+                    "macro_average_precision",
+                    "test_matches_unread",
+                    "checkpoint_sha256",
+                    "scores_sha256",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _prepare_final_event_review(args: argparse.Namespace) -> int:
     packet = create_final_event_review_packet(args.raw, args.processed, args.processed_audit)
     _write_json(packet, args.output)
@@ -1381,6 +1416,18 @@ def build_parser() -> argparse.ArgumentParser:
     b4_train.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     b4_train.add_argument("--max-new-shards", type=int, default=1)
     b4_train.set_defaults(handler=_train_b4_seed)
+
+    b4_calibration = subparsers.add_parser(
+        "score-b4-calibration", help="score one frozen B4 seed on calibration only"
+    )
+    b4_calibration.add_argument("--staging-root", type=Path, required=True)
+    b4_calibration.add_argument("--normalizer", type=Path, required=True)
+    b4_calibration.add_argument("--plan", type=Path, required=True)
+    b4_calibration.add_argument("--freeze", type=Path, required=True)
+    b4_calibration.add_argument("--training-root", type=Path, required=True)
+    b4_calibration.add_argument("--output", type=Path, required=True)
+    b4_calibration.add_argument("--seed", type=int, required=True)
+    b4_calibration.set_defaults(handler=_score_b4_calibration)
 
     final_review = subparsers.add_parser(
         "prepare-final-event-review", help="prepare private event-rich samples across all 12 cells"
