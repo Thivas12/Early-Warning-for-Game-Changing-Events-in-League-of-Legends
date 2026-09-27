@@ -55,6 +55,7 @@ from league_ews.final_selection import (
 )
 from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
+from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
@@ -951,6 +952,35 @@ def _summarize_m1_calibration(args: argparse.Namespace) -> int:
     return 0
 
 
+def _select_m1_alert_policy(args: argparse.Namespace) -> int:
+    result = select_m1_alert_policy(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.hazards,
+        args.freeze,
+        args.training_root,
+        args.calibration_root,
+        args.floor_root,
+        args.tabular_root,
+        args.processed,
+        args.split,
+        args.output,
+        seed=args.seed,
+    )
+    print(
+        json.dumps(
+            {
+                key: result[key]
+                for key in ("schema_version", "seed", "events", "test_matches_unread")
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1642,6 +1672,27 @@ def build_parser() -> argparse.ArgumentParser:
     ):
         m1_summary.add_argument(f"--{name}", type=Path, required=True)
     m1_summary.set_defaults(handler=_summarize_m1_calibration)
+
+    m1_policy = subparsers.add_parser(
+        "select-m1-alert-policy", help="freeze three calibration alert thresholds for one M1 seed"
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "plan",
+        "hazards",
+        "freeze",
+        "training-root",
+        "calibration-root",
+        "floor-root",
+        "tabular-root",
+        "processed",
+        "split",
+        "output",
+    ):
+        m1_policy.add_argument(f"--{name}", type=Path, required=True)
+    m1_policy.add_argument("--seed", type=int, required=True)
+    m1_policy.set_defaults(handler=_select_m1_alert_policy)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"

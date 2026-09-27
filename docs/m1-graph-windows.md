@@ -115,3 +115,15 @@ macro AP, the sample standard deviation, per-target ranges and the descriptive
 mean delta from B3. No seed is selected and the test partition stays sealed.
 The calibration delta alone does not satisfy the preregistered H1 hypothesis;
 the future-patch paired bootstrap is still required.
+
+## Frozen per-seed alert operating points
+
+`make select-m1-alert-policy SEED=20260915` uses the same 60-second event
+matching, threshold grid, 60-second cooldown and tie-break rule as B3. It
+verifies all ten calibration scores, the processed manifest and the exact
+calibration match order before comparing saved labels with audited processed
+matches. One call chooses Baron, Dragon and teamfight thresholds for one seed.
+Run it for all ten seeds; no seed is chosen using calibration results. The
+checksum-bound private policy report records event precision, recall, false
+alerts per game and lead times. Reruns reproduce the whole policy exactly.
+Calibration operating points are descriptive, and no test match is opened.
