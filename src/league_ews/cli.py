@@ -55,6 +55,7 @@ from league_ews.final_selection import (
 )
 from league_ews.final_split import freeze_final_split
 from league_ews.io import load_legacy_csv, sha256_file
+from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
 from league_ews.m1_normalizer import fit_m1_normalizer
@@ -880,6 +881,40 @@ def _train_m1_seed(args: argparse.Namespace) -> int:
     return 0
 
 
+def _score_m1_calibration(args: argparse.Namespace) -> int:
+    report = score_m1_calibration_seed(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.hazards,
+        args.freeze,
+        args.training_root,
+        args.output,
+        seed=args.seed,
+    )
+    print(
+        json.dumps(
+            {
+                key: report[key]
+                for key in (
+                    "schema_version",
+                    "seed",
+                    "calibration_matches",
+                    "calibration_observations",
+                    "macro_average_precision",
+                    "device",
+                    "checkpoint_sha256",
+                    "scores_sha256",
+                    "test_matches_unread",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1538,6 +1573,22 @@ def build_parser() -> argparse.ArgumentParser:
     m1_train.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     m1_train.add_argument("--max-new-shards", type=int, default=1)
     m1_train.set_defaults(handler=_train_m1_seed)
+
+    m1_score = subparsers.add_parser(
+        "score-m1-calibration", help="score a frozen M1 seed after all ten complete"
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "plan",
+        "hazards",
+        "freeze",
+        "training-root",
+        "output",
+    ):
+        m1_score.add_argument(f"--{name}", type=Path, required=True)
+    m1_score.add_argument("--seed", type=int, required=True)
+    m1_score.set_defaults(handler=_score_m1_calibration)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"
