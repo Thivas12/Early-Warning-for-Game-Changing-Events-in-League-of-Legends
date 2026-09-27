@@ -60,6 +60,7 @@ from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
 from league_ews.m1_normalizer import fit_m1_normalizer
+from league_ews.m1_policy_summary import summarize_m1_alert_policies
 from league_ews.m1_summary import summarize_m1_calibration
 from league_ews.m1_training import train_m1_seed
 from league_ews.m1_training_plan import freeze_m1_training_plan
@@ -981,6 +982,39 @@ def _select_m1_alert_policy(args: argparse.Namespace) -> int:
     return 0
 
 
+def _summarize_m1_alert_policies(args: argparse.Namespace) -> int:
+    result = summarize_m1_alert_policies(
+        args.staging_root,
+        args.normalizer,
+        args.plan,
+        args.hazards,
+        args.freeze,
+        args.training_root,
+        args.calibration_root,
+        args.floor_root,
+        args.tabular_root,
+        args.policy_root,
+        args.b3_policy_root,
+    )
+    print(
+        json.dumps(
+            {
+                key: result[key]
+                for key in (
+                    "schema_version",
+                    "seed_count",
+                    "events",
+                    "selected_seed",
+                    "test_matches_unread",
+                )
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _fit_b4_normalizer(args: argparse.Namespace) -> int:
     print(json.dumps(fit_b4_normalizer(args.staging_root, args.output), indent=2, sort_keys=True))
     return 0
@@ -1693,6 +1727,25 @@ def build_parser() -> argparse.ArgumentParser:
         m1_policy.add_argument(f"--{name}", type=Path, required=True)
     m1_policy.add_argument("--seed", type=int, required=True)
     m1_policy.set_defaults(handler=_select_m1_alert_policy)
+
+    m1_policy_summary = subparsers.add_parser(
+        "summarize-m1-alert-policies", help="audit all ten M1 event thresholds against B3"
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "plan",
+        "hazards",
+        "freeze",
+        "training-root",
+        "calibration-root",
+        "floor-root",
+        "tabular-root",
+        "policy-root",
+        "b3-policy-root",
+    ):
+        m1_policy_summary.add_argument(f"--{name}", type=Path, required=True)
+    m1_policy_summary.set_defaults(handler=_summarize_m1_alert_policies)
 
     b4_normalizer = subparsers.add_parser(
         "fit-b4-normalizer", help="fit B4 scaling on frozen training shards only"

@@ -127,3 +127,11 @@ Run it for all ten seeds; no seed is chosen using calibration results. The
 checksum-bound private policy report records event precision, recall, false
 alerts per game and lead times. Reruns reproduce the whole policy exactly.
 Calibration operating points are descriptive, and no test match is opened.
+
+`make summarize-m1-alert-policies` audits all ten private policy artifacts
+against the fixed calibration score summary and B3 policy reports. It checks
+the frozen threshold grid, event inventory and precision/recall/F1 arithmetic,
+then writes one private, identifier-free report with ten-seed mean and spread
+for each event's precision, recall, F1 and false alerts per game. B3 is shown
+on the same calibration matches for descriptive comparison only. The sealed
+test patch stays unread.
