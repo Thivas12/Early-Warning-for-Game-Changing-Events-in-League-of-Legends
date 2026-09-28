@@ -1,9 +1,11 @@
 """Alert opportunity is measured from real frames with frozen alert matching."""
 
 import hashlib
+import io
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -217,6 +219,52 @@ class AlertOpportunityTests(unittest.TestCase):
         self.assertFalse(hasattr(args, "test_root"))
         self.assertFalse(hasattr(args, "raw"))
 
+    def test_cli_prints_only_compact_aggregate(self):
+        args = build_parser().parse_args(
+            [
+                "audit-m1-alert-opportunity",
+                "--processed",
+                "processed",
+                "--split",
+                "split.json",
+                "--calibration-root",
+                "calibration",
+                "--policy-root",
+                "policies",
+                "--output",
+                "diagnostic.json",
+            ]
+        )
+        report = {
+            "calibration_matches": 6000,
+            "seed_count": 10,
+            "test_matches_unread": 6000,
+            "seed_diagnostics": [
+                {
+                    "events": {
+                        event: {"opportunities_by_horizon_seconds": {"60": 50}}
+                        for event in EVENTS
+                    }
+                }
+            ],
+            "later_half_summary": {
+                event: {
+                    metric: {"mean": 0.5}
+                    for metric in ("event_f1", "event_recall", "false_alerts_per_game")
+                }
+                for event in EVENTS
+            },
+        }
+        output = io.StringIO()
+        with (
+            patch("league_ews.cli.audit_m1_alert_opportunity", return_value=report),
+            redirect_stdout(output),
+        ):
+            self.assertEqual(args.handler(args), 0)
+        displayed = json.loads(output.getvalue())
+        self.assertEqual(displayed["events"]["dragon"]["later_half_f1_mean"], 0.5)
+        self.assertNotIn("seed_diagnostics", displayed)
+
     def test_balanced_temporal_halves_reject_changed_order(self):
         entries = [
             {"regional_route": route, "game_creation_ms": index}
@@ -249,3 +297,7 @@ def test_alert_opportunity_temporal_halves_reject_changed_order():
 
 def test_alert_opportunity_full_audit_and_mutation():
     AlertOpportunityTests().test_full_audit_and_mutation()
+
+
+def test_alert_opportunity_cli_compact_summary():
+    AlertOpportunityTests().test_cli_prints_only_compact_aggregate()
