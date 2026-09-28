@@ -595,6 +595,12 @@ summarize-m1-graph-ablation:
 		--calibration-root data/private/m1-ablation-calibration \
 		--variant $(or $(VARIANT),no-objective-nodes)
 
+audit-m1-calibration:
+	uv run --no-sync league-ews audit-m1-calibration \
+		--original-root data/private/m1-calibration \
+		--ablation-root data/private/m1-ablation-calibration \
+		--output reports/local/m1-calibration-diagnostic.json
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \

@@ -1,5 +1,10 @@
 # Rare-event research path after the frozen M1 experiment
 
+The [2026-09-28 reassessment](research-grade-reassessment-2026-09-28.md)
+records the observed graph-removal results, current alert limitations and a
+separate prospective protocol. The original priorities below predate those
+ablation results and remain historical, not a revised preregistration.
+
 This is a prospective analysis and follow-on experiment plan, written while
 the registered M1 ablations are running. It does **not** change their training
 configuration, model checkpoints, final split, alert thresholds or sealed test

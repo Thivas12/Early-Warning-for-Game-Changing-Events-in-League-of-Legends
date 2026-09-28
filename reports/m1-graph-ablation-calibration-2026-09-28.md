@@ -41,3 +41,9 @@ The compact transcription for the figure is in
 Regenerate the SVG with `python scripts/render_m1_ablation_figure.py` after
 checking the transcription against the private summaries. No raw matches or
 player identifiers are required.
+
+The [research reassessment](../docs/research-grade-reassessment-2026-09-28.md)
+sets out the limitations and follow-on protocol. `make audit-m1-calibration`
+checks the existing private per-target reports and score checksums, then writes
+an identifier-free target-level diagnostic under `reports/local/`. It lists
+incomplete registered controls explicitly and never reads test outcomes.
