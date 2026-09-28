@@ -161,7 +161,20 @@ def _synthetic_audit(root):
         assert opportunities["10"] == 6000
         assert result["test_matches_unread"] == 6000
         assert "EUW1_0" not in output.read_text()
-        (policy_root / f"policy.seed-{SEEDS[0]}.json").write_text("tampered")
+        assert audit_m1_alert_opportunity(
+            processed, split_file, calibration, policy_root, output
+        ) == result
+        original_output = output.read_bytes()
+        output.write_text("tampered")
+        with unittest.TestCase().assertRaisesRegex(ValueError, "Existing alert opportunity"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        output.write_bytes(original_output)
+        payload["labels"][0][LABELS[0]] = 2
+        with unittest.TestCase().assertRaisesRegex(ValueError, "labels must be binary"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        payload["labels"][0][LABELS[0]] = 1
+        policy_file = policy_root / f"policy.seed-{SEEDS[0]}.json"
+        policy_file.write_text("tampered")
         with unittest.TestCase().assertRaisesRegex(ValueError, "checksum differs"):
             audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
 
@@ -199,6 +212,15 @@ class AlertOpportunityTests(unittest.TestCase):
         self.assertEqual(result["opportunities_by_horizon_seconds"]["60"], 0)
         self.assertIsNone(result["recall_of_observable_events_60"])
         self.assertEqual(result["false_alerts_per_game"]["maximum"], 1)
+
+    def test_no_event_or_alert_has_defined_zero_burden(self):
+        empty = diagnose_alerts([MatchRisk((), (), ())], 0.5)
+        self.assertIsNone(empty["observable_fraction_60"])
+        self.assertIsNone(empty["recall_of_observable_events_60"])
+        self.assertEqual(empty["false_alerts_per_game"]["maximum"], 0)
+        no_hit = diagnose_alerts([MatchRisk((0,), (5000,), (0.1,))], 0.5)
+        self.assertEqual(no_hit["recall_of_observable_events_60"], 0.0)
+        self.assertEqual(no_hit["games_with_at_least_one_false_alert"], 0)
 
     def test_no_test_or_raw_dependency_in_cli(self):
         args = build_parser().parse_args(
@@ -276,6 +298,12 @@ class AlertOpportunityTests(unittest.TestCase):
         entries[2]["game_creation_ms"] = -1
         with self.assertRaises(ValueError):
             _chronological_halves(entries)
+        entries[2]["game_creation_ms"] = 1
+        entries[0]["regional_route"] = "asia"
+        with self.assertRaises(ValueError):
+            _chronological_halves(entries)
+        with self.assertRaises(ValueError):
+            _chronological_halves(entries[1:])
 
 
 def test_alert_opportunity_strict_future_observation_and_cooldown():
@@ -284,6 +312,10 @@ def test_alert_opportunity_strict_future_observation_and_cooldown():
 
 def test_alert_opportunity_at_frame_is_not_anticipated():
     AlertOpportunityTests().test_onset_at_frame_is_not_anticipated_by_that_frame()
+
+
+def test_alert_opportunity_no_event_or_alert():
+    AlertOpportunityTests().test_no_event_or_alert_has_defined_zero_burden()
 
 
 def test_alert_opportunity_cli_has_no_test_or_raw_dependency():
