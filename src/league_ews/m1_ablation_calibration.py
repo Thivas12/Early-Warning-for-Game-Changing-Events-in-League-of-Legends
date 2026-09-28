@@ -161,9 +161,7 @@ def score_m1_graph_ablation_seed(
             stage, entry, normalizer
         )
         if variant == "fixed-minute-grid":
-            nodes, edges, mask, ages = fixed_minute_grid(
-                nodes, edges, mask, ages, local_offsets
-            )
+            nodes, edges, mask, ages = fixed_minute_grid(nodes, edges, mask, ages, local_offsets)
         elif variant != "independent-horizon-heads":
             nodes, edges = ablate_graph_inputs(nodes, edges, mask, ages, variant=variant)
         all_scores.append(backend.predict_shard(nodes, edges, mask, ages))
@@ -216,8 +214,7 @@ def score_m1_graph_ablation_seed(
         **binding,
         "node_count": node_count,
         "relation_count": relation_count,
-        **({"output_mode": "independent-heads"}
-           if variant == "independent-horizon-heads" else {}),
+        **({"output_mode": "independent-heads"} if variant == "independent-horizon-heads" else {}),
         "device": backend.device,
         "torch_version": backend.version,
         "calibration_matches": CAL_MATCHES,

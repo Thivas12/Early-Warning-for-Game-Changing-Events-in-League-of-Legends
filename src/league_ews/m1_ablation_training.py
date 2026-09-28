@@ -142,9 +142,7 @@ def train_m1_graph_ablation_seed(
                 )
                 if variant == "fixed-minute-grid":
                     offsets = verified_match_offsets(stage, manifest["shards"][index])
-                    nodes, edges, mask, ages = fixed_minute_grid(
-                        nodes, edges, mask, ages, offsets
-                    )
+                    nodes, edges, mask, ages = fixed_minute_grid(nodes, edges, mask, ages, offsets)
                 else:
                     nodes, edges = ablate_graph_inputs(nodes, edges, mask, ages, variant=variant)
             last_loss, last_rows = backend.train_shard(
@@ -160,8 +158,11 @@ def train_m1_graph_ablation_seed(
                 "torch_version": backend.version,
                 "node_count": node_count,
                 "relation_count": relation_count,
-                **({"output_mode": "independent-heads"}
-                   if variant == "independent-horizon-heads" else {}),
+                **(
+                    {"output_mode": "independent-heads"}
+                    if variant == "independent-horizon-heads"
+                    else {}
+                ),
                 "completed_shards": unit + 1,
                 "backend": backend.state_dict(),
             }

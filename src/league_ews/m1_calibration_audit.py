@@ -78,7 +78,9 @@ def _audited_reports(
         values = [float(report["metrics"][label]["average_precision"]) for report in reports]
         if not np.isclose(
             float(summary["per_target_average_precision"][label]["mean"]),
-            np.mean(values), rtol=0, atol=1e-12,
+            np.mean(values),
+            rtol=0,
+            atol=1e-12,
         ):
             raise ValueError("Per-target AP differs from the audited summary")
     return reports
@@ -105,9 +107,7 @@ def audit_m1_calibration(
         if not variant_path.exists():
             missing.append(variant)
             continue
-        summary = _read_summary(
-            variant_path, "league-ews-m1-graph-ablation-ten-seed-summary-v1"
-        )
+        summary = _read_summary(variant_path, "league-ews-m1-graph-ablation-ten-seed-summary-v1")
         if (
             summary.get("variant") != variant
             or summary.get("original_m1_summary_sha256") != _sha(original_path)

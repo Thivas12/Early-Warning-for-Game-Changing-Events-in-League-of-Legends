@@ -96,8 +96,11 @@ def _fixture(tmp_path, monkeypatch, variant="no-objective-nodes"):
             "torch_version": "fake",
             "node_count": 10 if variant == "no-objective-nodes" else 12,
             "relation_count": 3 if variant == "no-objective-nodes" else 5,
-            **({"output_mode": "independent-heads"}
-               if variant == "independent-horizon-heads" else {}),
+            **(
+                {"output_mode": "independent-heads"}
+                if variant == "independent-horizon-heads"
+                else {}
+            ),
             "calibration_matches": 6000,
             "calibration_observations": 6000,
             "targets": list(LABELS),
@@ -138,9 +141,7 @@ def test_summary_audits_ten_seeds_and_preserves_test(tmp_path, monkeypatch):
 
 def test_independent_head_summary_allows_nonmonotone_scores(tmp_path, monkeypatch):
     args = _fixture(tmp_path, monkeypatch, variant="independent-horizon-heads")
-    report = summary_module.summarize_m1_graph_ablation(
-        *args, variant="independent-horizon-heads"
-    )
+    report = summary_module.summarize_m1_graph_ablation(*args, variant="independent-horizon-heads")
     assert report["output_mode"] == "independent-heads"
     assert report["seed_count"] == 10
 

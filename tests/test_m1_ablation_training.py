@@ -160,9 +160,7 @@ def test_objective_free_checkpoint_rejects_architecture_change(tmp_path, monkeyp
         runner.train_m1_graph_ablation_seed(*arguments, variant="no-objective-nodes", seed=20260915)
 
 
-def test_independent_head_training_uses_stored_labels_and_binds_output_mode(
-    tmp_path, monkeypatch
-):
+def test_independent_head_training_uses_stored_labels_and_binds_output_mode(tmp_path, monkeypatch):
     inputs, arguments = _inputs(tmp_path, monkeypatch)
     called = []
 
@@ -176,8 +174,9 @@ def test_independent_head_training_uses_stored_labels_and_binds_output_mode(
     )
     assert called == [True] and result["completed_shards"] == 1
     saved = json.loads(
-        (arguments[-1] / "independent-horizon-heads" / "seed-20260915" / "checkpoint.pt")
-        .read_text()
+        (
+            arguments[-1] / "independent-horizon-heads" / "seed-20260915" / "checkpoint.pt"
+        ).read_text()
     )
     assert saved["output_mode"] == "independent-heads"
     saved["output_mode"] = "hazards"
@@ -210,9 +209,7 @@ def test_fixed_grid_runner_uses_frozen_match_offsets(tmp_path, monkeypatch):
 def test_reject_unfrozen_and_unregistered_variants(tmp_path, monkeypatch):
     _, arguments = _inputs(tmp_path, monkeypatch)
     with pytest.raises(ValueError, match="supported backend"):
-        runner.train_m1_graph_ablation_seed(
-            *arguments, variant="unregistered", seed=20260915
-        )
+        runner.train_m1_graph_ablation_seed(*arguments, variant="unregistered", seed=20260915)
     arguments[6].unlink()
     with pytest.raises(ValueError, match="freeze must be created"):
         runner.train_m1_graph_ablation_seed(

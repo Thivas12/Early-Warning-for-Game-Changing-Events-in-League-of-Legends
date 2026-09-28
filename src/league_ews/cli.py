@@ -1015,12 +1015,18 @@ def _summarize_m1_graph_ablation(args: argparse.Namespace) -> int:
 
 def _audit_m1_calibration(args: argparse.Namespace) -> int:
     report = audit_m1_calibration(args.original_root, args.ablation_root, args.output)
-    print(json.dumps({
-        "output": str(args.output),
-        "complete_variants": list(report["comparisons"]),
-        "missing_variants": report["missing_variants"],
-        "test_matches_unread": report["test_matches_unread"],
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "output": str(args.output),
+                "complete_variants": list(report["comparisons"]),
+                "missing_variants": report["missing_variants"],
+                "test_matches_unread": report["test_matches_unread"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

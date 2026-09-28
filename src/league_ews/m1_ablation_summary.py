@@ -193,8 +193,7 @@ def summarize_m1_graph_ablation(
         "split_sha256": manifest["split_sha256"],
         "node_count": node_count,
         "relation_count": relation_count,
-        **({"output_mode": "independent-heads"}
-           if variant == "independent-horizon-heads" else {}),
+        **({"output_mode": "independent-heads"} if variant == "independent-horizon-heads" else {}),
         "seed_count": len(SEEDS),
         "calibration_matches": 6000,
         "calibration_observations": observations,

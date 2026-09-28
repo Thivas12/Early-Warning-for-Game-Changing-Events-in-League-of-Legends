@@ -28,7 +28,8 @@ def _make_experiment(root, *, variant=None, original_hash=None):
         report = {
             "schema_version": (
                 "league-ews-m1-graph-ablation-calibration-v1"
-                if variant else "league-ews-m1-calibration-v1"
+                if variant
+                else "league-ews-m1-calibration-v1"
             ),
             "seed": seed,
             "scores_sha256": _sha(scores),
@@ -38,25 +39,29 @@ def _make_experiment(root, *, variant=None, original_hash=None):
             "calibration_observations": 12,
             "test_matches_unread": 6000,
             "identifiers_in_report": False,
-            "metrics": {label: {
-                "average_precision": ap, "brier": 0.12, "prevalence": 0.2
-            } for label in LABELS},
+            "metrics": {
+                label: {"average_precision": ap, "brier": 0.12, "prevalence": 0.2}
+                for label in LABELS
+            },
             "macro_average_precision": ap,
         }
         if variant:
             report["variant"] = variant
         path = folder / "calibration-report.json"
         path.write_text(json.dumps(report))
-        seeds.append({
-            "seed": seed,
-            "report_sha256": _sha(path),
-            "scores_sha256": _sha(scores),
-            "checkpoint_sha256": str(seed),
-        })
+        seeds.append(
+            {
+                "seed": seed,
+                "report_sha256": _sha(path),
+                "scores_sha256": _sha(scores),
+                "checkpoint_sha256": str(seed),
+            }
+        )
     summary = {
         "schema_version": (
             "league-ews-m1-graph-ablation-ten-seed-summary-v1"
-            if variant else "league-ews-m1-ten-seed-calibration-v1"
+            if variant
+            else "league-ews-m1-ten-seed-calibration-v1"
         ),
         "seed_count": 10,
         "calibration_matches": 6000,
@@ -66,12 +71,18 @@ def _make_experiment(root, *, variant=None, original_hash=None):
         "identifiers_in_summary": False,
         "split_sha256": "split",
         "seed_results": seeds,
-        "per_target_average_precision": {label: {"mean": 0.6 if variant else 0.5}
-                                         for label in LABELS},
+        "per_target_average_precision": {
+            label: {"mean": 0.6 if variant else 0.5} for label in LABELS
+        },
     }
     if variant:
-        summary.update({"variant": variant, "original_m1_summary_sha256": original_hash,
-                        "training_freeze_sha256": "freeze"})
+        summary.update(
+            {
+                "variant": variant,
+                "original_m1_summary_sha256": original_hash,
+                "training_freeze_sha256": "freeze",
+            }
+        )
     else:
         summary["freeze_sha256"] = "freeze"
     path = root / "ten-seed-summary.json"
@@ -127,10 +138,17 @@ def _test_audit_rejects_mutation_and_incompatible_split(tmp_path):
 
 
 def test_audit_cli_has_no_test_path():
-    args = build_parser().parse_args([
-        "audit-m1-calibration", "--original-root", "original",
-        "--ablation-root", "variants", "--output", "diagnostic.json",
-    ])
+    args = build_parser().parse_args(
+        [
+            "audit-m1-calibration",
+            "--original-root",
+            "original",
+            "--ablation-root",
+            "variants",
+            "--output",
+            "diagnostic.json",
+        ]
+    )
     assert args.original_root.name == "original"
     assert not hasattr(args, "test_root")
 

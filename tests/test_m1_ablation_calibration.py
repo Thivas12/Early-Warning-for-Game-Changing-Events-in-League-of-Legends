@@ -164,9 +164,7 @@ def test_fixed_minute_grid_scoring_keeps_genuine_targets(tmp_path, monkeypatch):
 
     monkeypatch.setattr(scorer, "TorchM1Backend", StandardBackend)
     monkeypatch.setattr(scorer, "fixed_minute_grid", grid)
-    report = scorer.score_m1_graph_ablation_seed(
-        *args, variant="fixed-minute-grid", seed=SEEDS[0]
-    )
+    report = scorer.score_m1_graph_ablation_seed(*args, variant="fixed-minute-grid", seed=SEEDS[0])
     assert called == [[0, 1, 2]] and report["calibration_matches"] == 2
 
 
