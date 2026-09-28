@@ -161,9 +161,10 @@ def _synthetic_audit(root):
         assert opportunities["10"] == 6000
         assert result["test_matches_unread"] == 6000
         assert "EUW1_0" not in output.read_text()
-        assert audit_m1_alert_opportunity(
+        replayed = audit_m1_alert_opportunity(
             processed, split_file, calibration, policy_root, output
-        ) == result
+        )
+        assert replayed == result
         original_output = output.read_bytes()
         output.write_text("tampered")
         with unittest.TestCase().assertRaisesRegex(ValueError, "Existing alert opportunity"):
