@@ -101,6 +101,23 @@ def test_eda_renders_audited_aggregates_without_identifiers(tmp_path, monkeypatc
             "cadence_ms": {"minimum": 28000, "median": 60018, "maximum": 64400},
             "event_counts": {"baron": 3600, "dragon": 18000, "teamfight": 36000},
             "opportunity_percent": {event: [10, 30, 50, 100] for event in eda.EVENTS},
+            "positive_rows": {
+                split: {event: {str(h): 100 for h in eda.HORIZONS} for event in eda.EVENTS}
+                for split in ("train", "calibration")
+            },
+            "rows_by_split": {"train": 60000, "calibration": 12000},
+            "cell_prevalence_percent": [
+                {
+                    "route": "europe",
+                    "patch": "16.12",
+                    "observations": 6000,
+                    "positive_percent": {
+                        event: {str(h): 1.0 for h in eda.HORIZONS} for event in eda.EVENTS
+                    },
+                }
+            ],
+            "onsets_by_five_minute_bin": {event: [1] * 8 for event in eda.EVENTS},
+            "position_coverage": {"known": 700, "participant_states": 1000, "percent": 70.0},
         },
     )
     summary = write_eda(*sources, tmp_path / "processed", destination)
@@ -110,6 +127,10 @@ def test_eda_renders_audited_aggregates_without_identifiers(tmp_path, monkeypatc
     assert "EUW1_" not in page and "NA1_" not in page
     assert "36,000" in page and "60.02 s" in page
     assert "strictly earlier genuine snapshot" in page
+    assert "The actual class imbalance" in page
+    assert "70.00%" in page
+    assert json.loads((tmp_path / "summary.json").read_text()) == summary
+    assert "EUW1_" not in (tmp_path / "summary.json").read_text()
 
 
 def test_eda_refuses_a_replaced_validation_report(tmp_path):
@@ -125,8 +146,12 @@ def test_eda_only_opens_train_and_calibration_match_files(tmp_path):
     root = tmp_path / "processed"
     (root / "matches").mkdir(parents=True)
     partitions = {
-        "train": [{"match_id": "EUW1_1"}],
-        "calibration": [{"match_id": "NA1_2"}],
+        "train": [
+            {"match_id": "EUW1_1", "regional_route": "europe", "game_version_patch": "16.12"}
+        ],
+        "calibration": [
+            {"match_id": "NA1_2", "regional_route": "americas", "game_version_patch": "16.16"}
+        ],
         "test": [{"match_id": "EUW1_3"}],
     }
     records = [{"match_id": f"EUW1_{i + 4}"} for i in range(35998)]
@@ -135,9 +160,28 @@ def test_eda_only_opens_train_and_calibration_match_files(tmp_path):
             "schema_version": "league-ews-processed-match-v1",
             "timeline": {
                 "match_id": name,
-                "observations": [{"timestamp_ms": 0}, {"timestamp_ms": 10000}],
+                "observations": [
+                    {
+                        "timestamp_ms": time,
+                        "participants": [
+                            {"position": {"x": 1, "y": 2} if i < 8 else None} for i in range(10)
+                        ],
+                    }
+                    for time in (0, 10000)
+                ],
             },
             "event_index": {f"{event}_ms": [event_time] for event in eda.EVENTS},
+            "labels": [
+                {
+                    "timestamp_ms": time,
+                    **{
+                        f"y_{event}_{h}": int(time < event_time <= time + h * 1000)
+                        for event in eda.EVENTS
+                        for h in eda.HORIZONS
+                    },
+                }
+                for time in (0, 10000)
+            ],
         }
         content = json.dumps(payload).encode()
         (root / "matches" / f"{name}.json").write_bytes(content)
@@ -162,3 +206,21 @@ def test_eda_only_opens_train_and_calibration_match_files(tmp_path):
     assert result["observations"] == 4
     assert result["event_counts"] == dict.fromkeys(eda.EVENTS, 2)
     assert result["opportunity_percent"]["baron"] == [50, 100, 100, 100]
+    assert result["positive_rows"]["train"]["baron"] == {
+        "10": 1,
+        "20": 2,
+        "30": 2,
+        "60": 2,
+    }
+    assert result["positive_rows"]["calibration"]["baron"] == {
+        "10": 0,
+        "20": 1,
+        "30": 2,
+        "60": 2,
+    }
+    assert result["position_coverage"] == {
+        "known": 32,
+        "participant_states": 40,
+        "percent": 80.0,
+    }
+    assert result["onsets_by_five_minute_bin"]["baron"][0] == 2

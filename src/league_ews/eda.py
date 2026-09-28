@@ -9,7 +9,7 @@ import hashlib
 import html
 import json
 import re
-from bisect import bisect_left
+from bisect import bisect_left, bisect_right
 from collections import Counter
 from itertools import pairwise
 from pathlib import Path
@@ -49,16 +49,27 @@ def _training_calibration_aggregates(
         raise ValueError("EDA processed inventory contains duplicate matches")
     counts: Counter[str] = Counter()
     labelable: Counter[tuple[str, int]] = Counter()
+    positives: Counter[tuple[str, str, int]] = Counter()
+    rows_by_split: Counter[str] = Counter()
+    rows_by_cell: Counter[tuple[str, str]] = Counter()
+    positive_by_cell: Counter[tuple[str, str, str, int]] = Counter()
+    onset_by_time: Counter[tuple[str, int]] = Counter()
     intervals: list[int] = []
     observations = 0
+    position_known = 0
+    participant_states = 0
     for partition in ("train", "calibration"):
         for member in partitions[partition]:
             match_id = member.get("match_id")
+            route, patch = member.get("regional_route"), member.get("game_version_patch")
             record = by_id.get(match_id)
             if (
                 not isinstance(match_id, str)
                 or re.fullmatch(r"[A-Z0-9]+_[0-9]+", match_id) is None
                 or not isinstance(record, dict)
+                or route not in ROUTES
+                or patch not in PATCHES[:5]
+                or (partition == "calibration") != (patch == PATCHES[4])
             ):
                 raise ValueError("EDA processed member is absent from the audit")
             content = (processed_root / "matches" / f"{match_id}.json").read_bytes()
@@ -72,10 +83,16 @@ def _training_calibration_aggregates(
                 raise ValueError("EDA processed match schema differs")
             timeline = payload.get("timeline")
             index = payload.get("event_index")
+            labels = payload.get("labels")
             if not isinstance(timeline, dict) or not isinstance(index, dict):
                 raise ValueError("EDA processed timeline or event index is missing")
             frames = timeline.get("observations")
-            if timeline.get("match_id") != match_id or not isinstance(frames, list):
+            if (
+                timeline.get("match_id") != match_id
+                or not isinstance(frames, list)
+                or not isinstance(labels, list)
+                or len(labels) != len(frames)
+            ):
                 raise ValueError("EDA processed match identity differs")
             raw_times = [frame.get("timestamp_ms") for frame in frames if isinstance(frame, dict)]
             if (
@@ -89,7 +106,10 @@ def _training_calibration_aggregates(
             if any(second <= first for first, second in pairwise(times)):
                 raise ValueError("EDA processed observation timing differs")
             observations += len(times)
+            rows_by_split[partition] += len(times)
+            rows_by_cell[route, patch] += len(times)
             intervals.extend(second - first for first, second in pairwise(times))
+            event_index: dict[str, list[int]] = {}
             for event in EVENTS:
                 values = index.get(f"{event}_ms")
                 if (
@@ -100,7 +120,9 @@ def _training_calibration_aggregates(
                 ):
                     raise ValueError("EDA processed event count differs from audit")
                 counts[event] += len(values)
+                event_index[event] = values
                 for onset in values:
+                    onset_by_time[event, min(onset // 300_000, 7)] += 1
                     position = bisect_left(times, onset) - 1
                     if position < 0:
                         continue
@@ -108,6 +130,37 @@ def _training_calibration_aggregates(
                     for horizon in HORIZONS:
                         if 0 < delay <= horizon * 1000:
                             labelable[event, horizon] += 1
+            for frame, row, timestamp in zip(frames, labels, times, strict=True):
+                participants = frame.get("participants")
+                if (
+                    not isinstance(participants, list)
+                    or len(participants) != 10
+                    or not isinstance(row, dict)
+                    or row.get("timestamp_ms") != timestamp
+                ):
+                    raise ValueError("EDA participant or label inventory differs")
+                for participant in participants:
+                    if not isinstance(participant, dict):
+                        raise ValueError("EDA participant state differs")
+                    participant_states += 1
+                    if participant.get("position") is not None:
+                        position_known += 1
+                for event in EVENTS:
+                    events = event_index[event]
+                    next_index = bisect_right(events, timestamp)
+                    for horizon in HORIZONS:
+                        name = f"y_{event}_{horizon}"
+                        value = row.get(name)
+                        expected = int(
+                            next_index < len(events)
+                            and events[next_index] <= timestamp + horizon * 1000
+                        )
+                        if type(value) is not int or value != expected:
+                            raise ValueError(
+                                "EDA strict future label differs from source event index"
+                            )
+                        positives[partition, event, horizon] += value
+                        positive_by_cell[route, patch, event, horizon] += value
     analyzed_matches = len(partitions["train"]) + len(partitions["calibration"])
     if len(intervals) != observations - analyzed_matches or any(
         not counts[event] for event in EVENTS
@@ -121,6 +174,45 @@ def _training_calibration_aggregates(
             "maximum": max(intervals),
         },
         "event_counts": {event: counts[event] for event in EVENTS},
+        "positive_rows": {
+            partition: {
+                event: {str(h): positives[partition, event, h] for h in HORIZONS}
+                for event in EVENTS
+            }
+            for partition in ("train", "calibration")
+        },
+        "rows_by_split": dict(rows_by_split),
+        "cell_prevalence_percent": [
+            {
+                "route": route,
+                "patch": patch,
+                "observations": rows_by_cell[route, patch],
+                "positive_percent": {
+                    event: {
+                        str(h): round(
+                            100
+                            * positive_by_cell[route, patch, event, h]
+                            / rows_by_cell[route, patch]
+                            if rows_by_cell[route, patch]
+                            else 0,
+                            4,
+                        )
+                        for h in HORIZONS
+                    }
+                    for event in EVENTS
+                },
+            }
+            for patch in PATCHES[:5]
+            for route in ROUTES
+        ],
+        "onsets_by_five_minute_bin": {
+            event: [onset_by_time[event, bin_index] for bin_index in range(8)] for event in EVENTS
+        },
+        "position_coverage": {
+            "known": position_known,
+            "participant_states": participant_states,
+            "percent": round(100 * position_known / participant_states, 4),
+        },
         "opportunity_percent": {
             event: [
                 round(100 * labelable[event, horizon] / counts[event], 4) for horizon in HORIZONS
@@ -200,7 +292,7 @@ def audited_eda_data(
         partitions, Path(processed_root), str(split["processing_manifest_sha256"])
     )
     return {
-        "schema_version": "league-ews-public-eda-v1",
+        "schema_version": "league-ews-public-eda-v2",
         "matches": 30000,
         "frozen_matches": 36000,
         **aggregates,
@@ -299,6 +391,76 @@ def _event_chart(counts: dict[str, int], matches: int) -> str:
     return "".join(parts)
 
 
+def _prevalence_chart(data: dict[str, Any]) -> str:
+    """Compare row-level target prevalence on a shared, explicitly labeled scale."""
+
+    positives = data["positive_rows"]
+    totals = data["rows_by_split"]
+    maximum = max(
+        100 * positives[split][event][str(h)] / totals[split]
+        for split in ("train", "calibration")
+        for event in EVENTS
+        for h in HORIZONS
+    )
+    scale = max(1, int(maximum + 0.9999))
+    parts = [
+        '<svg viewBox="0 0 860 580" role="img" aria-labelledby="prev-title prev-desc">',
+        '<title id="prev-title">Positive observation rates by target</title>',
+        '<desc id="prev-desc">Paired training and calibration bars for twelve event and horizon targets. The bars use the same linear percentage scale.</desc>',
+    ]
+    for tick in (0, scale / 2, scale):
+        x = 170 + 470 * tick / scale
+        parts.append(
+            f'<path d="M{x:.1f} 30 V530" stroke="#31435a" stroke-dasharray="4 7"/>'
+            f'<text x="{x:.1f}" y="550" text-anchor="middle" class="small">{tick:g}%</text>'
+        )
+    for index, (event, horizon) in enumerate(
+        (event, horizon) for event in EVENTS for horizon in HORIZONS
+    ):
+        y = 43 + index * 40
+        parts.append(f'<text x="8" y="{y + 13}" class="small">{event.title()} · {horizon}s</text>')
+        for split, offset, color in (
+            ("train", 0, "#5bd6c0"),
+            ("calibration", 16, "#e9ad66"),
+        ):
+            rate = 100 * positives[split][event][str(horizon)] / totals[split]
+            width = 470 * rate / scale
+            parts.append(
+                f'<rect x="170" y="{y + offset}" width="{width:.2f}" height="13" rx="4" fill="{color}"><title>{split.title()}: {rate:.3f}% ({positives[split][event][str(horizon)]:,}/{totals[split]:,})</title></rect>'
+                f'<text x="655" y="{y + offset + 11}" class="small">{rate:.2f}%</text>'
+            )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def _timing_chart(counts: dict[str, list[int]]) -> str:
+    """Show within-type onset timing without hiding the rare Baron series."""
+
+    parts = [
+        '<svg viewBox="0 0 850 420" role="img" aria-labelledby="time-title time-desc">',
+        '<title id="time-title">Event onset timing by five-minute match-time bin</title>',
+        '<desc id="time-desc">Each event series is scaled to its own maximum; tooltip gives the actual onset count. The last bin contains all onsets at 35 minutes or later.</desc>',
+    ]
+    for row, event in enumerate(EVENTS):
+        top = 38 + row * 125
+        maximum = max(counts[event])
+        parts.append(f'<text x="12" y="{top + 15}" class="value">{event.title()}</text>')
+        parts.append(f'<path d="M125 {top + 82} H816" stroke="#31435a"/>')
+        for index, value in enumerate(counts[event]):
+            x = 137 + index * 95
+            height = 65 * value / maximum if maximum else 0
+            label = f"{index * 5}-{index * 5 + 5}m" if index < 7 else "35m+"
+            parts.append(
+                f'<rect x="{x}" y="{top + 82 - height:.1f}" width="55" height="{height:.1f}" rx="5" fill="{COLORS[event]}"><title>{label}: {value:,} onsets</title></rect>'
+            )
+            if row == 2:
+                parts.append(
+                    f'<text x="{x + 27}" y="{top + 102}" text-anchor="middle" class="small">{label}</text>'
+                )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
 def render_eda_html(data: dict[str, Any]) -> str:
     """Render only aggregates assembled by audited_eda_data."""
 
@@ -316,6 +478,7 @@ def render_eda_html(data: dict[str, Any]) -> str:
     h2{font-size:1.45rem;letter-spacing:-.025em;margin:0 0 5px}p{color:var(--muted);margin:0 0 15px;max-width:78ch}svg{width:100%;height:auto;display:block;font:15px system-ui,sans-serif;fill:#e8f1f5}svg .small{font-size:13px;fill:#9db0c3}svg .value{font-weight:750}
     .legend{display:flex;gap:21px;flex-wrap:wrap}.legend span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--swatch);margin-right:7px}
     .note{border-left:3px solid #e9ad66;padding:15px 20px;background:#e9ad6616;color:#d7e3e9;margin-top:20px;border-radius:0 12px 12px 0}
+    .table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:right;padding:10px;border-bottom:1px solid #304258;white-space:nowrap}th:first-child,td:first-child{text-align:left}thead th{color:#9db0c3;font-weight:600}
     footer{margin-top:45px;color:var(--muted);font-size:.81rem;overflow-wrap:anywhere}code{color:#b9eee4}@media(max-width:760px){.metrics,.grid{grid-template-columns:1fr 1fr}.panel{grid-column:1/-1}}
     @media(max-width:480px){main{padding:35px 16px 70px}.metrics{grid-template-columns:1fr 1fr}.metric{padding:14px}.metric strong{font-size:1.5rem}}
     @media print{body{background:#0b1625!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.panel,.metric{break-inside:avoid}}
@@ -323,6 +486,19 @@ def render_eda_html(data: dict[str, Any]) -> str:
     legend = "".join(
         f'<span style="--swatch:{COLORS[event]}">{event.title()}</span>' for event in EVENTS
     )
+    prevalence_legend = '<span style="--swatch:#5bd6c0">Train</span><span style="--swatch:#e9ad66">Calibration</span>'
+    cell_rows = "".join(
+        "<tr>"
+        f"<td>{html.escape(row['route'].title())} / {html.escape(row['patch'])}</td>"
+        f"<td>{row['observations']:,}</td>"
+        + "".join(
+            f"<td>{row['positive_percent'][event]['10']:.2f}% / {row['positive_percent'][event]['60']:.2f}%</td>"
+            for event in EVENTS
+        )
+        + "</tr>"
+        for row in data["cell_prevalence_percent"]
+    )
+    coverage = data["position_coverage"]
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RiftHazard | Audited data atlas</title><style>{styles}</style></head>
 <body><main><div class="eyebrow">RiftHazard / research v2 / data atlas</div><h1>Before the warning.</h1>
 <p class="subtitle">The shape of the frozen League of Legends research sample, and the limits imposed by genuine timeline observations. Built from passed validation and split artifacts.</p>
@@ -337,7 +513,11 @@ def render_eda_html(data: dict[str, Any]) -> str:
 <section class="panel"><h2>04 / Native timeline timing</h2><p>Intervals are measured only between genuine observations within each match. The minimum, median and maximum are shown; they are not a full interval distribution.</p>
 <div class="metric"><strong>{float(cadence["minimum"]) / 1000:.3f} s</strong><span>shortest observed interval</span></div><br>
 <div class="metric"><strong>{float(cadence["median"]) / 1000:.3f} s</strong><span>median observed interval</span></div><br>
-<div class="metric"><strong>{float(cadence["maximum"]) / 1000:.3f} s</strong><span>longest observed interval</span></div></section></div>
+<div class="metric"><strong>{float(cadence["maximum"]) / 1000:.3f} s</strong><span>longest observed interval</span></div></section>
+<section class="panel wide"><h2>05 / The actual class imbalance</h2><p>Positive prediction rows divided by all genuine rows in that partition. Train and calibration share the same horizontal scale; these rates are distinct from the event opportunity plot above.</p><div class="legend">{prevalence_legend}</div>{_prevalence_chart(data)}</section>
+<section class="panel wide"><h2>06 / Patch and route slices</h2><p>Positive row rate at 10s / 60s for each event type. Equal match allocations need not yield equal observation or label counts. Test-patch labels remain sealed.</p><div class="table-scroll"><table><thead><tr><th>Route / patch</th><th>Rows</th><th>Baron 10s / 60s</th><th>Dragon 10s / 60s</th><th>Teamfight 10s / 60s</th></tr></thead><tbody>{cell_rows}</tbody></table></div></section>
+<section class="panel"><h2>07 / When events start</h2><p>Source onsets by five-minute game-time bin. Each type has its own height scale, so compare the shape within a type, not bar heights between types. Hover for exact counts.</p>{_timing_chart(data["onsets_by_five_minute_bin"])}</section>
+<section class="panel"><h2>08 / Position availability</h2><p>Position is present in {coverage["known"]:,} of {coverage["participant_states"]:,} player frame states ({coverage["percent"]:.2f}%). Missing positions have an explicit indicator in M1. This processed-data check cannot reveal numeric fields defaulted during raw normalization.</p><div class="metric"><strong>{coverage["percent"]:.2f}%</strong><span>player states with observed position</span></div></section></div>
 <div class="note">Short horizons can miss an event even with a perfect model when no genuine observation exists in that window. The test-patch match files were not opened to make these figures.</div>
 <footer>Validated final G2 SHA-256: <code>{data["g2_sha256"]}</code><br>Frozen split SHA-256: <code>{data["split_sha256"]}</code><br>Processed audit SHA-256: <code>{data["processed_audit_sha256"]}</code><br>Aggregates only · no match IDs, PUUIDs, raw payloads or prediction scores.</footer></main></body></html>"""
 
@@ -355,4 +535,11 @@ def write_eda(
     temporary = output.with_suffix(output.suffix + ".partial")
     temporary.write_text(render_eda_html(data), encoding="utf-8")
     temporary.replace(output)
-    return {key: value for key, value in data.items() if key != "cells"}
+    summary = {key: value for key, value in data.items() if key != "cells"}
+    summary_path = output.with_name("summary.json")
+    summary_temporary = summary_path.with_suffix(".json.partial")
+    summary_temporary.write_text(
+        json.dumps(summary, sort_keys=True, indent=2) + "\n", encoding="utf-8"
+    )
+    summary_temporary.replace(summary_path)
+    return summary
