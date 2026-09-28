@@ -242,8 +242,7 @@ class AlertOpportunityTests(unittest.TestCase):
             "seed_diagnostics": [
                 {
                     "events": {
-                        event: {"opportunities_by_horizon_seconds": {"60": 50}}
-                        for event in EVENTS
+                        event: {"opportunities_by_horizon_seconds": {"60": 50}} for event in EVENTS
                     }
                 }
             ],
