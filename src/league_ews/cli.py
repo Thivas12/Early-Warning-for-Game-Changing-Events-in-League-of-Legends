@@ -1035,6 +1035,8 @@ def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
     report = audit_m1_alert_opportunity(
         args.processed, args.split, args.calibration_root, args.policy_root, args.output
     )
+    opportunities = report["seed_diagnostics"][0]["events"]
+    later = report["later_half_summary"]
     print(
         json.dumps(
             {
@@ -1044,18 +1046,14 @@ def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
                 "test_matches_unread": report["test_matches_unread"],
                 "events": {
                     event: {
-                        "opportunities_by_horizon_seconds": report["seed_diagnostics"][0][
-                            "events"
-                        ][event]["opportunities_by_horizon_seconds"],
-                        "later_half_f1_mean": report["later_half_summary"][event]["event_f1"][
-                            "mean"
+                        "opportunities_by_horizon_seconds": opportunities[event][
+                            "opportunities_by_horizon_seconds"
                         ],
-                        "later_half_recall_mean": report["later_half_summary"][event][
-                            "event_recall"
+                        "later_half_f1_mean": later[event]["event_f1"]["mean"],
+                        "later_half_recall_mean": later[event]["event_recall"]["mean"],
+                        "later_half_false_alerts_per_game_mean": later[event][
+                            "false_alerts_per_game"
                         ]["mean"],
-                        "later_half_false_alerts_per_game_mean": report["later_half_summary"][
-                            event
-                        ]["false_alerts_per_game"]["mean"],
                     }
                     for event in EVENTS
                 },

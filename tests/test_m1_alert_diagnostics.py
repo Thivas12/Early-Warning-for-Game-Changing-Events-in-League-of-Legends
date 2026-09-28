@@ -153,9 +153,10 @@ def _synthetic_audit(root):
         output = root / "diagnostic.json"
         result = audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
         assert result["later_half_summary"]["dragon"]["event_recall"]["mean"] == 1.0
-        assert result["seed_diagnostics"][0]["events"]["dragon"][
+        opportunities = result["seed_diagnostics"][0]["events"]["dragon"][
             "opportunities_by_horizon_seconds"
-        ]["10"] == 6000
+        ]
+        assert opportunities["10"] == 6000
         assert result["test_matches_unread"] == 6000
         assert "EUW1_0" not in output.read_text()
         (policy_root / f"policy.seed-{SEEDS[0]}.json").write_text("tampered")
