@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
@@ -63,7 +64,7 @@ def fixed_minute_grid(
     result_edges = np.zeros_like(edges)
     result_mask = np.zeros_like(mask)
     result_ages = np.zeros_like(ages)
-    for start, end in zip(offsets[:-1], offsets[1:], strict=True):
+    for start, end in pairwise(offsets):
         first, last = int(start), int(end)
         count = last - first
         expected_lengths = np.minimum(np.arange(count) + 1, STEPS)

@@ -16,8 +16,8 @@ from league_ews.m1_ablation_inputs import ablate_graph_inputs
 from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_ablation_training import SUPPORTED_VARIANTS
 from league_ews.m1_backend import TorchM1Backend
-from league_ews.m1_fixed_grid import fixed_minute_grid
 from league_ews.m1_calibration import CAL_MATCHES, CAL_SHARDS, _calibration_shard
+from league_ews.m1_fixed_grid import fixed_minute_grid
 from league_ews.m1_normalizer import TRAIN_SHARDS
 from league_ews.m1_training import UNITS_PER_SEED, _bound_inputs
 from league_ews.m1_training_plan import SEEDS

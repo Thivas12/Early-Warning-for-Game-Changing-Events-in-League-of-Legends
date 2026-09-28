@@ -173,7 +173,9 @@ def audit_m1_calibration(
         "registered_variants": list(SUPPORTED_VARIANTS),
         "missing_variants": missing,
         "comparisons": comparisons,
-        "interpretation": "Descriptive calibration only; seeds are not independent matches or test sets",
+        "interpretation": (
+            "Descriptive calibration only; seeds are not independent matches or test sets"
+        ),
     }
     destination = Path(output)
     content = (json.dumps(result, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()
