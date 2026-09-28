@@ -190,7 +190,10 @@ def audit_m1_alert_opportunity(
             len(stamps) != by_id[match_id].observations
             or len(labels) != len(stamps)
             or any(b <= a for a, b in pairwise(stamps))
-            or any(item["timestamp_ms"] != stamp for item, stamp in zip(labels, stamps))
+            or any(
+                item["timestamp_ms"] != stamp
+                for item, stamp in zip(labels, stamps, strict=True)
+            )
         ):
             raise ValueError("Alert audit observation inventory differs from processed match")
         times.append(stamps)
