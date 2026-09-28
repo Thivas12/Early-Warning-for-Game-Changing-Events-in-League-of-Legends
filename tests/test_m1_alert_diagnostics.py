@@ -174,7 +174,35 @@ def _synthetic_audit(root):
         with unittest.TestCase().assertRaisesRegex(ValueError, "labels must be binary"):
             audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
         payload["labels"][0][LABELS[0]] = 1
+        payload["labels"][0]["timestamp_ms"] = 1
+        with unittest.TestCase().assertRaisesRegex(ValueError, "observation inventory"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        payload["labels"][0]["timestamp_ms"] = 0
+        original_processing = processing.read_bytes()
+        processing.write_text("changed")
+        with unittest.TestCase().assertRaisesRegex(ValueError, "frozen calibration inventory"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        processing.write_bytes(original_processing)
+        policy_summary_file = policy_root / "ten-seed-alert-summary.json"
+        original_summary = policy_summary_file.read_bytes()
+        summary = json.loads(original_summary)
+        summary["events"]["dragon"]["thresholds"][0]["threshold"] = 0.3
+        _json(policy_summary_file, summary)
+        with unittest.TestCase().assertRaisesRegex(ValueError, "operating point differs"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        policy_summary_file.write_bytes(original_summary)
         policy_file = policy_root / f"policy.seed-{SEEDS[0]}.json"
+        original_policy = policy_file.read_bytes()
+        altered_policy = json.loads(original_policy)
+        altered_policy["events"]["dragon"]["calibration_event_metrics"]["events"] = 0
+        _json(policy_file, altered_policy)
+        summary = json.loads(original_summary)
+        summary["seed_reports"][0]["policy_sha256"] = _sha(policy_file)
+        _json(policy_summary_file, summary)
+        with unittest.TestCase().assertRaisesRegex(ValueError, "replay differs"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        policy_summary_file.write_bytes(original_summary)
+        policy_file.write_bytes(original_policy)
         policy_file.write_text("tampered")
         with unittest.TestCase().assertRaisesRegex(ValueError, "checksum differs"):
             audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
@@ -222,6 +250,16 @@ class AlertOpportunityTests(unittest.TestCase):
         no_hit = diagnose_alerts([MatchRisk((0,), (5000,), (0.1,))], 0.5)
         self.assertEqual(no_hit["recall_of_observable_events_60"], 0.0)
         self.assertEqual(no_hit["games_with_at_least_one_false_alert"], 0)
+
+    def test_replay_detects_disagreement_with_frozen_matcher(self):
+        matches = [MatchRisk((0,), (5000,), (0.9,))]
+        wrong = evaluate_alerts(matches, 0.5)
+        wrong["matched_events"] = 0
+        with (
+            patch("league_ews.m1_alert_diagnostics.evaluate_alerts", return_value=wrong),
+            self.assertRaisesRegex(ValueError, "replay differs"),
+        ):
+            diagnose_alerts(matches, 0.5)
 
     def test_no_test_or_raw_dependency_in_cli(self):
         args = build_parser().parse_args(
@@ -317,6 +355,10 @@ def test_alert_opportunity_at_frame_is_not_anticipated():
 
 def test_alert_opportunity_no_event_or_alert():
     AlertOpportunityTests().test_no_event_or_alert_has_defined_zero_burden()
+
+
+def test_alert_opportunity_replay_detects_matcher_disagreement():
+    AlertOpportunityTests().test_replay_detects_disagreement_with_frozen_matcher()
 
 
 def test_alert_opportunity_cli_has_no_test_or_raw_dependency():
