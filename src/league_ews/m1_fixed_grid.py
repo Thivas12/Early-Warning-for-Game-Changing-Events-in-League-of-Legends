@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 from itertools import pairwise
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 
@@ -23,7 +23,7 @@ def verified_match_offsets(root: Path, entry: dict[str, Any]) -> np.ndarray:
     ):
         raise ValueError("Fixed-minute source shard differs from the frozen manifest")
     with np.load(path, allow_pickle=False) as shard:
-        offsets = shard["match_offsets"]
+        offsets = cast(np.ndarray, shard["match_offsets"])
     if (
         offsets.shape != (MATCHES_PER_SHARD + 1,)
         or offsets.dtype != np.int64
