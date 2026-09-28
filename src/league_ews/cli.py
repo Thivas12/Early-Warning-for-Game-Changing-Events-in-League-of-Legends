@@ -1042,6 +1042,23 @@ def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
                 "calibration_matches": report["calibration_matches"],
                 "seed_count": report["seed_count"],
                 "test_matches_unread": report["test_matches_unread"],
+                "events": {
+                    event: {
+                        "opportunities_by_horizon_seconds": report["seed_diagnostics"][0][
+                            "events"
+                        ][event]["opportunities_by_horizon_seconds"],
+                        "later_half_f1_mean": report["later_half_summary"][event]["event_f1"][
+                            "mean"
+                        ],
+                        "later_half_recall_mean": report["later_half_summary"][event][
+                            "event_recall"
+                        ]["mean"],
+                        "later_half_false_alerts_per_game_mean": report["later_half_summary"][
+                            event
+                        ]["false_alerts_per_game"]["mean"],
+                    }
+                    for event in EVENTS
+                },
             },
             indent=2,
             sort_keys=True,
