@@ -126,6 +126,8 @@ def main() -> None:
     fig.subplots_adjust(left=0.31, right=0.96, top=0.82, bottom=0.20)
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, facecolor=background)
+    # Matplotlib writes insignificant trailing spaces in multiline path data.
+    output.write_text("\n".join(line.rstrip() for line in output.read_text().splitlines()) + "\n")
     fig.savefig(output.with_suffix(".png"), facecolor=background, dpi=180)
     plt.close(fig)
     print(f"Rendered {output}")
