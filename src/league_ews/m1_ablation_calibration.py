@@ -1,4 +1,4 @@
-"""Score one graph removal on calibration after all ten variant seeds complete."""
+"""Score one registered M1 ablation after all ten variant seeds complete."""
 
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ from league_ews.m1_ablation_inputs import ablate_graph_inputs
 from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_ablation_training import SUPPORTED_VARIANTS
 from league_ews.m1_backend import TorchM1Backend
+from league_ews.m1_fixed_grid import fixed_minute_grid
 from league_ews.m1_calibration import CAL_MATCHES, CAL_SHARDS, _calibration_shard
 from league_ews.m1_normalizer import TRAIN_SHARDS
 from league_ews.m1_training import UNITS_PER_SEED, _bound_inputs
@@ -53,6 +54,8 @@ def _completed_variant_checkpoints(
             or state.get("torch_version") != str(torch.__version__)
             or state.get("node_count", 12) != node_count
             or state.get("relation_count", 5) != relation_count
+            or state.get("output_mode", "hazards")
+            != ("independent-heads" if variant == "independent-horizon-heads" else "hazards")
             or state.get("completed_shards") != UNITS_PER_SEED
             or not isinstance(state.get("backend"), dict)
         ):
@@ -140,7 +143,11 @@ def score_m1_graph_ablation_seed(
     state = states[seed]
     node_count, relation_count = (10, 3) if variant == "no-objective-nodes" else (12, 5)
     backend = TorchM1Backend(
-        seed, state["device"], node_count=node_count, relation_count=relation_count
+        seed,
+        state["device"],
+        node_count=node_count,
+        relation_count=relation_count,
+        **({"output_mode": "independent-heads"} if variant == "independent-horizon-heads" else {}),
     )
     backend.load_state_dict(state["backend"])
     entries = manifest["shards"][TRAIN_SHARDS:]
@@ -153,7 +160,12 @@ def score_m1_graph_ablation_seed(
         nodes, edges, mask, ages, truth, local_offsets = _calibration_shard(
             stage, entry, normalizer
         )
-        nodes, edges = ablate_graph_inputs(nodes, edges, mask, ages, variant=variant)
+        if variant == "fixed-minute-grid":
+            nodes, edges, mask, ages = fixed_minute_grid(
+                nodes, edges, mask, ages, local_offsets
+            )
+        elif variant != "independent-horizon-heads":
+            nodes, edges = ablate_graph_inputs(nodes, edges, mask, ages, variant=variant)
         all_scores.append(backend.predict_shard(nodes, edges, mask, ages))
         all_targets.append(truth)
         offsets.extend((local_offsets[1:] + offsets[-1]).tolist())
@@ -170,7 +182,10 @@ def score_m1_graph_ablation_seed(
         or match_offsets[-1] != len(scores)
         or not np.isfinite(scores).all()
         or np.any((scores < 0) | (scores > 1))
-        or np.any(np.diff(scores.reshape(len(scores), 3, 4), axis=-1) < -1e-7)
+        or (
+            variant != "independent-horizon-heads"
+            and np.any(np.diff(scores.reshape(len(scores), 3, 4), axis=-1) < -1e-7)
+        )
     ):
         raise ValueError("Graph ablation calibration predictions differ from frozen horizons")
     metrics = {
@@ -201,6 +216,8 @@ def score_m1_graph_ablation_seed(
         **binding,
         "node_count": node_count,
         "relation_count": relation_count,
+        **({"output_mode": "independent-heads"}
+           if variant == "independent-horizon-heads" else {}),
         "device": backend.device,
         "torch_version": backend.version,
         "calibration_matches": CAL_MATCHES,

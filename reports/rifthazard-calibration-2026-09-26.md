@@ -118,5 +118,12 @@ false alerts per game on average. These results do not establish H5, and the
 test patch 16.17 remains unread. The registered ablations come before its
 one-time evaluation.
 
+The four completed graph-removal controls are summarized separately in
+[`m1-graph-ablation-calibration-2026-09-28.md`](m1-graph-ablation-calibration-2026-09-28.md).
+Removing objective nodes improves mean calibration macro AP to 0.51086;
+removing positions and proximity together drops it to 0.13914. These combined
+interventions do not independently identify the effect of each removed
+channel. Two frozen controls and the future-patch evaluation remain pending.
+
 Model and alert-policy decisions must remain on the training and calibration
 patches until the one-time future-patch evaluation is frozen.

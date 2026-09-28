@@ -48,6 +48,15 @@ class FakeObjectiveFreeBackend(FakeBackend):
         return 0.25, len(nodes)
 
 
+class FakeIndependentBackend(FakeBackend):
+    def train_shard(self, nodes, edges, mask, ages, labels, *, seed):
+        assert nodes.shape == (2, 8, 12, 11)
+        assert edges.shape == (2, 8, 5, 12, 12)
+        assert labels.shape == (2, 12)
+        self.count += 1
+        return 0.25, len(nodes)
+
+
 def _inputs(tmp_path, monkeypatch):
     nodes = np.zeros((2, 8, 12, 11), dtype=np.float32)
     edges = np.zeros((2, 8, 5, 12, 12), dtype=np.bool_)
@@ -73,6 +82,7 @@ def _inputs(tmp_path, monkeypatch):
     )
     monkeypatch.setattr(runner, "_new_backend", FakeBackend)
     monkeypatch.setattr(runner, "_new_objective_free_backend", FakeObjectiveFreeBackend)
+    monkeypatch.setattr(runner, "_new_independent_backend", FakeIndependentBackend)
     training_freeze = tmp_path / "original.json"
     training_freeze.write_bytes(b"training")
     ablation_freeze = tmp_path / "ablation.json"
@@ -150,11 +160,58 @@ def test_objective_free_checkpoint_rejects_architecture_change(tmp_path, monkeyp
         runner.train_m1_graph_ablation_seed(*arguments, variant="no-objective-nodes", seed=20260915)
 
 
-def test_reject_unfrozen_and_unimplemented_variants(tmp_path, monkeypatch):
+def test_independent_head_training_uses_stored_labels_and_binds_output_mode(
+    tmp_path, monkeypatch
+):
+    inputs, arguments = _inputs(tmp_path, monkeypatch)
+    called = []
+
+    def labels_only(stage, entry, normalizer, *, independent_labels):
+        called.append(independent_labels)
+        return (*inputs[:4], np.zeros((2, 12), dtype=np.int8))
+
+    monkeypatch.setattr(runner, "_training_shard", labels_only)
+    result = runner.train_m1_graph_ablation_seed(
+        *arguments, variant="independent-horizon-heads", seed=20260915
+    )
+    assert called == [True] and result["completed_shards"] == 1
+    saved = json.loads(
+        (arguments[-1] / "independent-horizon-heads" / "seed-20260915" / "checkpoint.pt")
+        .read_text()
+    )
+    assert saved["output_mode"] == "independent-heads"
+    saved["output_mode"] = "hazards"
+    checkpoint = arguments[-1] / "independent-horizon-heads" / "seed-20260915" / "checkpoint.pt"
+    checkpoint.write_text(json.dumps(saved))
+    with pytest.raises(ValueError, match="checkpoint differs"):
+        runner.train_m1_graph_ablation_seed(
+            *arguments, variant="independent-horizon-heads", seed=20260915
+        )
+
+
+def test_fixed_grid_runner_uses_frozen_match_offsets(tmp_path, monkeypatch):
+    _, arguments = _inputs(tmp_path, monkeypatch)
+    called = []
+    monkeypatch.setattr(
+        runner, "verified_match_offsets", lambda *args: np.array([0, 2], dtype=np.int64)
+    )
+
+    def grid(nodes, edges, mask, ages, offsets):
+        called.append(offsets.tolist())
+        return nodes, edges, mask, ages
+
+    monkeypatch.setattr(runner, "fixed_minute_grid", grid)
+    report = runner.train_m1_graph_ablation_seed(
+        *arguments, variant="fixed-minute-grid", seed=20260915
+    )
+    assert report["completed_shards"] == 1 and called == [[0, 2]]
+
+
+def test_reject_unfrozen_and_unregistered_variants(tmp_path, monkeypatch):
     _, arguments = _inputs(tmp_path, monkeypatch)
     with pytest.raises(ValueError, match="supported backend"):
         runner.train_m1_graph_ablation_seed(
-            *arguments, variant="independent-horizon-heads", seed=20260915
+            *arguments, variant="unregistered", seed=20260915
         )
     arguments[6].unlink()
     with pytest.raises(ValueError, match="freeze must be created"):

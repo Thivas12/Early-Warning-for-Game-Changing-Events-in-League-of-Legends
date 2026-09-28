@@ -112,6 +112,26 @@ def test_objective_free_backend_trains_and_scores_ten_nodes():
         backend.predict_shard(_batch(2)[0], edges, mask, ages)
 
 
+def test_independent_heads_use_direct_labels_and_allow_nonmonotone_scores():
+    torch = pytest.importorskip("torch")
+    nodes, edges, mask, ages, hazards, labels = _batch(2)
+    backend = TorchM1Backend(20260915, output_mode="independent-heads")
+    assert backend.model.head.out_features == 12
+    with pytest.raises(ValueError, match="twelve exact-future labels"):
+        backend.train_shard(nodes, edges, mask, ages, hazards, seed=20260915)
+    loss, rows = backend.train_shard(nodes, edges, mask, ages, labels, seed=20260915)
+    assert rows == 2 and np.isfinite(loss)
+    with torch.no_grad():
+        backend.model.head.weight.zero_()
+        backend.model.head.bias.copy_(
+            torch.tensor([1.0, -1.0, 0.5, -0.5] * 3, dtype=torch.float32)
+        )
+    predictions = backend.predict_shard(nodes, edges, mask, ages)
+    assert predictions.shape == (2, 12)
+    assert np.any(np.diff(predictions.reshape(2, 3, 4), axis=-1) < 0)
+    assert np.all((predictions > 0) & (predictions < 1))
+
+
 class _FakeBackend:
     calls = 0
 
@@ -178,6 +198,9 @@ def _staged_shard(tmp_path):
 def test_training_shard_checks_hazards_and_checksum(tmp_path):
     root, entry, normalizer = _staged_shard(tmp_path)
     assert m1_training._training_shard(root, entry, normalizer)[-1].shape == (100, 3, 6)
+    assert m1_training._training_shard(
+        root, entry, normalizer, independent_labels=True
+    )[-1].shape == (100, 12)
     entry["sha256"] = "0" * 64
     with pytest.raises(ValueError, match="checksum"):
         m1_training._training_shard(root, entry, normalizer)

@@ -1845,7 +1845,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     m1_ablation_train = subparsers.add_parser(
         "train-m1-graph-ablation-seed",
-        help="resume one frozen M1 graph removal seed",
+        help="resume one frozen M1 ablation seed",
     )
     for name in (
         "staging-root",
@@ -1871,7 +1871,7 @@ def build_parser() -> argparse.ArgumentParser:
     m1_ablation_train.set_defaults(handler=_train_m1_graph_ablation_seed)
 
     m1_ablation_score = subparsers.add_parser(
-        "score-m1-graph-ablation-seed", help="score one frozen graph removal seed"
+        "score-m1-graph-ablation-seed", help="score one frozen M1 ablation seed"
     )
     for name in (
         "staging-root",
@@ -1892,7 +1892,7 @@ def build_parser() -> argparse.ArgumentParser:
     m1_ablation_score.set_defaults(handler=_score_m1_graph_ablation_seed)
 
     m1_ablation_summary = subparsers.add_parser(
-        "summarize-m1-graph-ablation", help="audit ten graph removal calibration seeds"
+        "summarize-m1-graph-ablation", help="audit ten M1 ablation calibration seeds"
     )
     for name in (
         "staging-root",

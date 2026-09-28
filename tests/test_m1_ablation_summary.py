@@ -17,7 +17,7 @@ def _sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def _fixture(tmp_path, monkeypatch):
+def _fixture(tmp_path, monkeypatch, variant="no-objective-nodes"):
     stage = tmp_path / "stage"
     stage.mkdir()
     (stage / "staging-manifest.json").write_text("manifest")
@@ -62,7 +62,7 @@ def _fixture(tmp_path, monkeypatch):
     truth[::7] = 1
     offsets = np.arange(6001, dtype=np.int64)
     for index, seed in enumerate(SEEDS):
-        folder = calibration / "no-objective-nodes" / f"seed-{seed}"
+        folder = calibration / variant / f"seed-{seed}"
         folder.mkdir(parents=True)
         base = np.roll(np.linspace(0, 0.05, 6000, dtype=np.float32), index * 37)
         scores = (
@@ -73,6 +73,8 @@ def _fixture(tmp_path, monkeypatch):
             .copy()
             .reshape(6000, len(LABELS))
         )
+        if variant == "independent-horizon-heads":
+            scores = scores.reshape(6000, 3, 4)[:, :, ::-1].copy().reshape(6000, len(LABELS))
         score_path = folder / "calibration-scores.npz"
         np.savez_compressed(score_path, probabilities=scores, targets=truth, match_offsets=offsets)
         metrics = {
@@ -81,7 +83,7 @@ def _fixture(tmp_path, monkeypatch):
         }
         report = {
             "schema_version": "league-ews-m1-graph-ablation-calibration-v1",
-            "variant": "no-objective-nodes",
+            "variant": variant,
             "seed": seed,
             "ablation_freeze_sha256": ablation_sha,
             "training_freeze_sha256": training_sha,
@@ -92,8 +94,10 @@ def _fixture(tmp_path, monkeypatch):
             "scores_sha256": _sha(score_path.read_bytes()),
             "device": "cpu",
             "torch_version": "fake",
-            "node_count": 10,
-            "relation_count": 3,
+            "node_count": 10 if variant == "no-objective-nodes" else 12,
+            "relation_count": 3 if variant == "no-objective-nodes" else 5,
+            **({"output_mode": "independent-heads"}
+               if variant == "independent-horizon-heads" else {}),
             "calibration_matches": 6000,
             "calibration_observations": 6000,
             "targets": list(LABELS),
@@ -130,6 +134,15 @@ def test_summary_audits_ten_seeds_and_preserves_test(tmp_path, monkeypatch):
         result["macro_average_precision"]["mean"] - 0.4
     )
     assert summary_module.summarize_m1_graph_ablation(*args, variant="no-objective-nodes") == result
+
+
+def test_independent_head_summary_allows_nonmonotone_scores(tmp_path, monkeypatch):
+    args = _fixture(tmp_path, monkeypatch, variant="independent-horizon-heads")
+    report = summary_module.summarize_m1_graph_ablation(
+        *args, variant="independent-horizon-heads"
+    )
+    assert report["output_mode"] == "independent-heads"
+    assert report["seed_count"] == 10
 
 
 def test_summary_detects_mutated_scores_and_cross_seed_truth(tmp_path, monkeypatch):

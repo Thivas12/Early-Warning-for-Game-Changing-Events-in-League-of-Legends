@@ -1,4 +1,4 @@
-"""Audit ten graph removal calibration seeds against the original M1."""
+"""Audit ten registered M1 ablation seeds against the original M1."""
 
 from __future__ import annotations
 
@@ -119,6 +119,8 @@ def summarize_m1_graph_ablation(
             or report.get("torch_version") != torch_version
             or report.get("node_count") != node_count
             or report.get("relation_count") != relation_count
+            or report.get("output_mode", "hazards")
+            != ("independent-heads" if variant == "independent-horizon-heads" else "hazards")
             or report.get("calibration_matches") != 6000
             or report.get("targets") != list(LABELS)
             or report.get("test_matches_unread") != 6000
@@ -142,7 +144,10 @@ def summarize_m1_graph_ablation(
             or not np.isin(truth, (0, 1)).all()
             or not np.isfinite(scores).all()
             or np.any((scores < 0) | (scores > 1))
-            or np.any(np.diff(scores.reshape(len(scores), 3, 4), axis=-1) < -1e-7)
+            or (
+                variant != "independent-horizon-heads"
+                and np.any(np.diff(scores.reshape(len(scores), 3, 4), axis=-1) < -1e-7)
+            )
             or report.get("calibration_observations") != len(scores)
         ):
             raise ValueError("Graph ablation scores differ from frozen calibration partition")
@@ -188,6 +193,8 @@ def summarize_m1_graph_ablation(
         "split_sha256": manifest["split_sha256"],
         "node_count": node_count,
         "relation_count": relation_count,
+        **({"output_mode": "independent-heads"}
+           if variant == "independent-horizon-heads" else {}),
         "seed_count": len(SEEDS),
         "calibration_matches": 6000,
         "calibration_observations": observations,

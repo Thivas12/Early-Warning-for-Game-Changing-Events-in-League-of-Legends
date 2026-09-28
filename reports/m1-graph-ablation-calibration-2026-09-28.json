@@ -1,0 +1,42 @@
+{
+  "schema_version": "league-ews-m1-graph-ablation-calibration-transcription-v1",
+  "source": "Ten-seed CLI summaries supplied by the researcher on 2026-09-28; verify against checksum-bound private summaries before publication",
+  "partition": "calibration",
+  "matches": 6000,
+  "seed_count": 10,
+  "test_matches_unread": 6000,
+  "metric": "macro_average_precision_over_twelve_targets",
+  "b3": 0.37594241568657977,
+  "m1": {
+    "mean": 0.4911193604568041,
+    "minimum": 0.47962616298133104,
+    "maximum": 0.49951712605044873,
+    "sample_standard_deviation": 0.006223575601076709
+  },
+  "variants": {
+    "no-objective-nodes": {
+      "mean": 0.5108564896240648,
+      "minimum": 0.5063867148008568,
+      "maximum": 0.5145345443466961,
+      "sample_standard_deviation": 0.0028540608062455983
+    },
+    "no-positions-or-proximity": {
+      "mean": 0.13914005385858697,
+      "minimum": 0.1337438371294262,
+      "maximum": 0.1431406334543025,
+      "sample_standard_deviation": 0.0035804878678917964
+    },
+    "no-interaction-edges": {
+      "mean": 0.46633745123996817,
+      "minimum": 0.45381073131382,
+      "maximum": 0.4758105727301705,
+      "sample_standard_deviation": 0.006529627154454517
+    },
+    "no-assistance-history": {
+      "mean": 0.4634553528746953,
+      "minimum": 0.4493308325079149,
+      "maximum": 0.4730471834672642,
+      "sample_standard_deviation": 0.007051227004037502
+    }
+  }
+}
