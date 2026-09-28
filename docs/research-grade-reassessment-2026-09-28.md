@@ -48,6 +48,22 @@ original frozen M1 hypothesis.
    and per-match false-alert distribution (median, p90, p95, maximum). Audit
    lead-time strata and the early/late match phases. A model can raise AP by
    exploiting event clocks while yielding little early warning.
+
+   `make audit-m1-alert-opportunity` replays the **existing** ten M1 policies
+   against checksum-bound calibration scores and processed matches. It uses
+   only patch 16.16, reads no archived raw bundle, and writes a small
+   identifier-free JSON to `reports/local/m1-alert-opportunity.json`. It
+   reports actual preceding-frame opportunity at 10/20/30/60 seconds, recall
+   among events observable at 60 seconds, false-alert counts per match, and
+   lead-time bands. It also chooses a separate threshold from the earlier
+   1,500 calibration matches in each route and evaluates that operating point
+   on the later 1,500 in each route. These later-half numbers are a descriptive
+   within-patch sensitivity check, because this analysis was designed after
+   seeing the aggregate calibration outcomes; they are not confirmatory
+   future-patch performance. The existing thresholds and reports are never
+   changed. Compare their same-sample metrics with these later-half estimates,
+   and explicitly report deterioration rather than optimizing a new threshold
+   against the later half.
 4. Audit normalized missing fields against source-side presence. A default
    value must not be presented as a measured value. Inspect actual availability
    and timing of positions before attributing the large spatial ablation gap
@@ -117,5 +133,8 @@ Cai and Ye,
 [Understanding the Limits of Deep Tabular Methods with Temporal Shift](https://proceedings.mlr.press/v267/cai25j.html),
 ICML 2025, discuss the impact of temporal shift and splitting choices;
 their setting does not establish this project's future-patch performance.
+The [technical alarm evaluation framework](https://pmc.ncbi.nlm.nih.gov/articles/PMC8414372/)
+motivates separating timeliness and burden from row-level ranking; its clinical
+setting is not evidence of game-specific utility.
 These are established research directions. The contribution, if any, has to
 survive the concrete controls and a new untouched cohort.

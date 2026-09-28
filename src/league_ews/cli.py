@@ -60,6 +60,7 @@ from league_ews.m1_ablation_calibration import score_m1_graph_ablation_seed
 from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_ablation_summary import summarize_m1_graph_ablation
 from league_ews.m1_ablation_training import SUPPORTED_VARIANTS, train_m1_graph_ablation_seed
+from league_ews.m1_alert_diagnostics import audit_m1_alert_opportunity
 from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
 from league_ews.m1_calibration_audit import audit_m1_calibration
@@ -1030,6 +1031,25 @@ def _audit_m1_calibration(args: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
+    report = audit_m1_alert_opportunity(
+        args.processed, args.split, args.calibration_root, args.policy_root, args.output
+    )
+    print(
+        json.dumps(
+            {
+                "output": str(args.output),
+                "calibration_matches": report["calibration_matches"],
+                "seed_count": report["seed_count"],
+                "test_matches_unread": report["test_matches_unread"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _train_m1_seed(args: argparse.Namespace) -> int:
     report = train_m1_seed(
         args.staging_root,
@@ -1935,6 +1955,14 @@ def build_parser() -> argparse.ArgumentParser:
     for name in ("original-root", "ablation-root", "output"):
         m1_audit.add_argument(f"--{name}", type=Path, required=True)
     m1_audit.set_defaults(handler=_audit_m1_calibration)
+
+    m1_alert_audit = subparsers.add_parser(
+        "audit-m1-alert-opportunity",
+        help="audit M1 event opportunity and alert burden on frozen calibration only",
+    )
+    for name in ("processed", "split", "calibration-root", "policy-root", "output"):
+        m1_alert_audit.add_argument(f"--{name}", type=Path, required=True)
+    m1_alert_audit.set_defaults(handler=_audit_m1_alert_opportunity)
 
     m1_train = subparsers.add_parser("train-m1-seed", help="resume one frozen M1 seed")
     for name in ("staging-root", "normalizer", "plan", "hazards", "freeze", "output"):
