@@ -1,13 +1,173 @@
 """Alert opportunity is measured from real frames with frozen alert matching."""
 
+import hashlib
+import json
+import tempfile
 import unittest
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
-from league_ews.alert_policy import MatchRisk
+import numpy as np
+
+from league_ews.alert_policy import MatchRisk, evaluate_alerts
+from league_ews.baseline_floor import LABELS
 from league_ews.cli import build_parser
-from league_ews.m1_alert_diagnostics import _chronological_halves, diagnose_alerts
+from league_ews.constants import EVENTS
+from league_ews.m1_alert_diagnostics import (
+    _chronological_halves,
+    audit_m1_alert_opportunity,
+    diagnose_alerts,
+)
+from league_ews.m1_training_plan import SEEDS
+
+
+def _sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _json(path, value):
+    path.write_text(json.dumps(value))
+
+
+def _synthetic_audit(root):
+    processed = root / "processed"
+    calibration = root / "calibration"
+    policy_root = root / "policies"
+    for path in (processed, calibration, policy_root):
+        path.mkdir()
+    processing = processed / "processing-manifest.json"
+    processing.write_text("synthetic manifest")
+    entries = [
+        {
+            "match_id": f"EUW1_{index}" if index < 3000 else f"NA1_{index}",
+            "game_version_patch": "16.16",
+            "regional_route": "europe" if index < 3000 else "americas",
+            "game_creation_ms": index % 3000,
+        }
+        for index in range(6000)
+    ]
+    split_file = root / "split.json"
+    _json(
+        split_file,
+        {
+            "schema_version": "league-ews-final-split-v1",
+            "processing_manifest_sha256": _sha(processing),
+            "summary": {
+                "counts": {"train": 24000, "calibration": 6000, "test": 6000},
+                "patches": {"calibration": ["16.16"]},
+            },
+            "partitions": {"calibration": entries},
+        },
+    )
+    offsets = np.arange(6001, dtype=np.int64)
+    truth = np.ones((6000, len(LABELS)), dtype=np.int8)
+    probabilities = np.full(truth.shape, 0.9, dtype=np.float32)
+    cal_seeds = []
+    policy_seeds = []
+    single = MatchRisk((0,), (5000,), (0.9,))
+    metrics = evaluate_alerts([single] * 6000, 0.5)
+    for seed in SEEDS:
+        seed_root = calibration / f"seed-{seed}"
+        seed_root.mkdir()
+        scores = seed_root / "calibration-scores.npz"
+        np.savez_compressed(
+            scores, probabilities=probabilities, targets=truth, match_offsets=offsets
+        )
+        cal_seeds.append({"seed": seed, "scores_sha256": _sha(scores)})
+    cal_summary = calibration / "ten-seed-summary.json"
+    _json(
+        cal_summary,
+        {
+            "schema_version": "league-ews-m1-ten-seed-calibration-v1",
+            "split_sha256": _sha(split_file),
+            "seed_count": 10,
+            "calibration_matches": 6000,
+            "identifiers_in_summary": False,
+            "test_matches_unread": 6000,
+            "selected_seed": None,
+            "seed_results": cal_seeds,
+        },
+    )
+    for row in cal_seeds:
+        seed = row["seed"]
+        policy_path = policy_root / f"policy.seed-{seed}.json"
+        _json(
+            policy_path,
+            {
+                "schema_version": "league-ews-m1-alert-policy-v1",
+                "seed": seed,
+                "split_sha256": _sha(split_file),
+                "processing_manifest_sha256": _sha(processing),
+                "ten_seed_summary_sha256": _sha(cal_summary),
+                "scores_sha256": row["scores_sha256"],
+                "events": {
+                    event: {"threshold": 0.5, "calibration_event_metrics": metrics}
+                    for event in EVENTS
+                },
+                "selected_seed": None,
+                "test_matches_unread": 6000,
+                "identifiers_in_report": False,
+            },
+        )
+        policy_seeds.append({"seed": seed, "policy_sha256": _sha(policy_path)})
+    _json(
+        policy_root / "ten-seed-alert-summary.json",
+        {
+            "schema_version": "league-ews-m1-ten-seed-alert-summary-v1",
+            "split_sha256": _sha(split_file),
+            "ten_seed_calibration_sha256": _sha(cal_summary),
+            "calibration_matches": 6000,
+            "seed_count": 10,
+            "identifiers_in_summary": False,
+            "selected_seed": None,
+            "test_matches_unread": 6000,
+            "seed_reports": policy_seeds,
+            "events": {
+                event: {
+                    "events": 6000,
+                    "thresholds": [{"seed": seed, "threshold": 0.5} for seed in SEEDS],
+                }
+                for event in EVENTS
+            },
+        },
+    )
+    record = SimpleNamespace(sha256="synthetic", observations=1)
+    inventory = SimpleNamespace(
+        matches=[SimpleNamespace(match_id=row["match_id"], **vars(record)) for row in entries]
+        + [SimpleNamespace(match_id=f"NA1_{index}") for index in range(6000, 36000)]
+    )
+    payload = {
+        "timeline": {"observations": [{"timestamp_ms": 0}]},
+        "labels": [{"timestamp_ms": 0, **dict.fromkeys(LABELS, 1)}],
+        "event_index": {f"{event}_ms": [5000] for event in EVENTS},
+    }
+    with (
+        patch(
+            "league_ews.m1_alert_diagnostics.ProcessingManifest.model_validate_json",
+            return_value=inventory,
+        ),
+        patch("league_ews.m1_alert_diagnostics._read_match", return_value=payload),
+        patch("league_ews.m1_alert_diagnostics.select_threshold", return_value=(0.5, {})),
+    ):
+        output = root / "diagnostic.json"
+        result = audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
+        assert result["later_half_summary"]["dragon"]["event_recall"]["mean"] == 1.0
+        assert result["seed_diagnostics"][0]["events"]["dragon"][
+            "opportunities_by_horizon_seconds"
+        ]["10"] == 6000
+        assert result["test_matches_unread"] == 6000
+        assert "EUW1_0" not in output.read_text()
+        (policy_root / f"policy.seed-{SEEDS[0]}.json").write_text("tampered")
+        with unittest.TestCase().assertRaisesRegex(ValueError, "checksum differs"):
+            audit_m1_alert_opportunity(processed, split_file, calibration, policy_root, output)
 
 
 class AlertOpportunityTests(unittest.TestCase):
+    def test_full_audit_and_mutation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            _synthetic_audit(Path(directory))
+
     def test_strict_future_observation_and_cooldown(self):
         matches = [
             MatchRisk((0, 60_000, 120_000), (9_000, 80_000, 200_000), (0.9, 0.9, 0.9)),
@@ -84,3 +244,7 @@ def test_alert_opportunity_cli_has_no_test_or_raw_dependency():
 
 def test_alert_opportunity_temporal_halves_reject_changed_order():
     AlertOpportunityTests().test_balanced_temporal_halves_reject_changed_order()
+
+
+def test_alert_opportunity_full_audit_and_mutation():
+    AlertOpportunityTests().test_full_audit_and_mutation()
