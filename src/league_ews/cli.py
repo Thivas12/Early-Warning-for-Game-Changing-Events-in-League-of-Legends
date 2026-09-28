@@ -78,6 +78,7 @@ from league_ews.pilot_collection import (
 from league_ews.processed_validation import validate_processed_collection
 from league_ews.processing import process_raw_collection
 from league_ews.provenance import source_provenance
+from league_ews.raw_field_coverage import write_raw_field_coverage
 from league_ews.raw_validation import create_event_spot_check_record, validate_raw_collection
 from league_ews.riot import (
     RequestPacer,
@@ -121,6 +122,15 @@ def _render_research_eda(args: argparse.Namespace) -> int:
     print(
         f"{summary['matches']} matches; {summary['observations']} snapshots; "
         f"test outcomes unread: {summary['test_outcomes_unread']}"
+    )
+    return 0
+
+
+def _audit_raw_field_coverage(args: argparse.Namespace) -> int:
+    report = write_raw_field_coverage(args.raw, args.g2_report, args.split, args.output)
+    print(
+        f"Audited source fields in {report['matches']} train/calibration matches; "
+        f"test timelines unread: {report['test_timelines_unread']}; report: {args.output}"
     )
     return 0
 
@@ -1332,6 +1342,15 @@ def build_parser() -> argparse.ArgumentParser:
     eda.add_argument("--processed", type=Path, required=True)
     eda.add_argument("--output", type=Path, required=True)
     eda.set_defaults(handler=_render_research_eda)
+    source_fields = subparsers.add_parser(
+        "audit-raw-field-coverage",
+        help="audit source numeric and position field presence without opening test timelines",
+    )
+    source_fields.add_argument("--raw", type=Path, required=True)
+    source_fields.add_argument("--g2-report", type=Path, required=True)
+    source_fields.add_argument("--split", type=Path, required=True)
+    source_fields.add_argument("--output", type=Path, required=True)
+    source_fields.set_defaults(handler=_audit_raw_field_coverage)
 
     audit = subparsers.add_parser("audit", help="audit a legacy derived CSV")
     audit.add_argument("--csv", type=Path, required=True)
