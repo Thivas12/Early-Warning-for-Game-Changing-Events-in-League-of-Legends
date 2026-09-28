@@ -20,11 +20,14 @@ class AlertOpportunityTests(unittest.TestCase):
         )
         self.assertEqual(result["events"], 4)
         self.assertEqual(result["recall_of_observable_events_60"], 2 / 3)
-        self.assertEqual(result["matched_lead_seconds"], {
-            "under_10": 1,
-            "over_10_to_30": 0,
-            "over_30_to_60": 1,
-        })
+        self.assertEqual(
+            result["matched_lead_seconds"],
+            {
+                "under_10": 1,
+                "over_10_to_30": 0,
+                "over_30_to_60": 1,
+            },
+        )
         self.assertEqual(result["false_alerts_per_game"]["maximum"], 1)
         self.assertEqual(result["games_with_at_least_one_false_alert"], 1)
 
@@ -38,11 +41,16 @@ class AlertOpportunityTests(unittest.TestCase):
         args = build_parser().parse_args(
             [
                 "audit-m1-alert-opportunity",
-                "--processed", "processed",
-                "--split", "split.json",
-                "--calibration-root", "calibration",
-                "--policy-root", "policies",
-                "--output", "diagnostic.json",
+                "--processed",
+                "processed",
+                "--split",
+                "split.json",
+                "--calibration-root",
+                "calibration",
+                "--policy-root",
+                "policies",
+                "--output",
+                "diagnostic.json",
             ]
         )
         self.assertFalse(hasattr(args, "test_root"))
