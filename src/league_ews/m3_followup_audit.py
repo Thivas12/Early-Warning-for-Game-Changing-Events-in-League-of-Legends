@@ -19,6 +19,11 @@ from league_ews.m3_followup import confirmed_followup_masks
 from league_ews.raw_validation import ProcessingManifest
 
 HORIZONS = (10, 20, 30, 60)
+TRAIN_MATCHES = 24000
+CALIBRATION_MATCHES = 6000
+TEST_MATCHES = 6000
+CELL_MATCHES = 3000
+REGISTERED_CELLS = 12
 
 
 def _sha(content: bytes) -> str:
@@ -138,32 +143,33 @@ def audit_confirmed_followup(
         split.get("schema_version") != "league-ews-final-split-v1"
         or split.get("processing_manifest_sha256") != _sha(processing_bytes)
         or split.get("summary", {}).get("counts")
-        != {"train": 24000, "calibration": 6000, "test": 6000}
-        or len(inventory.matches) != 36000
+        != {"train": TRAIN_MATCHES, "calibration": CALIBRATION_MATCHES, "test": TEST_MATCHES}
+        or len(inventory.matches) != TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES
         or staging["split_sha256"] != _sha(split_bytes)
         or staging["processing_manifest_sha256"] != _sha(processing_bytes)
         or selection_manifest.get("schema_version") != "riot-final-selection-manifest-v1"
         or selection_manifest.get("complete") is not True
-        or selection_manifest.get("selected_match_ids") != 36000
+        or selection_manifest.get("selected_match_ids")
+        != TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES
         or selection_manifest.get("selected_pool_sha256") != _sha(pool_bytes)
         or pool.frame_sha256 != split.get("frame_sha256")
-        or pool.selected_match_ids != 36000
-        or len(pool.cells) != 12
+        or pool.selected_match_ids != TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES
+        or len(pool.cells) != REGISTERED_CELLS
     ):
         raise ValueError("Follow-up audit differs from frozen split or processed inventory")
     partitions = split.get("partitions")
     if not isinstance(partitions, dict) or {k: len(v) for k, v in partitions.items()} != {
-        "train": 24000,
-        "calibration": 6000,
-        "test": 6000,
+        "train": TRAIN_MATCHES,
+        "calibration": CALIBRATION_MATCHES,
+        "test": TEST_MATCHES,
     }:
         raise ValueError("Follow-up audit requires all three frozen partitions")
     by_id = {record.match_id: record for record in inventory.matches}
-    if len(by_id) != 36000:
+    if len(by_id) != TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES:
         raise ValueError("Processed match inventory contains duplicates")
     durations: dict[str, tuple[int, str, str]] = {}
     for cell in pool.cells:
-        if cell.selected_count != 3000 or len(cell.selected) != 3000:
+        if cell.selected_count != CELL_MATCHES or len(cell.selected) != CELL_MATCHES:
             raise ValueError("Selection cell has an incomplete duration inventory")
         for record in cell.selected:
             if record.match_id in durations:
@@ -173,7 +179,7 @@ def audit_confirmed_followup(
                 cell.regional_route,
                 cell.game_version_patch,
             )
-    if len(durations) != 36000:
+    if len(durations) != TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES:
         raise ValueError("Frozen selection durations are incomplete")
     profiles: dict[str, dict[str, Any]] = {"train": _counts(), "calibration": _counts()}
     cells: dict[str, dict[str, Any]] = {}
@@ -221,7 +227,10 @@ def audit_confirmed_followup(
                     cells[key] = _counts()
                 _accumulate(profiles[partition], times, expected, labels[start:stop], duration_ms)
                 _accumulate(cells[key], times, expected, labels[start:stop], duration_ms)
-    if profiles["train"]["matches"] != 24000 or profiles["calibration"]["matches"] != 6000:
+    if (
+        profiles["train"]["matches"] != TRAIN_MATCHES
+        or profiles["calibration"]["matches"] != CALIBRATION_MATCHES
+    ):
         raise ValueError("Audited match count differs from frozen partitions")
     report = {
         "schema_version": "league-ews-confirmed-followup-audit-v1",
@@ -235,7 +244,7 @@ def audit_confirmed_followup(
         "label_order": list(LABELS),
         "partitions": profiles,
         "cells": cells,
-        "test_matches_unread": 6000,
+        "test_matches_unread": TEST_MATCHES,
         "identifiers_in_report": False,
     }
     target = Path(output)
