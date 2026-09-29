@@ -36,7 +36,12 @@ def _accumulator() -> dict[str, Any]:
 
 def _add_shard(target: dict[str, Any], shard: Any, entry: dict[str, Any]) -> None:
     names = {
-        "nodes", "edges", "history_mask", "ages_minutes", "targets", "hazard_targets",
+        "nodes",
+        "edges",
+        "history_mask",
+        "ages_minutes",
+        "targets",
+        "hazard_targets",
         "match_offsets",
     }
     if set(shard.files) != names:

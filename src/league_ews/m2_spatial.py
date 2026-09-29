@@ -37,8 +37,8 @@ SPATIAL_FEATURES = (
     "red_baron_observed",
     "blue_dragon_observed",
     "red_dragon_observed",
-    "baron_spawn_elapsed",
-    "dragon_spawn_elapsed",
+    "baron_initial_spawn_reached",
+    "dragon_initial_spawn_reached",
     "proximity_edge_count",
     "assistance_edge_count",
     "history_length",
@@ -46,9 +46,7 @@ SPATIAL_FEATURES = (
 )
 
 
-def _validate(
-    nodes: np.ndarray, edges: np.ndarray, mask: np.ndarray, ages: np.ndarray
-) -> None:
+def _validate(nodes: np.ndarray, edges: np.ndarray, mask: np.ndarray, ages: np.ndarray) -> None:
     rows = len(nodes)
     if (
         rows == 0
@@ -74,10 +72,7 @@ def _validate(
     if any(
         not np.array_equal(row, np.arange(STEPS) >= STEPS - length)
         for row, length in zip(mask, lengths, strict=True)
-    ) or any(
-        np.any(np.diff(row[-length:]) > 0)
-        for row, length in zip(ages, lengths, strict=True)
-    ):
+    ) or any(np.any(np.diff(row[-length:]) > 0) for row, length in zip(ages, lengths, strict=True)):
         raise ValueError("Spatial history must contain only prior, ordered observations")
 
 
@@ -128,10 +123,9 @@ def spatial_summary(
     for team, base in ((slice(0, 5), 0), (slice(5, 10), 1)):
         count = observed[:, team].sum(axis=1)
         result[:, base] = count
-        result[:, 2 + 2 * base : 4 + 2 * base] = (
-            np.sum(coords[:, team] * observed[:, team, None], axis=1)
-            / np.maximum(count[:, None], 1)
-        )
+        result[:, 2 + 2 * base : 4 + 2 * base] = np.sum(
+            coords[:, team] * observed[:, team, None], axis=1
+        ) / np.maximum(count[:, None], 1)
     both = (result[:, 0] > 0) & (result[:, 1] > 0)
     result[both, 6] = np.linalg.norm(result[both, 2:4] - result[both, 4:6], axis=1)
     result[:, 7] = both

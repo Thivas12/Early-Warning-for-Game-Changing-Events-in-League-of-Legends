@@ -1046,9 +1046,7 @@ def _audit_m2_preprocessing(args: argparse.Namespace) -> int:
             {
                 "output": str(args.output),
                 "staging_manifest_sha256": report["staging_manifest_sha256"],
-                "matches": {
-                    name: value["matches"] for name, value in report["partitions"].items()
-                },
+                "matches": {name: value["matches"] for name, value in report["partitions"].items()},
                 "test_matches_unread": report["test_matches_unread"],
             },
             indent=2,
@@ -2002,7 +2000,14 @@ def build_parser() -> argparse.ArgumentParser:
         "audit-m2-preprocessing",
         help="audit position coverage and target prevalence in staged train/calibration graphs",
     )
-    for name in ("staging-root", "normalizer", "training-plan", "hazards", "training-freeze", "output"):
+    for name in (
+        "staging-root",
+        "normalizer",
+        "training-plan",
+        "hazards",
+        "training-freeze",
+        "output",
+    ):
         m2_audit.add_argument(f"--{name}", type=Path, required=True)
     m2_audit.set_defaults(handler=_audit_m2_preprocessing)
 

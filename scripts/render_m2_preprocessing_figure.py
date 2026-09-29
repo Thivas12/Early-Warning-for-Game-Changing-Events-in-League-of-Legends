@@ -40,16 +40,27 @@ def render(source: Path, output: Path) -> None:
         axis.tick_params(length=0, pad=7, colors="#263B45")
 
     fig.text(
-        0.075, 0.96, "RIFTHAZARD / PREPROCESSING ATLAS",
-        fontsize=10, color="#54717E", weight="bold",
+        0.075,
+        0.96,
+        "RIFTHAZARD / PREPROCESSING ATLAS",
+        fontsize=10,
+        color="#54717E",
+        weight="bold",
     )
     fig.text(
-        0.075, 0.875, "What do the recorded positions actually cover?",
-        fontsize=20, color="#183542", weight="bold",
+        0.075,
+        0.875,
+        "What do the recorded positions actually cover?",
+        fontsize=20,
+        color="#183542",
+        weight="bold",
     )
     fig.text(
-        0.075, 0.805, "Real prediction frames · patches 16.12–16.16 · test patch unread",
-        fontsize=10, color="#54717E",
+        0.075,
+        0.805,
+        "Real prediction frames · patches 16.12–16.16 · test patch unread",
+        fontsize=10,
+        color="#54717E",
     )
 
     x = np.arange(3)
@@ -71,8 +82,12 @@ def render(source: Path, output: Path) -> None:
     left.set_ylabel("Prediction frames (%)", color="#263B45")
     left.set_ylim(bottom=0)
     left.set_title(
-        "01  Observed participant positions", loc="left", fontsize=12,
-        color="#183542", weight="bold", pad=14,
+        "01  Observed participant positions",
+        loc="left",
+        fontsize=12,
+        color="#183542",
+        weight="bold",
+        pad=14,
     )
     left.legend(frameon=False, loc="upper left", fontsize=9)
 
@@ -91,8 +106,14 @@ def render(source: Path, output: Path) -> None:
             rates = np.divide(grouped_y, grouped_n, out=np.zeros(3), where=valid) * 100
             y = event_number * 4 + np.arange(3) + offsets[partition]
             right.scatter(
-                rates[valid], y[valid], s=57, marker=symbols[partition],
-                color=COLORS[partition], edgecolor="white", linewidth=0.8, zorder=4,
+                rates[valid],
+                y[valid],
+                s=57,
+                marker=symbols[partition],
+                color=COLORS[partition],
+                edgecolor="white",
+                linewidth=0.8,
+                zorder=4,
             )
     right.set_yticks(
         np.concatenate([np.arange(3), np.arange(4, 7), np.arange(8, 11)]),
@@ -101,22 +122,34 @@ def render(source: Path, output: Path) -> None:
     right.invert_yaxis()
     right.set_xlabel("60-second positive rows within coverage stratum (%)", color="#263B45")
     right.set_title(
-        "02  Event labels by coverage", loc="left", fontsize=12,
-        color="#183542", weight="bold", pad=14,
+        "02  Event labels by coverage",
+        loc="left",
+        fontsize=12,
+        color="#183542",
+        weight="bold",
+        pad=14,
     )
     for boundary in (3, 7):
         right.axhline(boundary - 0.5, color="#B9C3C6", linewidth=0.8)
     for center, event in ((1, "BARON"), (5, "DRAGON"), (9, "TEAMFIGHT")):
         right.text(
-            1.01, center, event, va="center", transform=right.get_yaxis_transform(),
-            color="#54717E", fontsize=8, weight="bold",
+            1.01,
+            center,
+            event,
+            va="center",
+            transform=right.get_yaxis_transform(),
+            color="#54717E",
+            fontsize=8,
+            weight="bold",
         )
     right.set_xlim(left=0)
     fig.text(
-        0.075, 0.073,
+        0.075,
+        0.073,
         "Association across observed frames; match phase and missingness may confound it. "
         "No synthetic frames or player IDs.",
-        fontsize=9, color="#54717E",
+        fontsize=9,
+        color="#54717E",
     )
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, dpi=180, facecolor=fig.get_facecolor())
