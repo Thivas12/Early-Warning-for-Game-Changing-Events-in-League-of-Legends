@@ -618,6 +618,19 @@ audit-m2-preprocessing:
 		--training-freeze data/private/m1-training-freeze.json \
 		--output reports/local/m2-preprocessing-audit.json
 
+audit-confirmed-followup:
+	uv run --no-sync league-ews audit-confirmed-followup \
+		--processed data/processed/registered-final \
+		--split data/private/final-split.json \
+		--staging-root data/private/m1-graph-staging \
+		--selection-root data/private/final-selection \
+		--output reports/local/m3-confirmed-followup.json
+
+render-confirmed-followup:
+	uv run --no-sync python scripts/render_m3_followup_figure.py \
+		--input reports/local/m3-confirmed-followup.json \
+		--output reports/local/m3-confirmed-followup.svg
+
 render-m2-preprocessing:
 	uv run --no-sync python scripts/render_m2_preprocessing_figure.py \
 		--input reports/local/m2-preprocessing-audit.json \
