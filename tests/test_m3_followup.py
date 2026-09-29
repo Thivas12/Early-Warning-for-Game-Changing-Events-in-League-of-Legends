@@ -224,8 +224,7 @@ def test_bound_audit_reads_train_and_calibration_only_and_rejects_tampering(
             match_offsets=np.arange(n + 1, dtype=np.int64),
         )
         entries.append(
-            {"partition": partition, "file": filename, "matches": n, "start": 0,
-             "observations": n}
+            {"partition": partition, "file": filename, "matches": n, "start": 0, "observations": n}
         )
     monkeypatch.setattr(
         audit_module,
@@ -240,9 +239,7 @@ def test_bound_audit_reads_train_and_calibration_only_and_rejects_tampering(
         ),
     )
     output = tmp_path / "audit.json"
-    result = audit_module.audit_confirmed_followup(
-        processed, split_path, stage, selection, output
-    )
+    result = audit_module.audit_confirmed_followup(processed, split_path, stage, selection, output)
     assert result["partitions"]["train"]["matches"] == 2
     assert result["partitions"]["calibration"]["matches"] == 1
     assert result["test_matches_unread"] == 1
