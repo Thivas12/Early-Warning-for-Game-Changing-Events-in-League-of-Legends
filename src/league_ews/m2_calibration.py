@@ -7,7 +7,7 @@ import importlib
 import io
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 
@@ -63,7 +63,7 @@ def _raw_calibration_nodes(root: Path, entry: dict[str, Any]) -> np.ndarray:
     if _sha(content) != entry["sha256"]:
         raise ValueError("M2 calibration shard checksum differs from frozen staging")
     with np.load(io.BytesIO(content), allow_pickle=False) as shard:
-        return shard["nodes"]
+        return cast(np.ndarray, shard["nodes"])
 
 
 def score_m2_calibration_seed(
@@ -117,7 +117,7 @@ def score_m2_calibration_seed(
             or _sha(scores_path.read_bytes()) != existing.get("scores_sha256")
         ):
             raise ValueError("Existing M2 calibration differs from frozen inputs")
-        return existing
+        return cast(dict[str, Any], existing)
 
     state = states[seed]
     backend = TorchM2Backend(seed, state["device"], mode=mode)
