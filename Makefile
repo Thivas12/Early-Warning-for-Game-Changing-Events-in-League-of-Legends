@@ -650,6 +650,21 @@ train-m2-seed:
 		--device $(or $(DEVICE),cpu) \
 		--max-new-shards $(or $(MAX_NEW_SHARDS),1)
 
+score-m2-calibration:
+	uv run --no-sync league-ews score-m2-calibration \
+		--staging-root data/private/m1-graph-staging \
+		--normalizer data/private/m1-graph-staging/normalizer.json \
+		--training-plan configs/rifthazard-m1-training-plan.yaml \
+		--hazards configs/rifthazard-m1-hazards.yaml \
+		--training-freeze data/private/m1-training-freeze.json \
+		--spatial-audit reports/local/m2-preprocessing-audit.json \
+		--hybrid-plan configs/rifthazard-m2-hybrid-plan.yaml \
+		--hybrid-freeze data/private/m2-hybrid-freeze.json \
+		--training-root data/private/m2-training \
+		--output data/private/m2-calibration \
+		--mode $(or $(MODE),gated) \
+		--seed $(or $(SEED),20260915)
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \
