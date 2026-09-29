@@ -670,6 +670,7 @@ audit-m2-utility:
 		--hybrid-freeze data/private/m2-hybrid-freeze.json \
 		--split data/private/final-split.json \
 		--processed data/processed/registered-final \
+		--training-root data/private/m2-training \
 		--calibration-root data/private/m2-calibration \
 		--m1-summary data/private/m1-calibration/ten-seed-summary.json \
 		--m1-diagnostic reports/local/m1-alert-opportunity.json \

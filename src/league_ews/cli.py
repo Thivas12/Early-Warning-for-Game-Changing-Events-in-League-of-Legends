@@ -1131,6 +1131,7 @@ def _audit_m2_utility(args: argparse.Namespace) -> int:
         args.hybrid_freeze,
         args.split,
         args.processed,
+        args.training_root,
         args.calibration_root,
         args.m1_summary,
         args.m1_diagnostic,
@@ -2169,8 +2170,14 @@ def build_parser() -> argparse.ArgumentParser:
         "audit-m2-utility", help="compare all ten M2 seeds and later-half calibration alerts"
     )
     for name in (
-        "hybrid-freeze", "split", "processed", "calibration-root", "m1-summary",
-        "m1-diagnostic", "output",
+        "hybrid-freeze",
+        "split",
+        "processed",
+        "training-root",
+        "calibration-root",
+        "m1-summary",
+        "m1-diagnostic",
+        "output",
     ):
         m2_utility.add_argument(f"--{name}", type=Path, required=True)
     m2_utility.add_argument("--mode", choices=("gated", "ungated", "spatial-only"), required=True)

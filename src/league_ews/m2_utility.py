@@ -17,6 +17,7 @@ from league_ews.m1_alert_diagnostics import _chronological_halves
 from league_ews.m1_summary import _range
 from league_ews.m1_training_plan import SEEDS
 from league_ews.m2_backend import MODES
+from league_ews.m2_calibration import _completed_checkpoints
 from league_ews.metrics import probabilistic_metrics
 from league_ews.raw_validation import ProcessingManifest
 
@@ -81,6 +82,7 @@ def audit_m2_calibration_utility(
     hybrid_freeze: str | Path,
     split_path: str | Path,
     processed_root: str | Path,
+    training_root: str | Path,
     calibration_root: str | Path,
     m1_summary_path: str | Path,
     m1_diagnostic_path: str | Path,
@@ -116,8 +118,7 @@ def audit_m2_calibration_utility(
         or m1.get("split_sha256") != _sha(split_file)
         or m1.get("seed_count") != len(SEEDS)
         or m1.get("selected_seed") is not None
-        or diagnostic.get("schema_version")
-        != "league-ews-m1-alert-opportunity-diagnostic-v1"
+        or diagnostic.get("schema_version") != "league-ews-m1-alert-opportunity-diagnostic-v1"
         or diagnostic.get("calibration_summary_sha256") != _sha(m1_file)
         or diagnostic.get("split_sha256") != _sha(split_file)
         or diagnostic.get("processing_manifest_sha256") != _sha(manifest_file)
@@ -157,6 +158,10 @@ def audit_m2_calibration_utility(
     if truth.shape != (offsets[-1], len(LABELS)) or not np.isin(truth, (0, 1)).all():
         raise ValueError("M2 comparison labels differ from frozen calibration")
 
+    checkpoint_hashes, _ = _completed_checkpoints(
+        Path(training_root), _sha(frozen_file), mode
+    )
+
     seed_results: list[dict[str, Any]] = []
     per_target: dict[str, list[float]] = {label: [] for label in LABELS}
     per_target_brier: dict[str, list[float]] = {label: [] for label in LABELS}
@@ -165,7 +170,6 @@ def audit_m2_calibration_utility(
         for event in EVENTS
     }
     cal_root = Path(calibration_root) / mode
-    reference_checkpoints: dict[str, str] | None = None
     for seed in SEEDS:
         folder = cal_root / f"seed-{seed}"
         report_file = folder / "calibration-report.json"
@@ -182,20 +186,18 @@ def audit_m2_calibration_utility(
             or report.get("targets") != list(LABELS)
             or report.get("test_matches_unread") != 6000
             or report.get("identifiers_in_report") is not False
-            or set(report.get("all_seed_checkpoint_sha256", {})) != {str(value) for value in SEEDS}
+            or report.get("all_seed_checkpoint_sha256") != checkpoint_hashes
             or report.get("checkpoint_sha256")
             != report["all_seed_checkpoint_sha256"].get(str(seed))
         ):
             raise ValueError("M2 calibration report differs from ten completed seeds")
-        if reference_checkpoints is None:
-            reference_checkpoints = report["all_seed_checkpoint_sha256"]
-        elif report["all_seed_checkpoint_sha256"] != reference_checkpoints:
-            raise ValueError("M2 calibration reports disagree on completed checkpoints")
         with np.load(scores_file, allow_pickle=False) as saved:
             if set(saved.files) != {"probabilities", "targets", "match_offsets"}:
                 raise ValueError("M2 calibration score inventory differs")
             scores, saved_truth, saved_offsets = (
-                saved["probabilities"], saved["targets"], saved["match_offsets"]
+                saved["probabilities"],
+                saved["targets"],
+                saved["match_offsets"],
             )
         _validate_scores(scores, saved_truth, saved_offsets, truth, expected_offsets)
         metrics = {
@@ -239,9 +241,7 @@ def audit_m2_calibration_utility(
         "later_half_matches": len(later),
         "seed_count": len(SEEDS),
         "seed_results": seed_results,
-        "macro_average_precision": _range(
-            [row["macro_average_precision"] for row in seed_results]
-        ),
+        "macro_average_precision": _range([row["macro_average_precision"] for row in seed_results]),
         "per_target_average_precision": {
             label: _range(values) for label, values in per_target.items()
         },

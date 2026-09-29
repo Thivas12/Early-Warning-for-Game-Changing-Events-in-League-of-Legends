@@ -25,8 +25,7 @@ class M2UtilityTests(unittest.TestCase):
     def test_later_outcomes_cannot_change_earlier_threshold(self) -> None:
         times = [(0,), (0,), (0,), (0,)]
         onsets = {
-            event: [(20_000,), (), (20_000,), ()]
-            for event in ("baron", "dragon", "teamfight")
+            event: [(20_000,), (), (20_000,), ()] for event in ("baron", "dragon", "teamfight")
         }
         offsets = np.arange(5, dtype=np.int64)
         scores = np.zeros((4, 12), dtype=np.float32)
