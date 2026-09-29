@@ -1,141 +1,134 @@
-# Research program: observation opportunity and recurrent event warnings
+# Research program: recurrence, geometry and useful event warnings
 
-**Status:** post-M1 exploratory design, 2026-09-29. This document is an
-experiment proposal, not a result or a modification of the frozen M1/M2
-training. The original patch 16.17 test remains sealed for its registered
-analysis. M3 needs a new untouched, later-patch cohort and a separate freeze.
+**Revised 2026-09-29 after a research and implementation review.** This is a
+post-M1 exploratory proposal. The original M1/M2 targets, losses, metrics and
+registered comparisons remain frozen. The full evidence, primary literature,
+reproducible calculations and controlled counterexamples are in
+[`research-assessment-2026-09-29.md`](../reports/research-assessment-2026-09-29.md).
 
-## The paper question
+## Corrections to the earlier proposal
 
-Can a model built from *actual, partially observed* League Match-V5 frames
-warn of a Dragon onset in the next 60 seconds at a fixed, low false-alert
-burden, when it is evaluated on a later patch? The contribution would be an
-audited observation/opportunity protocol, a censor-aware recurrent-event
-forecaster, and a paired warning-utility evaluation. A graph alone, a high
-observation-level AP, or an ablation gain cannot establish that claim.
+1. **Verified completed match termination is not automatically censoring.**
+   If the event stream is complete through match end, an event that did not
+   occur before termination is a known negative for the actual-match outcome,
+   even when the requested horizon extends beyond termination. True source
+   truncation while play continues is different. Final-frame/duration
+   disagreement alone cannot distinguish these cases.
+2. **The boundary mask is a diagnostic, not an established target correction.**
+   `confirmed_followup_masks` measures coverage through the earlier of the last
+   frame and screened duration. Its excluded negatives can include valid
+   completed-match outcomes. Including partial-bin positives while dropping
+   partial-bin negatives also introduces a discretization approximation.
+   `censored_hazard_bce` is an unweighted masked binary loss; the mask does not
+   automatically make it a correct likelihood for the desired continuous-time
+   risk. Do not train a replacement merely because the audit finds many
+   boundary-crossing rows.
+3. **An unseen test is not invalidated by development on calibration data.**
+   If patch 16.17 remains genuinely sealed, a documented amendment can freeze
+   additional comparisons before one joint test release. Preserve the original
+   registered analysis, identify added claims and handle multiplicity. A fresh
+   cohort is necessary after adapting to test outcomes and valuable for claims
+   across multiple patch transitions; it is not automatically mandatory here.
 
-Prior MOBA work already predicts events from much denser Honor of Kings data.
-A 2026 League of Legends study also predicts deaths in professional matches
-five seconds ahead from ten seconds of in-game history using a Temporal Fusion
-Transformer. Neither its roughly 0.6 death-prediction F1 nor the Honor of
-Kings results can be compared numerically to our Dragon warning F1: the
-events, observation density, population and horizon differ. These are
-task-adjacent baselines and prior art to discuss explicitly. If the original
-implementation and matching input cadence are available, assess a comparable
-transformer on *our* frozen split and metric; otherwise record the mismatch.
-Riot's approximately minute-spaced Match-V5 frames make this a different
-observation regime. Irregular/partially observed temporal graphs, dynamic
-survival, and early-event alarm methods are also established prior art. We
-can claim only a specific measured advance under this protocol, not invention
-of those ideas.
+## Findings that determine the next experiment
 
-## What is measurable now
+- Existing calibration results: M1 macro AP 0.49112 versus B3 0.37594,
+  but Dragon event F1 0.58807 versus 0.71183 and false alerts/game 1.94413
+  versus 1.55200. Better aggregate ranking has not delivered better Dragon
+  warnings at the reported operating points.
+- B3 receives objective counts and time since the last Dragon/Baron. M1 graph
+  construction omits those explicit recurrence features. A paired synthetic
+  probe confirms that changing a past Dragon kill leaves its graph unchanged.
+  Whether this omission explains the performance gap requires a matched refit.
+- Removing interaction edges leaves 78.48% of the numerical M1-versus-B3 AP
+  gap. That is descriptive arithmetic, not a causal attribution. A player-set
+  model with comparable geometry and history is an essential control.
+- The cooldown suppresses alerts exactly 60 seconds apart. The combat outcome
+  is a temporal multi-kill proxy without spatial coherence or total-duration
+  constraints. Preserve both frozen conventions; label and examine them
+  explicitly in the follow-on protocol.
 
-`make audit-confirmed-followup` scans the 24,000 training and 6,000
-calibration processed matches and the existing checksum-bound M1 target
-shards, plus durations in the frozen final selected pool. It checks the
-selection manifest and pool checksum, frozen split, processed file hashes,
-exact future event times, hazard targets and row offsets. It never reads
-patch 16.17 match payloads. The small
-identifier-free JSON counts how many negative 10/20/30/60-second labels lack
-*confirmed* follow-up through their horizon, by partition and route/patch.
-It also counts at-risk 10-second bins before and after masking and measures
-disagreement between final-frame time and `info.gameDuration`. The exposure
-cutoff is the **earlier** of the final frame and the screened match duration.
-It can conservatively mask some negatives when the last frame precedes the
-real end. The duration is recorded at integer-second resolution, so a source
-event in a partial bin remains positive even if its millisecond timestamp is
-just beyond the rounded duration. Treat large disagreements as a provenance
-investigation before any training. The archived 29 GB raw folder need not be
-restored; selected-pool durations were frozen during outcome-blind screening.
-`make render-confirmed-followup` turns the aggregate JSON into a compact SVG
-of horizon-specific uncertainty and loss exposure. It requires the optional
-`research` plotting dependencies and does not open source timelines.
+All performance above is from existing public transcriptions of private-run
+calibration summaries. This review did not train new private-data models or
+open sealed test payloads.
 
-`confirmed_followup_masks` implements the proposed training/evaluation
-contract: for a negative bin, the entire bin must lie before the last
-recorded frame **and** screened duration; an actually observed positive remains known even if the
-rest of its bin is incomplete. Per-event risk ends at its first onset. The
-future frame boundary is target/loss metadata and **cannot** enter a model
-feature. The `censored_hazard_bce` primitive implements an unweighted proper
-Bernoulli log score on those exposed bins. Neither function changes M1/M2.
-The audit must run before fitting M3 and can falsify this mechanism: if the
-discarded fraction is negligible or the B3-vs-M1 difference persists on
-fully followed predictions, censoring is not a plausible explanation.
+## Primary question and controlled comparison
 
-## Model and controls to freeze after the audit
+**Do temporal player relations improve useful Dragon warnings beyond objective
+recurrence and observed geometry under sparse telemetry?** Use Dragon within
+60 seconds as the primary follow-on outcome, with Baron and the combat proxy
+secondary. Finish the original registered M1 analysis under its original rules.
 
-1. **Baselines:** B0 event prevalence; B2 event/clock history; B3 tabular;
-   unchanged M1; M2 graph-only, spatial-only, equal fusion and learned gate;
-   a tabular **objective-clock and measured-position** baseline with explicit
-   source availability and comparable data/compute. For every forecast metric,
-   compare on the same follow-up-eligible prediction rows; refit a censored
-   B3 control if the training target policy changes. Reproduce thresholds with
-   disjoint tuning and evaluation matches. Report every negative result.
-2. **One-factored observations:** keep graph size/pooling fixed while masking
-   coordinates, position-observed bit, proximity relations and objective
-   anchor content one at a time. Stratify by coverage and phase. The original
-   no-positions-or-proximity and no-objective-nodes ablations are confounded
-   controls, not mechanistic proof.
-3. **M3 candidate:** an event-specific recurrent hazard with an explicitly
-   measured frame-age/missingness stream and a learned *bounded* fusion with
-   participant graph context. The hazard gives monotone risks at 10/20/30/60
-   seconds for each event; types can coincide. Train from exact onset delays
-   using the confirmed exposure mask. A no-censoring version and a simpler
-   clock/position model receive identical train matches, seed schedule,
-   capacity budget and threshold search. A small time-decay or GRU-D-style
-   state is an architectural comparator, not automatic novelty. The first
-   candidate uses unweighted log loss so risk remains interpretable; bounded
-   focal and clipped positive-weight losses are *separate* imbalance
-   controls, with calibration and alert costs checked at original prevalence.
-4. **Alarm policy:** choose a threshold and 60-second cooldown on earlier
-   calibration matches, evaluate on later calibration matches, and freeze it
-   before any new cohort. Count one-to-one event matches, all onsets and
-   onsets with a prior real frame inside 60 seconds. Report false alerts per
-   match with p50/p90/p95, precision, recall, event F1, and lead p10/median.
-   A budget such as at most **one false Dragon alert per match** is a proposed
-   primary operating point; set the exact budget in the new preregistration
-   using application costs and training/calibration data, then keep it fixed.
-5. **Primary comparison:** Dragon onset recall at the frozen false-alert
-   limit on the new patch, M3 against the stronger of B3 and the frozen M1
-   policy. Secondary: Baron, Teamfight, every horizon AP and Brier score,
-   calibration by route/phase/coverage, and utility across alert budgets.
-   A higher macro AP cannot replace a failed primary warning comparison.
-   Use a match-level paired bootstrap, stratified by route/patch, for an
-   interval on the recall difference and false-alert difference. Seeds are
-   repeated fits, not independent matches. Predeclare how seed results are
-   aggregated and how secondary multiplicity is controlled.
+Give every new contender identical causal global information: game time,
+observed objective counts, time since the last objective, source-availability
+indicators, and patch-specific availability state only where validated from
+past events and recorded rules. Future duration, frame times and retrospectively
+qualified episodes are target metadata, never prediction inputs.
 
-The M3 model implementation, freeze, calibration and fresh cohort are **not
-completed** by the diagnostic in this branch. Estimate storage before staging
-anything new; reuse the existing 340 MB graph shards and keep exposure masks
-as a small sidecar if the audit supports the experiment. The user's archived
-raw collection is not needed for this train/calibration diagnostic.
+| Contender | Question answered |
+|---|---|
+| Recorded B3 and M1 | Historical reference under the frozen protocol. |
+| B3 with comparable participant/pit geometry and objective history | Does a cheap, informed model suffice? |
+| Player-set encoder + GRU + global history, without relation messages | What do relations add beyond player states and history? |
+| M1 encoder + global history | Does the confirmed omission affect Dragon warnings? |
+| Event-specific relational readout + global history | Does objective-focused aggregation improve shared mean pooling? |
 
-## Publication checks
+Use the same temporal development split, input availability, seed list,
+selection budget and policy search. Record model size and compute; equal
+_epochs_ alone do not equalize optimization. Architecture selection belongs on
+an inner development split; probability and policy calibration use their
+declared partitions. Report all assigned seeds.
 
-- Prove each prediction input existed at its genuine frame timestamp. Do not
-  back-fill event outcomes, interpolate 10-second snapshots, or turn a
-  retrospectively qualified combat episode into an input feature.
-- Verify normalization source-field presence, 180-second eligibility, sealed
-  temporal split, checksum bindings, patient/match-style cluster boundaries,
-  sample exclusions, censoring and missing-data denominators.
-- Make model and threshold selection on different matches. Reserve a fresh
-  patch for one final comparison, publish the preregistered M1 test outcome
-  separately, and keep exploratory post hoc analyses visibly labeled.
-- Publish code, definitions, synthetic fixtures, provenance and aggregate
-  results. Riot raw timelines, match identifiers, and any source with player
-  identifiers stay private under the recorded redistribution scope.
+Compare direct 60-second probability prediction and the existing hazard
+formulation on the same actual-match target. Begin with unweighted binary
+loss. Investigate an exposure likelihood only if genuine incomplete event
+ascertainment is established. If cause-specific survival is used, integrate
+match termination as a competing terminal event when computing actual risk.
+Weighted/focal objectives need separate probability calibration checks.
 
-## Closest primary sources
+## Warning policy and decision rule
 
-- Yang et al., [Predicting Events in MOBA Games](https://arxiv.org/abs/2012.09424),
-  event prediction from high-frequency Honor of Kings data.
-- Vardakis et al., [Prediction of MOBA game events based on In-Game Data](https://doi.org/10.1016/j.entcom.2026.101091),
-  five-second League of Legends death forecasting on professional matches.
-- Yèche et al., [Temporal Label Smoothing for Early Event Prediction](https://proceedings.mlr.press/v202/yeche23a.html),
-  early-warning utility at low false alarms.
-- Oskarsson et al., [Temporal Graph Neural Networks for Irregular Data](https://proceedings.mlr.press/v206/oskarsson23a.html),
-  irregular and partially observed graph sequences.
-- Qi et al., [Toward Conditional Distribution Calibration in Survival Prediction](https://proceedings.neurips.cc/paper_files/paper/2024/hash/9c8df8de46c1a1b39b30b9f74be69c02-Abstract-Conference.html),
-  conditional probability calibration under censoring.
+Select the threshold to maximize Dragon recall subject to at most one false
+alert per match on the tuning partition, then report the realized burden on
+disjoint evaluation matches. The budget on tuning data is not a guarantee
+under drift. The original F1-selected operating point does not answer this
+constrained question. Predeclare a cooldown convention, one-to-one matching,
+the primary contrast, seed aggregation, minimum useful effect and multiplicity.
+
+Report all-event and opportunity-conditional recall, precision, false alerts
+per match and per hour, their per-match quantiles, lead-time median and p10,
+AP and Brier/calibration by event, horizon, route and phase. Resample paired
+whole matches for uncertainty; seeds are repeated fits, not independent
+samples of a patch. Account for repeated players when the recorded grouping
+information permits it. Opportunity denominators must match the warning
+window and any minimum lead requirement.
+
+## Role of the existing boundary audit
+
+`make audit-confirmed-followup` binds train/calibration processed matches,
+staged targets, the frozen split, selected-pool durations and selection
+manifest by checksum. It counts rows crossing the earlier of duration and
+last frame and checks target consistency. `make render-confirmed-followup`
+renders those counts. Neither reads test match payloads.
+
+The retained v1 field names such as `negative_labels_without_full_followup`
+describe the mask's boundary criterion. They **do not establish that the
+actual-match outcome is unknown**. Interpret the figure the same way. Event
+ascertainment, completed termination and actual truncation must be checked
+before deriving a different training population or loss. The archived raw
+collection is not needed simply to reanalyse the existing aggregate results.
+
+## Publication scope
+
+MOBA event forecasting, temporal graph models, survival losses and early-alarm
+objectives all have prior art; see the full report's nine-paper comparison.
+A graph/GRU/hazard/gate combination alone is not a demonstrated novelty claim.
+The contribution must be the measured value of relations under controlled
+information, realistic observation cadence, alert burden and temporal shift.
+
+Retain the registered combat proxy and validate any new tactical-teamfight
+endpoint separately. Reconcile publication tables with original score
+artifacts. Treat the present dataset as retrospective observer-style Match-V5
+forecasting; establish live API field and visibility parity before claiming
+a deployable player application. Keep private source timelines and player
+identifiers within the recorded redistribution scope.

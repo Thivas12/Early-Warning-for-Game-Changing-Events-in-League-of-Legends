@@ -1,0 +1,147 @@
+{
+  "schema_version": "league-ews-research-findings-v1",
+  "evidence_date": "2026-09-29",
+  "new_private_model_results": false,
+  "source_sha256": "edd9ac17defb41e6666682ca3f75d6ae847880c0310e91e92c63404c63ce2c1e",
+  "source_note": "Ten-seed CLI summaries supplied by the researcher on 2026-09-28; verify against checksum-bound private summaries before publication",
+  "existing_calibration_secondary_analysis": {
+    "m1_minus_b3_macro_ap": 0.11517694477022433,
+    "m1_relative_ap_gain_percent": 30.636858190070907,
+    "ap_gap_remaining_without_edges_percent": 78.48361990650531,
+    "objective_removal_gain": 0.019737129167260725,
+    "combined_spatial_removal_drop": 0.35197930659821713,
+    "dragon_f1_delta_from_rounded_report": -0.12375999999999998,
+    "dragon_false_alert_increase_percent_from_rounded_report": 25.26610824742268,
+    "opportunity_counts_10_20_30_60": {
+      "baron": [
+        1080,
+        2149,
+        3262,
+        6494
+      ],
+      "dragon": [
+        3772,
+        7501,
+        11324,
+        22713
+      ],
+      "teamfight": [
+        6508,
+        13501,
+        20077,
+        39998
+      ]
+    },
+    "opportunity_fraction_relative_to_60s": {
+      "baron": [
+        0.16630736064059132,
+        0.33092085001539884,
+        0.5023098244533415,
+        1.0
+      ],
+      "dragon": [
+        0.16607229340025537,
+        0.3302513978778673,
+        0.4985691013956765,
+        1.0
+      ],
+      "teamfight": [
+        0.16270813540677034,
+        0.3375418770938547,
+        0.5019500975048753,
+        1.0
+      ]
+    },
+    "warning": "Descriptive arithmetic on calibration transcriptions, not causal attribution or fresh uncertainty estimates"
+  },
+  "synthetic_probes": {
+    "objective_recurrence": {
+      "synthetic": true,
+      "graph_node_features_equal": true,
+      "graph_edges_equal": true,
+      "graph_relations_equal": true,
+      "b3_changed_features": [
+        {
+          "feature": "dragons_blue",
+          "without_past_kill": 0,
+          "with_past_kill": 1
+        },
+        {
+          "feature": "minutes_since_dragon",
+          "without_past_kill": null,
+          "with_past_kill": 1.0
+        }
+      ],
+      "interpretation": "explicit objective recurrence is omitted from M1 graph construction"
+    },
+    "terminal_outcome": {
+      "synthetic": true,
+      "assumption": "Prediction at 180s; complete match and event ascertainment through verified termination at 200s; no future event",
+      "correct_actual_match_labels_at_10_20_30_60": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "boundary_mask_marks_known": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "interpretation": "Boundary coverage does not identify which labels are genuinely unknown"
+    },
+    "partial_bin_likelihood": {
+      "synthetic": true,
+      "n": 200000,
+      "seed": 20260929,
+      "true_risk_10_seconds": 0.1,
+      "analytic_binary_mask_optimum": 0.14393065540468955,
+      "simulated_binary_mask_optimum": 0.14376644721216786,
+      "constant_rate_likelihood_risk": 0.09993436790324338,
+      "assumptions": "Exponential event time; independent equal mixture of 5s/10s follow-up; 10s bin",
+      "interpretation": "Binary masking is a discretized approximation, not an exact continuous-time likelihood"
+    },
+    "competing_terminal_event": {
+      "synthetic": true,
+      "event_rate_per_second": 0.01,
+      "match_end_rate_per_second": 0.02,
+      "horizon_seconds": 60,
+      "risk_ignoring_terminal_competitor": 0.45118836390597356,
+      "actual_cumulative_incidence": 0.27823370392613783
+    },
+    "cooldown_boundary": {
+      "synthetic": true,
+      "current_strictly_more_than_60s": {
+        "matches": 1,
+        "events": 3,
+        "alerts": 2,
+        "matched_events": 2,
+        "false_alerts": 0,
+        "precision": 1.0,
+        "event_recall": 0.6666666666666666,
+        "event_f1": 0.8,
+        "false_alerts_per_game": 0.0,
+        "median_lead_seconds": 30.0,
+        "p10_lead_seconds": 30.0
+      },
+      "at_least_60s_manual_oracle": {
+        "alerts": 3,
+        "matched_events": 3,
+        "event_recall": 1.0,
+        "false_alerts": 0
+      },
+      "interpretation": "Exactly 60s spacing is suppressed by current <= comparison; this is a convention sensitivity, not a measured LoL effect"
+    },
+    "combat_episode": {
+      "synthetic": true,
+      "kill_count": 11,
+      "span_seconds": 90,
+      "alternating_distant_positions": true,
+      "onsets_ms": [
+        300000
+      ],
+      "interpretation": "Temporal chaining does not enforce spatially coherent fights or a maximum total duration"
+    }
+  }
+}

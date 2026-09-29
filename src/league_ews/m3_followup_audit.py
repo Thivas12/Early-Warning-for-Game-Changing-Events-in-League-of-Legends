@@ -1,4 +1,9 @@
-"""Checksum-bound audit of terminal follow-up on train/calibration only."""
+"""Checksum-bound boundary-coverage audit on train/calibration only.
+
+The v1 counts do not distinguish complete match termination from actual
+truncation and therefore do not establish that excluded outcomes are unknown.
+See reports/research-assessment-2026-09-29.md for the corrected interpretation.
+"""
 
 from __future__ import annotations
 

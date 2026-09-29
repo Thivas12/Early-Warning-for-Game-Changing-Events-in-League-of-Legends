@@ -1,11 +1,11 @@
-"""Conservative follow-up masks for recurrent, event-specific hazard forecasts.
+"""Boundary-coverage sensitivity masks for event-specific hazard forecasts.
 
-The final genuine frame and screened game duration provide a bounded follow-up. An
-event observed before that frame remains a positive even if its bin ends
-after the frame. A negative bin is known only when its entire interval is
-covered. The cutoff is the earlier of actual duration and final source frame.
-These masks are targets/loss metadata,
-never model input features.
+The cutoff is the earlier of duration and final source frame. This criterion
+does not distinguish verified completed termination from actual truncation:
+excluded negatives may still be known actual-match outcomes. Partial-bin
+inclusion also introduces a discretization approximation. See the research
+assessment dated 2026-09-29 before applying these masks to training. They are
+target/loss metadata, never prediction inputs; M1/M2 do not use them.
 """
 
 from __future__ import annotations
@@ -25,12 +25,14 @@ def confirmed_followup_masks(
     bin_seconds: int = 10,
     game_duration_ms: int | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Return loss exposure [rows, events, bins] and label status [rows, events, 4].
+    """Return boundary masks shaped [rows, events, bins] and [rows, events, 4].
 
     Game duration comes from the checksum-bound Match-V5 detail screening
     record. Last source frame is a separate recorded boundary. Neither may
-    silently lengthen the other. Without duration, this is a frame-cutoff
-    sensitivity analysis only.
+    silently lengthen the other. These are boundary-coverage indicators, not
+    validated ascertainment status. Complete match termination can establish
+    negative actual-match labels beyond the boundary. Without duration, this
+    is a frame-cutoff sensitivity analysis only.
     """
 
     times = np.asarray(times_ms)
@@ -62,11 +64,12 @@ def confirmed_followup_masks(
 
 
 def censored_hazard_bce(logits: object, targets: object, exposure: object) -> object:
-    """Proper Bernoulli log score over confirmed at-risk event bins only.
+    """Unweighted binary log loss over user-supplied exposed event bins.
 
     Accepts PyTorch tensors; the optional dependency is imported at call time.
-    This primitive belongs to a separately frozen experiment, not the M1/M2
-    registered objectives. No prevalence weighting or synthetic frames.
+    The exposure policy must be justified for the intended estimand; binary
+    partial-bin masking is not an exact continuous-time exposure likelihood.
+    This primitive is not used by the M1/M2 registered objectives.
     """
 
     torch = importlib.import_module("torch")
