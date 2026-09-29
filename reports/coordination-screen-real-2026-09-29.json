@@ -1,0 +1,318 @@
+{
+  "freeze_sha256": "29930b83632e79a527e856595cfbf1f3e4ee99fa55824448009c55ca86dedd8f",
+  "interpretation": "Tests these engineered representations, not absence of all possible coordination signal; all comparisons exploratory after calibration review",
+  "models": {
+    "b3": {
+      "evaluation": {
+        "alerts": 9560,
+        "event_recall": 0.6252979080236561,
+        "events": 11329,
+        "false_alerts_per_game": 0.8253333333333334,
+        "false_alerts_per_game_quantiles": {
+          "50": 1.0,
+          "90": 2.0,
+          "95": 3.0
+        },
+        "late_alerts_per_game": 0.936,
+        "lead_seconds_median": 25.301000000000002,
+        "lead_seconds_p10": 5.080900000000001,
+        "matched_events": 7084,
+        "matches": 3000,
+        "opportunity_conditional_timely_recall": 0.5659827928524156,
+        "precision": 0.7410041841004185,
+        "timely_event_recall": 0.37743843234177776,
+        "timely_matched_events": 4276,
+        "timely_opportunities": 7555,
+        "timely_precision": 0.44728033472803347
+      },
+      "evaluation_budget_met": true,
+      "evaluation_row_metrics": {
+        "average_precision": 0.7518562620122208,
+        "brier": 0.052909723911860565,
+        "prevalence": 0.12964299213139538,
+        "roc_auc": 0.9624292146911934
+      },
+      "feature_count": 27,
+      "fit_and_evaluation_seconds": 14.763834527009749,
+      "freeze_sha256": "29930b83632e79a527e856595cfbf1f3e4ee99fa55824448009c55ca86dedd8f",
+      "model_sha256": "cdd99947537003b8f28ac97cd992c8396b2e4735dec5b7c9e33cec6494e34004",
+      "scores_sha256": "b02d7b0c5fd57b9be0cb6a8dfea3decc756df5bec0856e7dc34791611ff141bb",
+      "selected_max_leaf_nodes": 31,
+      "selection": [
+        {
+          "average_precision": 0.7289474785957845,
+          "brier": 0.05520380985146472,
+          "max_leaf_nodes": 7,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9589130330840225
+        },
+        {
+          "average_precision": 0.7394848510689015,
+          "brier": 0.05414761599977371,
+          "max_leaf_nodes": 15,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9603286634711407
+        },
+        {
+          "average_precision": 0.7443008693740517,
+          "brier": 0.05372318709807087,
+          "max_leaf_nodes": 31,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9609268284552483
+        }
+      ],
+      "test_matches_unread": 6000,
+      "threshold": 0.5011872336272725,
+      "variant": "b3"
+    },
+    "coordination": {
+      "evaluation": {
+        "alerts": 11429,
+        "event_recall": 0.7593785859299144,
+        "events": 11329,
+        "false_alerts_per_game": 0.942,
+        "false_alerts_per_game_quantiles": {
+          "50": 1.0,
+          "90": 2.0,
+          "95": 3.0
+        },
+        "late_alerts_per_game": 1.2356666666666667,
+        "lead_seconds_median": 23.621,
+        "lead_seconds_p10": 4.5802000000000005,
+        "matched_events": 8603,
+        "matches": 3000,
+        "opportunity_conditional_timely_recall": 0.6480476505625413,
+        "precision": 0.7527342724647825,
+        "timely_event_recall": 0.43216523965045456,
+        "timely_matched_events": 4896,
+        "timely_opportunities": 7555,
+        "timely_precision": 0.4283839356024149
+      },
+      "evaluation_budget_met": true,
+      "evaluation_row_metrics": {
+        "average_precision": 0.8485107435544927,
+        "brier": 0.04311416490182651,
+        "prevalence": 0.12964299213139538,
+        "roc_auc": 0.9749102883548607
+      },
+      "feature_count": 179,
+      "fit_and_evaluation_seconds": 93.98354363100952,
+      "freeze_sha256": "29930b83632e79a527e856595cfbf1f3e4ee99fa55824448009c55ca86dedd8f",
+      "model_sha256": "149419c21bb9d81871f70ddbc7d7a81438c9aa1c4bb68baa823b632fd420391b",
+      "scores_sha256": "9fce4d72ca6b0e2fd9d82e27d86547ce38c09b1d9518bb4584af97adbe85757e",
+      "selected_max_leaf_nodes": 31,
+      "selection": [
+        {
+          "average_precision": 0.8334224384650857,
+          "brier": 0.0452192553266717,
+          "max_leaf_nodes": 7,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9720974655351464
+        },
+        {
+          "average_precision": 0.8408321839558291,
+          "brier": 0.04412860869637333,
+          "max_leaf_nodes": 15,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9734244639170962
+        },
+        {
+          "average_precision": 0.8444032549787863,
+          "brier": 0.043617254073321315,
+          "max_leaf_nodes": 31,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.974019035682823
+        }
+      ],
+      "test_matches_unread": 6000,
+      "threshold": 0.4466835921509635,
+      "variant": "coordination"
+    },
+    "history": {
+      "evaluation": {
+        "alerts": 11402,
+        "event_recall": 0.7577014740930356,
+        "events": 11329,
+        "false_alerts_per_game": 0.9393333333333334,
+        "false_alerts_per_game_quantiles": {
+          "50": 1.0,
+          "90": 2.0,
+          "95": 3.0
+        },
+        "late_alerts_per_game": 1.2356666666666667,
+        "lead_seconds_median": 23.576999999999998,
+        "lead_seconds_p10": 4.576,
+        "matched_events": 8584,
+        "matches": 3000,
+        "opportunity_conditional_timely_recall": 0.6455327597617472,
+        "precision": 0.7528503771268199,
+        "timely_event_recall": 0.43048812781357576,
+        "timely_matched_events": 4877,
+        "timely_opportunities": 7555,
+        "timely_precision": 0.4277319768461673
+      },
+      "evaluation_budget_met": true,
+      "evaluation_row_metrics": {
+        "average_precision": 0.8491500579855848,
+        "brier": 0.043041178311422505,
+        "prevalence": 0.12964299213139538,
+        "roc_auc": 0.974986550010922
+      },
+      "feature_count": 158,
+      "fit_and_evaluation_seconds": 83.01320305799891,
+      "freeze_sha256": "29930b83632e79a527e856595cfbf1f3e4ee99fa55824448009c55ca86dedd8f",
+      "model_sha256": "98f932558179cabd214c8f2e1b5af888830bbad7f0f666bf483afc1df90c0496",
+      "scores_sha256": "928329211f3bb48f46bca682ad42e00de6592a61eb7bef703ad9108c7f8df74f",
+      "selected_max_leaf_nodes": 31,
+      "selection": [
+        {
+          "average_precision": 0.8330577968902358,
+          "brier": 0.04526655945265479,
+          "max_leaf_nodes": 7,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9720136320657343
+        },
+        {
+          "average_precision": 0.8408648206555006,
+          "brier": 0.044140854219508856,
+          "max_leaf_nodes": 15,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9734041839875778
+        },
+        {
+          "average_precision": 0.8443741822021541,
+          "brier": 0.04364413543812171,
+          "max_leaf_nodes": 31,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9739894809576359
+        }
+      ],
+      "test_matches_unread": 6000,
+      "threshold": 0.4466835921509635,
+      "variant": "history"
+    },
+    "snapshot": {
+      "evaluation": {
+        "alerts": 11295,
+        "event_recall": 0.7522287933621679,
+        "events": 11329,
+        "false_alerts_per_game": 0.9243333333333333,
+        "false_alerts_per_game_quantiles": {
+          "50": 1.0,
+          "90": 2.0,
+          "95": 3.0
+        },
+        "late_alerts_per_game": 1.2333333333333334,
+        "lead_seconds_median": 23.4725,
+        "lead_seconds_p10": 4.5701,
+        "matched_events": 8522,
+        "matches": 3000,
+        "opportunity_conditional_timely_recall": 0.6382528127068167,
+        "precision": 0.7544931385568836,
+        "timely_event_recall": 0.42563333039103185,
+        "timely_matched_events": 4822,
+        "timely_opportunities": 7555,
+        "timely_precision": 0.4269145639663568
+      },
+      "evaluation_budget_met": true,
+      "evaluation_row_metrics": {
+        "average_precision": 0.8411447857038201,
+        "brier": 0.04402006940007572,
+        "prevalence": 0.12964299213139538,
+        "roc_auc": 0.9738222212967815
+      },
+      "feature_count": 52,
+      "fit_and_evaluation_seconds": 20.875228453995078,
+      "freeze_sha256": "29930b83632e79a527e856595cfbf1f3e4ee99fa55824448009c55ca86dedd8f",
+      "model_sha256": "2d798879f4920ebfc918b88478c994f1651621257e75e921caa2130a5c9aa01e",
+      "scores_sha256": "2a4622b895dcd799b34beed84fe484973e9eac90b565ba7d223fdccade04bfce",
+      "selected_max_leaf_nodes": 31,
+      "selection": [
+        {
+          "average_precision": 0.8262159609668702,
+          "brier": 0.04619057156891435,
+          "max_leaf_nodes": 7,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.970839012108222
+        },
+        {
+          "average_precision": 0.8347535181332112,
+          "brier": 0.04491451939423176,
+          "max_leaf_nodes": 15,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9723742967675146
+        },
+        {
+          "average_precision": 0.8383614692964947,
+          "brier": 0.04437926075514732,
+          "max_leaf_nodes": 31,
+          "prevalence": 0.12917789184130676,
+          "roc_auc": 0.9730627054219685
+        }
+      ],
+      "test_matches_unread": 6000,
+      "threshold": 0.4466835921509635,
+      "variant": "snapshot"
+    }
+  },
+  "new_private_model_results": true,
+  "paired_comparisons": {
+    "coordination-minus-history": {
+      "draws_requested": 2000,
+      "draws_with_events": 2000,
+      "false_alerts_per_game_difference": 0.0026666666666666666,
+      "percentile_95_intervals": {
+        "false_alerts_per_game_difference": [
+          -0.006333333333333333,
+          0.011666666666666667
+        ],
+        "timely_recall_difference": [
+          -0.00044480820420008516,
+          0.0038898037981569744
+        ]
+      },
+      "scope": "Exploratory; conditional on models and tuned policies; no refit or patch-population uncertainty",
+      "seed": 20260929,
+      "timely_recall_difference": 0.0016771118368788065
+    },
+    "history-minus-snapshot": {
+      "draws_requested": 2000,
+      "draws_with_events": 2000,
+      "false_alerts_per_game_difference": 0.015,
+      "percentile_95_intervals": {
+        "false_alerts_per_game_difference": [
+          0.0033333333333333335,
+          0.027333333333333334
+        ],
+        "timely_recall_difference": [
+          0.0021310176606580164,
+          0.0077403146295963385
+        ]
+      },
+      "scope": "Exploratory; conditional on models and tuned policies; no refit or patch-population uncertainty",
+      "seed": 20260929,
+      "timely_recall_difference": 0.004854797422543914
+    },
+    "snapshot-minus-b3": {
+      "draws_requested": 2000,
+      "draws_with_events": 2000,
+      "false_alerts_per_game_difference": 0.099,
+      "percentile_95_intervals": {
+        "false_alerts_per_game_difference": [
+          0.07766666666666666,
+          0.12134166666666663
+        ],
+        "timely_recall_difference": [
+          0.04279187189706194,
+          0.053461931699014434
+        ]
+      },
+      "scope": "Exploratory; conditional on models and tuned policies; no refit or patch-population uncertainty",
+      "seed": 20260929,
+      "timely_recall_difference": 0.04819489804925413
+    }
+  },
+  "schema_version": "league-ews-coordination-screen-summary-v1",
+  "status": "complete-exploratory-calibration-screen",
+  "test_matches_unread": 6000
+}

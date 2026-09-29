@@ -60,6 +60,21 @@ detail-only final eligibility screen and exact 36,000-match allocation are in
 resumable timeline materialization is specified in
 [`docs/final-collection.md`](docs/final-collection.md).
 
+## Latest controlled experiment
+
+The [29 September coordination screen](reports/coordination-screen-real-2026-09-29.md)
+completed on the private audited cohort. Current geometry improved timely
+Dragon recall, while engineered movement summaries added no clear gain over
+history: +0.168 percentage points (paired 95% interval -0.044 to +0.389).
+These are exploratory calibration results; all 6,000 final-test matches remain
+sealed according to the run record. Late alerts and sparse observation
+opportunities are material limits.
+
+The [timing-objective follow-up](docs/timely-objective-screen.md) tests the next
+specific explanation with four matched fits and explicit false-plus-late alert
+budgets. It reuses the completed cache and is ready for a private-data run;
+no new performance or novelty claim is made.
+
 ## Quick start
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are the supported development

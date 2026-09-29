@@ -785,3 +785,21 @@ security:
 	scripts/check-secrets.sh
 
 check: lint type test
+
+.PHONY: freeze-timely-objective timely-objective start-timely-objective timely-objective-status
+
+freeze-timely-objective:
+	uv run --no-sync python -m league_ews.timely_experiment --freeze-only
+
+timely-objective:
+	uv run --no-sync python -m league_ews.timely_experiment --threads $(or $(THREADS),4) --max-new-models $(or $(MAX_NEW_MODELS),0)
+
+start-timely-objective:
+	@mkdir -p data/private/timely-objective-v1
+	@nohup bash scripts/run_timely_objective.sh >> data/private/timely-objective-v1/worker.log 2>&1 < /dev/null &
+	@echo 'Worker launched. Run make timely-objective-status for progress.'
+
+timely-objective-status:
+	@tail -n 16 data/private/timely-objective-v1/worker.log 2>/dev/null || true
+	@if test -f data/private/timely-objective-v1/worker-exit-code; then cat data/private/timely-objective-v1/worker-exit-code; fi
+	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/timely-objective-v1'); print('Completed model reports:', len(list(p.glob('*/report.json'))), '/ 4'); print('Summary ready:', (p/'summary.json').exists())"
