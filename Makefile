@@ -631,6 +631,29 @@ render-confirmed-followup:
 		--input reports/local/m3-confirmed-followup.json \
 		--output reports/local/m3-confirmed-followup.svg
 
+.PHONY: freeze-coordination-screen coordination-screen coordination-screen-smoke start-coordination-screen coordination-screen-status
+
+freeze-coordination-screen:
+	uv run --no-sync python -m league_ews.coordination_experiment --freeze-only
+
+coordination-screen:
+	uv run --no-sync python -m league_ews.coordination_experiment \
+		--max-new-shards $(or $(MAX_NEW_SHARDS),0) \
+		--max-new-models $(or $(MAX_NEW_MODELS),1) --threads $(or $(THREADS),4)
+
+coordination-screen-smoke:
+	uv run --no-sync python scripts/coordination_screen_smoke.py
+
+start-coordination-screen:
+	@mkdir -p data/private/coordination-screen-v1
+	@nohup bash scripts/run_coordination_screen.sh >> data/private/coordination-screen-v1/worker.log 2>&1 < /dev/null &
+	@echo 'Worker launched. Run make coordination-screen-status for progress.'
+
+coordination-screen-status:
+	@tail -n 12 data/private/coordination-screen-v1/worker.log 2>/dev/null || true
+	@if test -f data/private/coordination-screen-v1/worker-exit-code; then cat data/private/coordination-screen-v1/worker-exit-code; fi
+	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/coordination-screen-v1'); print('Completed model reports:', len(list(p.glob('*/report.json'))), '/ 4'); print('Summary ready:', (p/'summary.json').exists())"
+
 render-m2-preprocessing:
 	uv run --no-sync python scripts/render_m2_preprocessing_figure.py \
 		--input reports/local/m2-preprocessing-audit.json \
