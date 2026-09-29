@@ -76,6 +76,7 @@ from league_ews.m2_plan import freeze_m2_hybrid
 from league_ews.m2_preprocessing_audit import audit_m2_preprocessing
 from league_ews.m2_training import train_m2_seed
 from league_ews.m2_utility import audit_m2_calibration_utility
+from league_ews.m3_followup_audit import audit_confirmed_followup
 from league_ews.pilot_collection import (
     TimelineFetcher,
     collect_selected_pilot_bundles,
@@ -139,6 +140,20 @@ def _audit_raw_field_coverage(args: argparse.Namespace) -> int:
         f"Audited source fields in {report['matches']} train/calibration matches; "
         f"test timelines unread: {report['test_timelines_unread']}; report: {args.output}"
     )
+    return 0
+
+
+def _audit_confirmed_followup(args: argparse.Namespace) -> int:
+    report = audit_confirmed_followup(
+        args.processed, args.split, args.staging_root, args.selection_root, args.output
+    )
+    summary = {
+        "output": str(args.output),
+        "train_matches": report["partitions"]["train"]["matches"],
+        "calibration_matches": report["partitions"]["calibration"]["matches"],
+        "test_matches_unread": report["test_matches_unread"],
+    }
+    print(json.dumps(summary, indent=2, sort_keys=True))
     return 0
 
 
@@ -2108,6 +2123,14 @@ def build_parser() -> argparse.ArgumentParser:
     ):
         m2_audit.add_argument(f"--{name}", type=Path, required=True)
     m2_audit.set_defaults(handler=_audit_m2_preprocessing)
+
+    followup = subparsers.add_parser(
+        "audit-confirmed-followup",
+        help="measure terminal censoring of M1 hazard labels on train/calibration only",
+    )
+    for name in ("processed", "split", "staging-root", "selection-root", "output"):
+        followup.add_argument(f"--{name}", type=Path, required=True)
+    followup.set_defaults(handler=_audit_confirmed_followup)
 
     m2_freeze = subparsers.add_parser(
         "freeze-m2-hybrid", help="bind the exploratory hybrid to the spatial audit before fitting"
