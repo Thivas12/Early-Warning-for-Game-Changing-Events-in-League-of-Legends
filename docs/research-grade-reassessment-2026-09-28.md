@@ -76,6 +76,9 @@ position and objective availability* improves useful early warnings at a
 fixed alert budget across patches. It is a falsifiable question, not a novelty
 claim. Preregister the exact input transforms, architectures, compute budget,
 training seeds, model selection and thresholds before any new fit.
+The separate [observation-aware research track](m2-observation-aware-research.md)
+implements the first train/calibration-only diagnostic and one-factor input
+transforms without modifying the original M1 experiment.
 
 | Comparison | Single change | Why it is needed |
 |---|---|---|
