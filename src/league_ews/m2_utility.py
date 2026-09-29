@@ -158,9 +158,7 @@ def audit_m2_calibration_utility(
     if truth.shape != (offsets[-1], len(LABELS)) or not np.isin(truth, (0, 1)).all():
         raise ValueError("M2 comparison labels differ from frozen calibration")
 
-    checkpoint_hashes, _ = _completed_checkpoints(
-        Path(training_root), _sha(frozen_file), mode
-    )
+    checkpoint_hashes, _ = _completed_checkpoints(Path(training_root), _sha(frozen_file), mode)
 
     seed_results: list[dict[str, Any]] = []
     per_target: dict[str, list[float]] = {label: [] for label in LABELS}
