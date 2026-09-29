@@ -13,6 +13,9 @@ from typing import Any
 FIELDS = ("totalGold", "xp", "level", "minionsKilled", "jungleMinionsKilled", "position")
 PATCHES = ("16.12", "16.13", "16.14", "16.15", "16.16")
 ROUTES = ("europe", "americas")
+TRAIN_MATCHES = 24000
+CALIBRATION_MATCHES = 6000
+TEST_MATCHES = 6000
 
 
 def _read(path: Path) -> tuple[dict[str, Any], str]:
@@ -124,21 +127,23 @@ def audit_raw_field_coverage(
         and split.get("g2_report_sha256") == g2_sha
         and split.get("raw_manifest_sha256") == manifest_sha
         and split.get("summary", {}).get("counts")
-        == {"train": 24000, "calibration": 6000, "test": 6000}
+        == {"train": TRAIN_MATCHES, "calibration": CALIBRATION_MATCHES, "test": TEST_MATCHES}
         and manifest.get("schema_version") == "riot-raw-collection-v2"
         and isinstance(partitions, dict)
         and set(partitions) == {"train", "calibration", "test"}
     ):
         raise ValueError("Source-field audit requires the passed, bound final collection and split")
     entries = manifest.get("available")
-    if not isinstance(entries, list) or len(entries) != 36000:
+    if not isinstance(entries, list) or len(entries) != (
+        TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES
+    ):
         raise ValueError("Source-field audit requires the complete 36,000-bundle inventory")
     by_id: dict[str, dict[str, Any]] = {}
     for entry in entries:
         if not isinstance(entry, dict) or not isinstance(entry.get("match_id"), str):
             raise ValueError("Source-field audit inventory contains invalid records")
         by_id[entry["match_id"]] = entry
-    if len(by_id) != 36000:
+    if len(by_id) != TRAIN_MATCHES + CALIBRATION_MATCHES + TEST_MATCHES:
         raise ValueError("Source-field audit inventory contains duplicates")
     counts: Counter[tuple[str, str, str, str]] = Counter()
     states: Counter[tuple[str, str]] = Counter()
@@ -147,7 +152,7 @@ def audit_raw_field_coverage(
     for partition in ("train", "calibration"):
         members = partitions[partition]
         if not isinstance(members, list) or len(members) != (
-            24000 if partition == "train" else 6000
+            TRAIN_MATCHES if partition == "train" else CALIBRATION_MATCHES
         ):
             raise ValueError("Source-field audit split inventory differs")
         if not all(isinstance(member, dict) for member in members):
