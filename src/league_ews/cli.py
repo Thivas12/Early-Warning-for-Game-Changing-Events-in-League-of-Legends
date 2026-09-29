@@ -72,6 +72,8 @@ from league_ews.m1_summary import summarize_m1_calibration
 from league_ews.m1_training import train_m1_seed
 from league_ews.m1_training_plan import freeze_m1_training_plan
 from league_ews.m2_preprocessing_audit import audit_m2_preprocessing
+from league_ews.m2_plan import freeze_m2_hybrid
+from league_ews.m2_training import train_m2_seed
 from league_ews.pilot_collection import (
     TimelineFetcher,
     collect_selected_pilot_bundles,
@@ -1056,6 +1058,41 @@ def _audit_m2_preprocessing(args: argparse.Namespace) -> int:
     return 0
 
 
+def _freeze_m2_hybrid(args: argparse.Namespace) -> int:
+    report = freeze_m2_hybrid(
+        args.staging_root,
+        args.normalizer,
+        args.training_plan,
+        args.hazards,
+        args.training_freeze,
+        args.spatial_audit,
+        args.hybrid_plan,
+        args.output,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+
+def _train_m2_seed(args: argparse.Namespace) -> int:
+    report = train_m2_seed(
+        args.staging_root,
+        args.normalizer,
+        args.training_plan,
+        args.hazards,
+        args.training_freeze,
+        args.spatial_audit,
+        args.hybrid_plan,
+        args.hybrid_freeze,
+        args.output,
+        mode=args.mode,
+        seed=args.seed,
+        device=args.device,
+        max_new_shards=args.max_new_shards,
+    )
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["complete"] else 2
+
+
 def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
     report = audit_m1_alert_opportunity(
         args.processed, args.split, args.calibration_root, args.policy_root, args.output
@@ -2010,6 +2047,30 @@ def build_parser() -> argparse.ArgumentParser:
     ):
         m2_audit.add_argument(f"--{name}", type=Path, required=True)
     m2_audit.set_defaults(handler=_audit_m2_preprocessing)
+
+    m2_freeze = subparsers.add_parser(
+        "freeze-m2-hybrid", help="bind the exploratory hybrid to the spatial audit before fitting"
+    )
+    for name in (
+        "staging-root", "normalizer", "training-plan", "hazards", "training-freeze",
+        "spatial-audit", "hybrid-plan", "output",
+    ):
+        m2_freeze.add_argument(f"--{name}", type=Path, required=True)
+    m2_freeze.set_defaults(handler=_freeze_m2_hybrid)
+
+    m2_train = subparsers.add_parser(
+        "train-m2-seed", help="resume one checksum-bound exploratory hybrid seed"
+    )
+    for name in (
+        "staging-root", "normalizer", "training-plan", "hazards", "training-freeze",
+        "spatial-audit", "hybrid-plan", "hybrid-freeze", "output",
+    ):
+        m2_train.add_argument(f"--{name}", type=Path, required=True)
+    m2_train.add_argument("--mode", choices=("gated", "ungated", "spatial-only"), required=True)
+    m2_train.add_argument("--seed", type=int, required=True)
+    m2_train.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    m2_train.add_argument("--max-new-shards", type=int, default=1)
+    m2_train.set_defaults(handler=_train_m2_seed)
 
     m1_alert_audit = subparsers.add_parser(
         "audit-m1-alert-opportunity",

@@ -1,0 +1,33 @@
+schema_version: league-ews-m2-hybrid-plan-v1
+freeze_stage: after-spatial-audit-before-hybrid-training
+input:
+  graph: frozen-m1-train-calibration-shards
+  graph_normalizer: frozen-m1-training-only
+  spatial: real-current-and-past-frames-only
+  spatial_scale: fixed-outcome-blind-physical-bounds
+  position_missingness: explicit-observed-bits
+  synthetic_frames: prohibited
+model:
+  graph: same-architecture-as-m1-from-scratch
+  spatial_hidden_units: 32
+  fusion: event-specific-coverage-and-age-gate-over-hazard-logits
+  modes: [gated, ungated, spatial-only]
+  graph_only_reference: frozen-original-m1-ten-seeds
+  output: independent-event-specific-discrete-hazards
+training:
+  seeds: [20260915, 20260916, 20260917, 20260918, 20260919, 20260920, 20260921, 20260922, 20260923, 20260924]
+  epochs: 3
+  batch_size: 256
+  optimizer: adamw
+  learning_rate: 0.001
+  weight_decay: 0.01
+  loss: mean-bce-with-logits-over-at-risk-bins
+  shard_order: frozen-m1-order-with-seeded-within-shard-permutation
+  model_selection: report-all-ten-seeds-no-calibration-seed-selection
+calibration:
+  patch: "16.16"
+  use: exploratory-scoring-and-earlier-half-thresholds-only
+test:
+  original_patch: "16.17"
+  access: prohibited-for-m2
+  new_cohort: separately-authorized-and-preregistered

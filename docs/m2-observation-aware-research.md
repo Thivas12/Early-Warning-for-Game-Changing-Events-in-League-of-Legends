@@ -48,6 +48,36 @@ distance alone must never be interpreted as a real measurement. This side
 channel is candidate input for an observation-aware hybrid. It does not use
 future event labels or synthesize 10-second frames.
 
+## Prefit hybrid candidate
+
+The follow-on implementation is in `src/league_ews/m2_backend.py`. Its graph
+stream starts from the same M1 architecture, randomly initialized for each
+seed. The 24-value side stream has a 32-unit hidden layer. A three-output gate
+uses both teams' observed-position counts, whether both team centroids exist,
+and the age of the previous real frame. It combines the streams' hazard logits
+separately for Baron, Dragon and teamfight. `ungated` uses an equal logit mix;
+`spatial-only` removes the graph contribution. The original M1 ten seeds are
+the graph-only reference. All variants retain six ordered 10-second hazard
+bins and the same at-risk BCE, three epochs, batch size and seeds. The spatial
+values use fixed outcome-blind scales based on map and count bounds. No
+position imputation, future objective event, oversampling or test input is
+introduced.
+
+After the spatial audit, `make freeze-m2-hybrid` binds its bytes, source graph
+inventory, M1 normalization, and `configs/rifthazard-m2-hybrid-plan.yaml`.
+`make train-m2-seed MODE=gated SEED=20260915 DEVICE=cuda MAX_NEW_SHARDS=1`
+is a one-shard canary. Its checkpoint is atomic and resumable across 720
+train-only units (three epochs over 240 shards). A partial run exits 2 by
+design. The ungated and spatial-only modes are separate, matched controls.
+Run one CUDA process at a time, after the already-running M1 ablation batch;
+the three modes' checkpoints are small compared with the existing graph
+staging and do not create another raw or processed corpus.
+
+Training completion alone is not evidence of better warning. The next code
+stage must checksum-verify each mode's ten calibration score arrays, report
+every target AP/Brier and alert utility, and gate the independent-cohort design.
+Do not run the sealed original test through this follow-on model.
+
 ## Experiment matrix after the diagnostic
 
 1. Refit the four spatial controls above from identical training shards,
