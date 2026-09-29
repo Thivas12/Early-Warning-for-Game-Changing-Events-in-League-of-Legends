@@ -58,7 +58,7 @@ def render(source: Path, output: Path) -> None:
     fig.text(
         0.075,
         0.805,
-        "Real prediction frames · patches 16.12–16.16 · test patch unread",
+        "Real prediction frames · patches 16.12-16.16 · test patch unread",
         fontsize=10,
         color="#54717E",
     )

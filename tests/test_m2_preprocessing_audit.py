@@ -63,6 +63,5 @@ class PreprocessingAuditTests(unittest.TestCase):
                 hazard_targets=np.zeros((1, 3, 6), np.float32),
                 match_offsets=np.array([0, 1], np.int64),
             )
-            with np.load(path, allow_pickle=False) as shard:
-                with self.assertRaises(ValueError):
-                    _add_shard(_accumulator(), shard, {"observations": 1, "matches": 1})
+            with np.load(path, allow_pickle=False) as shard, self.assertRaises(ValueError):
+                _add_shard(_accumulator(), shard, {"observations": 1, "matches": 1})
