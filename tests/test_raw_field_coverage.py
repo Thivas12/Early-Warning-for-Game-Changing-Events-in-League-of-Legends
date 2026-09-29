@@ -114,7 +114,7 @@ def test_bound_source_audit_counts_train_and_calibration_without_test_payload(
         partitions[partition].append(
             {"match_id": match_id, "regional_route": "europe", "game_version_patch": patch}
         )
-    manifest = (raw / "collection-manifest.json")
+    manifest = raw / "collection-manifest.json"
     manifest.write_text(
         json.dumps({"schema_version": "riot-raw-collection-v2", "available": entries})
     )
