@@ -205,3 +205,12 @@ checks identical calibration truth and match order. It reports the ten-seed
 mean, spread and per-target ranges against the frozen original M1 calibration
 mean. This descriptive comparison selects no seed and leaves patch 16.17
 sealed. Alert policies and a protocol freeze follow.
+
+Run `bash scripts/finish_m1_frozen_ablations.sh` from this branch to train,
+calibration-score and summarize the two remaining frozen controls, then rerun
+the checksum-bound calibration audit. It runs one CUDA seed at a time, stops on
+the first error, and resumes from each seed's shard checkpoint when restarted.
+It saves the final six-variant audit separately from the existing four-variant
+audit at `reports/local/m1-calibration-diagnostic-complete.json`; both audits
+are immutable. This step reads no test graph shards. Keep the original M1 and
+B3 models and policies unchanged while these registered controls are completed.

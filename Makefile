@@ -599,7 +599,7 @@ audit-m1-calibration:
 	uv run --no-sync league-ews audit-m1-calibration \
 		--original-root data/private/m1-calibration \
 		--ablation-root data/private/m1-ablation-calibration \
-		--output reports/local/m1-calibration-diagnostic.json
+		--output $(or $(AUDIT_OUTPUT),reports/local/m1-calibration-diagnostic.json)
 
 audit-m1-alert-opportunity:
 	uv run --no-sync league-ews audit-m1-alert-opportunity \

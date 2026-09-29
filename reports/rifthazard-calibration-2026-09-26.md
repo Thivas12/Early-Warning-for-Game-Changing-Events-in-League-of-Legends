@@ -127,3 +127,42 @@ channel. Two frozen controls and the future-patch evaluation remain pending.
 
 Model and alert-policy decisions must remain on the training and calibration
 patches until the one-time future-patch evaluation is frozen.
+
+## Later-half alert sensitivity and observation opportunity
+
+An additional audit replayed the ten frozen M1 policies on calibration patch
+16.16 and selected separate thresholds on the earlier 1,500 matches per route,
+then checked those thresholds on the later 1,500 per route. This audit was
+designed after the aggregate calibration results were known, so its later-half
+numbers are **exploratory within-patch sensitivity**, not independent
+future-patch performance. The researcher supplied the identifier-free output;
+the checksum-bound source remains in the private checkout at
+`reports/local/m1-alert-opportunity.json`.
+
+| Event | Later-half M1 mean F1 | Mean recall | Mean false alerts/game | Full-calibration M1 false alerts/game |
+|---|---:|---:|---:|---:|
+| Baron | 0.49652 | 0.52854 | 0.64940 | 0.58347 |
+| Dragon | 0.58935 | 0.63524 | 1.96563 | 1.94413 |
+| Teamfight proxy | 0.43972 | 0.65541 | 8.74683 | 9.27712 |
+
+The full-calibration and later-half columns use different subsets and
+threshold procedures, so their differences are descriptive. The later-half
+Dragon and Teamfight false-alert rates both exceed the H5 limit of one per
+game. Thus **at most Baron could meet the registered two-event H5 gate at this
+operating point**, regardless of the unreported later-half precision and lead
+time. This does not replace the sealed patch 16.17 result.
+
+The same audit counted true events with a genuine preceding source frame
+within each lead window. The near-minute cadence sharply limits short-window
+opportunity; an observed event cannot receive a 10-second warning from a frame
+that does not exist.
+
+| Event | ≤10 s | ≤20 s | ≤30 s | ≤60 s |
+|---|---:|---:|---:|---:|
+| Baron | 1,080 | 2,149 | 3,262 | 6,494 |
+| Dragon | 3,772 | 7,501 | 11,324 | 22,713 |
+| Teamfight proxy | 6,508 | 13,501 | 20,077 | 39,998 |
+
+About one sixth of each event type has a genuine 10-second opportunity. These
+counts are observational coverage, not attainable model recall at a fixed
+false-alert budget. No intermediate frames were synthesized.
