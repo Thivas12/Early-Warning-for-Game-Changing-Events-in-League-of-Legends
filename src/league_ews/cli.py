@@ -2052,8 +2052,14 @@ def build_parser() -> argparse.ArgumentParser:
         "freeze-m2-hybrid", help="bind the exploratory hybrid to the spatial audit before fitting"
     )
     for name in (
-        "staging-root", "normalizer", "training-plan", "hazards", "training-freeze",
-        "spatial-audit", "hybrid-plan", "output",
+        "staging-root",
+        "normalizer",
+        "training-plan",
+        "hazards",
+        "training-freeze",
+        "spatial-audit",
+        "hybrid-plan",
+        "output",
     ):
         m2_freeze.add_argument(f"--{name}", type=Path, required=True)
     m2_freeze.set_defaults(handler=_freeze_m2_hybrid)
@@ -2062,8 +2068,15 @@ def build_parser() -> argparse.ArgumentParser:
         "train-m2-seed", help="resume one checksum-bound exploratory hybrid seed"
     )
     for name in (
-        "staging-root", "normalizer", "training-plan", "hazards", "training-freeze",
-        "spatial-audit", "hybrid-plan", "hybrid-freeze", "output",
+        "staging-root",
+        "normalizer",
+        "training-plan",
+        "hazards",
+        "training-freeze",
+        "spatial-audit",
+        "hybrid-plan",
+        "hybrid-freeze",
+        "output",
     ):
         m2_train.add_argument(f"--{name}", type=Path, required=True)
     m2_train.add_argument("--mode", choices=("gated", "ungated", "spatial-only"), required=True)

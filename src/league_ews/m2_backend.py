@@ -17,8 +17,7 @@ from league_ews.m2_spatial import SPATIAL_FEATURES, spatial_summary
 
 MODES = ("gated", "ungated", "spatial-only")
 SPATIAL_SCALES = np.asarray(
-    [10, 10, 1, 1, 1, 1, 1.5, 1, 1.5, 1, 1.5, 1.5, 1.5, 1.5,
-     1, 1, 1, 1, 1, 1, 50, 50, 8, 8],
+    [10, 10, 1, 1, 1, 1, 1.5, 1, 1.5, 1, 1.5, 1.5, 1.5, 1.5, 1, 1, 1, 1, 1, 1, 50, 50, 8, 8],
     dtype=np.float32,
 )
 
@@ -70,8 +69,7 @@ class TorchM2Backend:
                 self.gate = torch.nn.Linear(4, 3)
 
             def forward(
-                self, nodes: Any, edges: Any, ages: Any, lengths: Any,
-                spatial: Any, coverage: Any
+                self, nodes: Any, edges: Any, ages: Any, lengths: Any, spatial: Any, coverage: Any
             ) -> Any:
                 spatial_logits = self.spatial(spatial).reshape(-1, 3, 6)
                 if mode == "spatial-only":
@@ -135,8 +133,12 @@ class TorchM2Backend:
             at_risk = torch.from_numpy(risk[indices]).to(self.device)
             self.optimizer.zero_grad(set_to_none=True)
             logits = self.model(
-                graph_batch, edge_batch, ages_batch,
-                torch.from_numpy(lengths[indices]), spatial_batch, coverage_batch
+                graph_batch,
+                edge_batch,
+                ages_batch,
+                torch.from_numpy(lengths[indices]),
+                spatial_batch,
+                coverage_batch,
             )
             per_bin = torch.nn.functional.binary_cross_entropy_with_logits(
                 logits, truth, reduction="none"
@@ -177,9 +179,9 @@ class TorchM2Backend:
                 )
                 hazards = self.torch.sigmoid(logits).cpu().numpy()
                 chunks.append(
-                    risk_at_horizons(
-                        hazards, bin_seconds=10, horizons_seconds=(10, 20, 30, 60)
-                    ).reshape(end - start, 12).astype(np.float32)
+                    risk_at_horizons(hazards, bin_seconds=10, horizons_seconds=(10, 20, 30, 60))
+                    .reshape(end - start, 12)
+                    .astype(np.float32)
                 )
         if not chunks:
             raise ValueError("M2 prediction shard is empty")

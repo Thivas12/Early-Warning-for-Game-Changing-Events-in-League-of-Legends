@@ -121,7 +121,12 @@ def train_m2_seed(
                 root, manifest["shards"][index], normalizer
             )
             last_loss, last_rows = backend.train_shard(
-                raw, scaled, edges, mask, ages, hazards,
+                raw,
+                scaled,
+                edges,
+                mask,
+                ages,
+                hazards,
                 seed=seed + 10_000 * epoch + index,
             )
             saved = {

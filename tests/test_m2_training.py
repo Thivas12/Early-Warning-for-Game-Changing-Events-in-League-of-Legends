@@ -103,7 +103,17 @@ class M2TrainingTests(unittest.TestCase):
                 patch("league_ews.m2_training._training_input", return_value=(1, 2, 3, 4, 5, 6)),
                 patch("league_ews.m2_training.TorchM2Backend", FakeBackend),
             ):
-                params = (stage, normalizer, m1_plan, hazards, m1_freeze, audit, plan, freeze_path, output)
+                params = (
+                    stage,
+                    normalizer,
+                    m1_plan,
+                    hazards,
+                    m1_freeze,
+                    audit,
+                    plan,
+                    freeze_path,
+                    output,
+                )
                 first = train_m2_seed(*params, mode="gated", seed=SEEDS[0], max_new_shards=1)
                 self.assertEqual(first["completed_shards"], 1)
                 second = train_m2_seed(*params, mode="gated", seed=SEEDS[0], max_new_shards=1)
@@ -116,11 +126,28 @@ class M2TrainingTests(unittest.TestCase):
         args = build_parser().parse_args(
             [
                 "train-m2-seed",
-                "--staging-root", "stage", "--normalizer", "normalizer",
-                "--training-plan", "m1-plan", "--hazards", "hazards",
-                "--training-freeze", "m1-freeze", "--spatial-audit", "audit",
-                "--hybrid-plan", "plan", "--hybrid-freeze", "freeze",
-                "--output", "output", "--mode", "gated", "--seed", str(SEEDS[0]),
+                "--staging-root",
+                "stage",
+                "--normalizer",
+                "normalizer",
+                "--training-plan",
+                "m1-plan",
+                "--hazards",
+                "hazards",
+                "--training-freeze",
+                "m1-freeze",
+                "--spatial-audit",
+                "audit",
+                "--hybrid-plan",
+                "plan",
+                "--hybrid-freeze",
+                "freeze",
+                "--output",
+                "output",
+                "--mode",
+                "gated",
+                "--seed",
+                str(SEEDS[0]),
             ]
         )
         self.assertFalse(hasattr(args, "test_root"))
