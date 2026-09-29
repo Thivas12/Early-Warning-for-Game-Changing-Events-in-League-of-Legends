@@ -60,7 +60,9 @@ fully followed predictions, censoring is not a plausible explanation.
 1. **Baselines:** B0 event prevalence; B2 event/clock history; B3 tabular;
    unchanged M1; M2 graph-only, spatial-only, equal fusion and learned gate;
    a tabular **objective-clock and measured-position** baseline with explicit
-   source availability and comparable data/compute. Reproduce thresholds with
+   source availability and comparable data/compute. For every forecast metric,
+   compare on the same follow-up-eligible prediction rows; refit a censored
+   B3 control if the training target policy changes. Reproduce thresholds with
    disjoint tuning and evaluation matches. Report every negative result.
 2. **One-factored observations:** keep graph size/pooling fixed while masking
    coordinates, position-observed bit, proximity relations and objective

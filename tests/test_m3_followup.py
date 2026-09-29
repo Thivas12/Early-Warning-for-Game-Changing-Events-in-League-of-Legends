@@ -7,10 +7,10 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
+from league_ews import m3_followup_audit as audit_module
 from league_ews.cli import build_parser
 from league_ews.m3_followup import censored_hazard_bce, confirmed_followup_masks
 from league_ews.m3_followup_audit import _accumulate, _counts, _source_times_and_hazards
-from league_ews import m3_followup_audit as audit_module
 
 
 def test_positive_partial_bin_is_known_but_unobserved_negative_tail_is_censored() -> None:
