@@ -39,7 +39,7 @@ def _training_input(
     return raw_nodes, scaled, edges, mask, ages, hazards
 
 
-def train_m2_seed(
+def _bound_hybrid(
     staging_root: str | Path,
     normalizer_path: str | Path,
     training_plan_path: str | Path,
@@ -48,15 +48,9 @@ def train_m2_seed(
     audit_path: str | Path,
     plan_path: str | Path,
     hybrid_freeze_path: str | Path,
-    output_root: str | Path,
-    *,
-    mode: str,
-    seed: int,
-    device: str = "cpu",
-    max_new_shards: int = 1,
-) -> dict[str, Any]:
-    if mode not in MODES or seed not in SEEDS or max_new_shards < 1:
-        raise ValueError("M2 training mode, seed or bounded shard count is invalid")
+) -> tuple[dict[str, Any], dict[str, Any], str]:
+    """Bind every train/calibration use to the same immutable prefit audit."""
+
     root = Path(staging_root)
     normalizer_file = Path(normalizer_path)
     audit_file = Path(audit_path)
@@ -89,7 +83,38 @@ def train_m2_seed(
         or frozen.get("identifiers_in_summary") is not False
     ):
         raise ValueError("M2 hybrid training differs from its prefit freeze")
-    binding = _sha(frozen_content)
+    return manifest, normalizer, _sha(frozen_content)
+
+
+def train_m2_seed(
+    staging_root: str | Path,
+    normalizer_path: str | Path,
+    training_plan_path: str | Path,
+    hazards_path: str | Path,
+    training_freeze_path: str | Path,
+    audit_path: str | Path,
+    plan_path: str | Path,
+    hybrid_freeze_path: str | Path,
+    output_root: str | Path,
+    *,
+    mode: str,
+    seed: int,
+    device: str = "cpu",
+    max_new_shards: int = 1,
+) -> dict[str, Any]:
+    if mode not in MODES or seed not in SEEDS or max_new_shards < 1:
+        raise ValueError("M2 training mode, seed or bounded shard count is invalid")
+    root = Path(staging_root)
+    manifest, normalizer, binding = _bound_hybrid(
+        root,
+        normalizer_path,
+        training_plan_path,
+        hazards_path,
+        training_freeze_path,
+        audit_path,
+        plan_path,
+        hybrid_freeze_path,
+    )
     folder = Path(output_root) / mode / f"seed-{seed}"
     folder.mkdir(parents=True, exist_ok=True)
     checkpoint = folder / "checkpoint.pt"

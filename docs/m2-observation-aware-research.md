@@ -73,10 +73,17 @@ Run one CUDA process at a time, after the already-running M1 ablation batch;
 the three modes' checkpoints are small compared with the existing graph
 staging and do not create another raw or processed corpus.
 
-Training completion alone is not evidence of better warning. The next code
-stage must checksum-verify each mode's ten calibration score arrays, report
-every target AP/Brier and alert utility, and gate the independent-cohort design.
-Do not run the sealed original test through this follow-on model.
+After **all ten seeds in one mode** finish, `make score-m2-calibration
+MODE=gated SEED=20260915` verifies all ten checkpoints before opening the
+calibration shards. It writes checksum-bound probabilities, exact labels and
+match offsets plus each target's AP and Brier score. Repeat for all ten seeds
+and each mode; this command never reads a test shard. It creates roughly one
+compressed score file per seed, so review disk availability before a full
+thirty-seed run. Training completion and calibration AP alone are not evidence
+of better warnings. The next code stage must replay event-level alerts with
+threshold selection separated from evaluation, compare all seeds against B3
+and original M1, and gate a fresh-cohort design. Do not run the sealed original
+test through this follow-on model.
 
 ## Experiment matrix after the diagnostic
 
