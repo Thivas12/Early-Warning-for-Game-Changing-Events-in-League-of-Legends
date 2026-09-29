@@ -116,6 +116,58 @@ def test_objective_free_scoring_and_retry(tmp_path, monkeypatch):
         scorer.score_m1_graph_ablation_seed(*args, variant="no-objective-nodes", seed=SEEDS[0])
 
 
+def test_independent_head_scoring_keeps_unconstrained_predictions(tmp_path, monkeypatch):
+    args = _inputs(tmp_path, monkeypatch)
+
+    class IndependentBackend:
+        def __init__(self, seed, device, *, node_count, relation_count, output_mode):
+            assert (node_count, relation_count, output_mode) == (12, 5, "independent-heads")
+            self.device, self.version = device, "fake"
+
+        def load_state_dict(self, state):
+            assert state == {"frozen": True}
+
+        def predict_shard(self, nodes, edges, mask, ages):
+            return np.tile([0.8, 0.2, 0.7, 0.3] * 3, (len(nodes), 1)).astype(np.float32)
+
+    monkeypatch.setattr(scorer, "TorchM1Backend", IndependentBackend)
+    report = scorer.score_m1_graph_ablation_seed(
+        *args, variant="independent-horizon-heads", seed=SEEDS[0]
+    )
+    assert report["output_mode"] == "independent-heads"
+    with np.load(
+        args[-1] / "independent-horizon-heads" / f"seed-{SEEDS[0]}" / "calibration-scores.npz",
+        allow_pickle=False,
+    ) as saved:
+        assert saved["probabilities"][0, :4].tolist() == pytest.approx([0.8, 0.2, 0.7, 0.3])
+
+
+def test_fixed_minute_grid_scoring_keeps_genuine_targets(tmp_path, monkeypatch):
+    args = _inputs(tmp_path, monkeypatch)
+
+    class StandardBackend:
+        def __init__(self, seed, device, *, node_count, relation_count):
+            assert (node_count, relation_count) == (12, 5)
+            self.device, self.version = device, "fake"
+
+        def load_state_dict(self, state):
+            pass
+
+        def predict_shard(self, nodes, edges, mask, ages):
+            return np.tile([0.1, 0.2, 0.3, 0.4] * 3, (len(nodes), 1)).astype(np.float32)
+
+    called = []
+
+    def grid(nodes, edges, mask, ages, offsets):
+        called.append(offsets.tolist())
+        return nodes, edges, mask, ages
+
+    monkeypatch.setattr(scorer, "TorchM1Backend", StandardBackend)
+    monkeypatch.setattr(scorer, "fixed_minute_grid", grid)
+    report = scorer.score_m1_graph_ablation_seed(*args, variant="fixed-minute-grid", seed=SEEDS[0])
+    assert called == [[0, 1, 2]] and report["calibration_matches"] == 2
+
+
 def test_checkpoint_gate_blocks_calibration_reads(tmp_path, monkeypatch):
     args = _inputs(tmp_path, monkeypatch)
     monkeypatch.setattr(

@@ -97,13 +97,17 @@ class TorchM1Backend:
         *,
         node_count: int = 12,
         relation_count: int = 5,
+        output_mode: str = "hazards",
     ) -> None:
         if device not in ("cpu", "cuda"):
             raise ValueError("M1 device must be cpu or cuda")
         if (node_count, relation_count) not in ((12, 5), (10, 3)):
             raise ValueError("M1 graph architecture differs from registered node variants")
+        if output_mode not in ("hazards", "independent-heads"):
+            raise ValueError("M1 output mode is not registered")
         self.node_count = node_count
         self.relation_count = relation_count
+        self.output_mode = output_mode
         os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
         try:
             torch = importlib.import_module("torch")
@@ -131,7 +135,7 @@ class TorchM1Backend:
                 )
                 self.dropout = torch.nn.Dropout(0.1)
                 self.temporal = torch.nn.GRU(65, 64, batch_first=True)
-                self.head = torch.nn.Linear(64, 18)
+                self.head = torch.nn.Linear(64, 18 if output_mode == "hazards" else 12)
 
             def forward(self, nodes: Any, edges: Any, ages: Any, lengths: Any) -> Any:
                 mask = (
@@ -154,7 +158,8 @@ class TorchM1Backend:
                     temporal_input, lengths.cpu(), batch_first=True, enforce_sorted=False
                 )
                 _, state = self.temporal(packed)
-                return self.head(state[-1]).reshape(len(nodes), 3, 6)
+                output = self.head(state[-1])
+                return output.reshape(len(nodes), 3, 6) if output_mode == "hazards" else output
 
         self.model = GraphHazards().to(device)
         self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=0.001, weight_decay=0.01)
@@ -169,7 +174,7 @@ class TorchM1Backend:
         *,
         seed: int,
     ) -> tuple[float, int]:
-        """Train on one shard with independent event hazards and at-risk masking."""
+        """Train hazards or direct future labels with the same graph encoder."""
 
         packed_nodes, packed_edges, packed_ages, lengths = right_pad_graphs(
             nodes,
@@ -179,7 +184,12 @@ class TorchM1Backend:
             node_count=self.node_count,
             relation_count=self.relation_count,
         )
-        risk = at_risk_mask(targets)
+        if self.output_mode == "hazards":
+            risk = at_risk_mask(targets)
+        else:
+            if targets.shape != (len(nodes), 12) or not np.isin(targets, (0, 1)).all():
+                raise ValueError("Independent heads require twelve exact-future labels")
+            risk = np.ones_like(targets, dtype=np.float32)
         self.model.train()
         total_loss = 0.0
         total_weight = 0
@@ -208,7 +218,7 @@ class TorchM1Backend:
     def predict_shard(
         self, nodes: np.ndarray, edges: np.ndarray, mask: np.ndarray, ages: np.ndarray
     ) -> np.ndarray:
-        """Return coherent 10/20/30/60-second risk for all three event types."""
+        """Return registered 10/20/30/60-second scores for three event types."""
 
         if not len(nodes):
             raise ValueError("M1 prediction shard is empty")
@@ -231,9 +241,12 @@ class TorchM1Backend:
                     self.torch.from_numpy(a[start:end]).to(self.device),
                     self.torch.from_numpy(lengths[start:end]),
                 )
-                hazards = self.torch.sigmoid(logits).cpu().numpy()
-                risks = risk_at_horizons(hazards, bin_seconds=10, horizons_seconds=(10, 20, 30, 60))
-                scores.append(risks.reshape(end - start, 12).astype(np.float32))
+                probabilities = self.torch.sigmoid(logits).cpu().numpy()
+                if self.output_mode == "hazards":
+                    probabilities = risk_at_horizons(
+                        probabilities, bin_seconds=10, horizons_seconds=(10, 20, 30, 60)
+                    )
+                scores.append(probabilities.reshape(end - start, 12).astype(np.float32))
         result = np.concatenate(scores)
         if result.shape != (len(nodes), 12) or not np.isfinite(result).all():
             raise ValueError("M1 predictions differ from frozen hazard output")

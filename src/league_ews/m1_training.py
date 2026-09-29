@@ -98,7 +98,11 @@ def _bound_inputs(
 
 
 def _training_shard(
-    root: Path, entry: dict[str, Any], normalizer: dict[str, Any]
+    root: Path,
+    entry: dict[str, Any],
+    normalizer: dict[str, Any],
+    *,
+    independent_labels: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     if entry["partition"] != "train":
         raise ValueError("M1 training cannot load a calibration shard")
@@ -147,7 +151,7 @@ def _training_shard(
             raise ValueError("M1 hazard targets disagree with registered future labels")
         right_pad_graphs(nodes, edges, mask, ages)
         scaled = apply_m1_normalizer(nodes, mask, normalizer)
-        return scaled, edges, mask, ages, hazards
+        return scaled, edges, mask, ages, targets if independent_labels else hazards
 
 
 def train_m1_seed(

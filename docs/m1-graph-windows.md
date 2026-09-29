@@ -161,7 +161,7 @@ the same real observations. The same ten seeds, training schedule and
 calibration policy apply to each variant. This chunk freezes the contract;
 variant training is a separate step.
 
-## Bounded training for four graph removal variants
+## Bounded training for six registered controls
 
 `make train-m1-graph-ablation-seed VARIANT=no-positions-or-proximity SEED=20260915 DEVICE=cuda MAX_NEW_SHARDS=1`
 trains one canary shard on the frozen training partition. Rerun with a larger
@@ -176,23 +176,41 @@ architecture. The objective-node variant removes both objective nodes and
 their two relation channels, so its encoder pools ten participant nodes across
 three relation channels. Its checkpoint binds these dimensions; existing
 checkpoints for the other variants resume with the original architecture.
-Independent heads and fixed-minute-grid need their own implementations.
-Do not treat a completed checkpoint as a calibration or test result.
+Independent heads retain the twelve-node encoder but train twelve direct
+future-label logits with mean BCE and no horizon monotonicity constraint. The
+minute grid control uses checksum-bound genuine current frames, match offsets
+and cross-checked millisecond gaps from the processed-derived graph shards.
+It selects the latest real frame at each minute anchor, removes repeated
+selections and left pads missing history while preserving prediction rows and
+labels. It creates no second graph corpus. Do not treat a completed checkpoint
+as a calibration or test result.
 
 `make score-m1-graph-ablation-seed VARIANT=no-objective-nodes SEED=20260915`
-scores one graph removal seed only after **all ten seeds for that variant**
+scores one registered variant seed only after **all ten seeds for that variant**
 have completed training. It checks their checkpoint and freeze bindings first,
 then verifies each calibration shard against the frozen manifest, applies the
-same feature normalization and registered graph removal as training, and
+same feature normalization and registered ablation transform as training, and
 reports all twelve label AP values and macro AP. Private predictions include
 match offsets for later alert evaluation and are bound to all ten checkpoints.
 Reruns verify the report and scores; an interrupted write can regenerate the
 report from the same inputs. No test shard is staged or opened, and no seed is
-chosen from calibration results. Summaries and alert comparisons follow.
+chosen from calibration results. Use `VARIANT=independent-horizon-heads` or
+`VARIANT=fixed-minute-grid` for the remaining frozen controls. Independent
+head scoring intentionally permits nonmonotone horizon scores. Summaries and
+alert comparisons follow.
 
 `make summarize-m1-graph-ablation VARIANT=no-objective-nodes` audits all ten
 saved probability arrays, recalculates twelve AP metrics for each seed and
 checks identical calibration truth and match order. It reports the ten-seed
 mean, spread and per-target ranges against the frozen original M1 calibration
 mean. This descriptive comparison selects no seed and leaves patch 16.17
-sealed. Alert policies and the remaining registered controls follow.
+sealed. Alert policies and a protocol freeze follow.
+
+Run `bash scripts/finish_m1_frozen_ablations.sh` from this branch to train,
+calibration-score and summarize the two remaining frozen controls, then rerun
+the checksum-bound calibration audit. It runs one CUDA seed at a time, stops on
+the first error, and resumes from each seed's shard checkpoint when restarted.
+It saves the final six-variant audit separately from the existing four-variant
+audit at `reports/local/m1-calibration-diagnostic-complete.json`; both audits
+are immutable. This step reads no test graph shards. Keep the original M1 and
+B3 models and policies unchanged while these registered controls are completed.

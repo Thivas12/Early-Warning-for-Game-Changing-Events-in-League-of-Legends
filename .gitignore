@@ -40,6 +40,7 @@ mlruns/
 
 # Generated research outputs
 reports/local/
+reports/figures/*.png
 paper/build/
 paper/*.aux
 paper/*.bbl

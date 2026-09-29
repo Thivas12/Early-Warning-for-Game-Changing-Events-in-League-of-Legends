@@ -1,4 +1,4 @@
-"""Resume one registered M1 graph removal ablation at a time."""
+"""Resume one registered M1 ablation at a time."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from typing import Any
 from league_ews.m1_ablation_inputs import ablate_graph_inputs
 from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_backend import TorchM1Backend
+from league_ews.m1_fixed_grid import fixed_minute_grid, verified_match_offsets
 from league_ews.m1_normalizer import TRAIN_SHARDS
 from league_ews.m1_training import (
     UNITS_PER_SEED,
@@ -23,6 +24,8 @@ SUPPORTED_VARIANTS = (
     "no-interaction-edges",
     "no-objective-nodes",
     "no-assistance-history",
+    "independent-horizon-heads",
+    "fixed-minute-grid",
 )
 
 
@@ -36,6 +39,10 @@ def _new_backend(seed: int, device: str) -> TorchM1Backend:
 
 def _new_objective_free_backend(seed: int, device: str) -> TorchM1Backend:
     return TorchM1Backend(seed, device, node_count=10, relation_count=3)
+
+
+def _new_independent_backend(seed: int, device: str) -> TorchM1Backend:
+    return TorchM1Backend(seed, device, output_mode="independent-heads")
 
 
 def train_m1_graph_ablation_seed(
@@ -95,6 +102,8 @@ def train_m1_graph_ablation_seed(
         backend = (
             _new_objective_free_backend(seed, device)
             if variant == "no-objective-nodes"
+            else _new_independent_backend(seed, device)
+            if variant == "independent-horizon-heads"
             else _new_backend(seed, device)
         )
         if checkpoint.exists():
@@ -110,6 +119,8 @@ def train_m1_graph_ablation_seed(
                 or saved.get("torch_version") != backend.version
                 or saved.get("node_count", 12) != node_count
                 or saved.get("relation_count", 5) != relation_count
+                or saved.get("output_mode", "hazards")
+                != ("independent-heads" if variant == "independent-horizon-heads" else "hazards")
                 or type(completed) is not int
                 or not 0 <= completed <= UNITS_PER_SEED
             ):
@@ -121,10 +132,19 @@ def train_m1_graph_ablation_seed(
         last_rows = None
         for unit in range(completed, min(UNITS_PER_SEED, completed + max_new_shards)):
             epoch, index = divmod(unit, TRAIN_SHARDS)
-            nodes, edges, mask, ages, hazards = _training_shard(
-                stage, manifest["shards"][index], normalizer
-            )
-            nodes, edges = ablate_graph_inputs(nodes, edges, mask, ages, variant=variant)
+            if variant == "independent-horizon-heads":
+                nodes, edges, mask, ages, hazards = _training_shard(
+                    stage, manifest["shards"][index], normalizer, independent_labels=True
+                )
+            else:
+                nodes, edges, mask, ages, hazards = _training_shard(
+                    stage, manifest["shards"][index], normalizer
+                )
+                if variant == "fixed-minute-grid":
+                    offsets = verified_match_offsets(stage, manifest["shards"][index])
+                    nodes, edges, mask, ages = fixed_minute_grid(nodes, edges, mask, ages, offsets)
+                else:
+                    nodes, edges = ablate_graph_inputs(nodes, edges, mask, ages, variant=variant)
             last_loss, last_rows = backend.train_shard(
                 nodes, edges, mask, ages, hazards, seed=seed + 10_000 * epoch + index
             )
@@ -138,6 +158,11 @@ def train_m1_graph_ablation_seed(
                 "torch_version": backend.version,
                 "node_count": node_count,
                 "relation_count": relation_count,
+                **(
+                    {"output_mode": "independent-heads"}
+                    if variant == "independent-horizon-heads"
+                    else {}
+                ),
                 "completed_shards": unit + 1,
                 "backend": backend.state_dict(),
             }

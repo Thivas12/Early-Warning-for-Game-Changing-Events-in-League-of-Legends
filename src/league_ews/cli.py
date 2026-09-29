@@ -60,8 +60,10 @@ from league_ews.m1_ablation_calibration import score_m1_graph_ablation_seed
 from league_ews.m1_ablation_plan import freeze_m1_ablations
 from league_ews.m1_ablation_summary import summarize_m1_graph_ablation
 from league_ews.m1_ablation_training import SUPPORTED_VARIANTS, train_m1_graph_ablation_seed
+from league_ews.m1_alert_diagnostics import audit_m1_alert_opportunity
 from league_ews.m1_alert_policy import select_m1_alert_policy
 from league_ews.m1_calibration import score_m1_calibration_seed
+from league_ews.m1_calibration_audit import audit_m1_calibration
 from league_ews.m1_graph_plan import freeze_graph_plan
 from league_ews.m1_graph_staging import stage_m1_graphs
 from league_ews.m1_normalizer import fit_m1_normalizer
@@ -1012,6 +1014,57 @@ def _summarize_m1_graph_ablation(args: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_m1_calibration(args: argparse.Namespace) -> int:
+    report = audit_m1_calibration(args.original_root, args.ablation_root, args.output)
+    print(
+        json.dumps(
+            {
+                "output": str(args.output),
+                "complete_variants": list(report["comparisons"]),
+                "missing_variants": report["missing_variants"],
+                "test_matches_unread": report["test_matches_unread"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
+    report = audit_m1_alert_opportunity(
+        args.processed, args.split, args.calibration_root, args.policy_root, args.output
+    )
+    opportunities = report["seed_diagnostics"][0]["events"]
+    later = report["later_half_summary"]
+    print(
+        json.dumps(
+            {
+                "output": str(args.output),
+                "calibration_matches": report["calibration_matches"],
+                "seed_count": report["seed_count"],
+                "test_matches_unread": report["test_matches_unread"],
+                "events": {
+                    event: {
+                        "opportunities_by_horizon_seconds": opportunities[event][
+                            "opportunities_by_horizon_seconds"
+                        ],
+                        "later_half_f1_mean": later[event]["event_f1"]["mean"],
+                        "later_half_recall_mean": later[event]["event_recall"]["mean"],
+                        "later_half_false_alerts_per_game_mean": later[event][
+                            "false_alerts_per_game"
+                        ]["mean"],
+                    }
+                    for event in EVENTS
+                },
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _train_m1_seed(args: argparse.Namespace) -> int:
     report = train_m1_seed(
         args.staging_root,
@@ -1845,7 +1898,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     m1_ablation_train = subparsers.add_parser(
         "train-m1-graph-ablation-seed",
-        help="resume one frozen M1 graph removal seed",
+        help="resume one frozen M1 ablation seed",
     )
     for name in (
         "staging-root",
@@ -1871,7 +1924,7 @@ def build_parser() -> argparse.ArgumentParser:
     m1_ablation_train.set_defaults(handler=_train_m1_graph_ablation_seed)
 
     m1_ablation_score = subparsers.add_parser(
-        "score-m1-graph-ablation-seed", help="score one frozen graph removal seed"
+        "score-m1-graph-ablation-seed", help="score one frozen M1 ablation seed"
     )
     for name in (
         "staging-root",
@@ -1892,7 +1945,7 @@ def build_parser() -> argparse.ArgumentParser:
     m1_ablation_score.set_defaults(handler=_score_m1_graph_ablation_seed)
 
     m1_ablation_summary = subparsers.add_parser(
-        "summarize-m1-graph-ablation", help="audit ten graph removal calibration seeds"
+        "summarize-m1-graph-ablation", help="audit ten M1 ablation calibration seeds"
     )
     for name in (
         "staging-root",
@@ -1910,6 +1963,21 @@ def build_parser() -> argparse.ArgumentParser:
         m1_ablation_summary.add_argument(f"--{name}", type=Path, required=True)
     m1_ablation_summary.add_argument("--variant", choices=SUPPORTED_VARIANTS, required=True)
     m1_ablation_summary.set_defaults(handler=_summarize_m1_graph_ablation)
+
+    m1_audit = subparsers.add_parser(
+        "audit-m1-calibration", help="audit paired M1 ablation targets without test access"
+    )
+    for name in ("original-root", "ablation-root", "output"):
+        m1_audit.add_argument(f"--{name}", type=Path, required=True)
+    m1_audit.set_defaults(handler=_audit_m1_calibration)
+
+    m1_alert_audit = subparsers.add_parser(
+        "audit-m1-alert-opportunity",
+        help="audit M1 event opportunity and alert burden on frozen calibration only",
+    )
+    for name in ("processed", "split", "calibration-root", "policy-root", "output"):
+        m1_alert_audit.add_argument(f"--{name}", type=Path, required=True)
+    m1_alert_audit.set_defaults(handler=_audit_m1_alert_opportunity)
 
     m1_train = subparsers.add_parser("train-m1-seed", help="resume one frozen M1 seed")
     for name in ("staging-root", "normalizer", "plan", "hazards", "freeze", "output"):
