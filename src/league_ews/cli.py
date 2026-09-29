@@ -71,8 +71,8 @@ from league_ews.m1_policy_summary import summarize_m1_alert_policies
 from league_ews.m1_summary import summarize_m1_calibration
 from league_ews.m1_training import train_m1_seed
 from league_ews.m1_training_plan import freeze_m1_training_plan
-from league_ews.m2_preprocessing_audit import audit_m2_preprocessing
 from league_ews.m2_plan import freeze_m2_hybrid
+from league_ews.m2_preprocessing_audit import audit_m2_preprocessing
 from league_ews.m2_training import train_m2_seed
 from league_ews.pilot_collection import (
     TimelineFetcher,
