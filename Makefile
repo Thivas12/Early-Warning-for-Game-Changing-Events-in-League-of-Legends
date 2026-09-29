@@ -665,6 +665,17 @@ score-m2-calibration:
 		--mode $(or $(MODE),gated) \
 		--seed $(or $(SEED),20260915)
 
+audit-m2-utility:
+	uv run --no-sync league-ews audit-m2-utility \
+		--hybrid-freeze data/private/m2-hybrid-freeze.json \
+		--split data/private/final-split.json \
+		--processed data/processed/registered-final \
+		--calibration-root data/private/m2-calibration \
+		--m1-summary data/private/m1-calibration/ten-seed-summary.json \
+		--m1-diagnostic reports/local/m1-alert-opportunity.json \
+		--output reports/local/m2-utility \
+		--mode $(or $(MODE),gated)
+
 stage-b4-sequences-all:
 	@set -e; while :; do \
 		$(MAKE) stage-b4-sequences; \
