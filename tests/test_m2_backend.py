@@ -29,7 +29,7 @@ def test_spatial_inputs_preserve_explicit_coverage_and_fixed_scale():
     nodes, edges, mask, ages, _ = _batch()
     scaled, gate = spatial_inputs(nodes, edges, mask, ages)
     assert scaled.shape == (2, 24) and gate.shape == (2, 4)
-    np.testing.assert_array_equal(gate[:, :3], [[0.1, 0.1, 1], [0.1, 0.1, 1]])
+    np.testing.assert_allclose(gate[:, :3], [[0.1, 0.1, 1], [0.1, 0.1, 1]])
     assert scaled[0, 8] == pytest.approx(0.25 / 1.5)
     nodes[:, -1, 5, 10] = 0
     nodes[:, -1, 5, 8:10] = 0
