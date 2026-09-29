@@ -71,6 +71,7 @@ from league_ews.m1_policy_summary import summarize_m1_alert_policies
 from league_ews.m1_summary import summarize_m1_calibration
 from league_ews.m1_training import train_m1_seed
 from league_ews.m1_training_plan import freeze_m1_training_plan
+from league_ews.m2_preprocessing_audit import audit_m2_preprocessing
 from league_ews.pilot_collection import (
     TimelineFetcher,
     collect_selected_pilot_bundles,
@@ -1031,6 +1032,30 @@ def _audit_m1_calibration(args: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_m2_preprocessing(args: argparse.Namespace) -> int:
+    report = audit_m2_preprocessing(
+        args.staging_root,
+        args.normalizer,
+        args.training_plan,
+        args.hazards,
+        args.training_freeze,
+        args.output,
+    )
+    print(
+        json.dumps(
+            {
+                "output": str(args.output),
+                "staging_manifest_sha256": report["staging_manifest_sha256"],
+                "matches": {name: value["matches"] for name, value in report["partitions"].items()},
+                "test_matches_unread": report["test_matches_unread"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
     report = audit_m1_alert_opportunity(
         args.processed, args.split, args.calibration_root, args.policy_root, args.output
@@ -1970,6 +1995,21 @@ def build_parser() -> argparse.ArgumentParser:
     for name in ("original-root", "ablation-root", "output"):
         m1_audit.add_argument(f"--{name}", type=Path, required=True)
     m1_audit.set_defaults(handler=_audit_m1_calibration)
+
+    m2_audit = subparsers.add_parser(
+        "audit-m2-preprocessing",
+        help="audit position coverage and target prevalence in staged train/calibration graphs",
+    )
+    for name in (
+        "staging-root",
+        "normalizer",
+        "training-plan",
+        "hazards",
+        "training-freeze",
+        "output",
+    ):
+        m2_audit.add_argument(f"--{name}", type=Path, required=True)
+    m2_audit.set_defaults(handler=_audit_m2_preprocessing)
 
     m1_alert_audit = subparsers.add_parser(
         "audit-m1-alert-opportunity",
