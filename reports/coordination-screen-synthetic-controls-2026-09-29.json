@@ -1,0 +1,139 @@
+{
+  "schema_version": "league-ews-coordination-synthetic-controls-v1",
+  "synthetic": true,
+  "new_private_model_results": false,
+  "construction": "Snapshot/history aggregates identical; synthetic target depends on identity-linked past movement; one forecast per match",
+  "fit_matches": 60,
+  "selection_matches": 20,
+  "threshold_tuning_matches": 20,
+  "evaluation_matches": 20,
+  "positive_control": {
+    "b3": {
+      "row_metrics": {
+        "roc_auc": 0.5,
+        "average_precision": 0.5,
+        "brier": 0.25,
+        "prevalence": 0.5
+      },
+      "warning_metrics": {
+        "matches": 20,
+        "events": 10,
+        "alerts": 20,
+        "matched_events": 10,
+        "timely_matched_events": 10,
+        "event_recall": 1.0,
+        "timely_event_recall": 1.0,
+        "precision": 0.5,
+        "timely_precision": 0.5,
+        "false_alerts_per_game": 0.5,
+        "late_alerts_per_game": 0.0,
+        "timely_opportunities": 10,
+        "opportunity_conditional_timely_recall": 1.0,
+        "lead_seconds_median": 30.0,
+        "lead_seconds_p10": 30.0,
+        "false_alerts_per_game_quantiles": {
+          "50": 0.5,
+          "90": 1.0,
+          "95": 1.0
+        }
+      }
+    },
+    "snapshot": {
+      "row_metrics": {
+        "roc_auc": 0.5,
+        "average_precision": 0.5,
+        "brier": 0.25,
+        "prevalence": 0.5
+      },
+      "warning_metrics": {
+        "matches": 20,
+        "events": 10,
+        "alerts": 20,
+        "matched_events": 10,
+        "timely_matched_events": 10,
+        "event_recall": 1.0,
+        "timely_event_recall": 1.0,
+        "precision": 0.5,
+        "timely_precision": 0.5,
+        "false_alerts_per_game": 0.5,
+        "late_alerts_per_game": 0.0,
+        "timely_opportunities": 10,
+        "opportunity_conditional_timely_recall": 1.0,
+        "lead_seconds_median": 30.0,
+        "lead_seconds_p10": 30.0,
+        "false_alerts_per_game_quantiles": {
+          "50": 0.5,
+          "90": 1.0,
+          "95": 1.0
+        }
+      }
+    },
+    "history": {
+      "row_metrics": {
+        "roc_auc": 0.5,
+        "average_precision": 0.5,
+        "brier": 0.25,
+        "prevalence": 0.5
+      },
+      "warning_metrics": {
+        "matches": 20,
+        "events": 10,
+        "alerts": 20,
+        "matched_events": 10,
+        "timely_matched_events": 10,
+        "event_recall": 1.0,
+        "timely_event_recall": 1.0,
+        "precision": 0.5,
+        "timely_precision": 0.5,
+        "false_alerts_per_game": 0.5,
+        "late_alerts_per_game": 0.0,
+        "timely_opportunities": 10,
+        "opportunity_conditional_timely_recall": 1.0,
+        "lead_seconds_median": 30.0,
+        "lead_seconds_p10": 30.0,
+        "false_alerts_per_game_quantiles": {
+          "50": 0.5,
+          "90": 1.0,
+          "95": 1.0
+        }
+      }
+    },
+    "coordination": {
+      "row_metrics": {
+        "roc_auc": 1.0,
+        "average_precision": 1.0,
+        "brier": 0.0077222520013395845,
+        "prevalence": 0.5
+      },
+      "warning_metrics": {
+        "matches": 20,
+        "events": 10,
+        "alerts": 10,
+        "matched_events": 10,
+        "timely_matched_events": 10,
+        "event_recall": 1.0,
+        "timely_event_recall": 1.0,
+        "precision": 1.0,
+        "timely_precision": 1.0,
+        "false_alerts_per_game": 0.0,
+        "late_alerts_per_game": 0.0,
+        "timely_opportunities": 10,
+        "opportunity_conditional_timely_recall": 1.0,
+        "lead_seconds_median": 30.0,
+        "lead_seconds_p10": 30.0,
+        "false_alerts_per_game_quantiles": {
+          "50": 0.0,
+          "90": 0.0,
+          "95": 0.0
+        }
+      }
+    }
+  },
+  "signal_removed_control": {
+    "roc_auc": 0.5,
+    "average_precision": 0.5,
+    "brier": 0.25,
+    "prevalence": 0.5
+  },
+  "interpretation": "Checks that the pipeline can detect an injected signal and loses that advantage when removed; says nothing about effect size in real League matches"
+}
