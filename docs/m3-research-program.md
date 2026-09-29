@@ -15,11 +15,19 @@ forecaster, and a paired warning-utility evaluation. A graph alone, a high
 observation-level AP, or an ablation gain cannot establish that claim.
 
 Prior MOBA work already predicts events from much denser Honor of Kings data.
-We should compare explicitly against it, while explaining that Riot's
-approximately minute-spaced Match-V5 frames make this a different observation
-regime. Irregular/partially observed temporal graphs, dynamic survival, and
-early-event alarm methods are also established prior art. We can claim only a
-specific measured advance under this protocol, not invention of those ideas.
+A 2026 League of Legends study also predicts deaths in professional matches
+five seconds ahead from ten seconds of in-game history using a Temporal Fusion
+Transformer. Neither its roughly 0.6 death-prediction F1 nor the Honor of
+Kings results can be compared numerically to our Dragon warning F1: the
+events, observation density, population and horizon differ. These are
+task-adjacent baselines and prior art to discuss explicitly. If the original
+implementation and matching input cadence are available, assess a comparable
+transformer on *our* frozen split and metric; otherwise record the mismatch.
+Riot's approximately minute-spaced Match-V5 frames make this a different
+observation regime. Irregular/partially observed temporal graphs, dynamic
+survival, and early-event alarm methods are also established prior art. We
+can claim only a specific measured advance under this protocol, not invention
+of those ideas.
 
 ## What is measurable now
 
@@ -123,6 +131,8 @@ raw collection is not needed for this train/calibration diagnostic.
 
 - Yang et al., [Predicting Events in MOBA Games](https://arxiv.org/abs/2012.09424),
   event prediction from high-frequency Honor of Kings data.
+- Vardakis et al., [Prediction of MOBA game events based on In-Game Data](https://doi.org/10.1016/j.entcom.2026.101091),
+  five-second League of Legends death forecasting on professional matches.
 - Yèche et al., [Temporal Label Smoothing for Early Event Prediction](https://proceedings.mlr.press/v202/yeche23a.html),
   early-warning utility at low false alarms.
 - Oskarsson et al., [Temporal Graph Neural Networks for Irregular Data](https://proceedings.mlr.press/v206/oskarsson23a.html),
