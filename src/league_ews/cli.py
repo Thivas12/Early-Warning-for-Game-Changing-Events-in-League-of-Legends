@@ -75,6 +75,7 @@ from league_ews.m2_calibration import score_m2_calibration_seed
 from league_ews.m2_plan import freeze_m2_hybrid
 from league_ews.m2_preprocessing_audit import audit_m2_preprocessing
 from league_ews.m2_training import train_m2_seed
+from league_ews.m2_utility import audit_m2_calibration_utility
 from league_ews.pilot_collection import (
     TimelineFetcher,
     collect_selected_pilot_bundles,
@@ -1125,6 +1126,34 @@ def _score_m2_calibration_seed(args: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_m2_utility(args: argparse.Namespace) -> int:
+    result = audit_m2_calibration_utility(
+        args.hybrid_freeze,
+        args.split,
+        args.processed,
+        args.training_root,
+        args.calibration_root,
+        args.m1_summary,
+        args.m1_diagnostic,
+        args.output,
+        mode=args.mode,
+    )
+    print(
+        json.dumps(
+            {
+                "mode": result["mode"],
+                "seed_count": result["seed_count"],
+                "macro_average_precision": result["macro_average_precision"],
+                "later_half_alerts": result["later_half_alerts"],
+                "test_matches_unread": result["test_matches_unread"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _audit_m1_alert_opportunity(args: argparse.Namespace) -> int:
     report = audit_m1_alert_opportunity(
         args.processed, args.split, args.calibration_root, args.policy_root, args.output
@@ -2136,6 +2165,23 @@ def build_parser() -> argparse.ArgumentParser:
     m2_score.add_argument("--mode", choices=("gated", "ungated", "spatial-only"), required=True)
     m2_score.add_argument("--seed", type=int, required=True)
     m2_score.set_defaults(handler=_score_m2_calibration_seed)
+
+    m2_utility = subparsers.add_parser(
+        "audit-m2-utility", help="compare all ten M2 seeds and later-half calibration alerts"
+    )
+    for name in (
+        "hybrid-freeze",
+        "split",
+        "processed",
+        "training-root",
+        "calibration-root",
+        "m1-summary",
+        "m1-diagnostic",
+        "output",
+    ):
+        m2_utility.add_argument(f"--{name}", type=Path, required=True)
+    m2_utility.add_argument("--mode", choices=("gated", "ungated", "spatial-only"), required=True)
+    m2_utility.set_defaults(handler=_audit_m2_utility)
 
     m1_alert_audit = subparsers.add_parser(
         "audit-m1-alert-opportunity",

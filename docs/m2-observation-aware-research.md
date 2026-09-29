@@ -73,17 +73,21 @@ Run one CUDA process at a time, after the already-running M1 ablation batch;
 the three modes' checkpoints are small compared with the existing graph
 staging and do not create another raw or processed corpus.
 
-After **all ten seeds in one mode** finish, `make score-m2-calibration
-MODE=gated SEED=20260915` verifies all ten checkpoints before opening the
+After **all ten seeds in one mode** finish,
+`make score-m2-calibration MODE=gated SEED=20260915` verifies all ten checkpoints before opening the
 calibration shards. It writes checksum-bound probabilities, exact labels and
 match offsets plus each target's AP and Brier score. Repeat for all ten seeds
 and each mode; this command never reads a test shard. It creates roughly one
 compressed score file per seed, so review disk availability before a full
-thirty-seed run. Training completion and calibration AP alone are not evidence
-of better warnings. The next code stage must replay event-level alerts with
-threshold selection separated from evaluation, compare all seeds against B3
-and original M1, and gate a fresh-cohort design. Do not run the sealed original
-test through this follow-on model.
+thirty-seed run. After scoring all ten seeds of a mode,
+`make audit-m2-utility MODE=gated` verifies probabilities against the
+checksum-bound processed labels, recomputes AP/Brier, and fits event thresholds
+on the earlier chronological 1,500 matches per route. It replays those frozen
+thresholds on the later 1,500 per route, for every seed. Its summary compares
+M2 AP with B3 and M1 and later-half alerts with M1, retaining all individual
+seed results. The next code stage must compare the bounded loss controls and
+gate a fresh-cohort design. Do not run the sealed original test through this
+follow-on model.
 
 ## Experiment matrix after the diagnostic
 
