@@ -42,14 +42,15 @@ def _counts() -> dict[str, Any]:
 
 
 def _accumulate(
-    counts: dict[str, Any], times: np.ndarray, hazards: np.ndarray, labels: np.ndarray,
+    counts: dict[str, Any],
+    times: np.ndarray,
+    hazards: np.ndarray,
+    labels: np.ndarray,
     game_duration_ms: int | None = None,
 ) -> None:
     """Count exposure without printing source timelines or identifiers."""
 
-    exposure, known = confirmed_followup_masks(
-        times, hazards, game_duration_ms=game_duration_ms
-    )
+    exposure, known = confirmed_followup_masks(times, hazards, game_duration_ms=game_duration_ms)
     expected = np.maximum.accumulate(hazards, axis=-1)[:, :, [0, 1, 2, 5]].reshape(-1, 12)
     if not np.array_equal(expected, labels):
         raise ValueError("Staged labels disagree with exact future events")
@@ -181,8 +182,13 @@ def audit_confirmed_followup(
         members = partitions[partition][entry["start"] : entry["start"] + entry["matches"]]
         with np.load(stage / "shards" / entry["file"], allow_pickle=False) as shard:
             if set(shard.files) != {
-                "nodes", "edges", "history_mask", "ages_minutes", "targets",
-                "hazard_targets", "match_offsets",
+                "nodes",
+                "edges",
+                "history_mask",
+                "ages_minutes",
+                "targets",
+                "hazard_targets",
+                "match_offsets",
             }:
                 raise ValueError("Staged graph array inventory differs")
             offsets = shard["match_offsets"]

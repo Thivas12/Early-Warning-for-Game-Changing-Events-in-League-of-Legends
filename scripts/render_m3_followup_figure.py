@@ -43,8 +43,14 @@ def render(source: Path, output: Path) -> None:
                 followed = row["fully_followed_negative_labels"][index]
                 percentages.append(100 * censored / (censored + followed))
             ax.plot(
-                x, percentages, linestyle=style, marker=marker, linewidth=2,
-                markersize=5, color=colors[event], label=f"{event.title()} · {partition}",
+                x,
+                percentages,
+                linestyle=style,
+                marker=marker,
+                linewidth=2,
+                markersize=5,
+                color=colors[event],
+                label=f"{event.title()} · {partition}",
             )
     ax.set_xticks(x, ["10", "20", "30", "60"])
     ax.set_xlabel("Forecast horizon (seconds)", color="#DCE6EC")
@@ -53,9 +59,7 @@ def render(source: Path, output: Path) -> None:
     ax.legend(ncol=2, fontsize=8, facecolor="#152230", labelcolor="white", edgecolor="#576473")
 
     names = ("Training", "Calibration")
-    original = np.array(
-        [partitions[key]["original_loss_bins"] for key in ("train", "calibration")]
-    )
+    original = np.array([partitions[key]["original_loss_bins"] for key in ("train", "calibration")])
     confirmed = np.array(
         [partitions[key]["confirmed_loss_bins"] for key in ("train", "calibration")]
     )
@@ -68,15 +72,21 @@ def render(source: Path, output: Path) -> None:
     ax2.legend(facecolor="#152230", labelcolor="white", edgecolor="#576473")
     for position, (before, after) in enumerate(zip(original, confirmed, strict=True)):
         ax2.text(
-            position, max(before, after) / 1_000_000 + 0.03,
+            position,
+            max(before, after) / 1_000_000 + 0.03,
             f"{100 * (before - after) / before:.1f}% censored",
-            ha="center", color="white", fontsize=9,
+            ha="center",
+            color="white",
+            fontsize=9,
         )
     fig.suptitle("Confirmed follow-up at genuine Riot frames", color="white", fontsize=17)
     fig.text(
-        0.5, -0.03,
+        0.5,
+        -0.03,
         "Exploratory train/calibration audit · duration ∩ final frame · sealed test unread",
-        ha="center", color="#B9C6D1", fontsize=9,
+        ha="center",
+        color="#B9C6D1",
+        fontsize=9,
     )
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, facecolor=fig.get_facecolor(), bbox_inches="tight")

@@ -36,9 +36,7 @@ def test_screened_duration_shortens_exposure_without_erasing_observed_positives(
     times = np.array([0, 25_000], dtype=np.int64)
     hazards = np.zeros((2, 3, 6), np.float32)
     hazards[0, 0, 2] = 1  # Recorded event at 22 s; detail duration may be rounded to 21 s.
-    exposure, known = confirmed_followup_masks(
-        times, hazards, game_duration_ms=21_000
-    )
+    exposure, known = confirmed_followup_masks(times, hazards, game_duration_ms=21_000)
     assert exposure[0, 0].tolist() == [1, 1, 1, 0, 0, 0]
     assert exposure[0, 1].tolist() == [1, 1, 0, 0, 0, 0]
     assert known[0, 0, 2] and not known[0, 1, 2]
@@ -93,11 +91,16 @@ def test_cli_requires_bound_inputs() -> None:
     arguments = parser.parse_args(
         [
             "audit-confirmed-followup",
-            "--processed", "processed",
-            "--split", "split.json",
-            "--staging-root", "stage",
-            "--selection-root", "selected",
-            "--output", "audit.json",
+            "--processed",
+            "processed",
+            "--split",
+            "split.json",
+            "--staging-root",
+            "stage",
+            "--selection-root",
+            "selected",
+            "--output",
+            "audit.json",
         ]
     )
     assert arguments.command == "audit-confirmed-followup"
