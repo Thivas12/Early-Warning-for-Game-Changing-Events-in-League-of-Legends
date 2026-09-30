@@ -83,6 +83,13 @@ claim exists yet**. The GPU-ready private-data runner is
 `make start-scheduled-policy`; its CUDA preflight is explicit. All test payloads
 remain sealed. This remains exploratory research after calibration review.
 
+The [adversarial novelty defense](docs/policy-novelty-defense.md) now includes
+author-code-verified wSOL controls and a Bayes decision planner. Both match the
+candidate on the constructed example. The exact objective differs from the
+reviewed temporal losses, but neither first-ever novelty nor superior performance
+is established. The report includes proofs, counterexamples and reproducible
+checks of this narrower claim.
+
 ## Quick start
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are the supported development

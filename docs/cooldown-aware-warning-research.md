@@ -5,6 +5,12 @@ credit assignment for cooldown-constrained warning policies, evaluated with
 causal actions between sparse observations. No claim of priority, state of the
 art, publication readiness, or real-data improvement is established here.
 
+**Adversarial audit:** the [novelty defense](policy-novelty-defense.md) now checks
+the wSOL author implementation and stronger decision controls. All four tested
+wSOL variants and a Bayes planner match exact credit on the original toy. The
+example does not establish superiority over these methods. Optimal intervention
+timing and refractory-process mathematics have explicit prior art.
+
 ## The criticism the project needs
 
 The existing work is a useful, unusually careful evaluation pipeline. It has not
@@ -48,7 +54,9 @@ between-observation control receives the same opportunities.
 | [Yèche et al., ICML 2023, Temporal Label Smoothing](https://proceedings.mlr.press/v202/yeche23a.html) | Temporal structure and training objectives for early prediction | Relabeling the useful warning window is not enough. |
 | [Yèche et al., CHIL 2024, Dynamic Survival Analysis](https://proceedings.mlr.press/v248/yeche24a.html) | Event-time distributions, silencing and risk-localized alarm policies | A survival head plus a clever threshold is already established territory. |
 | [Rath and Hughes, AISTATS 2022](https://proceedings.mlr.press/v151/rath22a.html) | Constrained early-warning training to control false alarms | Constrained training and Lagrange multipliers are not new contributions. |
-| [Legnaro, Guastavino and Marchetti, 2026](https://arxiv.org/abs/2606.23145) | Temporally localized weighted score-oriented losses | Directly optimizing temporal utility is not a new general idea. The indexed primary abstract was retrieved; full text was unavailable in this review. Exact implementation-level overlap still needs checking. |
+| [Legnaro, Guastavino and Marchetti, 2026](https://arxiv.org/abs/2606.23145) | Temporally localized weighted score-oriented losses | The author implementation has now been inspected and independently matched in loss and gradient. It does not compute our emitted-alarm recurrence, but all four tested variants solve the toy equally well. Full paper text remains unavailable. |
+| [Damera Venkata and Bhattacharyya, NeurIPS 2022](https://proceedings.neurips.cc/paper_files/paper/2022/file/c26a8494fe31695db965ae8b7244b7c1-Paper-Conference.pdf) | Optimal intervention timing, stopping and continuation values | Learning when to warn and limitations of static thresholds are established. Their first-trigger objective differs from our repeated alarm count. |
+| [Deger et al., 2010](https://arxiv.org/pdf/1002.3798) | Active/refractory mass equations for stochastic point processes | The availability recurrence has direct mathematical antecedents. We do not claim it as new. |
 | [Koshizuka and Yaguchi, September 2026](https://arxiv.org/abs/2609.24443) | Horizon-aligned objectives and fixed-policy evaluation with shared encoders | The previous target-alignment experiment is particularly weak as a novelty claim. |
 
 **The proposed distinction:** optimize exact expected emitted-event credit under
@@ -108,8 +116,8 @@ two emitted alarms cannot claim the same event. Thus
  E[\text{non-timely alarms}]=\sum_j m_j(1-y_j).
 \]
 
-This equivalence would fail without the horizon/cooldown condition or with a
-different event-matching rule. The implementation is specific to this protocol.
+This equivalence is not guaranteed without an appropriate cooldown condition or
+under a different matching rule. The implementation is specific to this protocol.
 A late next event is never skipped to credit a later timely event.
 
 After two shared BCE warm-up epochs, minimize over six more epochs
@@ -161,6 +169,15 @@ not held-out estimates, training seeds, or evidence of a League improvement.
 The independent-utility number also depends on the specified optimizer and
 finite offset grid; it is not a universal bound. The exact-credit result
 illustrates why the research question is coherent.
+
+The [subsequent stronger controls](policy-novelty-defense.md) give **100% recall
+and .2 wrong alarms per episode for all four tested wSOL variants and a Bayes
+planner**, matching exact credit. The exact upper bound for the declared
+score-only family is 70.3125%; 70% above is its finite-grid result. This example
+separates policies using only a myopic scalar score from richer temporal/contextual
+decisions; it does not separate our method from existing temporal losses or
+decision theory. The frozen six-model private-data screen does not yet include
+these additional comparators.
 
 When decisions are at least 60 seconds apart, the exact loss reduces to the
 independent loss. A no-information control also gives a shared bound: if each

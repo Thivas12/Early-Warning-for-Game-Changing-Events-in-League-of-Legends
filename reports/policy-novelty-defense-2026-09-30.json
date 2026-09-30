@@ -1,0 +1,477 @@
+{
+  "author_implementation_parity": {
+    "configurations": 16,
+    "git_blob": "4380ee110fcbe78722f0e162d4356b8eba4177a1",
+    "implementation_sha256": "d6054d7ada753bcb608fcba2b9d857aa455bc122daa8e3713e2f5e6b3e3f5f42",
+    "max_absolute_gradient_difference": 1.4901161193847656e-08,
+    "max_absolute_loss_difference": 5.960464477539063e-08,
+    "scope": "per-sequence loss and gradients;not-the-paper-training-benchmark",
+    "status": "passed"
+  },
+  "conclusion": {
+    "broad_first_to_learn_when_to_warn_claim": "rejected-by-prior-art",
+    "exact_credit_beats_bayes_planner": false,
+    "exact_credit_beats_tested_wsol_variants_on_this_toy": false,
+    "new_refractory_mathematics_claim": "rejected-by-prior-art",
+    "publication_novelty_established": false,
+    "remaining_candidate": "exact-action-marginal-training-for-repeated-warnings-with-sparse-observations"
+  },
+  "gradient_comparison": {
+    "action_integrated_gradient_variance": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "enumerated_utility": 0.9661200000000001,
+    "gradient_logits": [
+      -0.16502999999999998,
+      0.017303999999999996,
+      0.04247099999999999,
+      -0.021147,
+      0.007696500000000006,
+      0.163821
+    ],
+    "max_gradient_difference": 2.7755575615628914e-17,
+    "reinforce_single_sample_gradient_variance": [
+      0.07535194125000001,
+      0.05660570687999999,
+      0.01966363427159998,
+      0.03930531920412002,
+      0.024059701963542002,
+      0.07762813714266242
+    ],
+    "scope": "fixed trace and parameters;action-sampling variance only;not-total-training-variance",
+    "utility": 0.9661199999999999
+  },
+  "invalid_short_cooldown_example": {
+    "additive_timely_credit": 2.0,
+    "conclusion": "shorter-cooldowns-require-a-new-unique-event-credit-proof",
+    "true_unique_event_count": 1
+  },
+  "no_conflict_gradient_max_error": 0.0,
+  "original_toy": {
+    "exact_credit": {
+      "context_logits": [
+        [
+          -7.213951117608992,
+          6.876036679592876
+        ],
+        [
+          6.327396652670124,
+          -3.144861188635329
+        ]
+      ],
+      "counts": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "policy": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 20.0,
+            "expected_timely_events": 16.0,
+            "false_per_match": 0.2,
+            "late_per_match": 0.0,
+            "matches": 20,
+            "non_timely_per_match": 0.2,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.8,
+            "timely_recall": 1.0
+          }
+        },
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "family": "deterministic",
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      }
+    },
+    "ignore_cooldown": {
+      "context_logits": [
+        [
+          6.457414928486038,
+          6.457415314366727
+        ],
+        [
+          6.457414928486038,
+          -6.457414156725159
+        ]
+      ],
+      "counts": {
+        "events": 16,
+        "expected_alerts": 14.621691078831793,
+        "expected_timely_events": 9.72247003439521,
+        "false_per_match": 0.2449606000367052,
+        "late_per_match": 4.521851240113506e-07,
+        "matches": 20,
+        "non_timely_per_match": 0.24496105222182915,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.664934718014299,
+        "timely_recall": 0.6076543771497006
+      },
+      "policy": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 14.621691078831793,
+            "expected_timely_events": 9.72247003439521,
+            "false_per_match": 0.2449606000367052,
+            "late_per_match": 4.521851240113506e-07,
+            "matches": 20,
+            "non_timely_per_match": 0.24496105222182915,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.664934718014299,
+            "timely_recall": 0.6076543771497006
+          }
+        },
+        "events": 16,
+        "expected_alerts": 14.621691078831793,
+        "expected_timely_events": 9.72247003439521,
+        "false_per_match": 0.2449606000367052,
+        "family": "randomized",
+        "late_per_match": 4.521851240113506e-07,
+        "matches": 20,
+        "non_timely_per_match": 0.24496105222182915,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.664934718014299,
+        "timely_recall": 0.6076543771497006
+      }
+    },
+    "oracle_pointwise_bce": {
+      "context_logits": [
+        [
+          0.4054651081081642,
+          20.723265864228342
+        ],
+        [
+          0.4054651081081642,
+          -20.72326583594641
+        ]
+      ],
+      "counts": {
+        "events": 16,
+        "expected_alerts": 15.999999999999996,
+        "expected_timely_events": 11.199999995999999,
+        "false_per_match": 0.24000000008,
+        "late_per_match": 1.2000000992884452e-10,
+        "matches": 20,
+        "non_timely_per_match": 0.24000000019999987,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.69999999975,
+        "timely_recall": 0.6999999997499999
+      },
+      "policy": {
+        "bias": 0.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 15.999999999999996,
+            "expected_timely_events": 11.199999995999999,
+            "false_per_match": 0.24000000008,
+            "late_per_match": 1.2000000992884452e-10,
+            "matches": 20,
+            "non_timely_per_match": 0.24000000019999987,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.69999999975,
+            "timely_recall": 0.6999999997499999
+          }
+        },
+        "events": 16,
+        "expected_alerts": 15.999999999999996,
+        "expected_timely_events": 11.199999995999999,
+        "false_per_match": 0.24000000008,
+        "family": "randomized",
+        "late_per_match": 1.2000000992884452e-10,
+        "matches": 20,
+        "non_timely_per_match": 0.24000000019999987,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.69999999975,
+        "timely_recall": 0.6999999997499999
+      }
+    }
+  },
+  "prior_reference": {
+    "blob": "4380ee110fcbe78722f0e162d4356b8eba4177a1",
+    "commit": "d929f0575833972c33826f1a41114fafb16ccb94",
+    "file": "wsol/torch/wsol.py",
+    "repository": "https://github.com/edoardolegnaro/ScoreOrientedLosses",
+    "scope": "uniform-threshold distribution;prod/max temporal weighting;tss/f1 scores"
+  },
+  "reproducibility": {
+    "code_sha256": {
+      "defend_policy_novelty.py": "a9f34d4a6b379261f667ef044f7bcddbd047fa334c02ab2b7b61be3e3ae3c10f",
+      "policy_novelty.py": "191afd796d2f6c380f8bdd48c163128aad26a2ea578d04c9243b3eb944199fba"
+    },
+    "numpy": "2.5.3",
+    "policy_selection": "same-two-families;49-offsets-plus-off;budget=.25",
+    "torch": "2.14.0+cpu",
+    "toy_optimizer": "Adam;lr=.1;400-steps;zero-initialization;float64;no-random-training-draws",
+    "warning": "finite-population algebra and diagnostics;not-held-out-performance"
+  },
+  "score_only_analytic_envelope": {
+    "event_recall_upper_bound": 0.703125,
+    "first_action_probability": 0.625,
+    "non_timely_per_episode": 0.25,
+    "timely_hits_per_episode": 0.5625
+  },
+  "status": "adversarial-novelty-evidence;synthetic-only",
+  "stronger_controls": {
+    "bayes-decision-planner": {
+      "context_actions": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "metrics": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "scope": "known-population decision-theory control;no-realized-future-event-access;not-OTI-reproduction"
+    },
+    "wsol-max-f1": {
+      "metrics": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "scope": "uniform-threshold author-loss adaptation to timely-window labels;no-paper-reproduction",
+      "selected": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 20.0,
+            "expected_timely_events": 16.0,
+            "false_per_match": 0.2,
+            "late_per_match": 0.0,
+            "matches": 20,
+            "non_timely_per_match": 0.2,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.8,
+            "timely_recall": 1.0
+          }
+        },
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "family": "deterministic",
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "table_logits": [
+        [
+          5.8912117222181655,
+          6.105566960596551
+        ],
+        [
+          6.181064388915576,
+          -6.834789504047561
+        ]
+      ]
+    },
+    "wsol-max-tss": {
+      "metrics": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "scope": "uniform-threshold author-loss adaptation to timely-window labels;no-paper-reproduction",
+      "selected": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 20.0,
+            "expected_timely_events": 16.0,
+            "false_per_match": 0.2,
+            "late_per_match": 0.0,
+            "matches": 20,
+            "non_timely_per_match": 0.2,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.8,
+            "timely_recall": 1.0
+          }
+        },
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "family": "deterministic",
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "table_logits": [
+        [
+          -0.5450791388607873,
+          6.457415148989275
+        ],
+        [
+          6.457414735545762,
+          -6.457415217896539
+        ]
+      ]
+    },
+    "wsol-prod-f1": {
+      "metrics": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "scope": "uniform-threshold author-loss adaptation to timely-window labels;no-paper-reproduction",
+      "selected": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 20.0,
+            "expected_timely_events": 16.0,
+            "false_per_match": 0.2,
+            "late_per_match": 0.0,
+            "matches": 20,
+            "non_timely_per_match": 0.2,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.8,
+            "timely_recall": 1.0
+          }
+        },
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "family": "deterministic",
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "table_logits": [
+        [
+          5.8912117222181655,
+          6.105566960596551
+        ],
+        [
+          6.181064388915576,
+          -6.834789504047561
+        ]
+      ]
+    },
+    "wsol-prod-tss": {
+      "metrics": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "scope": "uniform-threshold author-loss adaptation to timely-window labels;no-paper-reproduction",
+      "selected": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 20.0,
+            "expected_timely_events": 16.0,
+            "false_per_match": 0.2,
+            "late_per_match": 0.0,
+            "matches": 20,
+            "non_timely_per_match": 0.2,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.8,
+            "timely_recall": 1.0
+          }
+        },
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "family": "deterministic",
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "table_logits": [
+        [
+          -0.5450791388607873,
+          6.457415148989275
+        ],
+        [
+          6.457414735545762,
+          -6.457415217896539
+        ]
+      ]
+    }
+  }
+}
