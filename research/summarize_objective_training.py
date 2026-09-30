@@ -1,0 +1,188 @@
+"""Render all frozen objective-training results and the evidence boundary."""
+
+from __future__ import annotations
+
+import json
+from collections import Counter
+from pathlib import Path
+
+from research.public_objective_training import LOSSES, SEEDS
+
+
+def read(name: str) -> dict:
+    return json.loads((Path("reports") / f"{name}-2026-09-30.json").read_text())
+
+
+def main() -> None:
+    records = {size: read(f"objective-training-{size}") for size in ("small", "expanded")}
+    for result in records.values():
+        if len(result["models"]) != 21 or "gates" not in result:
+            raise ValueError("Refusing to present an incomplete objective comparison")
+    quality = read("objective-expansion-quality")
+    retained = [r for r in quality["matches"] if r["status"] == "accepted"]
+    rejected = Counter(
+        r["reason"].split(":")[0] for r in quality["matches"] if r["status"] != "accepted"
+    )
+    advancement = {s: r["advances_to_new_evaluation"] for s, r in records.items()}
+    lines = [
+        "# Public-data objective training: completed development experiments",
+        "",
+        f"**Advancement decisions: {advancement}. No breakthrough or generalization claim.**",
+        "",
+        "The experiment tests whether learning through the actual 60-second alarm",
+        "cooldown adds value beyond established classification and temporal-score losses.",
+        "Both data sizes, losses, seeds, training schedules and advancement gates were",
+        "declared before the first objective-training score. All 42 final neural fits,",
+        "six shared warm starts and two tree fits completed. No evaluation split was loaded.",
+        "",
+        "## Data and independent events",
+        "",
+        "The original 109 training matches contain 29,249 decision rows but just 76",
+        "eligible Roshan damage onsets. Seventy-five onsets have eight eligible warning",
+        "rows; one has nine. Unequal per-event positive-row multiplicity is too small",
+        "to explain the previous failures. Row counts overstate the independent evidence.",
+        "",
+        "Exactly 600 additional training and 150 additional calibration candidates were",
+        "selected by outcome-independent hashes, disjoint from all 750 previously",
+        "selected matches and ten schema-development matches. All are earlier than the",
+        "original evaluation period. Existing strict clock, coverage, identity and",
+        "combat-versus-health checks were applied without changing exclusion rules.",
+        f"New retained matches: {len(retained)}/750. New hero-state rows: "
+        f"{sum(r['hero_rows'] for r in retained):,}. Exclusions: {dict(rejected)}.",
+        "",
+        "| Development dataset | Train matches | Train onsets | Train decisions | "
+        "Calibration matches | Calibration onsets | Calibration decisions |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ]
+    for size, r in records.items():
+        lines.append(
+            f"| {size} | {r['matches']['train']} | {r['targets']['train']} | "
+            f"{r['decision_rows']['train']:,} | {r['matches']['calibration']} | "
+            f"{r['targets']['calibration']} | {r['decision_rows']['calibration']:,} |"
+        )
+    lines += [
+        "",
+        "Expanded data include the original development matches; these two experiments",
+        "are not independent replications. Matches and days may share players and leagues.",
+        "No result here evaluates League of Legends or opens its private final test.",
+        "",
+        "## Matched comparisons",
+        "",
+        "All neural arms use the same 197 history features, train-only normalization and",
+        "missingness masks, two 64-unit GELU layers, optimizer, batch order and common",
+        "10-epoch BCE warm start. Each arm then trains for 30 epochs. The final epoch is",
+        "used without validation checkpoint selection. Seeds are 17, 29 and 43.",
+        "Thresholds maximize calibration hits under at most one unmatched alarm per",
+        "match using the same frozen search. All alarms use a 60-second cooldown and",
+        "one-to-one credit for a target 20-60 seconds ahead. Missed, early, late and",
+        "duplicate unmatched alarms all consume the budget.",
+    ]
+    for size, r in records.items():
+        target = r["targets"]["calibration"]
+        lines += [
+            "",
+            f"### {size.capitalize()} data: {target} calibration onsets",
+            "",
+            "| Loss | Hits, seed 17 | Hits, seed 29 | Hits, seed 43 | "
+            "Mean recall | Unmatched/match range |",
+            "|---|---:|---:|---:|---:|---:|",
+        ]
+        for loss in LOSSES:
+            rows = [
+                next(x for x in r["models"] if x["seed"] == s and x["loss"] == loss) for s in SEEDS
+            ]
+            cal = [x["calibration"] for x in rows]
+            recall = sum(c["recall"] for c in cal) / 3
+            burden = [c["unmatched_per_match"] for c in cal]
+            lines.append(
+                f"| {loss} | {cal[0]['hits']} | {cal[1]['hits']} | {cal[2]['hits']} | "
+                f"{recall:.2%} | {min(burden):.3f}-{max(burden):.3f} |"
+            )
+        hgb = r["hgb"]["calibration"]
+        lines += [
+            f"| Fixed HGBT history | {hgb['hits']} | — | — | {hgb['recall']:.2%} | "
+            f"{hgb['unmatched_per_match']:.3f} |",
+            "",
+            "The HGBT control has one fixed seed and is not a three-seed mean.",
+            "",
+            "| Seed | Primary hits | Best control hits | Difference in recall | Gate |",
+            "|---|---:|---:|---:|---|",
+        ]
+        for g in r["gates"]:
+            lines.append(
+                f"| {g['seed']} | {g['primary_hits']} | {g['best_control_hits']} | "
+                f"{100 * g['recall_gain']:+.2f} pp | {'PASS' if g['passes'] else 'FAIL'} |"
+            )
+    lines += [
+        "",
+        "The small-data gate requires at least 8/29 hits and at least three more hits",
+        "than every control for EACH seed. The expanded gate requires at least 25%",
+        "recall and a gain of at least 10 percentage points over every control for EACH",
+        "seed. These are predeclared resource gates, not significance tests. Calibration",
+        "has been consulted repeatedly; neither a passing seed nor a mean improvement",
+        "would constitute held-out evidence. No confidence interval based on only three",
+        "seeds should be read as uncertainty over the match population.",
+        "",
+        "## Interpretation and novelty boundary",
+        "",
+        "Exact refractory emission credit is an established renewal identity. Optimizing",
+        "it is a candidate training objective, not a new theorem. Its value and gradients",
+        "were independently checked against exhaustive Bernoulli-policy enumeration and",
+        "actual one-to-one event matching, including overlapping target windows. Padding",
+        "and match boundaries were tested. The full focused suite passed 47 tests before",
+        "fitting. Losses and thresholds were never changed in response to scores.",
+        "",
+        "The stochastic training objective differs from deterministic threshold deployment.",
+        "Thus exact expected training credit does not imply optimal deployed decisions.",
+        "This experiment does not rule out other encoders, schedules or utility policies.",
+        "It tests the declared candidate under a controlled, limited training budget.",
+        "",
+        "[Temporal label smoothing](https://proceedings.mlr.press/v202/yeche23a.html) and",
+        "[dynamic survival prediction](https://proceedings.mlr.press/v248/yeche24a.html)",
+        "already address useful event timing. The [wSOL paper](https://arxiv.org/pdf/2606.23145)",
+        "compares temporal confusion-score losses using a common TCN and explicitly",
+        "reports dataset-dependent gains. Here the same loss equations are applied to",
+        "an MLP, with valid confusion counts pooled across matches while temporal shifts",
+        "remain inside each match. This adaptation avoids ignoring event-free matches.",
+        "It agrees with the author-checked reference on individual unpadded sequences;",
+        "it is not a reproduction of that paper's architecture or benchmark results.",
+        "The fixed three-lag wSOL control does not represent all possible temporal weights.",
+        "",
+        "[Horizon-aware disruption work](https://arxiv.org/html/2609.24443v1) likewise",
+        "compares established horizon objectives under a common causal encoder. Merely",
+        "changing the domain to games cannot establish methodological novelty.",
+        "",
+        "## Reproduction",
+        "",
+        "Reconstruct the original command-study development arrays first. Install the",
+        "pinned dependencies in research/command-requirements.txt and the CPU Torch build",
+        "in research/objective-training-requirements.txt. Use PYTHONPATH=.:src.",
+        "Preserve published objective-training JSON files under other names in a separate",
+        "reproduction checkout: the runner refuses to overwrite changed frozen inputs",
+        "or resume without the bound local checkpoints. Binary weights and raw data are",
+        "not committed. Code, protocols, source hashes and all result records are committed.",
+        "",
+        "```bash",
+        "python -m research.acquire_objective_expansion --plan-only",
+        "python -m research.acquire_objective_expansion",
+        "python -m research.precontact_data \\",
+        "  --root data/external/betty-objective-expansion \\",
+        "  --manifest reports/objective-expansion-cohort-2026-09-30.json \\",
+        "  --output-dir data/processed/objective-expansion \\",
+        "  --report reports/objective-expansion-quality-2026-09-30.json",
+        "python -m research.public_objective_training",
+        "python -m research.public_objective_training --expanded",
+        "python -m research.summarize_objective_training",
+        "```",
+        "",
+        "The adjacent objective-training-{small,expanded} JSON files contain all 42",
+        "loss histories, thresholds, calibration counts, seed gates and checkpoint hashes.",
+        "The quality report records every included or excluded candidate and source hash.",
+    ]
+    path = Path("reports/objective-training-research-2026-09-30.md")
+    path.write_text("\n".join(lines) + "\n")
+    print(path)
+
+
+if __name__ == "__main__":
+    main()
