@@ -803,3 +803,21 @@ timely-objective-status:
 	@tail -n 16 data/private/timely-objective-v1/worker.log 2>/dev/null || true
 	@if test -f data/private/timely-objective-v1/worker-exit-code; then cat data/private/timely-objective-v1/worker-exit-code; fi
 	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/timely-objective-v1'); print('Completed model reports:', len(list(p.glob('*/report.json'))), '/ 4'); print('Summary ready:', (p/'summary.json').exists())"
+
+.PHONY: scheduled-policy-preflight scheduled-policy start-scheduled-policy scheduled-policy-status
+
+scheduled-policy-preflight:
+	uv run --no-sync python -c "from league_ews.scheduled_model import runtime; t,d=runtime('$(or $(DEVICE),cuda)'); print('Device:', d, '| Torch:', t.__version__, '| CUDA:', t.version.cuda); print(t.cuda.get_device_name() if d == 'cuda' else 'CPU explicitly selected')"
+
+scheduled-policy:
+	uv run --no-sync python -u -m league_ews.scheduled_experiment --device $(or $(DEVICE),cuda) --batch-matches $(or $(BATCH_MATCHES),32) --max-new-models $(or $(MAX_NEW_MODELS),0)
+
+start-scheduled-policy: scheduled-policy-preflight
+	@mkdir -p data/private/scheduled-policy-v1
+	@SCHEDULED_DEVICE=$(or $(DEVICE),cuda) SCHEDULED_BATCH_MATCHES=$(or $(BATCH_MATCHES),32) nohup bash scripts/run_scheduled_policy.sh >> data/private/scheduled-policy-v1/worker.log 2>&1 < /dev/null &
+	@echo 'Worker launched. Run make scheduled-policy-status for progress.'
+
+scheduled-policy-status:
+	@tail -n 16 data/private/scheduled-policy-v1/worker.log 2>/dev/null || true
+	@if test -f data/private/scheduled-policy-v1/worker-exit-code; then printf 'Worker exit code: '; cat data/private/scheduled-policy-v1/worker-exit-code; fi
+	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/scheduled-policy-v1'); print('Completed model reports:', len(list(p.glob('*/report.json'))), '/ 18'); print('Summary ready:', (p/'summary.json').exists())"

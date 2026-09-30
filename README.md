@@ -70,10 +70,18 @@ These are exploratory calibration results; all 6,000 final-test matches remain
 sealed according to the run record. Late alerts and sparse observation
 opportunities are material limits.
 
-The [timing-objective follow-up](docs/timely-objective-screen.md) tests the next
-specific explanation with four matched fits and explicit false-plus-late alert
-budgets. It reuses the completed cache and is ready for a private-data run;
-no new performance or novelty claim is made.
+The [completed timing-objective follow-up](reports/timely-objective-real-2026-09-30.md)
+improved recall under a false-plus-late budget, but failed the primary regional
+budget gate. It demonstrates objective alignment, not methodological novelty.
+
+The new [cooldown-aware warning research candidate](docs/cooldown-aware-warning-research.md)
+learns when to warn by differentiating through exact expected alarm credit under
+a hard cooldown. It includes matched classification, distribution, independent
+utility, clock-only and observation-only controls. A reproducible synthetic
+counterexample demonstrates the mechanism; **no new League result or state-of-the-art
+claim exists yet**. The GPU-ready private-data runner is
+`make start-scheduled-policy`; its CUDA preflight is explicit. All test payloads
+remain sealed. This remains exploratory research after calibration review.
 
 ## Quick start
 
