@@ -1,0 +1,102 @@
+{
+  "scope": "post-fit descriptive train/calibration audit; no policy changes",
+  "model_report_sha256": "85d6053222adf24a8c0d3d04e33303ba2ec6e226fbf9905236d3e2d31cf09cfa",
+  "models": [
+    {
+      "loss": "shared_threshold_utility",
+      "seed": 17,
+      "splits": {
+        "train": {
+          "fixed_calibration_threshold": {
+            "targets": 378,
+            "alarms": 417,
+            "hits": 285,
+            "unmatched_alarms": 132,
+            "matches": 449,
+            "recall": 0.753968253968254,
+            "unmatched_per_match": 0.29398663697104677
+          },
+          "uncalibrated_stochastic_expected_recall": 0.7894088443803129,
+          "uncalibrated_stochastic_expected_unmatched_per_match": 0.540873341680577
+        },
+        "calibration": {
+          "fixed_calibration_threshold": {
+            "targets": 127,
+            "alarms": 138,
+            "hits": 10,
+            "unmatched_alarms": 128,
+            "matches": 146,
+            "recall": 0.07874015748031496,
+            "unmatched_per_match": 0.8767123287671232
+          },
+          "uncalibrated_stochastic_expected_recall": 0.12680334377857125,
+          "uncalibrated_stochastic_expected_unmatched_per_match": 1.6368684112633147
+        }
+      }
+    },
+    {
+      "loss": "shared_threshold_utility",
+      "seed": 29,
+      "splits": {
+        "train": {
+          "fixed_calibration_threshold": {
+            "targets": 378,
+            "alarms": 426,
+            "hits": 275,
+            "unmatched_alarms": 151,
+            "matches": 449,
+            "recall": 0.7275132275132276,
+            "unmatched_per_match": 0.3363028953229399
+          },
+          "uncalibrated_stochastic_expected_recall": 0.7767915779651962,
+          "uncalibrated_stochastic_expected_unmatched_per_match": 0.8737454690257014
+        },
+        "calibration": {
+          "fixed_calibration_threshold": {
+            "targets": 127,
+            "alarms": 123,
+            "hits": 13,
+            "unmatched_alarms": 110,
+            "matches": 146,
+            "recall": 0.10236220472440945,
+            "unmatched_per_match": 0.7534246575342466
+          },
+          "uncalibrated_stochastic_expected_recall": 0.15859258612463248,
+          "uncalibrated_stochastic_expected_unmatched_per_match": 1.939619564219307
+        }
+      }
+    },
+    {
+      "loss": "shared_threshold_utility",
+      "seed": 43,
+      "splits": {
+        "train": {
+          "fixed_calibration_threshold": {
+            "targets": 378,
+            "alarms": 428,
+            "hits": 294,
+            "unmatched_alarms": 134,
+            "matches": 449,
+            "recall": 0.7777777777777778,
+            "unmatched_per_match": 0.2984409799554566
+          },
+          "uncalibrated_stochastic_expected_recall": 0.7773986237350977,
+          "uncalibrated_stochastic_expected_unmatched_per_match": 0.6689405369446588
+        },
+        "calibration": {
+          "fixed_calibration_threshold": {
+            "targets": 127,
+            "alarms": 152,
+            "hits": 10,
+            "unmatched_alarms": 142,
+            "matches": 146,
+            "recall": 0.07874015748031496,
+            "unmatched_per_match": 0.9726027397260274
+          },
+          "uncalibrated_stochastic_expected_recall": 0.13606630136130587,
+          "uncalibrated_stochastic_expected_unmatched_per_match": 1.9948927192797477
+        }
+      }
+    }
+  ]
+}

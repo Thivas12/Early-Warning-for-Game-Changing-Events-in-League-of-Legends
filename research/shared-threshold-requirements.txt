@@ -1,0 +1,3 @@
+-r objective-training-requirements.txt
+numba==0.65.1
+llvmlite==0.47.0

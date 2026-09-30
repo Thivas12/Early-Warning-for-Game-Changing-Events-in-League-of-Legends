@@ -1,0 +1,3 @@
+-r command-requirements.txt
+# Install this CPU build from https://download.pytorch.org/whl/cpu.
+torch==2.14.1+cpu
