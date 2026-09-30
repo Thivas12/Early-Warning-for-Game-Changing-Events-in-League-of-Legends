@@ -1,0 +1,182 @@
+{
+  "conflict_control": {
+    "exact_credit": {
+      "context_logits": [
+        [
+          -7.213951117608992,
+          6.876036679592876
+        ],
+        [
+          6.327396652670124,
+          -3.144861188635329
+        ]
+      ],
+      "counts": {
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      },
+      "policy": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 20.0,
+            "expected_timely_events": 16.0,
+            "false_per_match": 0.2,
+            "late_per_match": 0.0,
+            "matches": 20,
+            "non_timely_per_match": 0.2,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.8,
+            "timely_recall": 1.0
+          }
+        },
+        "events": 16,
+        "expected_alerts": 20.0,
+        "expected_timely_events": 16.0,
+        "false_per_match": 0.2,
+        "family": "deterministic",
+        "late_per_match": 0.0,
+        "matches": 20,
+        "non_timely_per_match": 0.2,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.8,
+        "timely_recall": 1.0
+      }
+    },
+    "ignore_cooldown": {
+      "context_logits": [
+        [
+          6.457414928486038,
+          6.457415314366727
+        ],
+        [
+          6.457414928486038,
+          -6.457414156725159
+        ]
+      ],
+      "counts": {
+        "events": 16,
+        "expected_alerts": 14.621691078831793,
+        "expected_timely_events": 9.72247003439521,
+        "false_per_match": 0.2449606000367052,
+        "late_per_match": 4.521851240113506e-07,
+        "matches": 20,
+        "non_timely_per_match": 0.24496105222182915,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.664934718014299,
+        "timely_recall": 0.6076543771497006
+      },
+      "policy": {
+        "bias": -6.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 14.621691078831793,
+            "expected_timely_events": 9.72247003439521,
+            "false_per_match": 0.2449606000367052,
+            "late_per_match": 4.521851240113506e-07,
+            "matches": 20,
+            "non_timely_per_match": 0.24496105222182915,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.664934718014299,
+            "timely_recall": 0.6076543771497006
+          }
+        },
+        "events": 16,
+        "expected_alerts": 14.621691078831793,
+        "expected_timely_events": 9.72247003439521,
+        "false_per_match": 0.2449606000367052,
+        "family": "randomized",
+        "late_per_match": 4.521851240113506e-07,
+        "matches": 20,
+        "non_timely_per_match": 0.24496105222182915,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.664934718014299,
+        "timely_recall": 0.6076543771497006
+      }
+    },
+    "oracle_pointwise_bce": {
+      "context_logits": [
+        [
+          0.4054651081081642,
+          20.723265864228342
+        ],
+        [
+          0.4054651081081642,
+          -20.72326583594641
+        ]
+      ],
+      "counts": {
+        "events": 16,
+        "expected_alerts": 15.999999999999996,
+        "expected_timely_events": 11.199999995999999,
+        "false_per_match": 0.24000000008,
+        "late_per_match": 1.2000000992884452e-10,
+        "matches": 20,
+        "non_timely_per_match": 0.24000000019999987,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.69999999975,
+        "timely_recall": 0.6999999997499999
+      },
+      "policy": {
+        "bias": 0.0,
+        "by_route": {
+          "synthetic": {
+            "events": 16,
+            "expected_alerts": 15.999999999999996,
+            "expected_timely_events": 11.199999995999999,
+            "false_per_match": 0.24000000008,
+            "late_per_match": 1.2000000992884452e-10,
+            "matches": 20,
+            "non_timely_per_match": 0.24000000019999987,
+            "opportunity_ceiling": 1.0,
+            "timely_precision": 0.69999999975,
+            "timely_recall": 0.6999999997499999
+          }
+        },
+        "events": 16,
+        "expected_alerts": 15.999999999999996,
+        "expected_timely_events": 11.199999995999999,
+        "false_per_match": 0.24000000008,
+        "family": "randomized",
+        "late_per_match": 1.2000000992884452e-10,
+        "matches": 20,
+        "non_timely_per_match": 0.24000000019999987,
+        "opportunity_ceiling": 1.0,
+        "timely_precision": 0.69999999975,
+        "timely_recall": 0.6999999997499999
+      }
+    }
+  },
+  "design": "20 enumerated outcomes;2 observed decision times;known outcome probabilities",
+  "exchangeable_null": {
+    "event_probability": 0.2,
+    "meaning": "all causal methods share the bound for information-independent labels",
+    "upper_bound_expected_timely_hits_per_episode": 0.0625,
+    "wrong_budget": 0.25
+  },
+  "no_conflict_max_difference": 0.0,
+  "provenance": {
+    "code_sha256": {
+      "scripts/scheduled_policy_controls.py": "6e0c71d25537e984c676564a8e3d19647827c7b6ba0eb32c9e06bb0824e4bf5a",
+      "src/league_ews/scheduled_policy.py": "c7aa034eb6b5135541c2f0f6a04b8208786548c4fe0e93b3b5bbdc126794561c"
+    },
+    "dtype": "float64",
+    "numpy": "2.5.3",
+    "optimizer": "Adam;lr=.1;400-steps;zero-initial-logits;no-random-draws",
+    "selection_wrong_budget": 0.25,
+    "torch": "2.14.0+cpu",
+    "training_wrong_cost": 0.25
+  },
+  "selection_scope": "population illustration only; no generalization claim",
+  "status": "synthetic-mechanism-check-not-real-data-evidence"
+}
