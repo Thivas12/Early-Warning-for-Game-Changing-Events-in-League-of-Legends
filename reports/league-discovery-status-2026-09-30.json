@@ -1,0 +1,42 @@
+{
+  "schema_version": "league-ews-discovery-status-v1",
+  "date": "2026-09-30",
+  "game": "League of Legends",
+  "breakthrough_established": false,
+  "new_empirical_fits_this_update": 0,
+  "new_real_match_payloads_read_this_update": 0,
+  "sealed_test_payloads_read_this_update": 0,
+  "original_research_question": ["baron", "dragon", "teamfight"],
+  "research_update": "docs/league-discovery-gates.md",
+  "original_evidence_review": "reports/notebook-source-review-2026-09-30.json",
+  "access_checks": {
+    "private_wsl_cache_mounted": false,
+    "public_legacy_download_url": "https://www.kaggle.com/api/v1/datasets/download/thivas12/lol-dataset-v5",
+    "public_legacy_http_status": 403,
+    "public_legacy_response_message": "Permission 'datasets.get' was denied",
+    "public_legacy_download_succeeded": false,
+    "real_export_preflight": "stopped: missing data/private/coordination-screen-v1/freeze.json"
+  },
+  "implemented": {
+    "exporter": "scripts/export_league_three_events.py",
+    "inputs": "existing audited train/calibration processed matches",
+    "representation": "each observed frame once; bit-for-bit B4 history reconstruction per match",
+    "targets": "all three events at 10/20/30/60 seconds plus exact event times",
+    "test_membership_exported": false,
+    "player_identifiers_exported": false,
+    "separate_code_and_data_checkouts_supported": true,
+    "existing_notebook_experiment_source_modified": false
+  },
+  "verification": {
+    "export_contract_tests_passed": 11,
+    "existing_notebook_continuation_tests_passed": 14,
+    "focused_ruff": "passed",
+    "git_diff_check": "passed",
+    "make_target_dry_run": "passed",
+    "fixtures_are_empirical_evidence": false,
+    "full_30000_match_development_export_executed": false,
+    "cuda_training_executed": false
+  },
+  "next_required_input": "data/private/league-three-event-export-v1/development.zip from the user's existing WSL checkout",
+  "interpretation": "Access and study preparation only. No new performance, transfer, novelty, or publication-readiness claim."
+}
