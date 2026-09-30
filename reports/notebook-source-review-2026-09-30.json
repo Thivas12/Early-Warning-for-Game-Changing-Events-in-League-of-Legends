@@ -1,0 +1,93 @@
+{
+  "metric_scope": "Recorded notebook outputs; not new fits or valid generalization estimates",
+  "model_code_identical_across_notebook_versions": true,
+  "model_code_sha256": "95f4ff8ced163daa7a98183bf86000515c35c511b53fa72feec899d1cde96587",
+  "new_real_data_fits": 0,
+  "saved_augmented_sequence_shape": [
+    224184,
+    40,
+    150
+  ],
+  "saved_best_hyperparameters": {
+    "gru_units": 160,
+    "learning_rate": 0.0001,
+    "shared_dropout": 0.5,
+    "tcn_filters": 80
+  },
+  "saved_dataset_shape": [
+    484255,
+    86
+  ],
+  "saved_metrics_mean_over_horizons_10_20_30": {
+    "leagueews": {
+      "baron": {
+        "brier": 0.006405,
+        "precision_at_0_5": 0.702667,
+        "roc_auc": 0.986737
+      },
+      "dragon": {
+        "brier": 0.028658,
+        "precision_at_0_5": 0.719868,
+        "roc_auc": 0.94988
+      },
+      "teamfight": {
+        "brier": 0.043235,
+        "precision_at_0_5": 0.744377,
+        "roc_auc": 0.92294
+      }
+    },
+    "mlp": {
+      "baron": {
+        "brier": 0.007652,
+        "precision_at_0_5": 0.351908,
+        "roc_auc": 0.972985
+      },
+      "dragon": {
+        "brier": 0.047362,
+        "precision_at_0_5": 0.388889,
+        "roc_auc": 0.733707
+      },
+      "teamfight": {
+        "brier": 0.069922,
+        "precision_at_0_5": 0.510923,
+        "roc_auc": 0.741425
+      }
+    },
+    "random_forest": {
+      "baron": {
+        "brier": 0.08882,
+        "precision_at_0_5": 0.052406,
+        "roc_auc": 0.975212
+      },
+      "dragon": {
+        "brier": 0.164132,
+        "precision_at_0_5": 0.195973,
+        "roc_auc": 0.916203
+      },
+      "teamfight": {
+        "brier": 0.222173,
+        "precision_at_0_5": 0.140208,
+        "roc_auc": 0.698452
+      }
+    }
+  },
+  "saved_partition_sequences": {
+    "test": 22419,
+    "train": 161412,
+    "validation": 40353
+  },
+  "saved_raw_sequence_shape": [
+    74728,
+    40,
+    150
+  ],
+  "schema_version": "league-ews-msc-source-review-v1",
+  "source_sha256": {
+    "legacy/msc-v1/EWS - Exploratory data analysis.ipynb": "079f8ed397a455a07f48e25b665ac52703576a92dac70b206b490cee74000e9a",
+    "legacy/msc-v1/EWS - model building.ipynb": "420af9124f8b921e6d80aaf30b5a27c08c0e69797b117de4643ae8a3d23a9d5f",
+    "legacy/msc-v1/EWS_Exploratory_data_analysis.ipynb": "4ae61a16b45eff3d818c87e256867e789e3cfbe70f9c4195250d2bf3949c9ce3",
+    "legacy/msc-v1/EWS_model_building.ipynb": "d61142b7c94d65b7876826aaf49c0214fce38214843ab85a2ad463539960a8a2",
+    "legacy/msc-v1/LOL Data Gen - Final.ipynb": "85d3be664ac1c65db281c6a588c34ea152107071b4622bd1c7b53a019e6b219e",
+    "legacy/msc-v1/LOL Final Report.pdf": "ceaf05ebf0f2bebfbfc3912a0da3b1e1716409cc7506da1b530291c619a1cd55"
+  }
+}

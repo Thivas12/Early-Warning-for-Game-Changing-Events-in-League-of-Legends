@@ -821,3 +821,21 @@ scheduled-policy-status:
 	@tail -n 16 data/private/scheduled-policy-v1/worker.log 2>/dev/null || true
 	@if test -f data/private/scheduled-policy-v1/worker-exit-code; then printf 'Worker exit code: '; cat data/private/scheduled-policy-v1/worker-exit-code; fi
 	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/scheduled-policy-v1'); print('Completed model reports:', len(list(p.glob('*/report.json'))), '/ 18'); print('Summary ready:', (p/'summary.json').exists())"
+
+.PHONY: notebook-continuation-preflight notebook-continuation-canary start-notebook-continuation notebook-continuation-status
+
+notebook-continuation-preflight:
+	uv run --no-sync python -u -m league_ews.notebook_experiment --device $(or $(DEVICE),cuda) --preflight
+
+notebook-continuation-canary:
+	uv run --no-sync python -u -m league_ews.notebook_experiment --device $(or $(DEVICE),cuda) --max-new-shards 1
+
+start-notebook-continuation: notebook-continuation-preflight
+	@mkdir -p data/private/notebook-ews-v1
+	@NOTEBOOK_EWS_DEVICE=$(or $(DEVICE),cuda) nohup bash scripts/run_notebook_continuation.sh >> data/private/notebook-ews-v1/worker.log 2>&1 < /dev/null &
+	@echo 'LeagueEWS worker launched. Run make notebook-continuation-status for progress.'
+
+notebook-continuation-status:
+	@tail -n 16 data/private/notebook-ews-v1/worker.log 2>/dev/null || true
+	@if test -f data/private/notebook-ews-v1/worker-exit-code; then cat data/private/notebook-ews-v1/worker-exit-code; fi
+	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/notebook-ews-v1'); print('Calibration reports:', len(list(p.glob('*/seed-*/report.json'))), '/ 12'); print('Summary ready:', (p/'summary.json').exists())"

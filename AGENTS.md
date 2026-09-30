@@ -7,6 +7,10 @@ reports and descriptions of progress throughout this repository.
 - Use League of Legends data for empirical claims about this project. Do not
   substitute Dota, another game, or synthetic examples when League data are
   unavailable. Report the access limitation and prepare the concrete next step.
+- Ground continuation in the user's original notebooks and final report under
+  `legacy/msc-v1`. Preserve LeagueEWS's three-event research question. Read
+  `docs/notebook-continuation.md` before replacing its model family or narrowing
+  its targets. Architecture repairs and unit tests are not new empirical fits.
 - Baron and Dragon labels currently identify objective kills/completions, not
   first damage or engagement onset. Use the definitions in `src/league_ews/labels.py`.
 - Preserve the audited train/calibration split and the sealed patch-16.17 test.

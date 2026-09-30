@@ -60,6 +60,20 @@ detail-only final eligibility screen and exact 36,000-match allocation are in
 resumable timeline materialization is specified in
 [`docs/final-collection.md`](docs/final-collection.md).
 
+## Original LeagueEWS and its continuation
+
+The research starts from the user's MSc **LeagueEWS**: residual TCN with
+squeeze-excitation, stacked BiGRUs, cross-attention and shared heads for Baron,
+Dragon and teamfights. The [source review and continuation](docs/notebook-continuation.md)
+trace the original notebooks, saved metrics and final report, including the
+corrections needed to evaluate that architecture fairly.
+
+The implemented continuation retains this model family and compares it with
+snapshot, GRU and TCN controls on the existing audited League sequence cache.
+It restores all three events and separately reports the original 30-second task.
+Twelve fits are planned; **none has been run on real data in this workspace**.
+The WSL runner needs the existing cache, without exporting or recollecting it.
+
 ## League research status
 
 **This project is exclusively about League of Legends.** The
@@ -89,11 +103,11 @@ but **no verified real League result exists for this candidate yet**. Synthetic
 examples establish implementation behavior only. Its private-data runner is
 `make start-scheduled-policy`, with explicit CUDA preflight.
 
-The immediate prerequisite is the existing audited League development cache.
-The standalone [export script](scripts/export_league_development.py) packages only
-its training/calibration numeric shards and selected metadata, verifies their
-source binding, and leaves test payloads unopened. The exact WSL command is in
-[the scope correction](docs/league-research-scope.md#concrete-next-step).
+The [notebook continuation](docs/notebook-continuation.md#run-with-the-users-existing-wsl-data)
+runs against the audited three-event cache in WSL. The earlier
+[export script](scripts/export_league_development.py) remains an optional transfer
+route for the separate Dragon coordination cache; it is not a prerequisite for
+continuing the original three-event model.
 
 ## Archived work outside League
 
