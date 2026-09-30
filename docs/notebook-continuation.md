@@ -145,6 +145,12 @@ Shared versus single-task transfer is still untested by these four families.
 Capacity controls and a genuinely fresh evaluation would be required before
 attributing gains to a new mechanism.
 
+The [discovery gates](league-discovery-gates.md) specify the next mechanism
+comparisons and the closest prior work. Its compact three-event exporter can
+make the existing development data available in another workspace without a
+new collection or a pre-staged B4 cache. These additions do not change this
+12-fit experiment or establish an empirical discovery.
+
 ## Run with the user's existing WSL data
 
 ```bash

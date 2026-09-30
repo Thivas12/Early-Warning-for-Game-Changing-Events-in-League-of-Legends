@@ -822,7 +822,10 @@ scheduled-policy-status:
 	@if test -f data/private/scheduled-policy-v1/worker-exit-code; then printf 'Worker exit code: '; cat data/private/scheduled-policy-v1/worker-exit-code; fi
 	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/scheduled-policy-v1'); print('Completed model reports:', len(list(p.glob('*/report.json'))), '/ 18'); print('Summary ready:', (p/'summary.json').exists())"
 
-.PHONY: notebook-continuation-preflight notebook-continuation-canary start-notebook-continuation notebook-continuation-status
+.PHONY: notebook-continuation-preflight notebook-continuation-canary start-notebook-continuation notebook-continuation-status export-league-three-events
+
+export-league-three-events:
+	PYTHONPATH=.:src uv run --no-sync python -m scripts.export_league_three_events --repo .
 
 notebook-continuation-preflight:
 	uv run --no-sync python -u -m league_ews.notebook_experiment --device $(or $(DEVICE),cuda) --preflight
