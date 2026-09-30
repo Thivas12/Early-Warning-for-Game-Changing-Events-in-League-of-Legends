@@ -25,6 +25,13 @@ def main() -> None:
     )
     names = dict(zip(meta.match_id.astype(str), meta.league_name, strict=True))
     leagues = Counter(names[str(r["match_id"])] for r in fresh)
+    reproduced = results["original_controls_reproduced"]
+    reproduction_note = (
+        f"Original control calibration reproduced: {reproduced}."
+        if reproduced is not None
+        else "Exact prior-policy reproduction is not expected: command quality exclusions "
+        "changed the development cohort. Every paired model was refit on the same retained data."
+    )
     lines = [
         "# Command-stream anticipation: completed third public-data screen",
         "",
@@ -53,8 +60,10 @@ def main() -> None:
         f"Fresh evaluation: {results['fresh_targets']} quiet-gap onsets and",
         f"{results['fresh_decision_rows']:,} decisions. Quality exclusions: {dict(excluded)}.",
         "",
-        f"Retained evaluation league counts: {dict(leagues)}. Source PROFESSIONAL labels",
-        "do not establish elite-tournament or independent-team generalization.",
+        f"The largest retained evaluation league is {leagues.most_common(1)[0][0]}: "
+        f"{leagues.most_common(1)[0][1]}/{len(fresh)} matches. Source PROFESSIONAL labels",
+        "do not establish elite-tournament or independent-team generalization. The full",
+        "league breakdown is recorded in the machine-readable result and source metadata.",
         "",
         "## Frozen comparison",
         "",
@@ -63,7 +72,7 @@ def main() -> None:
         "calibration only. One fixed seed is used; previous seed repetitions produced",
         "identical policies. Both selection and model weights were frozen before scoring.",
         f"Calibration selected **{results['selected_comparator']}** as the comparator.",
-        f"Original control calibration reproduced: {results['original_controls_reproduced']}.",
+        reproduction_note,
         "",
         "| Model | Inputs | Calibration hits | Fresh onset hits | Recall | "
         "Unmatched/match | Hits with 5s delivery delay |",
@@ -177,6 +186,48 @@ def main() -> None:
         "paired intervals and raw validation are in adjacent command-*.json files.",
         "The downloaded replays, Parquet data and model binary are not committed.",
     ]
+    followup_path = root / "command-history-development-2026-09-30.json"
+    if followup_path.exists():
+        followup = json.loads(followup_path.read_text())
+        lines += [
+            "",
+            "## Subsequent development-only experiment",
+            "",
+            "After seeing the negative fresh result, a separate protocol asked whether",
+            "commands add value when combined with the full history model. It used only",
+            "109 training and 37 calibration matches. Three additional models were fit;",
+            "the hash-verified history baseline was reused. The 145-match evaluation was",
+            "not scored with these models.",
+            "",
+            "| Development model | Features | Calibration hits | Unmatched/match |",
+            "|---|---:|---:|---:|",
+        ]
+        for row in followup["models"]:
+            s = row["calibration"]
+            lines.append(
+                f"| {row['name']} | {row['features']} | {s['hits']}/{s['targets']} | "
+                f"{s['unmatched_per_match']:.3f} |"
+            )
+        lines += [
+            "",
+            "The pre-fit resource gate required at least three additional calibration hits",
+            "over each comparator within the same budget. Advance to a new evaluation: "
+            f"**{followup['advances_to_new_evaluation']}**. Calibration is development evidence,",
+            "not independent validation or a discovery claim. No new evaluation cohort was",
+            "acquired for this unsuccessful variant.",
+            "",
+            "Reproduce this separate stage after preserving its published JSON under a",
+            "different filename: `python -m research.run_command_history_screen`. Then rerun",
+            "the summary generator. Its protocol is in",
+            "[command-history-development-screen.md](../docs/command-history-development-screen.md).",
+            "",
+            "Research decision: neither the current-state nor full-history command",
+            "augmentation currently supports an incremental-gain claim. Correct command",
+            "locations do carry signal relative to the deliberately incorrect-location",
+            "control, but this evidence does not justify a novelty or breakthrough claim.",
+            "Further work needs a stronger hypothesis and a new frozen test cohort; repeated",
+            "tuning on these evaluation results would not produce independent evidence.",
+        ]
     (root / "command-anticipation-research-2026-09-30.md").write_text("\n".join(lines) + "\n")
 
 
