@@ -1,0 +1,53 @@
+{
+  "match_id": "7616388415",
+  "raw_sha256": "d286429839593847f0edc818c455dd12582cacfa172a15896c1446884b764af4",
+  "canonical_sha256": "aaab0a88cbdd6b458c020909a88f8c7816a620bd1f3242cb13c4561ef8bc5eea",
+  "gem_revision": "e276f3ea5e77b5b8652a68ef7687b5c494592853",
+  "commands": 74276,
+  "equal_fields": {
+    "tick": 74276,
+    "order_type": 74276,
+    "issuer_player_id": 74276,
+    "ability_id": 74276,
+    "target_index": 74276,
+    "pos_x": 74276,
+    "pos_y": 74276,
+    "pos_z": 74276,
+    "queue": 74276,
+    "sequence_number": 74276
+  },
+  "movement_selected_unit_counts": {
+    "1": 55450,
+    "2": 1097,
+    "5": 701,
+    "3": 510,
+    "4": 502,
+    "8": 403,
+    "11": 159,
+    "10": 80,
+    "12": 43,
+    "6": 35,
+    "9": 33,
+    "7": 19,
+    "0": 12
+  },
+  "issuer_field_semantics": "raw protobuf entindex, not a verified player slot",
+  "coordinate_check": {
+    "0": {
+      "rows": 51129,
+      "median_distance": 23161.654122374377,
+      "within_50_units": 0
+    },
+    "16384": {
+      "rows": 51129,
+      "median_distance": 371.3738630002784,
+      "within_50_units": 1236
+    }
+  },
+  "limitations": [
+    "One replay validation, not all-match verification",
+    "Selected units omitted from canonical derivative",
+    "Future positions used solely for coordinate diagnostic, never as features",
+    "Commands are issued orders, not verified intent or execution"
+  ]
+}

@@ -62,6 +62,17 @@ resumable timeline materialization is specified in
 
 ## Latest controlled experiment
 
+The [completed command-stream study](reports/command-anticipation-research-2026-09-30.md)
+tested seven models on 250 newly selected Dota matches, retaining 145 for evaluation.
+Its development and evaluation data contain 18.91 million command records. The
+destination candidate caught 11/131 onsets versus 14/131 for the history baseline
+and failed its advancement gate. On first contact in each objective life, both
+caught 6/96. The raw-command audit, fixed protocol, exclusions, frozen policies,
+and per-match results are preserved. The subsequent
+[history-plus-command development screen](docs/command-history-development-screen.md)
+also failed: the candidate tied history at 5/29 calibration onsets and did not
+advance to another evaluation. It used only training/calibration data.
+
 The [completed public pre-contact study](reports/precontact-research-2026-09-30.md)
 audited 500 Dota matches, retaining 288 with 4.82 million hero-state rows. It ran
 two experimental waves with seven feature/model variants. Both coordination
