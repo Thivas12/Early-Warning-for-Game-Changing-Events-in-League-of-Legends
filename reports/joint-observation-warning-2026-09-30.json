@@ -1,0 +1,1583 @@
+{
+  "aggregate": {
+    "higher_event_rate": {
+      "full_belief_known_world_reference": {
+        "counts": [
+          1.0650000000000004,
+          0.43499999999999983,
+          3.0
+        ],
+        "states": 88567,
+        "utility": 0.48000000000000054
+      },
+      "joint_minus": {
+        "all": {
+          "difference": 0.2124316631212672,
+          "lower": 0.2003586193549432,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.22325599223054815
+        },
+        "none": {
+          "difference": 0.4038124111939576,
+          "lower": 0.3820327054794618,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.4279970985793085
+        },
+        "periodic-2": {
+          "difference": 0.10021453164954777,
+          "lower": 0.08533791534547559,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.11461431828045644
+        },
+        "periodic-2-1": {
+          "difference": 0.13625895709977556,
+          "lower": 0.11575709821428028,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.15653217107214176
+        },
+        "periodic-3": {
+          "difference": 0.5509309513456305,
+          "lower": 0.5292954121189751,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.5749800117663131
+        },
+        "periodic-3-1": {
+          "difference": 0.1726371464390472,
+          "lower": 0.14974556635024408,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.19477046365559764
+        },
+        "periodic-3-2": {
+          "difference": -0.08786572732337626,
+          "lower": -0.09983774014599725,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.07698431153186541
+        },
+        "sampled": {
+          "difference": 0.00244383879419109,
+          "lower": 0.0018826619583979026,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.0029642191979852637
+        },
+        "silent": {
+          "difference": 0.40382794068932426,
+          "lower": 0.38198289875528973,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.4280621689469728
+        }
+      },
+      "metrics": {
+        "all": {
+          "observations_per_trace": 8.999999988935693,
+          "timely_per_trace": 1.0682296155073343,
+          "timely_recall": 0.7108225985083326,
+          "utility": 0.19139627756805702,
+          "wrong_per_trace": 0.42683333849249255
+        },
+        "joint": {
+          "observations_per_trace": 2.282785711412508,
+          "timely_per_trace": 0.8418431812151574,
+          "timely_recall": 0.5601802729684485,
+          "utility": 0.40382794068932426,
+          "wrong_per_trace": 0.32387595495520777
+        },
+        "none": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0033036874189728374,
+          "timely_recall": 0.002198343541241612,
+          "utility": 1.5529495366687723e-05,
+          "wrong_per_trace": 0.0032881579236061498
+        },
+        "periodic-2": {
+          "observations_per_trace": 5.000000010530735,
+          "timely_per_trace": 1.0237009123725578,
+          "timely_recall": 0.6811922568561444,
+          "utility": 0.30361340903977646,
+          "wrong_per_trace": 0.47008750280624445
+        },
+        "periodic-2-1": {
+          "observations_per_trace": 3.999999977425129,
+          "timely_per_trace": 0.9795804181587292,
+          "timely_recall": 0.6518335460609462,
+          "utility": 0.26756898358954867,
+          "wrong_per_trace": 0.5120114356979242
+        },
+        "periodic-3": {
+          "observations_per_trace": 3.0000000108314753,
+          "timely_per_trace": 0.01178791368117989,
+          "timely_recall": 0.007843927290733951,
+          "utility": -0.14710301065630632,
+          "wrong_per_trace": 0.008890923795912423
+        },
+        "periodic-3-1": {
+          "observations_per_trace": 2.999999980978221,
+          "timely_per_trace": 0.9389188531354051,
+          "timely_recall": 0.6247764799679343,
+          "utility": 0.23119079425027703,
+          "wrong_per_trace": 0.5577280598362171
+        },
+        "periodic-3-2": {
+          "observations_per_trace": 2.9999999855353963,
+          "timely_per_trace": 1.066379413811224,
+          "timely_recall": 0.7095914351345582,
+          "utility": 0.49169366801270054,
+          "wrong_per_trace": 0.42468574652175384
+        },
+        "sampled": {
+          "observations_per_trace": 2.322523485200331,
+          "timely_per_trace": 0.8409800544575416,
+          "timely_recall": 0.559605930153211,
+          "utility": 0.4013841018951332,
+          "wrong_per_trace": 0.32346977830239193
+        },
+        "silent": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0,
+          "timely_recall": 0.0,
+          "utility": 0.0,
+          "wrong_per_trace": 0.0
+        }
+      },
+      "no_observation_known_world_reference": {
+        "counts": [
+          1.5000000000000004,
+          1.5,
+          0.0
+        ],
+        "states": 27,
+        "utility": 4.440892098500626e-16
+      },
+      "world": {
+        "cooldown": 3,
+        "observation_price": 0.05,
+        "onset_probability": 0.2,
+        "period": 3,
+        "persistence": 0.8,
+        "sensitivity": 0.85,
+        "specificity": 0.85,
+        "steps": 9,
+        "wrong_price": 1.0
+      }
+    },
+    "matched": {
+      "full_belief_known_world_reference": {
+        "counts": [
+          0.6134582381661252,
+          0.31045863763637505,
+          3.410888030166667
+        ],
+        "states": 88567,
+        "utility": 0.1324551990214168
+      },
+      "joint_minus": {
+        "all": {
+          "difference": 0.31118185954290245,
+          "lower": 0.29966364267164575,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.3224980746074687
+        },
+        "none": {
+          "difference": 0.12387812257122091,
+          "lower": 0.10162448504597403,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.1443205878926965
+        },
+        "periodic-2": {
+          "difference": 0.18024012095965325,
+          "lower": 0.16656073731493257,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.19278555907599212
+        },
+        "periodic-2-1": {
+          "difference": 0.19406863718530395,
+          "lower": 0.17447799893548344,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.21290261005284952
+        },
+        "periodic-3": {
+          "difference": 0.2730638091385142,
+          "lower": 0.25112057621318956,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.29346810334249723
+        },
+        "periodic-3-1": {
+          "difference": 0.21327438760069123,
+          "lower": 0.19051514966775632,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.2339652789582838
+        },
+        "periodic-3-2": {
+          "difference": 0.009938448312582218,
+          "lower": -0.0015683440013796678,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.02124509306707995
+        },
+        "sampled": {
+          "difference": 0.002169997094197537,
+          "lower": 0.0016552211455378248,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.002707799020686827
+        },
+        "silent": {
+          "difference": 0.12163632363889881,
+          "lower": 0.0993107213277622,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.14214522026133378
+        }
+      },
+      "metrics": {
+        "all": {
+          "observations_per_trace": 8.999999990107122,
+          "timely_per_trace": 0.7029810136845309,
+          "timely_recall": 0.7100012901126467,
+          "utility": -0.1895455359040037,
+          "wrong_per_trace": 0.44252655008317837
+        },
+        "joint": {
+          "observations_per_trace": 2.185956230612921,
+          "timely_per_trace": 0.5511786976610386,
+          "timely_recall": 0.5566830096460643,
+          "utility": 0.12163632363889881,
+          "wrong_per_trace": 0.3202445624914937
+        },
+        "none": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0021750232051284497,
+          "timely_recall": 0.0021967439398856196,
+          "utility": -0.0022417989323220886,
+          "wrong_per_trace": 0.004416822137450538
+        },
+        "periodic-2": {
+          "observations_per_trace": 5.000000008408581,
+          "timely_per_trace": 0.6683602072253131,
+          "timely_recall": 0.675034745110315,
+          "utility": -0.05860379732075442,
+          "wrong_per_trace": 0.47696400412563844
+        },
+        "periodic-2-1": {
+          "observations_per_trace": 3.9999999814414577,
+          "timely_per_trace": 0.6310551796304286,
+          "timely_recall": 0.6373571731639096,
+          "utility": -0.07243231354640517,
+          "wrong_per_trace": 0.5034874941047608
+        },
+        "periodic-3": {
+          "observations_per_trace": 3.000000007431178,
+          "timely_per_trace": 0.007320919108781372,
+          "timely_recall": 0.0073940290148116145,
+          "utility": -0.15142748549961538,
+          "wrong_per_trace": 0.008748404236837834
+        },
+        "periodic-3-1": {
+          "observations_per_trace": 2.9999999797607106,
+          "timely_per_trace": 0.5988934873726244,
+          "timely_recall": 0.6048743001549178,
+          "utility": -0.09163806396179244,
+          "wrong_per_trace": 0.5405315523463813
+        },
+        "periodic-3-2": {
+          "observations_per_trace": 2.999999988503987,
+          "timely_per_trace": 0.7018225503019719,
+          "timely_recall": 0.7088312578071452,
+          "utility": 0.11169787532631656,
+          "wrong_per_trace": 0.4401246755504559
+        },
+        "sampled": {
+          "observations_per_trace": 2.220802398950781,
+          "timely_per_trace": 0.5500081631112987,
+          "timely_recall": 0.5555007856254173,
+          "utility": 0.11946632654470127,
+          "wrong_per_trace": 0.31950171661905846
+        },
+        "silent": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0,
+          "timely_recall": 0.0,
+          "utility": 0.0,
+          "wrong_per_trace": 0.0
+        }
+      },
+      "no_observation_known_world_reference": {
+        "counts": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "states": 27,
+        "utility": 0.0
+      },
+      "world": {
+        "cooldown": 3,
+        "observation_price": 0.05,
+        "onset_probability": 0.1,
+        "period": 3,
+        "persistence": 0.8,
+        "sensitivity": 0.85,
+        "specificity": 0.85,
+        "steps": 9,
+        "wrong_price": 1.0
+      }
+    },
+    "uninformative_sensor": {
+      "full_belief_known_world_reference": {
+        "counts": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "states": 27,
+        "utility": 0.0
+      },
+      "joint_minus": {
+        "all": {
+          "difference": 0.4744420126652093,
+          "lower": 0.46100326227423916,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.4888592820109128
+        },
+        "none": {
+          "difference": -0.4805152009822233,
+          "lower": -0.5046363343201109,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.4570646301650633
+        },
+        "periodic-2": {
+          "difference": 0.2632223785482559,
+          "lower": 0.24486667943089688,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.2809057099655129
+        },
+        "periodic-2-1": {
+          "difference": 0.23398489782028872,
+          "lower": 0.2081310357265694,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.2579584836032509
+        },
+        "periodic-3": {
+          "difference": -0.3256795812549649,
+          "lower": -0.34962752837694316,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.30255998067534223
+        },
+        "periodic-3-1": {
+          "difference": 0.17520199039306142,
+          "lower": 0.14690059203550174,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.20242680884462474
+        },
+        "periodic-3-2": {
+          "difference": 0.17248281762995654,
+          "lower": 0.1590747352141184,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.1868446977959924
+        },
+        "sampled": {
+          "difference": 0.0015663065779719521,
+          "lower": 0.0009576561613365492,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.0021817715281325636
+        },
+        "silent": {
+          "difference": -0.48275106625855624,
+          "lower": -0.5069558937639058,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.459232576412861
+        }
+      },
+      "metrics": {
+        "all": {
+          "observations_per_trace": 8.999999983294401,
+          "timely_per_trace": 0.4970581111068906,
+          "timely_recall": 0.5014037736962994,
+          "utility": -0.9571930789237655,
+          "wrong_per_trace": 1.004251190865936
+        },
+        "joint": {
+          "observations_per_trace": 2.2593371861251774,
+          "timely_per_trace": 0.3739982992476043,
+          "timely_recall": 0.3772680787386251,
+          "utility": -0.48275106625855624,
+          "wrong_per_trace": 0.7437825061999017
+        },
+        "none": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.002177990033122986,
+          "timely_recall": 0.002197031689612548,
+          "utility": -0.0022358652763330156,
+          "wrong_per_trace": 0.004413855309456002
+        },
+        "periodic-2": {
+          "observations_per_trace": 5.000000015146119,
+          "timely_per_trace": 0.49986712520519105,
+          "timely_recall": 0.504237346346623,
+          "utility": -0.7459734448068123,
+          "wrong_per_trace": 0.9958405692546974
+        },
+        "periodic-2-1": {
+          "observations_per_trace": 3.9999999774663597,
+          "timely_per_trace": 0.49729513989305874,
+          "timely_recall": 0.5016428747696019,
+          "utility": -0.7167359640788449,
+          "wrong_per_trace": 1.014031105098586
+        },
+        "periodic-3": {
+          "observations_per_trace": 3.000000010152386,
+          "timely_per_trace": 0.00684991190328669,
+          "timely_recall": 0.00690979907791215,
+          "utility": -0.15707148500359142,
+          "wrong_per_trace": 0.01392139639925875
+        },
+        "periodic-3-1": {
+          "observations_per_trace": 2.9999999803937194,
+          "timely_per_trace": 0.5024603545353516,
+          "timely_recall": 0.5068532476731438,
+          "utility": -0.6579530566516179,
+          "wrong_per_trace": 1.0104134121672832
+        },
+        "periodic-3-2": {
+          "observations_per_trace": 2.9999999849945507,
+          "timely_per_trace": 0.4950960256977871,
+          "timely_recall": 0.4994245342342411,
+          "utility": -0.6552338838885128,
+          "wrong_per_trace": 1.0003299103365724
+        },
+        "sampled": {
+          "observations_per_trace": 2.2997197457489547,
+          "timely_per_trace": 0.3730013987611924,
+          "timely_recall": 0.37626246258486495,
+          "utility": -0.4843173728365282,
+          "wrong_per_trace": 0.7423327843102729
+        },
+        "silent": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0,
+          "timely_recall": 0.0,
+          "utility": 0.0,
+          "wrong_per_trace": 0.0
+        }
+      },
+      "no_observation_known_world_reference": {
+        "counts": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "states": 27,
+        "utility": 0.0
+      },
+      "world": {
+        "cooldown": 3,
+        "observation_price": 0.05,
+        "onset_probability": 0.1,
+        "period": 3,
+        "persistence": 0.8,
+        "sensitivity": 0.5,
+        "specificity": 0.5,
+        "steps": 9,
+        "wrong_price": 1.0
+      }
+    },
+    "weaker_sensor": {
+      "full_belief_known_world_reference": {
+        "counts": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "states": 88567,
+        "utility": 0.0
+      },
+      "joint_minus": {
+        "all": {
+          "difference": 0.40575904539188223,
+          "lower": 0.3937492592808757,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.4185905235067576
+        },
+        "none": {
+          "difference": -0.2339208101045971,
+          "lower": -0.2585610492342484,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.2108012836637666
+        },
+        "periodic-2": {
+          "difference": 0.24098219001104365,
+          "lower": 0.2253149297472322,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.2569030562238133
+        },
+        "periodic-2-1": {
+          "difference": 0.20502167561306872,
+          "lower": 0.18008355274562707,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.22763888583713918
+        },
+        "periodic-3": {
+          "difference": -0.08134645447892264,
+          "lower": -0.10582988526959057,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.05846767768707372
+        },
+        "periodic-3-1": {
+          "difference": 0.19187866961120786,
+          "lower": 0.16506838539777396,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.2168462466867802
+        },
+        "periodic-3-2": {
+          "difference": 0.10361669179122555,
+          "lower": 0.09166146373746605,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.11647780701713983
+        },
+        "sampled": {
+          "difference": 0.0006784875209822214,
+          "lower": 9.429573929667897e-05,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": 0.001264696016366327
+        },
+        "silent": {
+          "difference": -0.23620851700556472,
+          "lower": -0.2609631878078597,
+          "scope": "paired-trajectory-bootstrap;seed-averaged-fits;conditional-on-fitted-models",
+          "upper": -0.2130595876575407
+        }
+      },
+      "metrics": {
+        "all": {
+          "observations_per_trace": 8.999999984288781,
+          "timely_per_trace": 0.575432555471133,
+          "timely_recall": 0.5885073026740976,
+          "utility": -0.641967562397447,
+          "wrong_per_trace": 0.7674001186541408
+        },
+        "joint": {
+          "observations_per_trace": 2.216531146937392,
+          "timely_per_trace": 0.43267855368699926,
+          "timely_recall": 0.442509701848177,
+          "utility": -0.23620851700556472,
+          "wrong_per_trace": 0.5580605133456944
+        },
+        "none": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0021520692208056857,
+          "timely_recall": 0.002200967672514379,
+          "utility": -0.002287706900967616,
+          "wrong_per_trace": 0.004439776121773302
+        },
+        "periodic-2": {
+          "observations_per_trace": 5.000000012526773,
+          "timely_per_trace": 0.557276084657896,
+          "timely_recall": 0.5699382878298982,
+          "utility": -0.4771907070166084,
+          "wrong_per_trace": 0.7844667910481657
+        },
+        "periodic-2-1": {
+          "observations_per_trace": 3.999999979059794,
+          "timely_per_trace": 0.5560846485240615,
+          "timely_recall": 0.5687197803631849,
+          "utility": -0.44123019261863344,
+          "wrong_per_trace": 0.7973148421897054
+        },
+        "periodic-3": {
+          "observations_per_trace": 3.000000008221832,
+          "timely_per_trace": 0.006940352676213143,
+          "timely_recall": 0.007098048579717612,
+          "utility": -0.15486206252664209,
+          "wrong_per_trace": 0.011802414791763619
+        },
+        "periodic-3-1": {
+          "observations_per_trace": 2.9999999794672476,
+          "timely_per_trace": 0.540373771743233,
+          "timely_recall": 0.5526519273558758,
+          "utility": -0.42808718661677264,
+          "wrong_per_trace": 0.8184609593866432
+        },
+        "periodic-3-2": {
+          "observations_per_trace": 2.99999998620721,
+          "timely_per_trace": 0.5737384923979643,
+          "timely_recall": 0.5867747477807894,
+          "utility": -0.33982520879679035,
+          "wrong_per_trace": 0.7635637018843942
+        },
+        "sampled": {
+          "observations_per_trace": 2.255162693163527,
+          "timely_per_trace": 0.43204446073073,
+          "timely_recall": 0.4418612012866592,
+          "utility": -0.23688700452654696,
+          "wrong_per_trace": 0.5561733305991006
+        },
+        "silent": {
+          "observations_per_trace": 0.0,
+          "timely_per_trace": 0.0,
+          "timely_recall": 0.0,
+          "utility": 0.0,
+          "wrong_per_trace": 0.0
+        }
+      },
+      "no_observation_known_world_reference": {
+        "counts": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "states": 27,
+        "utility": 0.0
+      },
+      "world": {
+        "cooldown": 3,
+        "observation_price": 0.05,
+        "onset_probability": 0.1,
+        "period": 3,
+        "persistence": 0.8,
+        "sensitivity": 0.65,
+        "specificity": 0.65,
+        "steps": 9,
+        "wrong_price": 1.0
+      }
+    }
+  },
+  "code_sha256": {
+    "joint_observation_warning.py": "702c6551029ad6284593e6c5b270d372a801936b5bfc603e596274166ec58885",
+    "run_joint_observation_warning.py": "f247678784042f8e0f7aed2066f65528866ba914443cb84e29bb92e4852565c6"
+  },
+  "environment": {
+    "device": "cpu",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cpu"
+  },
+  "protocol": {
+    "confirmation": "designed-synthetic-study;not-independent-real-world-confirmation",
+    "evaluation_action_semantics": "exact-expectations-for-every-trained-policy",
+    "evaluation_trajectories_per_case": 8192,
+    "methods": [
+      "joint",
+      "sampled",
+      "none",
+      "all",
+      "periodic-2",
+      "periodic-2-1",
+      "periodic-3",
+      "periodic-3-1",
+      "periodic-3-2"
+    ],
+    "optimization_steps": 200,
+    "prices": "same-fixed-Lagrangian-prices;not-matched-hard-budget-operating-points",
+    "reference": "classical-full-belief-POMDP;knows-world-law;no-hidden-state-or-future-access",
+    "sampled_comparator": "same-controller;8-action-draws-per-minibatch;training-time-reported",
+    "seeds": [
+      31,
+      32,
+      33
+    ],
+    "shift": "train-on-matched-only;no-adaptation-or-selection-on-evaluation-cases",
+    "train_trajectories": 2048,
+    "warm_start": "training-only-Laplace-probability-table;logits-times-four"
+  },
+  "research_question": "exact joint acquisition and repeated-warning credit without action-path sampling",
+  "runs": [
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.2803472025874,
+        "timely_per_trace": 0.8413203977223411,
+        "timely_recall": 0.5598324017660157,
+        "utility": 0.40365353449756325,
+        "wrong_per_trace": 0.32364950309540785
+      },
+      "matched": {
+        "observations_per_trace": 2.183353295223881,
+        "timely_per_trace": 0.5508561785055626,
+        "timely_recall": 0.5563572696729834,
+        "utility": 0.12167962638384959,
+        "wrong_per_trace": 0.3200088873605189
+      },
+      "method": "joint",
+      "seed": 31,
+      "training_seconds": 1.3942235989998153,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.2566798942749315,
+        "timely_per_trace": 0.3737275578406114,
+        "timely_recall": 0.3769949703029539,
+        "utility": -0.48232256316777244,
+        "wrong_per_trace": 0.7432161262946373
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.213809327143153,
+        "timely_per_trace": 0.4323588313097555,
+        "timely_recall": 0.44218271486760513,
+        "utility": -0.23597324944824016,
+        "wrong_per_trace": 0.557641614400838
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.3323454515179947,
+        "timely_per_trace": 0.841827976527517,
+        "timely_recall": 0.5601701554474388,
+        "utility": 0.4014829640209646,
+        "wrong_per_trace": 0.3237277399306526
+      },
+      "matched": {
+        "observations_per_trace": 2.22934604934494,
+        "timely_per_trace": 0.5505106513623135,
+        "timely_recall": 0.556008291944282,
+        "utility": 0.11917967172164534,
+        "wrong_per_trace": 0.3198636771734211
+      },
+      "method": "sampled",
+      "seed": 31,
+      "training_seconds": 4.938011876000019,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.30965638058467,
+        "timely_per_trace": 0.37327100126022383,
+        "timely_recall": 0.37653442215536925,
+        "utility": -0.48535609926841655,
+        "wrong_per_trace": 0.7431442814994069
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.2646171289737254,
+        "timely_per_trace": 0.4325384455864416,
+        "timely_recall": 0.4423664102676816,
+        "utility": -0.23740319430639845,
+        "wrong_per_trace": 0.5567107834441538
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0031476097121654334,
+        "timely_recall": 0.002094486131269534,
+        "utility": 1.455326533061907e-05,
+        "wrong_per_trace": 0.0031330564468348143
+      },
+      "matched": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.002072399213609799,
+        "timely_recall": 0.0020930951002208695,
+        "utility": -0.0021358677317806496,
+        "wrong_per_trace": 0.004208266945390449
+      },
+      "method": "none",
+      "seed": 31,
+      "training_seconds": 2.0214652519989613,
+      "uninformative_sensor": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.002075256301324657,
+        "timely_recall": 0.0020933997808707783,
+        "utility": -0.0021301535563509333,
+        "wrong_per_trace": 0.0042054098576755905
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0020500124525710817,
+        "timely_recall": 0.0020965920114185146,
+        "utility": -0.0021806412538580844,
+        "wrong_per_trace": 0.004230653706429166
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 9.000000024614565,
+        "timely_per_trace": 1.0681902552424627,
+        "timely_recall": 0.7107964073549066,
+        "utility": 0.19142356458011298,
+        "wrong_per_trace": 0.42676668943162144
+      },
+      "matched": {
+        "observations_per_trace": 9.00000001888111,
+        "timely_per_trace": 0.7029564240942181,
+        "timely_recall": 0.7099764549599106,
+        "utility": -0.1894867188760913,
+        "wrong_per_trace": 0.4424431420262538
+      },
+      "method": "all",
+      "seed": 31,
+      "training_seconds": 1.2963126470003772,
+      "uninformative_sensor": {
+        "observations_per_trace": 9.000000014959369,
+        "timely_per_trace": 0.49700800367151876,
+        "timely_recall": 0.5013532281833618,
+        "utility": -0.9571422753018746,
+        "wrong_per_trace": 1.004150278225425
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 9.000000013016688,
+        "timely_per_trace": 0.5753910857987625,
+        "timely_recall": 0.5884648907445021,
+        "utility": -0.6419023789613225,
+        "wrong_per_trace": 0.7672934641092507
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 4.999999995678081,
+        "timely_per_trace": 1.0233078841719376,
+        "timely_recall": 0.6809307275718067,
+        "utility": 0.30348045853499006,
+        "wrong_per_trace": 0.4698274258530435
+      },
+      "matched": {
+        "observations_per_trace": 4.99999999684951,
+        "timely_per_trace": 0.6681131228377055,
+        "timely_recall": 0.6747851932297477,
+        "utility": -0.058580414657585095,
+        "wrong_per_trace": 0.4766935376528151
+      },
+      "method": "periodic-2",
+      "seed": 31,
+      "training_seconds": 1.217171166001208,
+      "uninformative_sensor": {
+        "observations_per_trace": 5.0000000004292815,
+        "timely_per_trace": 0.4996399390895412,
+        "timely_recall": 0.5040081739960006,
+        "utility": -0.7457500589593034,
+        "wrong_per_trace": 0.9953899980273806
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 4.999999999861757,
+        "timely_per_trace": 0.5570402131750802,
+        "timely_recall": 0.5696970569700696,
+        "utility": -0.4770388736862834,
+        "wrong_per_trace": 0.7840790868682759
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 4.0000000067811925,
+        "timely_per_trace": 0.9800592610095443,
+        "timely_recall": 0.6521521782300533,
+        "utility": 0.2677715249068159,
+        "wrong_per_trace": 0.5122877357636688
+      },
+      "matched": {
+        "observations_per_trace": 4.000000007959898,
+        "timely_per_trace": 0.631371759285433,
+        "timely_recall": 0.6376769143220647,
+        "utility": -0.07236616843977167,
+        "wrong_per_trace": 0.5037379273272098
+      },
+      "method": "periodic-2-1",
+      "seed": 31,
+      "training_seconds": 1.267337385999781,
+      "uninformative_sensor": {
+        "observations_per_trace": 4.000000014275429,
+        "timely_per_trace": 0.4975590193831951,
+        "timely_recall": 0.5019090612962854,
+        "utility": -0.7170105469609317,
+        "wrong_per_trace": 1.0145695656303553
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 4.000000013853423,
+        "timely_per_trace": 0.5563721973416453,
+        "timely_recall": 0.569013862749408,
+        "utility": -0.44135806382065335,
+        "wrong_per_trace": 0.7977302604696275
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.010733134172211223,
+        "timely_recall": 0.007142054677829124,
+        "utility": -0.1473751771198724,
+        "wrong_per_trace": 0.00810831129208367
+      },
+      "matched": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.00666779215636204,
+        "timely_recall": 0.006734379650464533,
+        "utility": -0.15132956900149314,
+        "wrong_per_trace": 0.00799736115785521
+      },
+      "method": "periodic-3",
+      "seed": 31,
+      "training_seconds": 1.2782598799985863,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.006241088308810205,
+        "timely_recall": 0.006295652681415245,
+        "utility": -0.15644278680879747,
+        "wrong_per_trace": 0.012683875117607712
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.006322514637860266,
+        "timely_recall": 0.006466172273826629,
+        "utility": -0.15444200914021838,
+        "wrong_per_trace": 0.010764523778078683
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.9999999861975084,
+        "timely_per_trace": 0.9388593792458328,
+        "timely_recall": 0.6247369047828659,
+        "utility": 0.23117825950829124,
+        "wrong_per_trace": 0.5576811204276662
+      },
+      "matched": {
+        "observations_per_trace": 2.99999998799467,
+        "timely_per_trace": 0.5988553955486529,
+        "timely_recall": 0.6048358279293015,
+        "utility": -0.09161959215180582,
+        "wrong_per_trace": 0.5404749883007252
+      },
+      "method": "periodic-3-1",
+      "seed": 31,
+      "training_seconds": 2.2181493009993574,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.9999999853680492,
+        "timely_per_trace": 0.5024258805583539,
+        "timely_recall": 0.5068184722982435,
+        "utility": -0.6579177167391854,
+        "wrong_per_trace": 1.0103435980291369
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.999999985389877,
+        "timely_per_trace": 0.5403383661437056,
+        "timely_recall": 0.5526157172845488,
+        "utility": -0.42805909383081386,
+        "wrong_per_trace": 0.8183974607050255
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 1.066339667405956,
+        "timely_recall": 0.7095649870351386,
+        "utility": 0.49169076027985803,
+        "wrong_per_trace": 0.4246489071260978
+      },
+      "matched": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.7017962911914442,
+        "timely_recall": 0.7088047364616337,
+        "utility": 0.11172132378373757,
+        "wrong_per_trace": 0.4400749674077066
+      },
+      "method": "periodic-3-2",
+      "seed": 31,
+      "training_seconds": 1.3957352500001434,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.4950710763122951,
+        "timely_recall": 0.4993993667221181,
+        "utility": -0.655207873688706,
+        "wrong_per_trace": 1.000278950001001
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.5737131606305851,
+        "timely_recall": 0.5867488404351752,
+        "utility": -0.3398001747835995,
+        "wrong_per_trace": 0.7635133354141845
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.28187433977466,
+        "timely_per_trace": 0.8418402314131659,
+        "timely_recall": 0.5601783101077618,
+        "utility": 0.40385216953927544,
+        "wrong_per_trace": 0.32389434488515745
+      },
+      "matched": {
+        "observations_per_trace": 2.1848472079346024,
+        "timely_per_trace": 0.5511872908668183,
+        "timely_recall": 0.5566916886673623,
+        "utility": 0.12165068585721502,
+        "wrong_per_trace": 0.32029424461287315
+      },
+      "method": "joint",
+      "seed": 32,
+      "training_seconds": 2.023456236000129,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.2582613370512234,
+        "timely_per_trace": 0.37400366060423895,
+        "timely_recall": 0.37727348696834445,
+        "utility": -0.48268460493689125,
+        "wrong_per_trace": 0.743775198688569
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.215373625148537,
+        "timely_per_trace": 0.43267052999759104,
+        "timely_recall": 0.4425014958477236,
+        "utility": -0.23617757872748596,
+        "wrong_per_trace": 0.5580794274676502
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.316989296021518,
+        "timely_per_trace": 0.8399737169697916,
+        "timely_recall": 0.5589362918866487,
+        "utility": 0.40111559564761623,
+        "wrong_per_trace": 0.32300865652109945
+      },
+      "matched": {
+        "observations_per_trace": 2.215231475729098,
+        "timely_per_trace": 0.549311136778396,
+        "timely_recall": 0.5547967984821379,
+        "utility": 0.11957292365001493,
+        "wrong_per_trace": 0.3189766393419262
+      },
+      "method": "sampled",
+      "seed": 32,
+      "training_seconds": 4.4690322800015565,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.2940092454683167,
+        "timely_per_trace": 0.3725132241583484,
+        "timely_recall": 0.3757700199858626,
+        "utility": -0.48340827555425103,
+        "wrong_per_trace": 0.7412210374391837
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.2494613596585964,
+        "timely_per_trace": 0.43143708256273605,
+        "timely_recall": 0.4412400225160966,
+        "utility": -0.2363197759538041,
+        "wrong_per_trace": 0.5552837905336103
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0035048320986419412,
+        "timely_recall": 0.0023321894689362997,
+        "utility": 1.8638438376683553e-05,
+        "wrong_per_trace": 0.0034861936602652577
+      },
+      "matched": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0023064153387650776,
+        "timely_recall": 0.0023294482129408846,
+        "utility": -0.0023781950813770436,
+        "wrong_per_trace": 0.004684610420142121
+      },
+      "method": "none",
+      "seed": 32,
+      "training_seconds": 1.4319878019996395,
+      "uninformative_sensor": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0023099512516822074,
+        "timely_recall": 0.0023301466141830616,
+        "utility": -0.002371123255542784,
+        "wrong_per_trace": 0.0046810745072249915
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.002284123651222103,
+        "timely_recall": 0.002336022590613167,
+        "utility": -0.002422778456462993,
+        "wrong_per_trace": 0.004706902107685096
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 8.999999960440618,
+        "timely_per_trace": 1.0683069623392012,
+        "timely_recall": 0.7108740667275393,
+        "utility": 0.19141626193026695,
+        "wrong_per_trace": 0.4268907023869032
+      },
+      "matched": {
+        "observations_per_trace": 8.99999996346014,
+        "timely_per_trace": 0.7030313333591126,
+        "timely_recall": 0.7100521123015473,
+        "utility": -0.1895628394596905,
+        "wrong_per_trace": 0.4425941746457961
+      },
+      "method": "all",
+      "seed": 32,
+      "training_seconds": 1.4153921559991431,
+      "uninformative_sensor": {
+        "observations_per_trace": 8.999999954634404,
+        "timely_per_trace": 0.4971098883531947,
+        "timely_recall": 0.5014560036189349,
+        "utility": -0.9572456975425048,
+        "wrong_per_trace": 1.0043555881639794
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 8.999999955107342,
+        "timely_per_trace": 0.5754841720008126,
+        "timely_recall": 0.5885600920138149,
+        "utility": -0.6420111299547645,
+        "wrong_per_trace": 0.7674953042002102
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 5.000000021071173,
+        "timely_per_trace": 1.0237241489160098,
+        "timely_recall": 0.68120771894403,
+        "utility": 0.30358753467669775,
+        "wrong_per_trace": 0.4701366131857533
+      },
+      "matched": {
+        "observations_per_trace": 5.000000017753337,
+        "timely_per_trace": 0.6683755767468323,
+        "timely_recall": 0.6750502681186106,
+        "utility": -0.05865492205453805,
+        "wrong_per_trace": 0.47703049791370356
+      },
+      "method": "periodic-2",
+      "seed": 32,
+      "training_seconds": 1.4613037170001917,
+      "uninformative_sensor": {
+        "observations_per_trace": 5.000000022046152,
+        "timely_per_trace": 0.4999020884764275,
+        "timely_recall": 0.5042726152935468,
+        "utility": -0.746008550437836,
+        "wrong_per_trace": 0.9959106378119558
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 5.000000018655555,
+        "timely_per_trace": 0.5573043632445549,
+        "timely_recall": 0.5699672089512352,
+        "utility": -0.477240904788767,
+        "wrong_per_trace": 0.784545267100544
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.999999951272912,
+        "timely_per_trace": 0.9795364195715639,
+        "timely_recall": 0.6518042684696818,
+        "utility": 0.267538744218127,
+        "wrong_per_trace": 0.5119976777897914
+      },
+      "matched": {
+        "observations_per_trace": 3.999999961728463,
+        "timely_per_trace": 0.6310268902952929,
+        "timely_recall": 0.6373286013190778,
+        "utility": -0.07246147851712283,
+        "wrong_per_trace": 0.5034883707259927
+      },
+      "method": "periodic-2-1",
+      "seed": 32,
+      "training_seconds": 1.4677958039992518,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.9999999473729986,
+        "timely_per_trace": 0.49727378973892433,
+        "timely_recall": 0.5016213379560729,
+        "utility": -0.7167139916015787,
+        "wrong_per_trace": 1.013987783971853
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.999999953128281,
+        "timely_per_trace": 0.556060636369377,
+        "timely_recall": 0.5686952226139745,
+        "utility": -0.44122832958612357,
+        "wrong_per_trace": 0.7972889682990866
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.0000000324944267,
+        "timely_per_trace": 0.012975345177162367,
+        "timely_recall": 0.00863406934378313,
+        "utility": -0.1467988961113626,
+        "wrong_per_trace": 0.009774239663803641
+      },
+      "matched": {
+        "observations_per_trace": 3.000000022293534,
+        "timely_per_trace": 0.008056547518615176,
+        "timely_recall": 0.008137003732276602,
+        "utility": -0.1515429706089062,
+        "wrong_per_trace": 0.009599517012844672
+      },
+      "method": "periodic-3",
+      "seed": 32,
+      "training_seconds": 1.4680230659996596,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.0000000304571586,
+        "timely_per_trace": 0.007536048929232209,
+        "timely_recall": 0.007601934839092508,
+        "utility": -0.15777998078603975,
+        "wrong_per_trace": 0.015316028192414066
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.0000000246654963,
+        "timely_per_trace": 0.007636483430674801,
+        "timely_recall": 0.007809996537339322,
+        "utility": -0.15533761279119634,
+        "wrong_per_trace": 0.012974094988596363
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.9999998974526534,
+        "timely_per_trace": 0.9389099481313834,
+        "timely_recall": 0.6247705543897566,
+        "utility": 0.23116530343906777,
+        "wrong_per_trace": 0.557744649819683
+      },
+      "matched": {
+        "observations_per_trace": 2.9999999063365976,
+        "timely_per_trace": 0.5988897840588936,
+        "timely_recall": 0.6048705598582735,
+        "utility": -0.09168152864864812,
+        "wrong_per_trace": 0.5405713173907118
+      },
+      "method": "periodic-3-1",
+      "seed": 32,
+      "training_seconds": 1.644406039000387,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.999999895291694,
+        "timely_per_trace": 0.5024624896854295,
+        "timely_recall": 0.5068554014903385,
+        "utility": -0.6579553228169441,
+        "wrong_per_trace": 1.010417817737789
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.999999899911927,
+        "timely_per_trace": 0.5403734506985409,
+        "timely_recall": 0.5526515990165353,
+        "utility": -0.4281073626003637,
+        "wrong_per_trace": 0.8184808183033083
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.9999999865685822,
+        "timely_per_trace": 1.0664831789622018,
+        "timely_recall": 0.709660482662526,
+        "utility": 0.49173041603348366,
+        "wrong_per_trace": 0.424752763600289
+      },
+      "matched": {
+        "observations_per_trace": 2.9999999881983967,
+        "timely_per_trace": 0.7018906898550011,
+        "timely_recall": 0.7089000778316076,
+        "utility": 0.11168444844988197,
+        "wrong_per_trace": 0.4402062419951993
+      },
+      "method": "periodic-3-2",
+      "seed": 32,
+      "training_seconds": 1.5724434180010576,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.999999985040631,
+        "timely_per_trace": 0.4951523215322696,
+        "timely_recall": 0.4994813222500126,
+        "utility": -0.6552922896016758,
+        "wrong_per_trace": 1.000444611881914
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.999999985608156,
+        "timely_per_trace": 0.5737993909664422,
+        "timely_recall": 0.5868370300620592,
+        "utility": -0.33986498879742255,
+        "wrong_per_trace": 0.7636643804834569
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.286135591875464,
+        "timely_per_trace": 0.8423689145099653,
+        "timely_recall": 0.5605301070315681,
+        "utility": 0.40397811803113404,
+        "wrong_per_trace": 0.32408401688505806
+      },
+      "matched": {
+        "observations_per_trace": 2.1896681886802796,
+        "timely_per_trace": 0.5514926236107349,
+        "timely_recall": 0.5570000705978474,
+        "utility": 0.12157865867563183,
+        "wrong_per_trace": 0.3204305555010891
+      },
+      "method": "joint",
+      "seed": 33,
+      "training_seconds": 1.6066600670001208,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.263070327049377,
+        "timely_per_trace": 0.37426367929796256,
+        "timely_recall": 0.37753577894457696,
+        "utility": -0.48324603067100513,
+        "wrong_per_trace": 0.7443561936164989
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.2204104885204856,
+        "timely_per_trace": 0.43300629975365124,
+        "timely_recall": 0.44284489482920236,
+        "utility": -0.23647472284096804,
+        "wrong_per_trace": 0.558460498168595
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.3182357080614793,
+        "timely_per_trace": 0.8411384698753164,
+        "timely_recall": 0.5597113431255456,
+        "utility": 0.40155374601681865,
+        "wrong_per_trace": 0.3236729384554238
+      },
+      "matched": {
+        "observations_per_trace": 2.217829671778304,
+        "timely_per_trace": 0.5502027011931867,
+        "timely_recall": 0.5556972664498318,
+        "utility": 0.11964638426244356,
+        "wrong_per_trace": 0.31966483334182794
+      },
+      "method": "sampled",
+      "seed": 33,
+      "training_seconds": 4.280826251999315,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.2954936111938764,
+        "timely_per_trace": 0.373219970865005,
+        "timely_recall": 0.37648294561336304,
+        "utility": -0.484187743686917,
+        "wrong_per_trace": 0.7426330339922282
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.251409590858259,
+        "timely_per_trace": 0.43215785404301243,
+        "timely_recall": 0.4419771710761995,
+        "utility": -0.23693804331943832,
+        "wrong_per_trace": 0.5565254178195378
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.003258620446111138,
+        "timely_recall": 0.0021683550235190026,
+        "utility": 1.3396782392760542e-05,
+        "wrong_per_trace": 0.0032452236637183773
+      },
+      "matched": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0021462550630104715,
+        "timely_recall": 0.0021676885064951033,
+        "utility": -0.002211333983808572,
+        "wrong_per_trace": 0.004357589046819044
+      },
+      "method": "none",
+      "seed": 33,
+      "training_seconds": 1.4366487219995179,
+      "uninformative_sensor": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.002148762546362093,
+        "timely_recall": 0.002167548673783803,
+        "utility": -0.0022063190171053293,
+        "wrong_per_trace": 0.004355081563467422
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 0.0,
+        "timely_per_trace": 0.0021220715586238725,
+        "timely_recall": 0.0021702884155114562,
+        "utility": -0.00225970099258177,
+        "wrong_per_trace": 0.004381772551205643
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 8.999999981751898,
+        "timely_per_trace": 1.0681916289403388,
+        "timely_recall": 0.7107973214425518,
+        "utility": 0.1913490061937911,
+        "wrong_per_trace": 0.42684262365895287
+      },
+      "matched": {
+        "observations_per_trace": 8.999999987980118,
+        "timely_per_trace": 0.7029552836002618,
+        "timely_recall": 0.7099753030764819,
+        "utility": -0.18958704937622922,
+        "wrong_per_trace": 0.4425423335774851
+      },
+      "method": "all",
+      "seed": 33,
+      "training_seconds": 1.4771640819999448,
+      "uninformative_sensor": {
+        "observations_per_trace": 8.99999998028943,
+        "timely_per_trace": 0.49705644129595833,
+        "timely_recall": 0.5014020892866015,
+        "utility": -0.957191263926917,
+        "wrong_per_trace": 1.0042477062084039
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 8.999999984742317,
+        "timely_per_trace": 0.5754224086138237,
+        "timely_recall": 0.5884969252639755,
+        "utility": -0.6419891782762536,
+        "wrong_per_trace": 0.7674115876529615
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 5.0000000148429535,
+        "timely_per_trace": 1.0240707040297259,
+        "timely_recall": 0.6814383240525964,
+        "utility": 0.30377223390764163,
+        "wrong_per_trace": 0.4702984693799366
+      },
+      "matched": {
+        "observations_per_trace": 5.000000010622898,
+        "timely_per_trace": 0.6685919220914014,
+        "timely_recall": 0.6752687739825867,
+        "utility": -0.058576055250140126,
+        "wrong_per_trace": 0.4771679768103967
+      },
+      "method": "periodic-2",
+      "seed": 33,
+      "training_seconds": 1.4947829169996112,
+      "uninformative_sensor": {
+        "observations_per_trace": 5.000000022962922,
+        "timely_per_trace": 0.5000593480496045,
+        "timely_recall": 0.5044312497503214,
+        "utility": -0.7461617250232973,
+        "wrong_per_trace": 0.9962210719247556
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 5.000000019063009,
+        "timely_per_trace": 0.5574836775540527,
+        "timely_recall": 0.5701505975683895,
+        "utility": -0.4772923425747747,
+        "wrong_per_trace": 0.7847760191756771
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.999999974221282,
+        "timely_per_trace": 0.9791455738950794,
+        "timely_recall": 0.6515441914831037,
+        "utility": 0.26739668164370317,
+        "wrong_per_trace": 0.511748893540312
+      },
+      "matched": {
+        "observations_per_trace": 3.9999999746360118,
+        "timely_per_trace": 0.6307668893105597,
+        "timely_recall": 0.6370660038505862,
+        "utility": -0.072469293682321,
+        "wrong_per_trace": 0.50323618426108
+      },
+      "method": "periodic-2-1",
+      "seed": 33,
+      "training_seconds": 1.5029991070005053,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.9999999707506504,
+        "timely_per_trace": 0.49705261055705696,
+        "timely_recall": 0.5013982250564476,
+        "utility": -0.7164833536740245,
+        "wrong_per_trace": 1.0135359656935488
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.9999999701976776,
+        "timely_per_trace": 0.5558211118611622,
+        "timely_recall": 0.5684502557261724,
+        "utility": -0.4411041844491234,
+        "wrong_per_trace": 0.7969252978004018
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.011655261694166086,
+        "timely_recall": 0.0077556578505896005,
+        "utility": -0.14713495873768384,
+        "wrong_per_trace": 0.00879022043184996
+      },
+      "matched": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.007238417651366902,
+        "timely_recall": 0.007310703661693708,
+        "utility": -0.15140991688844668,
+        "wrong_per_trace": 0.008648334539813618
+      },
+      "method": "periodic-3",
+      "seed": 33,
+      "training_seconds": 1.4616602679998323,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.006772598471817659,
+        "timely_recall": 0.006831809713228699,
+        "utility": -0.15699168741593678,
+        "wrong_per_trace": 0.013764285887754468
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.0,
+        "timely_per_trace": 0.006862059960104361,
+        "timely_recall": 0.007017976927986882,
+        "utility": -0.15480656564851142,
+        "wrong_per_trace": 0.011668625608615812
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 3.0000000592845026,
+        "timely_per_trace": 0.9389872320289991,
+        "timely_recall": 0.6248219807311803,
+        "utility": 0.23122881980347204,
+        "wrong_per_trace": 0.5577584092613019
+      },
+      "matched": {
+        "observations_per_trace": 3.000000044950866,
+        "timely_per_trace": 0.5989352825103267,
+        "timely_recall": 0.6049165126771787,
+        "utility": -0.09161307108492336,
+        "wrong_per_trace": 0.5405483513477067
+      },
+      "method": "periodic-3-1",
+      "seed": 33,
+      "training_seconds": 1.454351176000273,
+      "uninformative_sensor": {
+        "observations_per_trace": 3.0000000605214154,
+        "timely_per_trace": 0.5024926933622713,
+        "timely_recall": 0.5068858692308492,
+        "utility": -0.6579861303987236,
+        "wrong_per_trace": 1.010478820734924
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 3.0000000530999387,
+        "timely_per_trace": 0.5404094983874526,
+        "timely_recall": 0.5526884657665433,
+        "utility": -0.4280951034191402,
+        "wrong_per_trace": 0.8185045991515958
+      }
+    },
+    {
+      "higher_event_rate": {
+        "observations_per_trace": 2.9999999700376065,
+        "timely_per_trace": 1.0663153950655144,
+        "timely_recall": 0.7095488357060105,
+        "utility": 0.4916598277247596,
+        "wrong_per_trace": 0.42465556883887456
+      },
+      "matched": {
+        "observations_per_trace": 2.999999977313564,
+        "timely_per_trace": 0.7017806698594703,
+        "timely_recall": 0.7087889591281938,
+        "utility": 0.11168785374533025,
+        "wrong_per_trace": 0.44009281724846183
+      },
+      "method": "periodic-3-2",
+      "seed": 33,
+      "training_seconds": 1.5085387219987751,
+      "uninformative_sensor": {
+        "observations_per_trace": 2.999999969943019,
+        "timely_per_trace": 0.4950646792487965,
+        "timely_recall": 0.4993929137305924,
+        "utility": -0.6552014883751567,
+        "wrong_per_trace": 1.0002661691268022
+      },
+      "weaker_sensor": {
+        "observations_per_trace": 2.999999973013473,
+        "timely_per_trace": 0.5737029255968656,
+        "timely_recall": 0.586738372845134,
+        "utility": -0.3398104628093489,
+        "wrong_per_trace": 0.7635133897555408
+      }
+    }
+  ],
+  "status": "research-prototype;synthetic-worlds;no-League-or-SOTA-result",
+  "world": {
+    "cooldown": 3,
+    "observation_price": 0.05,
+    "onset_probability": 0.1,
+    "period": 3,
+    "persistence": 0.8,
+    "sensitivity": 0.85,
+    "specificity": 0.85,
+    "steps": 9,
+    "wrong_price": 1.0
+  }
+}
