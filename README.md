@@ -90,6 +90,16 @@ reviewed temporal losses, but neither first-ever novelty nor superior performanc
 is established. The report includes proofs, counterexamples and reproducible
 checks of this narrower claim.
 
+The [completed seven-match replay audit](reports/objective-onset-corpus-2026-09-30.md)
+found that a purely reactive detector receives 47.6% completion recall at a
+20–60-second lead, while failing the alert-budget gate. The
+[objective-onset research direction](docs/objective-onset-research.md) now
+tests whether completion warnings actually precede the start of an objective
+attack. Its executable replay audit retains non-terminal damage episodes,
+includes a purely reactive detector, and checks both onset and completion
+targets. This is an exploratory Dota measurement study to guide better League
+data collection; it is not a new League model result or a breakthrough claim.
+
 ## Quick start
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are the supported development

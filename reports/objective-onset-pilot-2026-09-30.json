@@ -1,0 +1,1210 @@
+{
+  "schema": "objective-onset-audit-v1",
+  "status": "exploratory_measurement_audit_not_forecasting_validation",
+  "source_revision": "e276f3ea5e77b5b8652a68ef7687b5c494592853",
+  "source_hashes": {
+    "research/objective_onset.py": "abd04b5d5309b1fc8c38451fbad874295ca1a549ee5c53186ed91e060589db47",
+    "research/run_objective_onset_audit.py": "6754c63a7bb7f9c3fcc674ba8a1c8b00814bf4c183c2bc29bdff0144d2ed188a"
+  },
+  "independent_matches": 1,
+  "reports": [
+    {
+      "input_sha256": "cc0011910cd1996ceed947d9833b7f05a08a6ec7796cd8bf641f11a7cd7a23b5",
+      "audit": {
+        "match_id": "8461735141",
+        "target": "npc_dota_roshan",
+        "game_start_tick": 26021,
+        "recording_end_tick": 99262,
+        "combat_records": 68591,
+        "target_damage_records": 394,
+        "terminal_events": 3,
+        "nominal_tick_rate": 30,
+        "clock_scope": "replay_ticks; dividing by tick rate is NOT pause-corrected game time",
+        "observation_scope": "observer combat log; no verified player-visible or live release times",
+        "scenarios": [
+          {
+            "quiet_gap_nominal_seconds": 5,
+            "episodes": [
+              {
+                "onset": 52007,
+                "last_damage": 52697,
+                "terminal": 52697,
+                "closure": "death",
+                "damage_records": 218
+              },
+              {
+                "onset": 75248,
+                "last_damage": 75652,
+                "terminal": null,
+                "closure": "quiet",
+                "damage_records": 25
+              },
+              {
+                "onset": 75822,
+                "last_damage": 75912,
+                "terminal": null,
+                "closure": "quiet",
+                "damage_records": 5
+              },
+              {
+                "onset": 77350,
+                "last_damage": 77715,
+                "terminal": 77715,
+                "closure": "death",
+                "damage_records": 59
+              },
+              {
+                "onset": 95068,
+                "last_damage": 95366,
+                "terminal": 95366,
+                "closure": "death",
+                "damage_records": 87
+              }
+            ],
+            "orphan_death_ticks": [],
+            "metrics": [
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    },
+                    {
+                      "alarm": 77350,
+                      "target": 77715,
+                      "lead": 365
+                    },
+                    {
+                      "alarm": 95068,
+                      "target": 95366,
+                      "lead": 298
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 5,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.2,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 75248,
+                      "target": 75822,
+                      "lead": 574
+                    }
+                  ]
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 5,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    },
+                    {
+                      "alarm": 77380,
+                      "target": 77715,
+                      "lead": 335
+                    },
+                    {
+                      "alarm": 95098,
+                      "target": 95366,
+                      "lead": 268
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 5,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.2,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 75278,
+                      "target": 75822,
+                      "lead": 544
+                    }
+                  ]
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 5,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 2,
+                  "unmatched_alarms": 2,
+                  "recall": 0.6666666666666666,
+                  "precision": 0.5,
+                  "matches": [
+                    {
+                      "alarm": 52157,
+                      "target": 52697,
+                      "lead": 540
+                    },
+                    {
+                      "alarm": 77500,
+                      "target": 77715,
+                      "lead": 215
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 5,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.2,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 75398,
+                      "target": 75822,
+                      "lead": 424
+                    }
+                  ]
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "damage_onset": {
+                  "targets": 5,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          {
+            "quiet_gap_nominal_seconds": 10,
+            "episodes": [
+              {
+                "onset": 52007,
+                "last_damage": 52697,
+                "terminal": 52697,
+                "closure": "death",
+                "damage_records": 218
+              },
+              {
+                "onset": 75248,
+                "last_damage": 75912,
+                "terminal": null,
+                "closure": "quiet",
+                "damage_records": 30
+              },
+              {
+                "onset": 77350,
+                "last_damage": 77715,
+                "terminal": 77715,
+                "closure": "death",
+                "damage_records": 59
+              },
+              {
+                "onset": 95068,
+                "last_damage": 95366,
+                "terminal": 95366,
+                "closure": "death",
+                "damage_records": 87
+              }
+            ],
+            "orphan_death_ticks": [],
+            "metrics": [
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    },
+                    {
+                      "alarm": 77350,
+                      "target": 77715,
+                      "lead": 365
+                    },
+                    {
+                      "alarm": 95068,
+                      "target": 95366,
+                      "lead": 298
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    },
+                    {
+                      "alarm": 77380,
+                      "target": 77715,
+                      "lead": 335
+                    },
+                    {
+                      "alarm": 95098,
+                      "target": 95366,
+                      "lead": 268
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 2,
+                  "unmatched_alarms": 2,
+                  "recall": 0.6666666666666666,
+                  "precision": 0.5,
+                  "matches": [
+                    {
+                      "alarm": 52157,
+                      "target": 52697,
+                      "lead": 540
+                    },
+                    {
+                      "alarm": 77500,
+                      "target": 77715,
+                      "lead": 215
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          {
+            "quiet_gap_nominal_seconds": 20,
+            "episodes": [
+              {
+                "onset": 52007,
+                "last_damage": 52697,
+                "terminal": 52697,
+                "closure": "death",
+                "damage_records": 218
+              },
+              {
+                "onset": 75248,
+                "last_damage": 75912,
+                "terminal": null,
+                "closure": "quiet",
+                "damage_records": 30
+              },
+              {
+                "onset": 77350,
+                "last_damage": 77715,
+                "terminal": 77715,
+                "closure": "death",
+                "damage_records": 59
+              },
+              {
+                "onset": 95068,
+                "last_damage": 95366,
+                "terminal": 95366,
+                "closure": "death",
+                "damage_records": 87
+              }
+            ],
+            "orphan_death_ticks": [],
+            "metrics": [
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    },
+                    {
+                      "alarm": 77350,
+                      "target": 77715,
+                      "lead": 365
+                    },
+                    {
+                      "alarm": 95068,
+                      "target": 95366,
+                      "lead": 298
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    },
+                    {
+                      "alarm": 77380,
+                      "target": 77715,
+                      "lead": 335
+                    },
+                    {
+                      "alarm": 95098,
+                      "target": 95366,
+                      "lead": 268
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 2,
+                  "unmatched_alarms": 2,
+                  "recall": 0.6666666666666666,
+                  "precision": 0.5,
+                  "matches": [
+                    {
+                      "alarm": 52157,
+                      "target": 52697,
+                      "lead": 540
+                    },
+                    {
+                      "alarm": 77500,
+                      "target": 77715,
+                      "lead": 215
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          {
+            "quiet_gap_nominal_seconds": 30,
+            "episodes": [
+              {
+                "onset": 52007,
+                "last_damage": 52697,
+                "terminal": 52697,
+                "closure": "death",
+                "damage_records": 218
+              },
+              {
+                "onset": 75248,
+                "last_damage": 75912,
+                "terminal": null,
+                "closure": "quiet",
+                "damage_records": 30
+              },
+              {
+                "onset": 77350,
+                "last_damage": 77715,
+                "terminal": 77715,
+                "closure": "death",
+                "damage_records": 59
+              },
+              {
+                "onset": 95068,
+                "last_damage": 95366,
+                "terminal": 95366,
+                "closure": "death",
+                "damage_records": 87
+              }
+            ],
+            "orphan_death_ticks": [],
+            "metrics": [
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    },
+                    {
+                      "alarm": 77350,
+                      "target": 77715,
+                      "lead": 365
+                    },
+                    {
+                      "alarm": 95068,
+                      "target": 95366,
+                      "lead": 298
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 0,
+                "alarm_ticks": [
+                  52007,
+                  75248,
+                  77350,
+                  95068
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52007,
+                      "target": 52697,
+                      "lead": 690
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 3,
+                  "unmatched_alarms": 1,
+                  "recall": 1.0,
+                  "precision": 0.75,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    },
+                    {
+                      "alarm": 77380,
+                      "target": 77715,
+                      "lead": 335
+                    },
+                    {
+                      "alarm": 95098,
+                      "target": 95366,
+                      "lead": 268
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 1,
+                "alarm_ticks": [
+                  52037,
+                  75278,
+                  77380,
+                  95098
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 1,
+                  "unmatched_alarms": 3,
+                  "recall": 0.3333333333333333,
+                  "precision": 0.25,
+                  "matches": [
+                    {
+                      "alarm": 52037,
+                      "target": 52697,
+                      "lead": 660
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 5,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 2,
+                  "unmatched_alarms": 2,
+                  "recall": 0.6666666666666666,
+                  "precision": 0.5,
+                  "matches": [
+                    {
+                      "alarm": 52157,
+                      "target": 52697,
+                      "lead": 540
+                    },
+                    {
+                      "alarm": 77500,
+                      "target": 77715,
+                      "lead": 215
+                    }
+                  ]
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.32727272727272727,
+                  0.1303030303030303,
+                  0.08969696969696969
+                ]
+              },
+              {
+                "minimum_lead_nominal_seconds": 20,
+                "delivery_delay_nominal_seconds": 5,
+                "alarm_ticks": [
+                  52157,
+                  75398,
+                  77500,
+                  95218
+                ],
+                "completion": {
+                  "targets": 3,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "damage_onset": {
+                  "targets": 4,
+                  "alarms": 4,
+                  "hits": 0,
+                  "unmatched_alarms": 4,
+                  "recall": 0.0,
+                  "precision": 0.0,
+                  "matches": []
+                },
+                "completion_window_after_onset_fractions": [
+                  0.075,
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

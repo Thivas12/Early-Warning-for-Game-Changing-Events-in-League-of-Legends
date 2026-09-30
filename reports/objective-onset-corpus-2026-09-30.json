@@ -1,0 +1,1404 @@
+{
+  "status": "exploratory_label_audit; no trained predictor; no population inference",
+  "independent_matches": 7,
+  "attempted_matches": 9,
+  "source_combat_records": 1004359,
+  "source_revision": "e276f3ea5e77b5b8652a68ef7687b5c494592853",
+  "source_hashes": {
+    "research/objective_onset.py": "abd04b5d5309b1fc8c38451fbad874295ca1a549ee5c53186ed91e060589db47",
+    "research/compile_objective_onset.py": "9f3b36d660652463a9a0026cbf7d9e27fb05c32c74ff047f0184a16eea8250a8"
+  },
+  "metrics": [
+    {
+      "quiet_gap_seconds": 5,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 31,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 48,
+      "onset_hits": 11,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.7142857142857142,
+      "onset_recall": 0.22916666666666666,
+      "onset_unmatched_per_match": 2.857142857142857
+    },
+    {
+      "quiet_gap_seconds": 5,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 31,
+      "completion_targets": 21,
+      "completion_hits": 11,
+      "onset_targets": 48,
+      "onset_hits": 7,
+      "completion_recall": 0.5238095238095238,
+      "completion_unmatched_per_match": 2.857142857142857,
+      "onset_recall": 0.14583333333333334,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 5,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 31,
+      "completion_targets": 21,
+      "completion_hits": 20,
+      "onset_targets": 48,
+      "onset_hits": 10,
+      "completion_recall": 0.9523809523809523,
+      "completion_unmatched_per_match": 1.5714285714285714,
+      "onset_recall": 0.20833333333333334,
+      "onset_unmatched_per_match": 3.0
+    },
+    {
+      "quiet_gap_seconds": 5,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 31,
+      "completion_targets": 21,
+      "completion_hits": 11,
+      "onset_targets": 48,
+      "onset_hits": 7,
+      "completion_recall": 0.5238095238095238,
+      "completion_unmatched_per_match": 2.857142857142857,
+      "onset_recall": 0.14583333333333334,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 5,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 31,
+      "completion_targets": 21,
+      "completion_hits": 20,
+      "onset_targets": 48,
+      "onset_hits": 8,
+      "completion_recall": 0.9523809523809523,
+      "completion_unmatched_per_match": 1.5714285714285714,
+      "onset_recall": 0.16666666666666666,
+      "onset_unmatched_per_match": 3.2857142857142856
+    },
+    {
+      "quiet_gap_seconds": 5,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 31,
+      "completion_targets": 21,
+      "completion_hits": 9,
+      "onset_targets": 48,
+      "onset_hits": 6,
+      "completion_recall": 0.42857142857142855,
+      "completion_unmatched_per_match": 3.142857142857143,
+      "onset_recall": 0.125,
+      "onset_unmatched_per_match": 3.5714285714285716
+    },
+    {
+      "quiet_gap_seconds": 10,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 30,
+      "completion_targets": 21,
+      "completion_hits": 18,
+      "onset_targets": 41,
+      "onset_hits": 6,
+      "completion_recall": 0.8571428571428571,
+      "completion_unmatched_per_match": 1.7142857142857142,
+      "onset_recall": 0.14634146341463414,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 10,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 30,
+      "completion_targets": 21,
+      "completion_hits": 10,
+      "onset_targets": 41,
+      "onset_hits": 6,
+      "completion_recall": 0.47619047619047616,
+      "completion_unmatched_per_match": 2.857142857142857,
+      "onset_recall": 0.14634146341463414,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 10,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 30,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 41,
+      "onset_hits": 6,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.5714285714285714,
+      "onset_recall": 0.14634146341463414,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 10,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 30,
+      "completion_targets": 21,
+      "completion_hits": 10,
+      "onset_targets": 41,
+      "onset_hits": 6,
+      "completion_recall": 0.47619047619047616,
+      "completion_unmatched_per_match": 2.857142857142857,
+      "onset_recall": 0.14634146341463414,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 10,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 30,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 41,
+      "onset_hits": 6,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.5714285714285714,
+      "onset_recall": 0.14634146341463414,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 10,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 30,
+      "completion_targets": 21,
+      "completion_hits": 8,
+      "onset_targets": 41,
+      "onset_hits": 6,
+      "completion_recall": 0.38095238095238093,
+      "completion_unmatched_per_match": 3.142857142857143,
+      "onset_recall": 0.14634146341463414,
+      "onset_unmatched_per_match": 3.4285714285714284
+    },
+    {
+      "quiet_gap_seconds": 20,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 18,
+      "onset_targets": 33,
+      "onset_hits": 3,
+      "completion_recall": 0.8571428571428571,
+      "completion_unmatched_per_match": 1.5714285714285714,
+      "onset_recall": 0.09090909090909091,
+      "onset_unmatched_per_match": 3.7142857142857144
+    },
+    {
+      "quiet_gap_seconds": 20,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 10,
+      "onset_targets": 33,
+      "onset_hits": 3,
+      "completion_recall": 0.47619047619047616,
+      "completion_unmatched_per_match": 2.7142857142857144,
+      "onset_recall": 0.09090909090909091,
+      "onset_unmatched_per_match": 3.7142857142857144
+    },
+    {
+      "quiet_gap_seconds": 20,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 33,
+      "onset_hits": 3,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.4285714285714286,
+      "onset_recall": 0.09090909090909091,
+      "onset_unmatched_per_match": 3.7142857142857144
+    },
+    {
+      "quiet_gap_seconds": 20,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 10,
+      "onset_targets": 33,
+      "onset_hits": 3,
+      "completion_recall": 0.47619047619047616,
+      "completion_unmatched_per_match": 2.7142857142857144,
+      "onset_recall": 0.09090909090909091,
+      "onset_unmatched_per_match": 3.7142857142857144
+    },
+    {
+      "quiet_gap_seconds": 20,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 33,
+      "onset_hits": 3,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.4285714285714286,
+      "onset_recall": 0.09090909090909091,
+      "onset_unmatched_per_match": 3.7142857142857144
+    },
+    {
+      "quiet_gap_seconds": 20,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 8,
+      "onset_targets": 33,
+      "onset_hits": 3,
+      "completion_recall": 0.38095238095238093,
+      "completion_unmatched_per_match": 3.0,
+      "onset_recall": 0.09090909090909091,
+      "onset_unmatched_per_match": 3.7142857142857144
+    },
+    {
+      "quiet_gap_seconds": 30,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 18,
+      "onset_targets": 30,
+      "onset_hits": 1,
+      "completion_recall": 0.8571428571428571,
+      "completion_unmatched_per_match": 1.5714285714285714,
+      "onset_recall": 0.03333333333333333,
+      "onset_unmatched_per_match": 4.0
+    },
+    {
+      "quiet_gap_seconds": 30,
+      "delivery_delay_seconds": 0,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 10,
+      "onset_targets": 30,
+      "onset_hits": 1,
+      "completion_recall": 0.47619047619047616,
+      "completion_unmatched_per_match": 2.7142857142857144,
+      "onset_recall": 0.03333333333333333,
+      "onset_unmatched_per_match": 4.0
+    },
+    {
+      "quiet_gap_seconds": 30,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 30,
+      "onset_hits": 1,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.4285714285714286,
+      "onset_recall": 0.03333333333333333,
+      "onset_unmatched_per_match": 4.0
+    },
+    {
+      "quiet_gap_seconds": 30,
+      "delivery_delay_seconds": 1,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 10,
+      "onset_targets": 30,
+      "onset_hits": 1,
+      "completion_recall": 0.47619047619047616,
+      "completion_unmatched_per_match": 2.7142857142857144,
+      "onset_recall": 0.03333333333333333,
+      "onset_unmatched_per_match": 4.0
+    },
+    {
+      "quiet_gap_seconds": 30,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 5,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 19,
+      "onset_targets": 30,
+      "onset_hits": 1,
+      "completion_recall": 0.9047619047619048,
+      "completion_unmatched_per_match": 1.4285714285714286,
+      "onset_recall": 0.03333333333333333,
+      "onset_unmatched_per_match": 4.0
+    },
+    {
+      "quiet_gap_seconds": 30,
+      "delivery_delay_seconds": 5,
+      "minimum_lead_seconds": 20,
+      "maximum_lead_seconds": 60,
+      "alarms": 29,
+      "completion_targets": 21,
+      "completion_hits": 8,
+      "onset_targets": 30,
+      "onset_hits": 1,
+      "completion_recall": 0.38095238095238093,
+      "completion_unmatched_per_match": 3.0,
+      "onset_recall": 0.03333333333333333,
+      "onset_unmatched_per_match": 4.0
+    }
+  ],
+  "matches": [
+    {
+      "match_id": "8822520406",
+      "combat_records": 44634,
+      "primary_episodes": [
+        {
+          "onset": 61450,
+          "last_damage": 62072,
+          "terminal": 62072,
+          "closure": "death",
+          "damage_records": 254
+        }
+      ],
+      "terminal_events": 1,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            61450
+          ],
+          "completion": {
+            "targets": 1,
+            "alarms": 1,
+            "hits": 1,
+            "unmatched_alarms": 0,
+            "recall": 1.0,
+            "precision": 1.0,
+            "matches": [
+              {
+                "alarm": 61450,
+                "target": 62072,
+                "lead": 622
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 1,
+            "alarms": 1,
+            "hits": 0,
+            "unmatched_alarms": 1,
+            "recall": 0.0,
+            "precision": 0.0,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": [
+            0.28606060606060607
+          ]
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            61450
+          ],
+          "completion": {
+            "targets": 1,
+            "alarms": 1,
+            "hits": 1,
+            "unmatched_alarms": 0,
+            "recall": 1.0,
+            "precision": 1.0,
+            "matches": [
+              {
+                "alarm": 61450,
+                "target": 62072,
+                "lead": 622
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 1,
+            "alarms": 1,
+            "hits": 0,
+            "unmatched_alarms": 1,
+            "recall": 0.0,
+            "precision": 0.0,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": [
+            0.018333333333333333
+          ]
+        }
+      ]
+    },
+    {
+      "match_id": "8822593932",
+      "combat_records": 91242,
+      "primary_episodes": [
+        {
+          "onset": 59526,
+          "last_damage": 60260,
+          "terminal": 60260,
+          "closure": "death",
+          "damage_records": 145
+        },
+        {
+          "onset": 77517,
+          "last_damage": 77609,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 2
+        },
+        {
+          "onset": 78395,
+          "last_damage": 78395,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 79013,
+          "last_damage": 79013,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 79453,
+          "last_damage": 79453,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 82825,
+          "last_damage": 83281,
+          "terminal": 83281,
+          "closure": "death",
+          "damage_records": 104
+        },
+        {
+          "onset": 104933,
+          "last_damage": 104933,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 105345,
+          "last_damage": 105345,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 105869,
+          "last_damage": 107814,
+          "terminal": 107814,
+          "closure": "death",
+          "damage_records": 250
+        }
+      ],
+      "terminal_events": 3,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            59526,
+            77517,
+            79453,
+            82825,
+            104933
+          ],
+          "completion": {
+            "targets": 3,
+            "alarms": 5,
+            "hits": 2,
+            "unmatched_alarms": 3,
+            "recall": 0.6666666666666666,
+            "precision": 0.4,
+            "matches": [
+              {
+                "alarm": 59526,
+                "target": 60260,
+                "lead": 734
+              },
+              {
+                "alarm": 82825,
+                "target": 83281,
+                "lead": 456
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 9,
+            "alarms": 5,
+            "hits": 2,
+            "unmatched_alarms": 3,
+            "recall": 0.2222222222222222,
+            "precision": 0.4,
+            "matches": [
+              {
+                "alarm": 77517,
+                "target": 78395,
+                "lead": 878
+              },
+              {
+                "alarm": 104933,
+                "target": 105345,
+                "lead": 412
+              }
+            ]
+          },
+          "completion_window_after_onset_fractions": [
+            0.35393939393939394,
+            0.18545454545454546,
+            1.0
+          ]
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            59526,
+            77517,
+            79453,
+            82825,
+            104933
+          ],
+          "completion": {
+            "targets": 3,
+            "alarms": 5,
+            "hits": 1,
+            "unmatched_alarms": 4,
+            "recall": 0.3333333333333333,
+            "precision": 0.2,
+            "matches": [
+              {
+                "alarm": 59526,
+                "target": 60260,
+                "lead": 734
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 9,
+            "alarms": 5,
+            "hits": 2,
+            "unmatched_alarms": 3,
+            "recall": 0.2222222222222222,
+            "precision": 0.4,
+            "matches": [
+              {
+                "alarm": 77517,
+                "target": 78395,
+                "lead": 878
+              },
+              {
+                "alarm": 104933,
+                "target": 105869,
+                "lead": 936
+              }
+            ]
+          },
+          "completion_window_after_onset_fractions": [
+            0.11166666666666666,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "match_id": "8855242704",
+      "combat_records": 287776,
+      "primary_episodes": [
+        {
+          "onset": 58165,
+          "last_damage": 59189,
+          "terminal": 59189,
+          "closure": "death",
+          "damage_records": 136
+        },
+        {
+          "onset": 77303,
+          "last_damage": 77829,
+          "terminal": 77829,
+          "closure": "death",
+          "damage_records": 106
+        },
+        {
+          "onset": 95558,
+          "last_damage": 96008,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 48
+        },
+        {
+          "onset": 98022,
+          "last_damage": 98300,
+          "terminal": 98300,
+          "closure": "death",
+          "damage_records": 80
+        },
+        {
+          "onset": 113740,
+          "last_damage": 113740,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 116436,
+          "last_damage": 117014,
+          "terminal": 117014,
+          "closure": "death",
+          "damage_records": 81
+        },
+        {
+          "onset": 136601,
+          "last_damage": 136987,
+          "terminal": 136987,
+          "closure": "death",
+          "damage_records": 76
+        }
+      ],
+      "terminal_events": 5,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            58165,
+            77303,
+            95558,
+            98022,
+            113740,
+            116436,
+            136601
+          ],
+          "completion": {
+            "targets": 5,
+            "alarms": 7,
+            "hits": 5,
+            "unmatched_alarms": 2,
+            "recall": 1.0,
+            "precision": 0.7142857142857143,
+            "matches": [
+              {
+                "alarm": 58165,
+                "target": 59189,
+                "lead": 1024
+              },
+              {
+                "alarm": 77303,
+                "target": 77829,
+                "lead": 526
+              },
+              {
+                "alarm": 98022,
+                "target": 98300,
+                "lead": 278
+              },
+              {
+                "alarm": 116436,
+                "target": 117014,
+                "lead": 578
+              },
+              {
+                "alarm": 136601,
+                "target": 136987,
+                "lead": 386
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 7,
+            "alarms": 7,
+            "hits": 0,
+            "unmatched_alarms": 7,
+            "recall": 0.0,
+            "precision": 0.0,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": [
+            0.5296969696969697,
+            0.22787878787878788,
+            0.07757575757575758,
+            0.2593939393939394,
+            0.14303030303030304
+          ]
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            58165,
+            77303,
+            95558,
+            98022,
+            113740,
+            116436,
+            136601
+          ],
+          "completion": {
+            "targets": 5,
+            "alarms": 7,
+            "hits": 1,
+            "unmatched_alarms": 6,
+            "recall": 0.2,
+            "precision": 0.14285714285714285,
+            "matches": [
+              {
+                "alarm": 58165,
+                "target": 59189,
+                "lead": 1024
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 7,
+            "alarms": 7,
+            "hits": 0,
+            "unmatched_alarms": 7,
+            "recall": 0.0,
+            "precision": 0.0,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": [
+            0.35333333333333333,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "match_id": "8856501050",
+      "combat_records": 272347,
+      "primary_episodes": [
+        {
+          "onset": 58711,
+          "last_damage": 59379,
+          "terminal": 59379,
+          "closure": "death",
+          "damage_records": 164
+        },
+        {
+          "onset": 79548,
+          "last_damage": 79554,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 2
+        },
+        {
+          "onset": 84503,
+          "last_damage": 85009,
+          "terminal": 85009,
+          "closure": "death",
+          "damage_records": 123
+        },
+        {
+          "onset": 109094,
+          "last_damage": 110094,
+          "terminal": 110094,
+          "closure": "death",
+          "damage_records": 100
+        },
+        {
+          "onset": 128528,
+          "last_damage": 129006,
+          "terminal": 129006,
+          "closure": "death",
+          "damage_records": 215
+        },
+        {
+          "onset": 146093,
+          "last_damage": 146997,
+          "terminal": 146997,
+          "closure": "death",
+          "damage_records": 200
+        },
+        {
+          "onset": 164812,
+          "last_damage": 165187,
+          "terminal": 165187,
+          "closure": "death",
+          "damage_records": 115
+        },
+        {
+          "onset": 183200,
+          "last_damage": 183500,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 11
+        },
+        {
+          "onset": 183945,
+          "last_damage": 183951,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 2
+        },
+        {
+          "onset": 184813,
+          "last_damage": 184969,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 29
+        },
+        {
+          "onset": 185915,
+          "last_damage": 186095,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 12
+        },
+        {
+          "onset": 188493,
+          "last_damage": 189135,
+          "terminal": 189135,
+          "closure": "death",
+          "damage_records": 89
+        }
+      ],
+      "terminal_events": 7,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            58711,
+            79548,
+            84503,
+            109094,
+            128528,
+            146093,
+            164812,
+            183200,
+            185915,
+            188493
+          ],
+          "completion": {
+            "targets": 7,
+            "alarms": 10,
+            "hits": 7,
+            "unmatched_alarms": 3,
+            "recall": 1.0,
+            "precision": 0.7,
+            "matches": [
+              {
+                "alarm": 58711,
+                "target": 59379,
+                "lead": 668
+              },
+              {
+                "alarm": 84503,
+                "target": 85009,
+                "lead": 506
+              },
+              {
+                "alarm": 109094,
+                "target": 110094,
+                "lead": 1000
+              },
+              {
+                "alarm": 128528,
+                "target": 129006,
+                "lead": 478
+              },
+              {
+                "alarm": 146093,
+                "target": 146997,
+                "lead": 904
+              },
+              {
+                "alarm": 164812,
+                "target": 165187,
+                "lead": 375
+              },
+              {
+                "alarm": 188493,
+                "target": 189135,
+                "lead": 642
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 12,
+            "alarms": 10,
+            "hits": 1,
+            "unmatched_alarms": 9,
+            "recall": 0.08333333333333333,
+            "precision": 0.1,
+            "matches": [
+              {
+                "alarm": 183200,
+                "target": 183945,
+                "lead": 745
+              }
+            ]
+          },
+          "completion_window_after_onset_fractions": [
+            0.31393939393939396,
+            0.21575757575757576,
+            0.5151515151515151,
+            0.1987878787878788,
+            0.45696969696969697,
+            0.13636363636363635,
+            0.29818181818181816
+          ]
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            58711,
+            79548,
+            84503,
+            109094,
+            128528,
+            146093,
+            164812,
+            183200,
+            185915,
+            188493
+          ],
+          "completion": {
+            "targets": 7,
+            "alarms": 10,
+            "hits": 4,
+            "unmatched_alarms": 6,
+            "recall": 0.5714285714285714,
+            "precision": 0.4,
+            "matches": [
+              {
+                "alarm": 58711,
+                "target": 59379,
+                "lead": 668
+              },
+              {
+                "alarm": 109094,
+                "target": 110094,
+                "lead": 1000
+              },
+              {
+                "alarm": 146093,
+                "target": 146997,
+                "lead": 904
+              },
+              {
+                "alarm": 188493,
+                "target": 189135,
+                "lead": 642
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 12,
+            "alarms": 10,
+            "hits": 1,
+            "unmatched_alarms": 9,
+            "recall": 0.08333333333333333,
+            "precision": 0.1,
+            "matches": [
+              {
+                "alarm": 183200,
+                "target": 183945,
+                "lead": 745
+              }
+            ]
+          },
+          "completion_window_after_onset_fractions": [
+            0.056666666666666664,
+            0.0,
+            0.3333333333333333,
+            0.0,
+            0.25333333333333335,
+            0.0,
+            0.035
+          ]
+        }
+      ]
+    },
+    {
+      "match_id": "8860187335",
+      "combat_records": 149322,
+      "primary_episodes": [
+        {
+          "onset": 63867,
+          "last_damage": 64339,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 157
+        },
+        {
+          "onset": 64715,
+          "last_damage": 65673,
+          "terminal": 65673,
+          "closure": "death",
+          "damage_records": 188
+        },
+        {
+          "onset": 84353,
+          "last_damage": 84497,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 18
+        },
+        {
+          "onset": 84883,
+          "last_damage": 84883,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 85203,
+          "last_damage": 85447,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 4
+        },
+        {
+          "onset": 85841,
+          "last_damage": 85949,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 19
+        },
+        {
+          "onset": 86991,
+          "last_damage": 86997,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 2
+        },
+        {
+          "onset": 87999,
+          "last_damage": 88931,
+          "terminal": 88931,
+          "closure": "death",
+          "damage_records": 334
+        },
+        {
+          "onset": 105393,
+          "last_damage": 106315,
+          "terminal": 106315,
+          "closure": "death",
+          "damage_records": 161
+        }
+      ],
+      "terminal_events": 3,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            63867,
+            84353,
+            86991,
+            105393
+          ],
+          "completion": {
+            "targets": 3,
+            "alarms": 4,
+            "hits": 1,
+            "unmatched_alarms": 3,
+            "recall": 0.3333333333333333,
+            "precision": 0.25,
+            "matches": [
+              {
+                "alarm": 105393,
+                "target": 106315,
+                "lead": 922
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 9,
+            "alarms": 4,
+            "hits": 3,
+            "unmatched_alarms": 1,
+            "recall": 0.3333333333333333,
+            "precision": 0.75,
+            "matches": [
+              {
+                "alarm": 63867,
+                "target": 64715,
+                "lead": 848
+              },
+              {
+                "alarm": 84353,
+                "target": 84883,
+                "lead": 530
+              },
+              {
+                "alarm": 86991,
+                "target": 87999,
+                "lead": 1008
+              }
+            ]
+          },
+          "completion_window_after_onset_fractions": [
+            0.4896969696969697,
+            0.47393939393939394,
+            0.4678787878787879
+          ]
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            63867,
+            84353,
+            86991,
+            105393
+          ],
+          "completion": {
+            "targets": 3,
+            "alarms": 4,
+            "hits": 1,
+            "unmatched_alarms": 3,
+            "recall": 0.3333333333333333,
+            "precision": 0.25,
+            "matches": [
+              {
+                "alarm": 105393,
+                "target": 106315,
+                "lead": 922
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 9,
+            "alarms": 4,
+            "hits": 3,
+            "unmatched_alarms": 1,
+            "recall": 0.3333333333333333,
+            "precision": 0.75,
+            "matches": [
+              {
+                "alarm": 63867,
+                "target": 64715,
+                "lead": 848
+              },
+              {
+                "alarm": 84353,
+                "target": 85203,
+                "lead": 850
+              },
+              {
+                "alarm": 86991,
+                "target": 87999,
+                "lead": 1008
+              }
+            ]
+          },
+          "completion_window_after_onset_fractions": [
+            0.29833333333333334,
+            0.27666666666666667,
+            0.2683333333333333
+          ]
+        }
+      ]
+    },
+    {
+      "match_id": "8868259993",
+      "combat_records": 38394,
+      "primary_episodes": [],
+      "terminal_events": 0,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [],
+          "completion": {
+            "targets": 0,
+            "alarms": 0,
+            "hits": 0,
+            "unmatched_alarms": 0,
+            "recall": null,
+            "precision": null,
+            "matches": []
+          },
+          "damage_onset": {
+            "targets": 0,
+            "alarms": 0,
+            "hits": 0,
+            "unmatched_alarms": 0,
+            "recall": null,
+            "precision": null,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": []
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [],
+          "completion": {
+            "targets": 0,
+            "alarms": 0,
+            "hits": 0,
+            "unmatched_alarms": 0,
+            "recall": null,
+            "precision": null,
+            "matches": []
+          },
+          "damage_onset": {
+            "targets": 0,
+            "alarms": 0,
+            "hits": 0,
+            "unmatched_alarms": 0,
+            "recall": null,
+            "precision": null,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": []
+        }
+      ]
+    },
+    {
+      "match_id": "8974053011",
+      "combat_records": 120644,
+      "primary_episodes": [
+        {
+          "onset": 35042,
+          "last_damage": 35042,
+          "terminal": null,
+          "closure": "quiet",
+          "damage_records": 1
+        },
+        {
+          "onset": 52026,
+          "last_damage": 53286,
+          "terminal": 53286,
+          "closure": "death",
+          "damage_records": 121
+        },
+        {
+          "onset": 70652,
+          "last_damage": 72154,
+          "terminal": 72154,
+          "closure": "death",
+          "damage_records": 345
+        }
+      ],
+      "terminal_events": 2,
+      "primary_metrics": [
+        {
+          "minimum_lead_nominal_seconds": 5,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            35042,
+            52026,
+            70652
+          ],
+          "completion": {
+            "targets": 2,
+            "alarms": 3,
+            "hits": 2,
+            "unmatched_alarms": 1,
+            "recall": 1.0,
+            "precision": 0.6666666666666666,
+            "matches": [
+              {
+                "alarm": 52026,
+                "target": 53286,
+                "lead": 1260
+              },
+              {
+                "alarm": 70652,
+                "target": 72154,
+                "lead": 1502
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 3,
+            "alarms": 3,
+            "hits": 0,
+            "unmatched_alarms": 3,
+            "recall": 0.0,
+            "precision": 0.0,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": [
+            0.6727272727272727,
+            0.8193939393939393
+          ]
+        },
+        {
+          "minimum_lead_nominal_seconds": 20,
+          "delivery_delay_nominal_seconds": 0,
+          "alarm_ticks": [
+            35042,
+            52026,
+            70652
+          ],
+          "completion": {
+            "targets": 2,
+            "alarms": 3,
+            "hits": 2,
+            "unmatched_alarms": 1,
+            "recall": 1.0,
+            "precision": 0.6666666666666666,
+            "matches": [
+              {
+                "alarm": 52026,
+                "target": 53286,
+                "lead": 1260
+              },
+              {
+                "alarm": 70652,
+                "target": 72154,
+                "lead": 1502
+              }
+            ]
+          },
+          "damage_onset": {
+            "targets": 3,
+            "alarms": 3,
+            "hits": 0,
+            "unmatched_alarms": 3,
+            "recall": 0.0,
+            "precision": 0.0,
+            "matches": []
+          },
+          "completion_window_after_onset_fractions": [
+            0.55,
+            0.7516666666666667
+          ]
+        }
+      ]
+    }
+  ]
+}
