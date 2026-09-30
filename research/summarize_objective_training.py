@@ -6,6 +6,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
+import pandas as pd
+
 from research.public_objective_training import LOSSES, SEEDS
 
 
@@ -20,10 +22,18 @@ def main() -> None:
             raise ValueError("Refusing to present an incomplete objective comparison")
     quality = read("objective-expansion-quality")
     retained = [r for r in quality["matches"] if r["status"] == "accepted"]
+    metadata = pd.read_parquet(
+        "data/external/betty/matches.parquet", columns=["match_id", "league_name"]
+    )
+    league_names = dict(
+        zip(metadata.match_id.astype(str), metadata.league_name.fillna("unknown"), strict=True)
+    )
+    leagues = Counter(league_names[str(r["match_id"])] for r in retained)
     rejected = Counter(
         r["reason"].split(":")[0] for r in quality["matches"] if r["status"] != "accepted"
     )
     advancement = {s: r["advances_to_new_evaluation"] for s, r in records.items()}
+    audits = {size: read(f"objective-fit-audit-{size}") for size in records}
     lines = [
         "# Public-data objective training: completed development experiments",
         "",
@@ -49,6 +59,8 @@ def main() -> None:
         "combat-versus-health checks were applied without changing exclusion rules.",
         f"New retained matches: {len(retained)}/750. New hero-state rows: "
         f"{sum(r['hero_rows'] for r in retained):,}. Exclusions: {dict(rejected)}.",
+        f"Retained additions by league: {dict(leagues.most_common())}.",
+        "Source league labels do not establish elite-tournament generalization.",
         "",
         "| Development dataset | Train matches | Train onsets | Train decisions | "
         "Calibration matches | Calibration onsets | Calibration decisions |",
@@ -64,6 +76,8 @@ def main() -> None:
         "",
         "Expanded data include the original development matches; these two experiments",
         "are not independent replications. Matches and days may share players and leagues.",
+        "Both training and calibration cohorts expand, so the two tables alone do not",
+        "isolate a training-set-size effect on a fixed calibration population.",
         "No result here evaluates League of Legends or opens its private final test.",
         "",
         "## Matched comparisons",
@@ -123,6 +137,39 @@ def main() -> None:
         "would constitute held-out evidence. No confidence interval based on only three",
         "seeds should be read as uncertainty over the match population.",
         "",
+        "## Post-fit diagnostic: training credit versus calibration burden",
+        "",
+        "This descriptive audit was added after the small-cohort results, without changing",
+        "models, thresholds or advancement decisions. Every saved checkpoint must exactly",
+        "reproduce its originally recorded deterministic calibration policy. The following",
+        "ranges span the three cooldown-utility seeds using their RAW sigmoid probabilities",
+        "as Bernoulli alarm proposals, without the subsequent threshold calibration.",
+        "These stochastic values are not the deployed metrics in the tables above.",
+        "",
+        "| Data | Split | Expected stochastic recall range | Expected unmatched/match range |",
+        "|---|---|---:|---:|",
+    ]
+    for size, audit in audits.items():
+        primary = [r for r in audit["models"] if r["loss"] == "cooldown_utility"]
+        for split in ("train", "calibration"):
+            recalls = [
+                r["splits"][split]["uncalibrated_stochastic_expected_recall"] for r in primary
+            ]
+            wrong = [
+                r["splits"][split]["uncalibrated_stochastic_expected_unmatched_per_match"]
+                for r in primary
+            ]
+            lines.append(
+                f"| {size} | {split} | {min(recalls):.2%}-{max(recalls):.2%} | "
+                f"{min(wrong):.3f}-{max(wrong):.3f} |"
+            )
+    lines += [
+        "",
+        "A learned training multiplier is not a finite-sample budget guarantee, and",
+        "optimizing expected training credit does not ensure transfer to later matches.",
+        "The audit also records deterministic training metrics at the unchanged",
+        "calibration-selected threshold. Training performance is optimistic by construction.",
+        "",
         "## Interpretation and novelty boundary",
         "",
         "Exact refractory emission credit is an established renewal identity. Optimizing",
@@ -172,6 +219,8 @@ def main() -> None:
         "  --report reports/objective-expansion-quality-2026-09-30.json",
         "python -m research.public_objective_training",
         "python -m research.public_objective_training --expanded",
+        "python -m research.audit_objective_fit",
+        "python -m research.audit_objective_fit --expanded",
         "python -m research.summarize_objective_training",
         "```",
         "",
