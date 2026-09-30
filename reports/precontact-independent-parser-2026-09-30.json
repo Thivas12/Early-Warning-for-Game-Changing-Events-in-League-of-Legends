@@ -1,0 +1,16 @@
+{
+  "match_id": "7616388415",
+  "source_url": "https://huggingface.co/datasets/wolframko/betty-dota2-raw-v2/resolve/d113b4eb79592d99beb174e1b45b994f0a9e6537/replays/7616388415.dem.bz2",
+  "compressed_sha256": "7d9e2c784570de1a05720c03194f9043f2caf2b4c4e9fd01216ed109ae044888",
+  "raw_sha256": "d286429839593847f0edc818c455dd12582cacfa172a15896c1446884b764af4",
+  "gem_revision": "e276f3ea5e77b5b8652a68ef7687b5c494592853",
+  "clock_rows": 1438,
+  "clock_max_absolute_error_seconds": 0.03330078125009095,
+  "clock_median_absolute_error_seconds": 0.03330078124997726,
+  "gem_contact_rows": 150,
+  "canonical_contact_rows": 150,
+  "contacts_exact": true,
+  "gem_game_start_tick": 26841,
+  "gem_post_game_tick": 65631,
+  "scope": "One training match; independent parser agreement is not population validation"
+}

@@ -1,0 +1,148 @@
+{
+  "scope": "Post-hoc descriptive mechanism check; no fitting or threshold selection",
+  "lead_seconds": [
+    20,
+    60
+  ],
+  "cooldown_seconds": 60,
+  "cohorts": [
+    {
+      "name": "initial",
+      "sensitivities": [
+        {
+          "quiet_gap_seconds": 5,
+          "matches": 26,
+          "alarms": 23,
+          "completed_encounters": 19,
+          "completion_hits": 15,
+          "same_encounter_onset_hits": 0,
+          "completion_hits_at_or_after_own_onset": 15,
+          "all_onsets": 23,
+          "all_onset_hits": 0,
+          "orphan_deaths": 0,
+          "completion_recall": 0.7894736842105263,
+          "same_encounter_onset_recall": 0.0,
+          "unmatched_per_match_for_completion": 0.3076923076923077,
+          "unmatched_per_match_for_paired_onset": 0.8846153846153846
+        },
+        {
+          "quiet_gap_seconds": 10,
+          "matches": 26,
+          "alarms": 23,
+          "completed_encounters": 19,
+          "completion_hits": 15,
+          "same_encounter_onset_hits": 0,
+          "completion_hits_at_or_after_own_onset": 15,
+          "all_onsets": 23,
+          "all_onset_hits": 0,
+          "orphan_deaths": 0,
+          "completion_recall": 0.7894736842105263,
+          "same_encounter_onset_recall": 0.0,
+          "unmatched_per_match_for_completion": 0.3076923076923077,
+          "unmatched_per_match_for_paired_onset": 0.8846153846153846
+        },
+        {
+          "quiet_gap_seconds": 20,
+          "matches": 26,
+          "alarms": 23,
+          "completed_encounters": 19,
+          "completion_hits": 15,
+          "same_encounter_onset_hits": 0,
+          "completion_hits_at_or_after_own_onset": 15,
+          "all_onsets": 23,
+          "all_onset_hits": 0,
+          "orphan_deaths": 0,
+          "completion_recall": 0.7894736842105263,
+          "same_encounter_onset_recall": 0.0,
+          "unmatched_per_match_for_completion": 0.3076923076923077,
+          "unmatched_per_match_for_paired_onset": 0.8846153846153846
+        },
+        {
+          "quiet_gap_seconds": 30,
+          "matches": 26,
+          "alarms": 23,
+          "completed_encounters": 19,
+          "completion_hits": 15,
+          "same_encounter_onset_hits": 0,
+          "completion_hits_at_or_after_own_onset": 15,
+          "all_onsets": 23,
+          "all_onset_hits": 0,
+          "orphan_deaths": 0,
+          "completion_recall": 0.7894736842105263,
+          "same_encounter_onset_recall": 0.0,
+          "unmatched_per_match_for_completion": 0.3076923076923077,
+          "unmatched_per_match_for_paired_onset": 0.8846153846153846
+        }
+      ]
+    },
+    {
+      "name": "fresh",
+      "sensitivities": [
+        {
+          "quiet_gap_seconds": 5,
+          "matches": 115,
+          "alarms": 104,
+          "completed_encounters": 62,
+          "completion_hits": 43,
+          "same_encounter_onset_hits": 7,
+          "completion_hits_at_or_after_own_onset": 38,
+          "all_onsets": 114,
+          "all_onset_hits": 8,
+          "orphan_deaths": 0,
+          "completion_recall": 0.6935483870967742,
+          "same_encounter_onset_recall": 0.11290322580645161,
+          "unmatched_per_match_for_completion": 0.5304347826086957,
+          "unmatched_per_match_for_paired_onset": 0.8434782608695652
+        },
+        {
+          "quiet_gap_seconds": 10,
+          "matches": 115,
+          "alarms": 104,
+          "completed_encounters": 62,
+          "completion_hits": 43,
+          "same_encounter_onset_hits": 3,
+          "completion_hits_at_or_after_own_onset": 41,
+          "all_onsets": 110,
+          "all_onset_hits": 4,
+          "orphan_deaths": 0,
+          "completion_recall": 0.6935483870967742,
+          "same_encounter_onset_recall": 0.04838709677419355,
+          "unmatched_per_match_for_completion": 0.5304347826086957,
+          "unmatched_per_match_for_paired_onset": 0.8782608695652174
+        },
+        {
+          "quiet_gap_seconds": 20,
+          "matches": 115,
+          "alarms": 104,
+          "completed_encounters": 62,
+          "completion_hits": 43,
+          "same_encounter_onset_hits": 3,
+          "completion_hits_at_or_after_own_onset": 41,
+          "all_onsets": 107,
+          "all_onset_hits": 3,
+          "orphan_deaths": 0,
+          "completion_recall": 0.6935483870967742,
+          "same_encounter_onset_recall": 0.04838709677419355,
+          "unmatched_per_match_for_completion": 0.5304347826086957,
+          "unmatched_per_match_for_paired_onset": 0.8782608695652174
+        },
+        {
+          "quiet_gap_seconds": 30,
+          "matches": 115,
+          "alarms": 104,
+          "completed_encounters": 62,
+          "completion_hits": 43,
+          "same_encounter_onset_hits": 1,
+          "completion_hits_at_or_after_own_onset": 43,
+          "all_onsets": 105,
+          "all_onset_hits": 1,
+          "orphan_deaths": 0,
+          "completion_recall": 0.6935483870967742,
+          "same_encounter_onset_recall": 0.016129032258064516,
+          "unmatched_per_match_for_completion": 0.5304347826086957,
+          "unmatched_per_match_for_paired_onset": 0.8956521739130435
+        }
+      ]
+    }
+  ]
+}

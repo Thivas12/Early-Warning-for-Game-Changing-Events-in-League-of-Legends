@@ -1,0 +1,6129 @@
+{
+  "schema": "precontact-pilot-v1",
+  "scope": "exploratory observer-data Dota pilot; no breakthrough claim",
+  "quality_report_sha256": "d3256a72258dc0b784bb70b2f58f6beed3369212167efcb61804edab8a4edbbd",
+  "runner_sha256": "3cd15e29f0fc056a4dfd11f0d940cdaff2657932162202c2bf285bc4f359abf4",
+  "split_matches": {
+    "train": 110,
+    "calibration": 37,
+    "evaluation": 26
+  },
+  "decision_rows": {
+    "train": 29524,
+    "calibration": 10834,
+    "evaluation": 6947
+  },
+  "target_counts": {
+    "train": 77,
+    "calibration": 29,
+    "evaluation": 23
+  },
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "models": [
+    {
+      "name": "clock",
+      "seed": 17,
+      "features": 5,
+      "threshold": 0.0945875786030158,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 29,
+        "hits": 2,
+        "unmatched_alarms": 27,
+        "matches": 37,
+        "recall": 0.06896551724137931,
+        "unmatched_per_match": 0.7297297297297297
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 16,
+        "hits": 4,
+        "unmatched_alarms": 12,
+        "matches": 26,
+        "recall": 0.17391304347826086,
+        "unmatched_per_match": 0.46153846153846156
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 16,
+        "hits": 5,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.2631578947368421,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 16,
+        "hits": 4,
+        "unmatched_alarms": 12,
+        "matches": 26,
+        "recall": 0.17391304347826086,
+        "unmatched_per_match": 0.46153846153846156
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [
+            54861,
+            56661,
+            60411,
+            62211,
+            64011
+          ],
+          "targets": 2,
+          "alarms": 5,
+          "hits": 0,
+          "unmatched_alarms": 5,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [
+            46318,
+            48118
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 1,
+          "unmatched_alarms": 1,
+          "recall": 0.5,
+          "precision": 0.5,
+          "matches": [
+            {
+              "alarm": 48118,
+              "target": 49650,
+              "lead": 1532
+            }
+          ]
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [
+            71614
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 0.5,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 71614,
+              "target": 72285,
+              "lead": 671
+            }
+          ]
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [
+            69879
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 69879,
+              "target": 70785,
+              "lead": 906
+            }
+          ]
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [
+            64566
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [
+            69828
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 0.5,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 69828,
+              "target": 70763,
+              "lead": 935
+            }
+          ]
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            59607
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [
+            60866
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            76198
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [
+            37973,
+            63023
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "current",
+      "seed": 17,
+      "features": 77,
+      "threshold": 0.23199111036619044,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 41,
+        "hits": 6,
+        "unmatched_alarms": 35,
+        "matches": 37,
+        "recall": 0.20689655172413793,
+        "unmatched_per_match": 0.9459459459459459
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52174
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [
+            62724
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [
+            65829
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            47098
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [
+            50861
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            55557,
+            58107
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [
+            48266
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            68848,
+            72598,
+            77248
+          ],
+          "targets": 0,
+          "alarms": 3,
+          "hits": 0,
+          "unmatched_alarms": 3,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "history",
+      "seed": 17,
+      "features": 197,
+      "threshold": 0.2306570038633507,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 34,
+        "hits": 5,
+        "unmatched_alarms": 29,
+        "matches": 37,
+        "recall": 0.1724137931034483,
+        "unmatched_per_match": 0.7837837837837838
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 10,
+        "hits": 0,
+        "unmatched_alarms": 10,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.38461538461538464
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 10,
+        "hits": 1,
+        "unmatched_alarms": 9,
+        "matches": 26,
+        "recall": 0.05263157894736842,
+        "unmatched_per_match": 0.34615384615384615
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 10,
+        "hits": 0,
+        "unmatched_alarms": 10,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.38461538461538464
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52324
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [
+            62724,
+            85224
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            48598
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [
+            39838
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            47007,
+            54507,
+            63657
+          ],
+          "targets": 0,
+          "alarms": 3,
+          "hits": 0,
+          "unmatched_alarms": 3,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            71548,
+            80248
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "coordination",
+      "seed": 17,
+      "features": 225,
+      "threshold": 0.1963924589941205,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 40,
+        "hits": 3,
+        "unmatched_alarms": 37,
+        "matches": 37,
+        "recall": 0.10344827586206896,
+        "unmatched_per_match": 1.0
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 9,
+        "hits": 1,
+        "unmatched_alarms": 8,
+        "matches": 26,
+        "recall": 0.043478260869565216,
+        "unmatched_per_match": 0.3076923076923077
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 9,
+        "hits": 0,
+        "unmatched_alarms": 9,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.34615384615384615
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 9,
+        "hits": 1,
+        "unmatched_alarms": 8,
+        "matches": 26,
+        "recall": 0.043478260869565216,
+        "unmatched_per_match": 0.3076923076923077
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52624
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [
+            36399,
+            41349
+          ],
+          "targets": 1,
+          "alarms": 2,
+          "hits": 1,
+          "unmatched_alarms": 1,
+          "recall": 1.0,
+          "precision": 0.5,
+          "matches": [
+            {
+              "alarm": 41349,
+              "target": 42956,
+              "lead": 1607
+            }
+          ]
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [
+            59766
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            46798
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [
+            35338
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            55857,
+            57807
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            54748
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "completion_trained",
+      "seed": 17,
+      "features": 225,
+      "threshold": 0.47705344918929005,
+      "calibration_target": "kills",
+      "calibration": {
+        "targets": 20,
+        "alarms": 18,
+        "hits": 3,
+        "unmatched_alarms": 15,
+        "matches": 37,
+        "recall": 0.15,
+        "unmatched_per_match": 0.40540540540540543
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 5,
+        "hits": 0,
+        "unmatched_alarms": 5,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.19230769230769232
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 5,
+        "hits": 1,
+        "unmatched_alarms": 4,
+        "matches": 26,
+        "recall": 0.05263157894736842,
+        "unmatched_per_match": 0.15384615384615385
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 5,
+        "hits": 0,
+        "unmatched_alarms": 5,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.19230769230769232
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            55924
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [
+            56191
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [
+            65614
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [
+            58073,
+            61373
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "clock",
+      "seed": 29,
+      "features": 5,
+      "threshold": 0.0945875786030158,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 29,
+        "hits": 2,
+        "unmatched_alarms": 27,
+        "matches": 37,
+        "recall": 0.06896551724137931,
+        "unmatched_per_match": 0.7297297297297297
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 16,
+        "hits": 4,
+        "unmatched_alarms": 12,
+        "matches": 26,
+        "recall": 0.17391304347826086,
+        "unmatched_per_match": 0.46153846153846156
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 16,
+        "hits": 5,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.2631578947368421,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 16,
+        "hits": 4,
+        "unmatched_alarms": 12,
+        "matches": 26,
+        "recall": 0.17391304347826086,
+        "unmatched_per_match": 0.46153846153846156
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [
+            54861,
+            56661,
+            60411,
+            62211,
+            64011
+          ],
+          "targets": 2,
+          "alarms": 5,
+          "hits": 0,
+          "unmatched_alarms": 5,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [
+            46318,
+            48118
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 1,
+          "unmatched_alarms": 1,
+          "recall": 0.5,
+          "precision": 0.5,
+          "matches": [
+            {
+              "alarm": 48118,
+              "target": 49650,
+              "lead": 1532
+            }
+          ]
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [
+            71614
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 0.5,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 71614,
+              "target": 72285,
+              "lead": 671
+            }
+          ]
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [
+            69879
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 69879,
+              "target": 70785,
+              "lead": 906
+            }
+          ]
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [
+            64566
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [
+            69828
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 0.5,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 69828,
+              "target": 70763,
+              "lead": 935
+            }
+          ]
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            59607
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [
+            60866
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            76198
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [
+            37973,
+            63023
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "current",
+      "seed": 29,
+      "features": 77,
+      "threshold": 0.23199111036619044,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 41,
+        "hits": 6,
+        "unmatched_alarms": 35,
+        "matches": 37,
+        "recall": 0.20689655172413793,
+        "unmatched_per_match": 0.9459459459459459
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52174
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [
+            62724
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [
+            65829
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            47098
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [
+            50861
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            55557,
+            58107
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [
+            48266
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            68848,
+            72598,
+            77248
+          ],
+          "targets": 0,
+          "alarms": 3,
+          "hits": 0,
+          "unmatched_alarms": 3,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "history",
+      "seed": 29,
+      "features": 197,
+      "threshold": 0.2306570038633507,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 34,
+        "hits": 5,
+        "unmatched_alarms": 29,
+        "matches": 37,
+        "recall": 0.1724137931034483,
+        "unmatched_per_match": 0.7837837837837838
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 10,
+        "hits": 0,
+        "unmatched_alarms": 10,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.38461538461538464
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 10,
+        "hits": 1,
+        "unmatched_alarms": 9,
+        "matches": 26,
+        "recall": 0.05263157894736842,
+        "unmatched_per_match": 0.34615384615384615
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 10,
+        "hits": 0,
+        "unmatched_alarms": 10,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.38461538461538464
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52324
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [
+            62724,
+            85224
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            48598
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [
+            39838
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            47007,
+            54507,
+            63657
+          ],
+          "targets": 0,
+          "alarms": 3,
+          "hits": 0,
+          "unmatched_alarms": 3,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            71548,
+            80248
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "coordination",
+      "seed": 29,
+      "features": 225,
+      "threshold": 0.1963924589941205,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 40,
+        "hits": 3,
+        "unmatched_alarms": 37,
+        "matches": 37,
+        "recall": 0.10344827586206896,
+        "unmatched_per_match": 1.0
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 9,
+        "hits": 1,
+        "unmatched_alarms": 8,
+        "matches": 26,
+        "recall": 0.043478260869565216,
+        "unmatched_per_match": 0.3076923076923077
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 9,
+        "hits": 0,
+        "unmatched_alarms": 9,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.34615384615384615
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 9,
+        "hits": 1,
+        "unmatched_alarms": 8,
+        "matches": 26,
+        "recall": 0.043478260869565216,
+        "unmatched_per_match": 0.3076923076923077
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52624
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [
+            36399,
+            41349
+          ],
+          "targets": 1,
+          "alarms": 2,
+          "hits": 1,
+          "unmatched_alarms": 1,
+          "recall": 1.0,
+          "precision": 0.5,
+          "matches": [
+            {
+              "alarm": 41349,
+              "target": 42956,
+              "lead": 1607
+            }
+          ]
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [
+            59766
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            46798
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [
+            35338
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            55857,
+            57807
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            54748
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "completion_trained",
+      "seed": 29,
+      "features": 225,
+      "threshold": 0.47705344918929005,
+      "calibration_target": "kills",
+      "calibration": {
+        "targets": 20,
+        "alarms": 18,
+        "hits": 3,
+        "unmatched_alarms": 15,
+        "matches": 37,
+        "recall": 0.15,
+        "unmatched_per_match": 0.40540540540540543
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 5,
+        "hits": 0,
+        "unmatched_alarms": 5,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.19230769230769232
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 5,
+        "hits": 1,
+        "unmatched_alarms": 4,
+        "matches": 26,
+        "recall": 0.05263157894736842,
+        "unmatched_per_match": 0.15384615384615385
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 5,
+        "hits": 0,
+        "unmatched_alarms": 5,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.19230769230769232
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            55924
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [
+            56191
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [
+            65614
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [
+            58073,
+            61373
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "clock",
+      "seed": 43,
+      "features": 5,
+      "threshold": 0.0945875786030158,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 29,
+        "hits": 2,
+        "unmatched_alarms": 27,
+        "matches": 37,
+        "recall": 0.06896551724137931,
+        "unmatched_per_match": 0.7297297297297297
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 16,
+        "hits": 4,
+        "unmatched_alarms": 12,
+        "matches": 26,
+        "recall": 0.17391304347826086,
+        "unmatched_per_match": 0.46153846153846156
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 16,
+        "hits": 5,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.2631578947368421,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 16,
+        "hits": 4,
+        "unmatched_alarms": 12,
+        "matches": 26,
+        "recall": 0.17391304347826086,
+        "unmatched_per_match": 0.46153846153846156
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [
+            54861,
+            56661,
+            60411,
+            62211,
+            64011
+          ],
+          "targets": 2,
+          "alarms": 5,
+          "hits": 0,
+          "unmatched_alarms": 5,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [
+            46318,
+            48118
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 1,
+          "unmatched_alarms": 1,
+          "recall": 0.5,
+          "precision": 0.5,
+          "matches": [
+            {
+              "alarm": 48118,
+              "target": 49650,
+              "lead": 1532
+            }
+          ]
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [
+            71614
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 0.5,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 71614,
+              "target": 72285,
+              "lead": 671
+            }
+          ]
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [
+            69879
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 69879,
+              "target": 70785,
+              "lead": 906
+            }
+          ]
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [
+            64566
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [
+            69828
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 1,
+          "unmatched_alarms": 0,
+          "recall": 0.5,
+          "precision": 1.0,
+          "matches": [
+            {
+              "alarm": 69828,
+              "target": 70763,
+              "lead": 935
+            }
+          ]
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            59607
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [
+            60866
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            76198
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [
+            37973,
+            63023
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "current",
+      "seed": 43,
+      "features": 77,
+      "threshold": 0.23199111036619044,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 41,
+        "hits": 6,
+        "unmatched_alarms": 35,
+        "matches": 37,
+        "recall": 0.20689655172413793,
+        "unmatched_per_match": 0.9459459459459459
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 11,
+        "hits": 0,
+        "unmatched_alarms": 11,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.4230769230769231
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52174
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [
+            62724
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [
+            65829
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            47098
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [
+            50861
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            55557,
+            58107
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [
+            48266
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            68848,
+            72598,
+            77248
+          ],
+          "targets": 0,
+          "alarms": 3,
+          "hits": 0,
+          "unmatched_alarms": 3,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "history",
+      "seed": 43,
+      "features": 197,
+      "threshold": 0.2306570038633507,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 34,
+        "hits": 5,
+        "unmatched_alarms": 29,
+        "matches": 37,
+        "recall": 0.1724137931034483,
+        "unmatched_per_match": 0.7837837837837838
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 10,
+        "hits": 0,
+        "unmatched_alarms": 10,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.38461538461538464
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 10,
+        "hits": 1,
+        "unmatched_alarms": 9,
+        "matches": 26,
+        "recall": 0.05263157894736842,
+        "unmatched_per_match": 0.34615384615384615
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 10,
+        "hits": 0,
+        "unmatched_alarms": 10,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.38461538461538464
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52324
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [
+            62724,
+            85224
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            48598
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [
+            39838
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            47007,
+            54507,
+            63657
+          ],
+          "targets": 0,
+          "alarms": 3,
+          "hits": 0,
+          "unmatched_alarms": 3,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            71548,
+            80248
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "coordination",
+      "seed": 43,
+      "features": 225,
+      "threshold": 0.1963924589941205,
+      "calibration_target": "onsets",
+      "calibration": {
+        "targets": 29,
+        "alarms": 40,
+        "hits": 3,
+        "unmatched_alarms": 37,
+        "matches": 37,
+        "recall": 0.10344827586206896,
+        "unmatched_per_match": 1.0
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 9,
+        "hits": 1,
+        "unmatched_alarms": 8,
+        "matches": 26,
+        "recall": 0.043478260869565216,
+        "unmatched_per_match": 0.3076923076923077
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 9,
+        "hits": 0,
+        "unmatched_alarms": 9,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.34615384615384615
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 9,
+        "hits": 1,
+        "unmatched_alarms": 8,
+        "matches": 26,
+        "recall": 0.043478260869565216,
+        "unmatched_per_match": 0.3076923076923077
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            52624
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [
+            36399,
+            41349
+          ],
+          "targets": 1,
+          "alarms": 2,
+          "hits": 1,
+          "unmatched_alarms": 1,
+          "recall": 1.0,
+          "precision": 0.5,
+          "matches": [
+            {
+              "alarm": 41349,
+              "target": 42956,
+              "lead": 1607
+            }
+          ]
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [
+            59766
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [
+            46798
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [
+            35338
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [
+            55857,
+            57807
+          ],
+          "targets": 0,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [
+            54748
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        }
+      ]
+    },
+    {
+      "name": "completion_trained",
+      "seed": 43,
+      "features": 225,
+      "threshold": 0.47705344918929005,
+      "calibration_target": "kills",
+      "calibration": {
+        "targets": 20,
+        "alarms": 18,
+        "hits": 3,
+        "unmatched_alarms": 15,
+        "matches": 37,
+        "recall": 0.15,
+        "unmatched_per_match": 0.40540540540540543
+      },
+      "onset": {
+        "targets": 23,
+        "alarms": 5,
+        "hits": 0,
+        "unmatched_alarms": 5,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.19230769230769232
+      },
+      "completion": {
+        "targets": 19,
+        "alarms": 5,
+        "hits": 1,
+        "unmatched_alarms": 4,
+        "matches": 26,
+        "recall": 0.05263157894736842,
+        "unmatched_per_match": 0.15384615384615385
+      },
+      "onset_with_5s_delivery_delay": {
+        "targets": 23,
+        "alarms": 5,
+        "hits": 0,
+        "unmatched_alarms": 5,
+        "matches": 26,
+        "recall": 0.0,
+        "unmatched_per_match": 0.19230769230769232
+      },
+      "per_match_onset": [
+        {
+          "match_id": "8510181210",
+          "day": 20374,
+          "alarm_ticks": [
+            55924
+          ],
+          "targets": 1,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8511950787",
+          "day": 20376,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8514691226",
+          "day": 20378,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8516353603",
+          "day": 20379,
+          "alarm_ticks": [
+            56191
+          ],
+          "targets": 0,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": null,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8524229421",
+          "day": 20384,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526668949",
+          "day": 20385,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8526857356",
+          "day": 20386,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8528710569",
+          "day": 20387,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8529576913",
+          "day": 20387,
+          "alarm_ticks": [
+            65614
+          ],
+          "targets": 2,
+          "alarms": 1,
+          "hits": 0,
+          "unmatched_alarms": 1,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        },
+        {
+          "match_id": "8534863093",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8535275133",
+          "day": 20391,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8540719661",
+          "day": 20394,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542132241",
+          "day": 20395,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8542761253",
+          "day": 20396,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548348644",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 2,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8548409635",
+          "day": 20400,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8549828394",
+          "day": 20401,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8554427478",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555148297",
+          "day": 20404,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8555991311",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8556762722",
+          "day": 20405,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8562297475",
+          "day": 20408,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8570685807",
+          "day": 20414,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8575877261",
+          "day": 20417,
+          "alarm_ticks": [],
+          "targets": 0,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": null,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8579961771",
+          "day": 20420,
+          "alarm_ticks": [],
+          "targets": 1,
+          "alarms": 0,
+          "hits": 0,
+          "unmatched_alarms": 0,
+          "recall": 0.0,
+          "precision": null,
+          "matches": []
+        },
+        {
+          "match_id": "8584628515",
+          "day": 20422,
+          "alarm_ticks": [
+            58073,
+            61373
+          ],
+          "targets": 2,
+          "alarms": 2,
+          "hits": 0,
+          "unmatched_alarms": 2,
+          "recall": 0.0,
+          "precision": 0.0,
+          "matches": []
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "seed": 17,
+      "comparison": "coordination minus individual history",
+      "match_bootstrap": {
+        "unit": "match",
+        "units": 26,
+        "replicates_with_targets": 2000,
+        "recall_difference": 0.043478260869565216,
+        "percentile_95": [
+          0.0,
+          0.15
+        ]
+      },
+      "day_bootstrap": {
+        "unit": "calendar_day",
+        "units": 21,
+        "replicates_with_targets": 2000,
+        "recall_difference": 0.043478260869565216,
+        "percentile_95": [
+          0.0,
+          0.15789473684210525
+        ]
+      },
+      "advancement_gate": false
+    },
+    {
+      "seed": 29,
+      "comparison": "coordination minus individual history",
+      "match_bootstrap": {
+        "unit": "match",
+        "units": 26,
+        "replicates_with_targets": 2000,
+        "recall_difference": 0.043478260869565216,
+        "percentile_95": [
+          0.0,
+          0.15
+        ]
+      },
+      "day_bootstrap": {
+        "unit": "calendar_day",
+        "units": 21,
+        "replicates_with_targets": 2000,
+        "recall_difference": 0.043478260869565216,
+        "percentile_95": [
+          0.0,
+          0.15789473684210525
+        ]
+      },
+      "advancement_gate": false
+    },
+    {
+      "seed": 43,
+      "comparison": "coordination minus individual history",
+      "match_bootstrap": {
+        "unit": "match",
+        "units": 26,
+        "replicates_with_targets": 2000,
+        "recall_difference": 0.043478260869565216,
+        "percentile_95": [
+          0.0,
+          0.15
+        ]
+      },
+      "day_bootstrap": {
+        "unit": "calendar_day",
+        "units": 21,
+        "replicates_with_targets": 2000,
+        "recall_difference": 0.043478260869565216,
+        "percentile_95": [
+          0.0,
+          0.15789473684210525
+        ]
+      },
+      "advancement_gate": false
+    }
+  ],
+  "reactive": {
+    "onset": {
+      "targets": 23,
+      "alarms": 23,
+      "hits": 0,
+      "unmatched_alarms": 23,
+      "matches": 26,
+      "recall": 0.0,
+      "unmatched_per_match": 0.8846153846153846
+    },
+    "completion": {
+      "targets": 19,
+      "alarms": 23,
+      "hits": 15,
+      "unmatched_alarms": 8,
+      "matches": 26,
+      "recall": 0.7894736842105263,
+      "unmatched_per_match": 0.3076923076923077
+    },
+    "per_match": [
+      {
+        "match_id": "8510181210",
+        "day": 20374,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8511950787",
+        "day": 20376,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8514691226",
+        "day": 20378,
+        "targets": 2,
+        "alarms": 2,
+        "hits": 0,
+        "unmatched_alarms": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8516353603",
+        "day": 20379,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8524229421",
+        "day": 20384,
+        "targets": 2,
+        "alarms": 2,
+        "hits": 0,
+        "unmatched_alarms": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8526668949",
+        "day": 20385,
+        "targets": 2,
+        "alarms": 2,
+        "hits": 0,
+        "unmatched_alarms": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8526857356",
+        "day": 20386,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8528710569",
+        "day": 20387,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8529576913",
+        "day": 20387,
+        "targets": 2,
+        "alarms": 2,
+        "hits": 0,
+        "unmatched_alarms": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8534863093",
+        "day": 20391,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8535275133",
+        "day": 20391,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8540719661",
+        "day": 20394,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8542132241",
+        "day": 20395,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8542761253",
+        "day": 20396,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8548348644",
+        "day": 20400,
+        "targets": 2,
+        "alarms": 2,
+        "hits": 0,
+        "unmatched_alarms": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8548409635",
+        "day": 20400,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8549828394",
+        "day": 20401,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8554427478",
+        "day": 20404,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8555148297",
+        "day": 20404,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8555991311",
+        "day": 20405,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8556762722",
+        "day": 20405,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8562297475",
+        "day": 20408,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8570685807",
+        "day": 20414,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8575877261",
+        "day": 20417,
+        "targets": 0,
+        "alarms": 0,
+        "hits": 0,
+        "unmatched_alarms": 0,
+        "recall": null,
+        "precision": null,
+        "matches": []
+      },
+      {
+        "match_id": "8579961771",
+        "day": 20420,
+        "targets": 1,
+        "alarms": 1,
+        "hits": 0,
+        "unmatched_alarms": 1,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      },
+      {
+        "match_id": "8584628515",
+        "day": 20422,
+        "targets": 2,
+        "alarms": 2,
+        "hits": 0,
+        "unmatched_alarms": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matches": []
+      }
+    ]
+  },
+  "silence": {
+    "onset": {
+      "targets": 23,
+      "alarms": 0,
+      "hits": 0,
+      "unmatched_alarms": 0,
+      "matches": 26,
+      "recall": 0.0,
+      "unmatched_per_match": 0.0
+    }
+  },
+  "advancement_gate_all_seeds": false,
+  "seed_note": "Full-feature deterministic boosting may yield identical seeds; repeated fits are not independent evidence."
+}

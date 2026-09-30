@@ -1,0 +1,1410 @@
+{
+  "repository": "wolframko/betty-dota2-canonical-v1",
+  "revision": "29aca0551be317948d0a181e9630c9a583fadc32",
+  "metadata_sha256": "4f5c2152ba188ced430e5680775d57107bf77e2a51d2b099f816bf34faffe4bb",
+  "selection": "200 lowest SHA256(precontact-replication-v1:match_id), disjoint from original 300, at or after original evaluation start",
+  "late_period_cutoff": 1760390736,
+  "original_manifest_sha256": "5ac57fbfd0ff0c49cf5a9c571120ff05d9e0ca351a81fdfae170a0b273dcf27c",
+  "matches": [
+    {
+      "match_id": 8510211563,
+      "start_time": 1760393016,
+      "duration_sec": 1965,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8510328718,
+      "start_time": 1760405314,
+      "duration_sec": 2040,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8511004846,
+      "start_time": 1760450986,
+      "duration_sec": 2054,
+      "league_id": 17508,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8511233908,
+      "start_time": 1760459182,
+      "duration_sec": 1285,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8511920264,
+      "start_time": 1760507000,
+      "duration_sec": 1908,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8511971459,
+      "start_time": 1760511676,
+      "duration_sec": 1828,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8512681025,
+      "start_time": 1760546329,
+      "duration_sec": 1075,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8513106307,
+      "start_time": 1760568659,
+      "duration_sec": 1818,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8513196037,
+      "start_time": 1760578624,
+      "duration_sec": 1665,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8513489928,
+      "start_time": 1760605589,
+      "duration_sec": 1828,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8513522054,
+      "start_time": 1760607902,
+      "duration_sec": 1498,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8513792124,
+      "start_time": 1760621264,
+      "duration_sec": 1553,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8513922092,
+      "start_time": 1760625839,
+      "duration_sec": 1241,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8514784412,
+      "start_time": 1760678638,
+      "duration_sec": 2173,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8514824624,
+      "start_time": 1760682323,
+      "duration_sec": 1717,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8514848580,
+      "start_time": 1760684366,
+      "duration_sec": 1616,
+      "league_id": 17659,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8514850841,
+      "start_time": 1760684574,
+      "duration_sec": 1421,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8515000710,
+      "start_time": 1760695480,
+      "duration_sec": 1620,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8516312194,
+      "start_time": 1760760290,
+      "duration_sec": 2078,
+      "league_id": 17659,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8516451614,
+      "start_time": 1760770035,
+      "duration_sec": 1658,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8516533342,
+      "start_time": 1760774956,
+      "duration_sec": 2051,
+      "league_id": 17659,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8518221310,
+      "start_time": 1760854892,
+      "duration_sec": 1913,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8518522716,
+      "start_time": 1760869554,
+      "duration_sec": 1999,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8518676165,
+      "start_time": 1760875366,
+      "duration_sec": 1834,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8518685423,
+      "start_time": 1760875686,
+      "duration_sec": 2931,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8519181342,
+      "start_time": 1760891490,
+      "duration_sec": 2863,
+      "league_id": 16251,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8519760560,
+      "start_time": 1760925912,
+      "duration_sec": 1910,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8519874714,
+      "start_time": 1760937028,
+      "duration_sec": 1554,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8519996531,
+      "start_time": 1760947773,
+      "duration_sec": 1812,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8520034817,
+      "start_time": 1760950642,
+      "duration_sec": 1521,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8520276775,
+      "start_time": 1760964060,
+      "duration_sec": 1728,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8520477546,
+      "start_time": 1760971330,
+      "duration_sec": 1814,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8520547315,
+      "start_time": 1760973814,
+      "duration_sec": 1476,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8521061749,
+      "start_time": 1760997884,
+      "duration_sec": 1894,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8521115097,
+      "start_time": 1761003393,
+      "duration_sec": 1629,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8522459810,
+      "start_time": 1761082344,
+      "duration_sec": 1856,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8522649428,
+      "start_time": 1761102054,
+      "duration_sec": 1525,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8523956284,
+      "start_time": 1761179638,
+      "duration_sec": 1766,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8524022781,
+      "start_time": 1761186806,
+      "duration_sec": 1384,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8524076491,
+      "start_time": 1761192289,
+      "duration_sec": 1964,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8524109144,
+      "start_time": 1761195533,
+      "duration_sec": 1702,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8524155968,
+      "start_time": 1761200216,
+      "duration_sec": 1615,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8524182970,
+      "start_time": 1761202719,
+      "duration_sec": 1557,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8525229584,
+      "start_time": 1761254240,
+      "duration_sec": 1620,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8525395977,
+      "start_time": 1761270930,
+      "duration_sec": 2035,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8525514264,
+      "start_time": 1761282480,
+      "duration_sec": 1677,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8525639502,
+      "start_time": 1761293416,
+      "duration_sec": 1902,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8527061910,
+      "start_time": 1761369354,
+      "duration_sec": 1464,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8527188836,
+      "start_time": 1761377814,
+      "duration_sec": 881,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8528726293,
+      "start_time": 1761451186,
+      "duration_sec": 1783,
+      "league_id": 17659,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8528735744,
+      "start_time": 1761451984,
+      "duration_sec": 1352,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8528821458,
+      "start_time": 1761457993,
+      "duration_sec": 1761,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8528892093,
+      "start_time": 1761462352,
+      "duration_sec": 2158,
+      "league_id": 17659,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8529199781,
+      "start_time": 1761477040,
+      "duration_sec": 1969,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8529280828,
+      "start_time": 1761480131,
+      "duration_sec": 1362,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8530391517,
+      "start_time": 1761531354,
+      "duration_sec": 1870,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8530927241,
+      "start_time": 1761569742,
+      "duration_sec": 1517,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8531128433,
+      "start_time": 1761577071,
+      "duration_sec": 1362,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8531729820,
+      "start_time": 1761606200,
+      "duration_sec": 1639,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8531935280,
+      "start_time": 1761627271,
+      "duration_sec": 1495,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8532001124,
+      "start_time": 1761633698,
+      "duration_sec": 1362,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8532055043,
+      "start_time": 1761638288,
+      "duration_sec": 1876,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8532093884,
+      "start_time": 1761641284,
+      "duration_sec": 2367,
+      "league_id": 17659,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8532115334,
+      "start_time": 1761642888,
+      "duration_sec": 2459,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8533705735,
+      "start_time": 1761738451,
+      "duration_sec": 1430,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8533968932,
+      "start_time": 1761748977,
+      "duration_sec": 2164,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8534801126,
+      "start_time": 1761800969,
+      "duration_sec": 2170,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8536119795,
+      "start_time": 1761875851,
+      "duration_sec": 1831,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8536537533,
+      "start_time": 1761909427,
+      "duration_sec": 1849,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8536542121,
+      "start_time": 1761909661,
+      "duration_sec": 1133,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8537718278,
+      "start_time": 1761973147,
+      "duration_sec": 1038,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8539717366,
+      "start_time": 1762079144,
+      "duration_sec": 1875,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8539768293,
+      "start_time": 1762081509,
+      "duration_sec": 2192,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8540906422,
+      "start_time": 1762134132,
+      "duration_sec": 1684,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8541147376,
+      "start_time": 1762156497,
+      "duration_sec": 1432,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8541555416,
+      "start_time": 1762177320,
+      "duration_sec": 1271,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8542175760,
+      "start_time": 1762202644,
+      "duration_sec": 2011,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8542381284,
+      "start_time": 1762217617,
+      "duration_sec": 1764,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8542405191,
+      "start_time": 1762219945,
+      "duration_sec": 1507,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8542585173,
+      "start_time": 1762237773,
+      "duration_sec": 2744,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8543169039,
+      "start_time": 1762267573,
+      "duration_sec": 1210,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8543443161,
+      "start_time": 1762278058,
+      "duration_sec": 2334,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8543672925,
+      "start_time": 1762289308,
+      "duration_sec": 1559,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8544026076,
+      "start_time": 1762322945,
+      "duration_sec": 1402,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8544047712,
+      "start_time": 1762325104,
+      "duration_sec": 1489,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8544240280,
+      "start_time": 1762340720,
+      "duration_sec": 1785,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8544320719,
+      "start_time": 1762345072,
+      "duration_sec": 1325,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8544535965,
+      "start_time": 1762354094,
+      "duration_sec": 1162,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8544849585,
+      "start_time": 1762367627,
+      "duration_sec": 2876,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8545061004,
+      "start_time": 1762380183,
+      "duration_sec": 2041,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8545300939,
+      "start_time": 1762405422,
+      "duration_sec": 1398,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8545457221,
+      "start_time": 1762419979,
+      "duration_sec": 1808,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8545888282,
+      "start_time": 1762441500,
+      "duration_sec": 1095,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546373602,
+      "start_time": 1762465010,
+      "duration_sec": 1712,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546526318,
+      "start_time": 1762480276,
+      "duration_sec": 1907,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546617746,
+      "start_time": 1762489509,
+      "duration_sec": 1638,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546640817,
+      "start_time": 1762491855,
+      "duration_sec": 1206,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546659863,
+      "start_time": 1762493759,
+      "duration_sec": 1365,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546775601,
+      "start_time": 1762504328,
+      "duration_sec": 1332,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8546876179,
+      "start_time": 1762511630,
+      "duration_sec": 1498,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8547973460,
+      "start_time": 1762565530,
+      "duration_sec": 1857,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8548026730,
+      "start_time": 1762570173,
+      "duration_sec": 1684,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8548773276,
+      "start_time": 1762611162,
+      "duration_sec": 2582,
+      "league_id": 16251,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8548906652,
+      "start_time": 1762615632,
+      "duration_sec": 2376,
+      "league_id": 16251,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8548983113,
+      "start_time": 1762618239,
+      "duration_sec": 1530,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8549098397,
+      "start_time": 1762622397,
+      "duration_sec": 1883,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8549306196,
+      "start_time": 1762630705,
+      "duration_sec": 4030,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8549712761,
+      "start_time": 1762657608,
+      "duration_sec": 1529,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8550998588,
+      "start_time": 1762716787,
+      "duration_sec": 2266,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8551478822,
+      "start_time": 1762758417,
+      "duration_sec": 1462,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8551499670,
+      "start_time": 1762760471,
+      "duration_sec": 1766,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8552322247,
+      "start_time": 1762801865,
+      "duration_sec": 2543,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8552867593,
+      "start_time": 1762842373,
+      "duration_sec": 1480,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8552898680,
+      "start_time": 1762844759,
+      "duration_sec": 1226,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8553077010,
+      "start_time": 1762856489,
+      "duration_sec": 3225,
+      "league_id": 17662,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8553859046,
+      "start_time": 1762884707,
+      "duration_sec": 2680,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8554164289,
+      "start_time": 1762899483,
+      "duration_sec": 1509,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8554479709,
+      "start_time": 1762926086,
+      "duration_sec": 1497,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8554590275,
+      "start_time": 1762935174,
+      "duration_sec": 1075,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8554646837,
+      "start_time": 1762939108,
+      "duration_sec": 1511,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8554684252,
+      "start_time": 1762941580,
+      "duration_sec": 1366,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8554891326,
+      "start_time": 1762951532,
+      "duration_sec": 1616,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8555734227,
+      "start_time": 1762984920,
+      "duration_sec": 2126,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8555823353,
+      "start_time": 1762992634,
+      "duration_sec": 1869,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8556145117,
+      "start_time": 1763020729,
+      "duration_sec": 819,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8556356865,
+      "start_time": 1763034160,
+      "duration_sec": 2633,
+      "league_id": 17662,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8556441913,
+      "start_time": 1763037516,
+      "duration_sec": 1569,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8557291712,
+      "start_time": 1763071290,
+      "duration_sec": 1553,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8557328235,
+      "start_time": 1763073977,
+      "duration_sec": 1357,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8557353921,
+      "start_time": 1763076278,
+      "duration_sec": 1949,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8557458047,
+      "start_time": 1763086428,
+      "duration_sec": 1576,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8557625639,
+      "start_time": 1763100550,
+      "duration_sec": 1448,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8557775538,
+      "start_time": 1763111685,
+      "duration_sec": 1465,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8558192840,
+      "start_time": 1763130019,
+      "duration_sec": 1528,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8558982015,
+      "start_time": 1763160248,
+      "duration_sec": 1748,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8560049808,
+      "start_time": 1763217400,
+      "duration_sec": 2066,
+      "league_id": 16251,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8560120350,
+      "start_time": 1763219539,
+      "duration_sec": 1019,
+      "league_id": 16251,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8561200615,
+      "start_time": 1763272037,
+      "duration_sec": 1272,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8561551158,
+      "start_time": 1763289081,
+      "duration_sec": 1438,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8561724398,
+      "start_time": 1763295470,
+      "duration_sec": 1274,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8562195795,
+      "start_time": 1763309878,
+      "duration_sec": 2293,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8562377031,
+      "start_time": 1763316320,
+      "duration_sec": 2265,
+      "league_id": 17662,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8562604250,
+      "start_time": 1763325785,
+      "duration_sec": 2013,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8562652561,
+      "start_time": 1763328457,
+      "duration_sec": 1696,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8563058224,
+      "start_time": 1763363343,
+      "duration_sec": 1443,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8563783512,
+      "start_time": 1763397270,
+      "duration_sec": 2211,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8564300543,
+      "start_time": 1763425324,
+      "duration_sec": 1898,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8564837272,
+      "start_time": 1763467272,
+      "duration_sec": 1945,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8565362901,
+      "start_time": 1763486537,
+      "duration_sec": 2129,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8565707348,
+      "start_time": 1763503393,
+      "duration_sec": 1924,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8565757902,
+      "start_time": 1763510759,
+      "duration_sec": 1375,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8565861180,
+      "start_time": 1763520723,
+      "duration_sec": 1324,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8565921588,
+      "start_time": 1763526272,
+      "duration_sec": 1591,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8565979518,
+      "start_time": 1763531685,
+      "duration_sec": 1189,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8566086734,
+      "start_time": 1763540740,
+      "duration_sec": 1873,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8567427168,
+      "start_time": 1763618144,
+      "duration_sec": 1120,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8567495109,
+      "start_time": 1763624121,
+      "duration_sec": 1462,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8567959316,
+      "start_time": 1763648562,
+      "duration_sec": 1753,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8568555164,
+      "start_time": 1763673788,
+      "duration_sec": 1380,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8568619299,
+      "start_time": 1763678515,
+      "duration_sec": 1856,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8568718388,
+      "start_time": 1763688404,
+      "duration_sec": 1868,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8569282262,
+      "start_time": 1763728970,
+      "duration_sec": 1791,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8570007434,
+      "start_time": 1763755460,
+      "duration_sec": 1807,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8570267442,
+      "start_time": 1763771392,
+      "duration_sec": 1827,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8570499544,
+      "start_time": 1763789758,
+      "duration_sec": 1914,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8572201483,
+      "start_time": 1763867742,
+      "duration_sec": 1850,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8572301061,
+      "start_time": 1763874825,
+      "duration_sec": 1957,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8572969270,
+      "start_time": 1763904197,
+      "duration_sec": 2248,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8573372985,
+      "start_time": 1763917159,
+      "duration_sec": 2069,
+      "league_id": 17914,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8575417565,
+      "start_time": 1764034933,
+      "duration_sec": 2161,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8575588637,
+      "start_time": 1764050932,
+      "duration_sec": 1760,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8575686653,
+      "start_time": 1764059134,
+      "duration_sec": 1556,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8576737697,
+      "start_time": 1764108484,
+      "duration_sec": 1909,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8576767185,
+      "start_time": 1764110978,
+      "duration_sec": 1529,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8576841486,
+      "start_time": 1764118466,
+      "duration_sec": 2309,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8576900286,
+      "start_time": 1764124368,
+      "duration_sec": 1634,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8577087388,
+      "start_time": 1764141603,
+      "duration_sec": 1997,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8577190993,
+      "start_time": 1764149682,
+      "duration_sec": 1827,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8577614193,
+      "start_time": 1764168833,
+      "duration_sec": 1628,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8577743455,
+      "start_time": 1764173641,
+      "duration_sec": 1286,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8578518576,
+      "start_time": 1764227296,
+      "duration_sec": 1935,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8578576906,
+      "start_time": 1764231998,
+      "duration_sec": 1874,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8578813937,
+      "start_time": 1764246148,
+      "duration_sec": 1605,
+      "league_id": 18477,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8579318013,
+      "start_time": 1764265332,
+      "duration_sec": 2472,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8579868334,
+      "start_time": 1764303778,
+      "duration_sec": 1700,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8580061971,
+      "start_time": 1764320028,
+      "duration_sec": 2174,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8580264557,
+      "start_time": 1764331731,
+      "duration_sec": 2002,
+      "league_id": 18477,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8580313582,
+      "start_time": 1764333805,
+      "duration_sec": 1527,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8580378394,
+      "start_time": 1764336271,
+      "duration_sec": 1616,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8581052089,
+      "start_time": 1764361015,
+      "duration_sec": 1988,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8581460751,
+      "start_time": 1764390321,
+      "duration_sec": 1612,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8582402463,
+      "start_time": 1764432529,
+      "duration_sec": 3015,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8582700732,
+      "start_time": 1764443460,
+      "duration_sec": 2373,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8582771882,
+      "start_time": 1764446340,
+      "duration_sec": 3061,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8582800200,
+      "start_time": 1764447502,
+      "duration_sec": 2865,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8583434981,
+      "start_time": 1764489133,
+      "duration_sec": 1521,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8584320629,
+      "start_time": 1764522382,
+      "duration_sec": 1902,
+      "league_id": 17909,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8584575652,
+      "start_time": 1764532926,
+      "duration_sec": 1810,
+      "league_id": 16110,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8585207711,
+      "start_time": 1764584398,
+      "duration_sec": 1331,
+      "league_id": 17233,
+      "split": "evaluation"
+    },
+    {
+      "match_id": 8585372304,
+      "start_time": 1764592869,
+      "duration_sec": 1646,
+      "league_id": 17233,
+      "split": "evaluation"
+    }
+  ]
+}
