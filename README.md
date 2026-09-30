@@ -60,78 +60,47 @@ detail-only final eligibility screen and exact 36,000-match allocation are in
 resumable timeline materialization is specified in
 [`docs/final-collection.md`](docs/final-collection.md).
 
-## Latest controlled experiment
+## League research status
 
-The [completed objective-training study](reports/objective-training-research-2026-09-30.md)
-ran **42 final neural fits** across two development data sizes and **six follow-up
-fits** of an independently checked shared-threshold objective. An outcome-independent expansion
-audited 750 additional Dota matches and retained 449, adding 7.56 million hero-state
-rows. The combined data contain 449 training matches (378 onsets) and 146 calibration
-matches (127 onsets). On the expanded cohort, cooldown utility caught 11/10/7
-onsets across three seeds versus 11/16/10 for the strongest controls. Shared-threshold
-utility caught 10/13/10. Both candidates failed every expanded advancement gate.
-All 48 fits, fixed protocols, exclusions, thresholds, source hashes and checkpoint
-audits are retained. The focused suite passed 57 tests. No evaluation split was
-opened, and no breakthrough or generalization claim is supported.
+**This project is exclusively about League of Legends.** The
+[scope correction](docs/league-research-scope.md) records the evidence boundary
+and the next data-access step. The separate Dota experiments are inactive and
+excluded from League results and novelty claims.
 
-The [completed command-stream study](reports/command-anticipation-research-2026-09-30.md)
-tested seven models on 250 newly selected Dota matches, retaining 145 for evaluation.
-Its development and evaluation data contain 18.91 million command records. The
-destination candidate caught 11/131 onsets versus 14/131 for the history baseline
-and failed its advancement gate. On first contact in each objective life, both
-caught 6/96. The raw-command audit, fixed protocol, exclusions, frozen policies,
-and per-match results are preserved. The subsequent
-[history-plus-command development screen](docs/command-history-development-screen.md)
-also failed: the candidate tied history at 5/29 calibration onsets and did not
-advance to another evaluation. It used only training/calibration data.
+The audited League development cohort contains **24,000 training matches /
+704,967 genuine observed rows** and **6,000 calibration matches / 175,031 rows**.
+Training covers patches 16.12–16.15 and calibration covers 16.16. The 6,000
+patch-16.17 test payloads remain sealed according to the saved run records.
+Dragon and Baron targets identify objective kills/completions, not first attacks.
 
-The [completed public pre-contact study](reports/precontact-research-2026-09-30.md)
-audited 500 Dota matches, retaining 288 with 4.82 million hero-state rows. It ran
-two experimental waves with seven feature/model variants. Both coordination
-and invariant-motion candidates failed their advancement gates. On 115 fresh
-evaluation matches, invariant motion caught 7/110 onsets versus 11/110 for the
-calibration-selected current-state control. A reactive detector caught 43/62
-kills but only 3/62 onsets of those same completed encounters; 41 credited kill
-warnings arrived at or after first contact. This is replicated evidence about
-the evaluation target, not a new algorithm or League generalization result.
+| Completed League experiment | Finding | Research conclusion |
+|---|---|---|
+| [Coordination screen](reports/coordination-screen-real-2026-09-29.md) | Coordination versus history: +0.168 percentage points of timely Dragon recall; paired 95% interval −0.044 to +0.389 | No clear incremental coordination benefit |
+| [Timing-objective screen](reports/timely-objective-real-2026-09-30.md) | Training for the useful warning interval improved recall under a false-plus-late budget, but failed the primary regional budget gate | Objective alignment, without established methodological novelty |
 
-The [29 September coordination screen](reports/coordination-screen-real-2026-09-29.md)
-completed on the private audited cohort. Current geometry improved timely
-Dragon recall, while engineered movement summaries added no clear gain over
-history: +0.168 percentage points (paired 95% interval -0.044 to +0.389).
-These are exploratory calibration results; all 6,000 final-test matches remain
-sealed according to the run record. Late alerts and sparse observation
-opportunities are material limits.
+These are **exploratory calibration results from the user's WSL runs**. Their
+aggregate summaries are available here; the private models have not been refitted
+in this workspace. The later calibration half has already been examined and is
+not a fresh test. Neither result establishes a breakthrough or state of the art.
 
-The [completed timing-objective follow-up](reports/timely-objective-real-2026-09-30.md)
-improved recall under a false-plus-late budget, but failed the primary regional
-budget gate. It demonstrates objective alignment, not methodological novelty.
+The [cooldown-aware warning candidate](docs/cooldown-aware-warning-research.md)
+and [adversarial novelty checks](docs/policy-novelty-defense.md) are implemented,
+but **no verified real League result exists for this candidate yet**. Synthetic
+examples establish implementation behavior only. Its private-data runner is
+`make start-scheduled-policy`, with explicit CUDA preflight.
 
-The new [cooldown-aware warning research candidate](docs/cooldown-aware-warning-research.md)
-learns when to warn by differentiating through exact expected alarm credit under
-a hard cooldown. It includes matched classification, distribution, independent
-utility, clock-only and observation-only controls. A reproducible synthetic
-counterexample demonstrates the mechanism; **no new League result or state-of-the-art
-claim exists yet**. The GPU-ready private-data runner is
-`make start-scheduled-policy`; its CUDA preflight is explicit. All test payloads
-remain sealed. This remains exploratory research after calibration review.
+The immediate prerequisite is the existing audited League development cache.
+The standalone [export script](scripts/export_league_development.py) packages only
+its training/calibration numeric shards and selected metadata, verifies their
+source binding, and leaves test payloads unopened. The exact WSL command is in
+[the scope correction](docs/league-research-scope.md#concrete-next-step).
 
-The [adversarial novelty defense](docs/policy-novelty-defense.md) now includes
-author-code-verified wSOL controls and a Bayes decision planner. Both match the
-candidate on the constructed example. The exact objective differs from the
-reviewed temporal losses, but neither first-ever novelty nor superior performance
-is established. The report includes proofs, counterexamples and reproducible
-checks of this narrower claim.
+## Archived work outside League
 
-The [completed seven-match replay audit](reports/objective-onset-corpus-2026-09-30.md)
-found that a purely reactive detector receives 47.6% completion recall at a
-20–60-second lead, while failing the alert-budget gate. The
-[objective-onset research direction](docs/objective-onset-research.md) now
-tests whether completion warnings actually precede the start of an objective
-attack. Its executable replay audit retains non-terminal damage episodes,
-includes a purely reactive detector, and checks both onset and completion
-targets. This is an exploratory Dota measurement study to guide better League
-data collection; it is not a new League model result or a breakthrough claim.
+The [Dota archive index](docs/archived-dota-work.md) preserves the historical
+reports and their unchanged frozen artifacts, including the 48 neural fits.
+Those fits and the additional 7.56 million hero-state rows are Dota work;
+they are not League experiments or an expansion of the Riot cohort.
 
 ## Quick start
 
