@@ -62,6 +62,16 @@ resumable timeline materialization is specified in
 
 ## Latest controlled experiment
 
+The [completed public pre-contact study](reports/precontact-research-2026-09-30.md)
+audited 500 Dota matches, retaining 288 with 4.82 million hero-state rows. It ran
+two experimental waves with seven feature/model variants. Both coordination
+and invariant-motion candidates failed their advancement gates. On 115 fresh
+evaluation matches, invariant motion caught 7/110 onsets versus 11/110 for the
+calibration-selected current-state control. A reactive detector caught 43/62
+kills but only 3/62 onsets of those same completed encounters; 41 credited kill
+warnings arrived at or after first contact. This is replicated evidence about
+the evaluation target, not a new algorithm or League generalization result.
+
 The [29 September coordination screen](reports/coordination-screen-real-2026-09-29.md)
 completed on the private audited cohort. Current geometry improved timely
 Dragon recall, while engineered movement summaries added no clear gain over
