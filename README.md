@@ -62,6 +62,18 @@ resumable timeline materialization is specified in
 
 ## Latest controlled experiment
 
+The [completed objective-training study](reports/objective-training-research-2026-09-30.md)
+ran **42 final neural fits** across two development data sizes and **six follow-up
+fits** of an independently checked shared-threshold objective. An outcome-independent expansion
+audited 750 additional Dota matches and retained 449, adding 7.56 million hero-state
+rows. The combined data contain 449 training matches (378 onsets) and 146 calibration
+matches (127 onsets). On the expanded cohort, cooldown utility caught 11/10/7
+onsets across three seeds versus 11/16/10 for the strongest controls. Shared-threshold
+utility caught 10/13/10. Both candidates failed every expanded advancement gate.
+All 48 fits, fixed protocols, exclusions, thresholds, source hashes and checkpoint
+audits are retained. The focused suite passed 57 tests. No evaluation split was
+opened, and no breakthrough or generalization claim is supported.
+
 The [completed command-stream study](reports/command-anticipation-research-2026-09-30.md)
 tested seven models on 250 newly selected Dota matches, retaining 145 for evaluation.
 Its development and evaluation data contain 18.91 million command records. The

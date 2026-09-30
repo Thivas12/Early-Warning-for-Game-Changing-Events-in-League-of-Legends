@@ -17,6 +17,10 @@ def read(name: str) -> dict:
 
 def main() -> None:
     records = {size: read(f"objective-training-{size}") for size in ("small", "expanded")}
+    followups = {size: read(f"shared-threshold-{size}") for size in records}
+    for r in followups.values():
+        if len(r["models"]) != 3 or "advances_to_new_evaluation" not in r:
+            raise ValueError("Shared-threshold follow-up incomplete")
     for result in records.values():
         if len(result["models"]) != 21 or "gates" not in result:
             raise ValueError("Refusing to present an incomplete objective comparison")
@@ -44,6 +48,8 @@ def main() -> None:
         "Both data sizes, losses, seeds, training schedules and advancement gates were",
         "declared before the first objective-training score. All 42 final neural fits,",
         "six shared warm starts and two tree fits completed. No evaluation split was loaded.",
+        "A subsequently declared shared-threshold follow-up added six final fits, for",
+        "**48 completed final neural fits** in total. All results are retained below.",
         "",
         "## Data and independent events",
         "",
@@ -88,7 +94,7 @@ def main() -> None:
         "used without validation checkpoint selection. Seeds are 17, 29 and 43.",
         "Thresholds maximize calibration hits under at most one unmatched alarm per",
         "match using the same frozen search. All alarms use a 60-second cooldown and",
-        "one-to-one credit for a target 20-60 seconds ahead. Missed, early, late and",
+        "one-to-one credit for a target 20-60 seconds ahead. False, early, late and",
         "duplicate unmatched alarms all consume the budget.",
     ]
     for size, r in records.items():
@@ -177,7 +183,8 @@ def main() -> None:
         "were independently checked against exhaustive Bernoulli-policy enumeration and",
         "actual one-to-one event matching, including overlapping target windows. Padding",
         "and match boundaries were tested. The full focused suite passed 47 tests before",
-        "fitting. Losses and thresholds were never changed in response to scores.",
+        "fitting. Loss definitions and training schedules stayed fixed; thresholds",
+        "were selected by the predeclared calibration search.",
         "",
         "The stochastic training objective differs from deterministic threshold deployment.",
         "Thus exact expected training credit does not imply optimal deployed decisions.",
@@ -221,6 +228,10 @@ def main() -> None:
         "python -m research.public_objective_training --expanded",
         "python -m research.audit_objective_fit",
         "python -m research.audit_objective_fit --expanded",
+        "python -m research.run_shared_threshold",
+        "python -m research.run_shared_threshold --expanded",
+        "python -m research.audit_objective_fit --shared",
+        "python -m research.audit_objective_fit --shared --expanded",
         "python -m research.summarize_objective_training",
         "```",
         "",
@@ -228,6 +239,61 @@ def main() -> None:
         "loss histories, thresholds, calibration counts, seed gates and checkpoint hashes.",
         "The quality report records every included or excluded candidate and source hash.",
     ]
+    extra = [
+        "## Subsequent shared-threshold experiment",
+        "",
+        "After inspecting the first study's training/calibration gap and policy mismatch,",
+        "a separate protocol replaced independent Bernoulli proposals with ONE uniform",
+        "threshold shared across each match. Every threshold uses the exact deployed",
+        "causal cooldown policy. Counts are integrated exactly over score intervals.",
+        "The implementation uses the established sorted-increment Lovasz extension of",
+        "an alarm-count set function, without claiming submodularity or convexity.",
+        "This is an application of existing mathematics, not a new extension theorem.",
+        "The protocol and verified implementation were published in commit",
+        "adc1f070b83bb41f007ac11d091864e8784940f3 before these six fits started.",
+        "",
+        "Ten additional tests independently integrated actual emitted alarm policies",
+        "and checked numerical gradients, ties, padding, boundaries and overlapping",
+        "events. The combined focused suite passed 57 tests. Each follow-up reused the",
+        "same saved warm start, preprocessing, optimizer, batch order, 30-epoch schedule",
+        "and final calibration search. All seven original arms are controls here.",
+        "",
+        "| Data | Seed | Hits | Recall | Unmatched/match | Best control hits | Gate |",
+        "|---|---:|---:|---:|---:|---:|---|",
+    ]
+    for size, result in followups.items():
+        for row in result["models"]:
+            c = row["calibration"]
+            extra.append(
+                f"| {size} | {row['seed']} | {c['hits']}/{c['targets']} | {c['recall']:.2%} | "
+                f"{c['unmatched_per_match']:.3f} | {row['best_control_hits']} | "
+                f"{'PASS' if row['passes'] else 'FAIL'} |"
+            )
+    extra += [
+        "",
+        "The thresholds are still selected on calibration. Integrating over all training",
+        "thresholds is not the same as optimizing the eventual selected threshold.",
+        "Matching the policy mechanism cannot by itself solve distribution shift or",
+        "overfitting. These data do not identify which remaining limitation dominates.",
+        "The follow-up uses the same development matches and is not independent validation.",
+        "Its declared gates are unchanged in form, with the original cooldown arm now",
+        "also included among the controls. Full records and weight hashes are in the",
+        "adjacent shared-threshold JSON files; saved policies were checked again by the",
+        "post-fit audit. None of these experiments supports a breakthrough claim.",
+        "",
+        "Reproduce the follow-up with research/shared-threshold-requirements.txt after",
+        "preserving its published result/freeze files in a separate checkout:",
+        "",
+        "```bash",
+        "python -m research.run_shared_threshold",
+        "python -m research.run_shared_threshold --expanded",
+        "python -m research.audit_objective_fit --shared",
+        "python -m research.audit_objective_fit --shared --expanded",
+        "```",
+        "",
+    ]
+    index = lines.index("## Reproduction")
+    lines[index:index] = extra
     path = Path("reports/objective-training-research-2026-09-30.md")
     path.write_text("\n".join(lines) + "\n")
     print(path)

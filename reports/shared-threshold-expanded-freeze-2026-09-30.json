@@ -1,0 +1,20 @@
+{
+  "scope": "development only; post-original-result follow-up",
+  "size": "expanded",
+  "control_report_sha256": "6aa4a1c67b67ee5cdc8e155f0e3ac83968f0d83eb71c836a8879cb4f598bd9f9",
+  "control_freeze_sha256": "7df24861571b709c91b3d3563eb01246fb38c03468cd8be536cdcfc812e7339b",
+  "code_bindings": {
+    "/workspace/scratch/a7650f0a1772/league-research/research/run_shared_threshold.py": "2fede329afb0e694741d69245d888cad8ca2ce608450a8fc2862504fc0027be4",
+    "research/shared_threshold.py": "ee3ba939b7c204ea005f3b4717f26d75487b71af15edcf46f4acabcb7c2268ca",
+    "tests/test_shared_threshold.py": "803fcb4a8cc453f839eeaead3db39923cd3e26e9f2afa41ddf96c1775a6eb68e",
+    "docs/shared-threshold-training-protocol.md": "a4c161443bfabe980a10045d6a62d0735a34b010e6be6005835afaca6499772d"
+  },
+  "numpy_version": "2.3.5",
+  "numba_version": "0.65.1",
+  "torch_version": "2.14.1+cpu",
+  "seeds": [
+    17,
+    29,
+    43
+  ]
+}
