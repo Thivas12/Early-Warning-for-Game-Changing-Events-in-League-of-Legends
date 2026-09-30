@@ -1,0 +1,5 @@
+-r precontact-requirements.txt
+joblib==1.5.3
+# Additional dependencies for the independent raw protobuf verification only.
+protobuf==7.36.2
+python-snappy==0.7.3
