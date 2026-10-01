@@ -1,5 +1,11 @@
 # LeagueEWS: the evidence needed for a strong paper
 
+**Update, 1 October 2026:** the development archive is available and validated.
+[Nine real three-event tree fits](../reports/league-three-event-results-2026-10-01.md)
+are complete. The [compact GPU continuation](compact-gpu-continuation.md) runs
+the existing 12-fit neural study directly from that archive on the user's PC.
+The access limitation recorded below is historical and has been resolved.
+
 Status, 30 September 2026: **no breakthrough established**. The next empirical
 question comes from the original report's claim that temporal buildup and
 shared learning explain improvements across Baron, Dragon and teamfights.

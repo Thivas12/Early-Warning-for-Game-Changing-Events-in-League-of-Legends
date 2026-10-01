@@ -1,0 +1,508 @@
+{
+  "all_regional_budgets_met": false,
+  "archive_sha256": "3bdee868abe445947a8573167d4b3b561b60f5d2247f1857f6b538ff603e6a23",
+  "bootstrap": "2000 whole-match paired draws stratified by region; same draws across events; conditional on fits and thresholds",
+  "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+  "history_minus_snapshot": {
+    "baron": {
+      "draws_requested": 2000,
+      "draws_with_events": 2000,
+      "false_alerts_per_game_difference": -0.111,
+      "non_timely_alerts_per_game_difference": -0.11533333333333333,
+      "percentile_95_intervals": {
+        "false_alerts_per_game_difference": [
+          -0.13000833333333334,
+          -0.0909916666666667
+        ],
+        "non_timely_alerts_per_game_difference": [
+          -0.135,
+          -0.09466666666666666
+        ],
+        "timely_recall_difference": [
+          -0.012654619074425914,
+          0.0009189421604429255
+        ]
+      },
+      "scope": "Exploratory; conditional on models and tuned policies; no refit or patch-population uncertainty",
+      "seed": 20260929,
+      "timely_recall_difference": -0.005862388151804999
+    },
+    "dragon": {
+      "draws_requested": 2000,
+      "draws_with_events": 2000,
+      "false_alerts_per_game_difference": 0.027,
+      "non_timely_alerts_per_game_difference": 0.043333333333333335,
+      "percentile_95_intervals": {
+        "false_alerts_per_game_difference": [
+          0.013666666666666667,
+          0.03966666666666667
+        ],
+        "non_timely_alerts_per_game_difference": [
+          0.027666666666666666,
+          0.058
+        ],
+        "timely_recall_difference": [
+          0.0013189770818580948,
+          0.006899343269648607
+        ]
+      },
+      "scope": "Exploratory; conditional on models and tuned policies; no refit or patch-population uncertainty",
+      "seed": 20260929,
+      "timely_recall_difference": 0.0040603760261276375
+    },
+    "teamfight": {
+      "draws_requested": 2000,
+      "draws_with_events": 2000,
+      "false_alerts_per_game_difference": -0.06366666666666666,
+      "non_timely_alerts_per_game_difference": -0.05433333333333333,
+      "percentile_95_intervals": {
+        "false_alerts_per_game_difference": [
+          -0.08900833333333333,
+          -0.03833333333333333
+        ],
+        "non_timely_alerts_per_game_difference": [
+          -0.08233333333333333,
+          -0.02666666666666667
+        ],
+        "timely_recall_difference": [
+          -0.000405439697913516,
+          0.002887333322653589
+        ]
+      },
+      "scope": "Exploratory; conditional on models and tuned policies; no refit or patch-population uncertainty",
+      "seed": 20260929,
+      "timely_recall_difference": 0.0012124273806516797
+    }
+  },
+  "interpretation": "Not a hybrid or task-sharing test; not novel or confirmatory; one tree seed; secondary event intervals unadjusted",
+  "macro_conditional_95_interval": [
+    -0.0027633252089705454,
+    0.0023054322278224047
+  ],
+  "macro_timely_recall_difference": -0.00019652824834189386,
+  "models": {
+    "history-baron": {
+      "fit": {
+        "features": 219,
+        "fit_seconds": 37.471677120000095,
+        "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+        "iterations": 200,
+        "model_sha256": "068db96a0a9f1b07ec15f1eccd9bdee193f031e72f6392d5371c865853323665",
+        "training_rows": 704967
+      },
+      "row_metrics": {
+        "average_precision": 0.42581764075526096,
+        "brier": 0.013481802223959961,
+        "prevalence": 0.018749498906183784,
+        "roc_auc": 0.9733584277875191
+      },
+      "warnings": {
+        "by_route": {
+          "americas": {
+            "alerts": 1704,
+            "event_recall": 0.3059472716125077,
+            "events": 1631,
+            "false_alerts_per_match": 0.8033333333333333,
+            "late_alerts_per_match": 0.13,
+            "lead_seconds_median": 13.17,
+            "lead_seconds_p10": 2.3230000000000004,
+            "matched_events": 499,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.9333333333333333,
+            "timely_event_recall": 0.1863887185775598,
+            "timely_matched_events": 304,
+            "timely_opportunities": 533,
+            "timely_precision": 0.1784037558685446
+          },
+          "europe": {
+            "alerts": 1521,
+            "event_recall": 0.3267080745341615,
+            "events": 1610,
+            "false_alerts_per_match": 0.6633333333333333,
+            "late_alerts_per_match": 0.13866666666666666,
+            "lead_seconds_median": 12.4645,
+            "lead_seconds_p10": 2.783,
+            "matched_events": 526,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.802,
+            "timely_event_recall": 0.19751552795031055,
+            "timely_matched_events": 318,
+            "timely_opportunities": 558,
+            "timely_precision": 0.20907297830374755
+          }
+        },
+        "later": {
+          "alerts": 3225,
+          "event_recall": 0.31626041345263806,
+          "events": 3241,
+          "false_alerts_per_match": 0.7333333333333333,
+          "late_alerts_per_match": 0.13433333333333333,
+          "lead_seconds_median": 12.695,
+          "lead_seconds_p10": 2.6069999999999998,
+          "matched_events": 1025,
+          "matches": 3000,
+          "non_timely_alerts_per_match": 0.8676666666666667,
+          "timely_event_recall": 0.19191607528540575,
+          "timely_matched_events": 622,
+          "timely_opportunities": 1091,
+          "timely_precision": 0.19286821705426357
+        },
+        "regional_budget_met": true,
+        "threshold": 0.14125375446227553
+      }
+    },
+    "history-dragon": {
+      "fit": {
+        "features": 219,
+        "fit_seconds": 39.302344130000165,
+        "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+        "iterations": 200,
+        "model_sha256": "6477c92e964fedee344b96e6adc5feb978b374025b4eaa4520bf188a2a80a5ff",
+        "training_rows": 704967
+      },
+      "row_metrics": {
+        "average_precision": 0.607144474747161,
+        "brier": 0.03513748386708042,
+        "prevalence": 0.06447216209096428,
+        "roc_auc": 0.9661821329274783
+      },
+      "warnings": {
+        "by_route": {
+          "americas": {
+            "alerts": 1965,
+            "event_recall": 0.22117892540427753,
+            "events": 5751,
+            "false_alerts_per_match": 0.462,
+            "late_alerts_per_match": 0.374,
+            "lead_seconds_median": 11.367999999999999,
+            "lead_seconds_p10": 2.2661000000000002,
+            "matched_events": 1272,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.836,
+            "timely_event_recall": 0.12363067292644757,
+            "timely_matched_events": 711,
+            "timely_opportunities": 1902,
+            "timely_precision": 0.3618320610687023
+          },
+          "europe": {
+            "alerts": 1920,
+            "event_recall": 0.2128002868411617,
+            "events": 5578,
+            "false_alerts_per_match": 0.4886666666666667,
+            "late_alerts_per_match": 0.352,
+            "lead_seconds_median": 11.713,
+            "lead_seconds_p10": 2.306,
+            "matched_events": 1187,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.8406666666666667,
+            "timely_event_recall": 0.11814270347794908,
+            "timely_matched_events": 659,
+            "timely_opportunities": 1834,
+            "timely_precision": 0.34322916666666664
+          }
+        },
+        "later": {
+          "alerts": 3885,
+          "event_recall": 0.21705357930973607,
+          "events": 11329,
+          "false_alerts_per_match": 0.47533333333333333,
+          "late_alerts_per_match": 0.363,
+          "lead_seconds_median": 11.615,
+          "lead_seconds_p10": 2.3002000000000002,
+          "matched_events": 2459,
+          "matches": 3000,
+          "non_timely_alerts_per_match": 0.8383333333333334,
+          "timely_event_recall": 0.12092859034336659,
+          "timely_matched_events": 1370,
+          "timely_opportunities": 3736,
+          "timely_precision": 0.35263835263835264
+        },
+        "regional_budget_met": true,
+        "threshold": 0.5011872336272725
+      }
+    },
+    "history-teamfight": {
+      "fit": {
+        "features": 219,
+        "fit_seconds": 45.29692929799967,
+        "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+        "iterations": 200,
+        "model_sha256": "cfc7f501030e5d3f63a4a2d22f2e1bcd86bd4fb414c84d68fee1f1c33cb4cd64",
+        "training_rows": 704967
+      },
+      "row_metrics": {
+        "average_precision": 0.2586382846090983,
+        "brier": 0.09256759102112191,
+        "prevalence": 0.11280623990653885,
+        "roc_auc": 0.727865100743929
+      },
+      "warnings": {
+        "by_route": {
+          "americas": {
+            "alerts": 1563,
+            "event_recall": 0.06315575022919426,
+            "events": 9817,
+            "false_alerts_per_match": 0.6286666666666667,
+            "late_alerts_per_match": 0.21733333333333332,
+            "lead_seconds_median": 9.164,
+            "lead_seconds_p10": 1.5717,
+            "matched_events": 620,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.846,
+            "timely_event_recall": 0.029948049302230825,
+            "timely_matched_events": 294,
+            "timely_opportunities": 3297,
+            "timely_precision": 0.18809980806142035
+          },
+          "europe": {
+            "alerts": 1476,
+            "event_recall": 0.05532170775706555,
+            "events": 9978,
+            "false_alerts_per_match": 0.616,
+            "late_alerts_per_match": 0.17,
+            "lead_seconds_median": 10.8625,
+            "lead_seconds_p10": 1.9452,
+            "matched_events": 552,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.786,
+            "timely_event_recall": 0.029765484064942876,
+            "timely_matched_events": 297,
+            "timely_opportunities": 3351,
+            "timely_precision": 0.20121951219512196
+          }
+        },
+        "later": {
+          "alerts": 3039,
+          "event_recall": 0.059206870421823696,
+          "events": 19795,
+          "false_alerts_per_match": 0.6223333333333333,
+          "late_alerts_per_match": 0.19366666666666665,
+          "lead_seconds_median": 10.0825,
+          "lead_seconds_p10": 1.6911000000000003,
+          "matched_events": 1172,
+          "matches": 3000,
+          "non_timely_alerts_per_match": 0.816,
+          "timely_event_recall": 0.02985602424854761,
+          "timely_matched_events": 591,
+          "timely_opportunities": 6648,
+          "timely_precision": 0.19447186574531095
+        },
+        "regional_budget_met": true,
+        "threshold": 0.31622776601683794
+      }
+    },
+    "snapshot-baron": {
+      "fit": {
+        "features": 54,
+        "fit_seconds": 10.7790701240001,
+        "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+        "iterations": 200,
+        "model_sha256": "9cb4f52601d121cfb05543d0dbe14dde646bc1af939a06e4d2e00a44665243ab",
+        "training_rows": 704967
+      },
+      "row_metrics": {
+        "average_precision": 0.4039968235369664,
+        "brier": 0.013768992941973118,
+        "prevalence": 0.018749498906183784,
+        "roc_auc": 0.9710983553759867
+      },
+      "warnings": {
+        "by_route": {
+          "americas": {
+            "alerts": 1866,
+            "event_recall": 0.31514408338442673,
+            "events": 1631,
+            "false_alerts_per_match": 0.9013333333333333,
+            "late_alerts_per_match": 0.13666666666666666,
+            "lead_seconds_median": 12.6405,
+            "lead_seconds_p10": 2.2230000000000003,
+            "matched_events": 514,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 1.038,
+            "timely_event_recall": 0.1894543225015328,
+            "timely_matched_events": 309,
+            "timely_opportunities": 533,
+            "timely_precision": 0.16559485530546625
+          },
+          "europe": {
+            "alerts": 1724,
+            "event_recall": 0.3372670807453416,
+            "events": 1610,
+            "false_alerts_per_match": 0.7873333333333333,
+            "late_alerts_per_match": 0.14066666666666666,
+            "lead_seconds_median": 12.594,
+            "lead_seconds_p10": 2.7680000000000002,
+            "matched_events": 543,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.928,
+            "timely_event_recall": 0.2062111801242236,
+            "timely_matched_events": 332,
+            "timely_opportunities": 558,
+            "timely_precision": 0.1925754060324826
+          }
+        },
+        "later": {
+          "alerts": 3590,
+          "event_recall": 0.326133909287257,
+          "events": 3241,
+          "false_alerts_per_match": 0.8443333333333334,
+          "late_alerts_per_match": 0.13866666666666666,
+          "lead_seconds_median": 12.616,
+          "lead_seconds_p10": 2.4942,
+          "matched_events": 1057,
+          "matches": 3000,
+          "non_timely_alerts_per_match": 0.983,
+          "timely_event_recall": 0.19777846343721073,
+          "timely_matched_events": 641,
+          "timely_opportunities": 1091,
+          "timely_precision": 0.1785515320334262
+        },
+        "regional_budget_met": false,
+        "threshold": 0.12589254117941687
+      }
+    },
+    "snapshot-dragon": {
+      "fit": {
+        "features": 54,
+        "fit_seconds": 10.556903773000158,
+        "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+        "iterations": 200,
+        "model_sha256": "685e0cb10d24972f699ba5cdb3cf024615e1acb004651244ad20ede2e528374a",
+        "training_rows": 704967
+      },
+      "row_metrics": {
+        "average_precision": 0.5936631505025654,
+        "brier": 0.0357794828650702,
+        "prevalence": 0.06447216209096428,
+        "roc_auc": 0.9645855960258276
+      },
+      "warnings": {
+        "by_route": {
+          "americas": {
+            "alerts": 1895,
+            "event_recall": 0.21526691010259086,
+            "events": 5751,
+            "false_alerts_per_match": 0.438,
+            "late_alerts_per_match": 0.3566666666666667,
+            "lead_seconds_median": 11.787500000000001,
+            "lead_seconds_p10": 2.2582999999999998,
+            "matched_events": 1238,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.7946666666666666,
+            "timely_event_recall": 0.1222396105025213,
+            "timely_matched_events": 703,
+            "timely_opportunities": 1902,
+            "timely_precision": 0.37097625329815304
+          },
+          "europe": {
+            "alerts": 1814,
+            "event_recall": 0.20186446755109358,
+            "events": 5578,
+            "false_alerts_per_match": 0.45866666666666667,
+            "late_alerts_per_match": 0.33666666666666667,
+            "lead_seconds_median": 11.689499999999999,
+            "lead_seconds_p10": 2.2634999999999996,
+            "matched_events": 1126,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.7953333333333333,
+            "timely_event_recall": 0.11133022588741484,
+            "timely_matched_events": 621,
+            "timely_opportunities": 1834,
+            "timely_precision": 0.34233737596471886
+          }
+        },
+        "later": {
+          "alerts": 3709,
+          "event_recall": 0.20866802012534205,
+          "events": 11329,
+          "false_alerts_per_match": 0.4483333333333333,
+          "late_alerts_per_match": 0.3466666666666667,
+          "lead_seconds_median": 11.721,
+          "lead_seconds_p10": 2.2507,
+          "matched_events": 2364,
+          "matches": 3000,
+          "non_timely_alerts_per_match": 0.795,
+          "timely_event_recall": 0.11686821431723894,
+          "timely_matched_events": 1324,
+          "timely_opportunities": 3736,
+          "timely_precision": 0.3569695335669992
+        },
+        "regional_budget_met": true,
+        "threshold": 0.5011872336272725
+      }
+    },
+    "snapshot-teamfight": {
+      "fit": {
+        "features": 54,
+        "fit_seconds": 12.317312612000023,
+        "freeze_sha256": "dd1ebf13fba9976ecdb14312b9eb158fa435fe19ec70682074cb95449b0955cf",
+        "iterations": 200,
+        "model_sha256": "20db843b5d336fd8356e4156a4cf09c211ce3d4b8f3d701d42f74f3371f88e48",
+        "training_rows": 704967
+      },
+      "row_metrics": {
+        "average_precision": 0.23658576206552667,
+        "brier": 0.09413123028106316,
+        "prevalence": 0.11280623990653885,
+        "roc_auc": 0.7036275778717713
+      },
+      "warnings": {
+        "by_route": {
+          "americas": {
+            "alerts": 1673,
+            "event_recall": 0.0607110115106448,
+            "events": 9817,
+            "false_alerts_per_match": 0.718,
+            "late_alerts_per_match": 0.198,
+            "lead_seconds_median": 10.015,
+            "lead_seconds_p10": 1.7655,
+            "matched_events": 596,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.916,
+            "timely_event_recall": 0.030457369868595294,
+            "timely_matched_events": 299,
+            "timely_opportunities": 3297,
+            "timely_precision": 0.17872086072922894
+          },
+          "europe": {
+            "alerts": 1505,
+            "event_recall": 0.05251553417518541,
+            "events": 9978,
+            "false_alerts_per_match": 0.654,
+            "late_alerts_per_match": 0.17066666666666666,
+            "lead_seconds_median": 10.456,
+            "lead_seconds_p10": 1.9373,
+            "matched_events": 524,
+            "matches": 1500,
+            "non_timely_alerts_per_match": 0.8246666666666667,
+            "timely_event_recall": 0.02685908999799559,
+            "timely_matched_events": 268,
+            "timely_opportunities": 3351,
+            "timely_precision": 0.17807308970099667
+          }
+        },
+        "later": {
+          "alerts": 3178,
+          "event_recall": 0.05657994443041172,
+          "events": 19795,
+          "false_alerts_per_match": 0.686,
+          "late_alerts_per_match": 0.18433333333333332,
+          "lead_seconds_median": 10.281,
+          "lead_seconds_p10": 1.836,
+          "matched_events": 1120,
+          "matches": 3000,
+          "non_timely_alerts_per_match": 0.8703333333333333,
+          "timely_event_recall": 0.028643596867895933,
+          "timely_matched_events": 567,
+          "timely_opportunities": 6648,
+          "timely_precision": 0.17841409691629956
+        },
+        "regional_budget_met": true,
+        "threshold": 0.2818382931264455
+      }
+    }
+  },
+  "schema_version": "league-three-event-tree-results-v1",
+  "status": "complete-exploratory-control-screen",
+  "test_payloads_opened": 0
+}

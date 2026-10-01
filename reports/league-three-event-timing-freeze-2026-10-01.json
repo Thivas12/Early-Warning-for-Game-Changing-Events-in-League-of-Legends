@@ -1,0 +1,39 @@
+{
+  "archive_sha256": "3bdee868abe445947a8573167d4b3b561b60f5d2247f1857f6b538ff603e6a23",
+  "control_summary_sha256": "fdd89f461351ab8a47007c0267111d9fc59e9a1367eb71aefb546ec969e66f1b",
+  "numpy": "2.3.5",
+  "plan": {
+    "claim_limit": "Objective alignment is established prior work; no novelty claim",
+    "estimator": {
+      "class_weight": null,
+      "early_stopping": false,
+      "l2_regularization": 1.0,
+      "learning_rate": 0.06,
+      "max_iter": 200,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 100,
+      "random_state": 20261001
+    },
+    "events": [
+      "baron",
+      "dragon",
+      "teamfight"
+    ],
+    "features": "same-history-219-as-fixed-tree-control",
+    "fits": 3,
+    "policy": "notebook-policy;10-to-30-second-lead;60-second-cooldown",
+    "primary": "timely-target-minus-within30-history;macro-three-event-timely-recall",
+    "reason": "History screen macro gain is null; test whether within-30 target rewards late alerts",
+    "schema_version": "league-three-event-timing-plan-v1",
+    "status": "adaptive-exploratory-control-follow-up",
+    "targets": "next-strictly-future-event;closed-10-through-30-second-interval",
+    "threshold_selection": "earlier-1500-calibration-matches-per-region;<=1-false-plus-late-per-match-per-event-per-region"
+  },
+  "sklearn": "1.8.0",
+  "source_sha256": {
+    "scripts/league_compact_data.py": "31ef1507e3cf7a1a5396ca48e5ce624ad2a7552205949ddf58e6a0c115ace665",
+    "scripts/run_three_event_timing.py": "70f087137fd0d814a0257da95cbe5d7248648803789a9a20ddccd07f68244c68",
+    "scripts/run_three_event_trees.py": "f253880e5aae01be98b8cc97e24def55b64068f6cda1474ce27d78ba25a3c056",
+    "src/league_ews/notebook_policy.py": "e622cf2efc9c7f48906e0b0308acc8435434ed4e88c3474126992f7c3f71b39a"
+  }
+}

@@ -18,6 +18,15 @@ a versioned, validated research release.
 
 ## Research status
 
+**1 October 2026:** The uploaded development archive passed validation, and nine
+three-event tree controls were fitted on 24,000 League matches. Added lagged
+frames did not improve macro timely recall; training for the useful lead window
+gave a modest exploratory gain, with a warning-burden tradeoff. See the
+[complete results](reports/league-three-event-results-2026-10-01.md) and
+[PC GPU instructions](docs/compact-gpu-continuation.md) for the unchanged
+LeagueEWS/GRU/TCN/snapshot neural study. No breakthrough is established; the
+patch-16.17 test remains sealed.
+
 The original MSc notebooks reported promising results, but a post-project audit
 found data leakage, broken features and train/test contamination. Those results
 are preserved for research transparency under [`legacy/msc-v1`](legacy/msc-v1)

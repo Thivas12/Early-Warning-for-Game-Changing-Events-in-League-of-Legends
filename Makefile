@@ -842,3 +842,25 @@ notebook-continuation-status:
 	@tail -n 16 data/private/notebook-ews-v1/worker.log 2>/dev/null || true
 	@if test -f data/private/notebook-ews-v1/worker-exit-code; then cat data/private/notebook-ews-v1/worker-exit-code; fi
 	@uv run --no-sync python -c "from pathlib import Path; p=Path('data/private/notebook-ews-v1'); print('Calibration reports:', len(list(p.glob('*/seed-*/report.json'))), '/ 12'); print('Summary ready:', (p/'summary.json').exists())"
+
+# Same LeagueEWS experiment, read directly from the validated development ZIP.
+LEAGUE_PYTHON ?= .venv/bin/python
+LEAGUE_ARCHIVE ?= data/private/league-three-event-export-v1/development.zip
+COMPACT_OUTPUT ?= data/private/compact-notebook-v1
+.PHONY: compact-notebook-preflight compact-notebook-canary start-compact-notebook compact-notebook-status
+
+compact-notebook-preflight:
+	PYTHONPATH=.:src "$(LEAGUE_PYTHON)" -u -m scripts.run_compact_notebook --archive "$(LEAGUE_ARCHIVE)" --output "$(COMPACT_OUTPUT)" --device $(or $(DEVICE),cuda) --preflight
+
+compact-notebook-canary:
+	PYTHONPATH=.:src "$(LEAGUE_PYTHON)" -u -m scripts.run_compact_notebook --archive "$(LEAGUE_ARCHIVE)" --output "$(COMPACT_OUTPUT)" --device $(or $(DEVICE),cuda) --max-new-shards 1
+
+start-compact-notebook: compact-notebook-preflight
+	@mkdir -p "$(COMPACT_OUTPUT)"
+	@nohup bash scripts/run_compact_notebook.sh "$(LEAGUE_ARCHIVE)" "$(COMPACT_OUTPUT)" "$(LEAGUE_PYTHON)" $(or $(DEVICE),cuda) >> "$(COMPACT_OUTPUT)/worker.log" 2>&1 < /dev/null &
+	@echo 'Compact LeagueEWS worker launched. Run make compact-notebook-status for progress.'
+
+compact-notebook-status:
+	@tail -n 12 "$(COMPACT_OUTPUT)/worker.log" 2>/dev/null || true
+	@if test -f "$(COMPACT_OUTPUT)/worker-exit-code"; then printf 'Worker exit code: '; cat "$(COMPACT_OUTPUT)/worker-exit-code"; fi
+	@"$(LEAGUE_PYTHON)" -c "import json; from pathlib import Path; p=Path('$(COMPACT_OUTPUT)'); rows=[json.loads(f.read_text()) for f in sorted(p.glob('*/seed-*/progress.json'))]; print('Training shard updates:', sum(r['completed_units'] for r in rows), '/ 6912'); print('Calibration reports:', len(list(p.glob('*/seed-*/report.json'))), '/ 12'); print('Summary ready:', (p/'summary.json').exists())"
