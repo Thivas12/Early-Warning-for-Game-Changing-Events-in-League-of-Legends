@@ -19,5 +19,32 @@
   "followup_plan_sha256": "0b607c6b1ab60cf0d1c2c5777c20d6f81b1af70de8de14f4829458ffa59b0424",
   "launch_recovery": "One-shard CUDA canary succeeded. Detached launch created empty log/lock but left no live worker; host process inspection confirmed absence. Resumed the unchanged canary checkpoint in monitored command session. No training duplicated or frozen source changed.",
   "test_payloads_opened": 0,
-  "updated_at_utc": "2026-10-01T11:39:31.003971+00:00"
+  "updated_at_utc": "2026-10-01T12:19:21.006693+00:00",
+  "followup_exit_code": 0,
+  "followup_fits_complete": 3,
+  "original_evaluation_reports": 12,
+  "followup_evaluation_reports": 3,
+  "followup_training_seconds_by_seed": {
+    "seed-20260930": 714.7968460083939,
+    "seed-20261001": 713.0421985190769,
+    "seed-20261002": 717.165958490863
+  },
+  "analysis_complete": true,
+  "source_hash_mismatches": {
+    "original": [],
+    "followup": []
+  },
+  "original_results_unchanged_since_analysis": {
+    "summary.json": true,
+    "freeze.json": true,
+    "validation.json": true,
+    "normalizer.json": true,
+    "worker.log": true
+  },
+  "analysis_sha256": {
+    "neural-analysis.json": "b29985d1f2ead715621f85c89487e367293556c90378918dc60d848c65fc4bbb",
+    "history-analysis.json": "82b7a83ef972450368b0b18ac7dfc647c2c748d4d5c88ffd37aab3c00baca648"
+  },
+  "final_verified_fits": 15,
+  "followup_plan_and_selection_analysis_unchanged": true
 }
