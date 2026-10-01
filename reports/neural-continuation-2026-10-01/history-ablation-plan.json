@@ -1,0 +1,126 @@
+{
+  "additional_experiments": "None in this follow-up; preserve every seed and negative result.",
+  "control_freeze_sha256": "3ff075d75cd32d42132a3bb800c1616ad2cd16e8bad584ed9ab0a4f2358337e6",
+  "control_summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7",
+  "descriptive_support_rule": "Macro history-minus-current difference positive in every seed, fixed-seed mean conditional interval entirely above zero, both variants meet all primary regional budgets, and no negative mean event difference. This is exploratory support only, not a confirmatory or novelty test. Any failure is reported.",
+  "evaluation": "All three fits complete before scoring; unchanged early-calibration threshold selection and later-calibration evaluation, 60 second cooldown, one-to-one event credit, <=1 false-plus-late per event per region.",
+  "family": "leagueews",
+  "frozen_at_utc": "2026-10-01T11:23:49.992981+00:00",
+  "implementation_commit": "8631209",
+  "intervention": "At every valid historical position replace the 27 normalized values and 27 missingness flags with those of the current frame. Preserve current frame, original age channel, mask, valid length, padding and all targets.",
+  "mechanism_limits": "Current summaries already contain history; lengths and age retain timing. This tests past values/missingness for this architecture and optimization budget, not all history, sequence order alone, cross-attention or shared-versus-independent supervision.",
+  "normalization": "Reuse identical train-current-frame moments; verify recomputed normalizer equals control.",
+  "original_plan": {
+    "budget": "<=1-false-plus-late-alert-per-match-in-each-route",
+    "epochs": 12,
+    "families": [
+      "leagueews",
+      "gru",
+      "tcn",
+      "snapshot"
+    ],
+    "inputs": "frozen-b4-8-real-frames-27-values-27-missingness-bits-age",
+    "model": {
+      "attention_heads": 4,
+      "attention_key_dimension": 64,
+      "event_loss_weights": [
+        1.0,
+        2.0,
+        2.5
+      ],
+      "gru_layers": 2,
+      "gru_units_per_direction": 160,
+      "horizons_seconds": [
+        10,
+        20,
+        30,
+        60
+      ],
+      "normalization": "per-token-layernorm;masked-squeeze-excitation",
+      "representation_width": 128,
+      "shared_dense": [
+        512,
+        256
+      ],
+      "shared_dropout": 0.5,
+      "squeeze_excitation_ratio": 8,
+      "tcn_dilations": [
+        1,
+        2,
+        4
+      ],
+      "tcn_filters": [
+        80,
+        160,
+        160
+      ],
+      "tcn_kernel": 3
+    },
+    "model_selection": "fixed-final-epoch;report-every-seed;no-calibration-selection",
+    "optimizer": "AdamW;lr=0.0001;weight_decay=0.0001;batch=256;constant-lr",
+    "policy": "early-calibration-route-halves-only;60s-cooldown;chronological-one-to-one",
+    "primary": "LeagueEWS-minus-GRU;macro-timely-recall-10-to-30-seconds",
+    "schema_version": "league-ews-notebook-continuation-plan-v1",
+    "secondary": "per-event-30s-and-60s;all-four-row-horizons;all-controls",
+    "seeds": [
+      20260930,
+      20261001,
+      20261002
+    ],
+    "status": "exploratory-architecture-continuation-not-novelty-or-confirmation",
+    "targets": [
+      "y_baron_10",
+      "y_baron_20",
+      "y_baron_30",
+      "y_baron_60",
+      "y_dragon_10",
+      "y_dragon_20",
+      "y_dragon_30",
+      "y_dragon_60",
+      "y_teamfight_10",
+      "y_teamfight_20",
+      "y_teamfight_30",
+      "y_teamfight_60"
+    ],
+    "test_access": "prohibited"
+  },
+  "primary_contrast": "full-history LeagueEWS minus current-only LeagueEWS in macro 10-30 second timely recall",
+  "purpose": "Determine whether the original hybrid gains useful warning information from past observed states beyond current summaries, timing and the same architecture capacity.",
+  "registered_original_screen_passed": false,
+  "schema_version": "league-history-ablation-plan-v1",
+  "secondary": "Individual events, both routes, false and late burden separately, 20-60 second endpoint and all original row metrics.",
+  "seeds": [
+    20260930,
+    20261001,
+    20261002
+  ],
+  "selection_analysis_sha256": "b29985d1f2ead715621f85c89487e367293556c90378918dc60d848c65fc4bbb",
+  "selection_evidence": {
+    "leagueews_minus_gru": {
+      "conditional_95_interval": [
+        0.04222622188715447,
+        0.050635743227090704
+      ],
+      "estimate": 0.046231907822986085
+    },
+    "leagueews_minus_snapshot": {
+      "conditional_95_interval": [
+        0.011346934518514377,
+        0.016373870862847452
+      ],
+      "estimate": 0.013889046069088392
+    },
+    "leagueews_minus_tcn": {
+      "conditional_95_interval": [
+        -0.0015641886366494582,
+        0.0017770995277762856
+      ],
+      "estimate": 0.00011835753383785998
+    }
+  },
+  "selection_reason": "LeagueEWS exceeds snapshot but is nearly tied with TCN; GRU is weaker than snapshot. The original architecture comparisons confound historical inputs with capacity. A same-architecture history intervention is the most direct next test of the report temporal-buildup explanation. Regional budget failures remain binding.",
+  "status": "adaptive-exploratory-after-completed-four-family-screen",
+  "test_access": "Patch 16.17 prohibited; use only the existing development ZIP.",
+  "training": "Three new independent-from-initialization fits, each 12 epochs on all 48 training shards; identical seeds, initial model, batches, optimizer, loss weights and twelve outputs to full-history control. No tuning or early stopping.",
+  "uncertainty": "2000 whole-match bootstrap draws stratified by route, seed 20261001, paired across events and fitted seeds; conditional on fitted models/policies. Report each seed and fixed-seed average; do not multiply sample size by seeds."
+}

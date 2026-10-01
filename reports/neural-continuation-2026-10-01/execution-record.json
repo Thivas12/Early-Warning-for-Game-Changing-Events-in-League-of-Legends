@@ -1,0 +1,23 @@
+{
+  "original_worktree": "/home/thivas/work/ai-portfolio/league-ews-gpu",
+  "original_commit": "0f849a4ce83f374fdcfa001bc49297abee224d67",
+  "original_worker_pid": 33927,
+  "original_exit_code": 0,
+  "original_fits_complete": 12,
+  "analysis_worktree": "/home/thivas/work/ai-portfolio/league-ews-audit/tmp/league-ews-analysis-20261001",
+  "analysis_branch": "research/league-neural-followup-20261001",
+  "prepared_implementation_commit": "8631209",
+  "software_checks": "32 focused CPU tests passed; Ruff and shell syntax passed; synthetic fixtures are implementation checks only",
+  "gpu_runtime": {
+    "cuda_build": "13.0",
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "torch": "2.14.0+cu130"
+  },
+  "followup_output": "/home/thivas/work/ai-portfolio/league-ews-audit/data/private/league-history-ablation-v1",
+  "followup_freeze_sha256": "11a450477e7e0e49e3f783eaf11a9c741449a438b0703f1fdcf36b9c41222aff",
+  "followup_plan_sha256": "0b607c6b1ab60cf0d1c2c5777c20d6f81b1af70de8de14f4829458ffa59b0424",
+  "launch_recovery": "One-shard CUDA canary succeeded. Detached launch created empty log/lock but left no live worker; host process inspection confirmed absence. Resumed the unchanged canary checkpoint in monitored command session. No training duplicated or frozen source changed.",
+  "test_payloads_opened": 0,
+  "updated_at_utc": "2026-10-01T11:39:31.003971+00:00"
+}
