@@ -7,6 +7,16 @@ follow-up calibration was scored. The original study's checkout and checkpoints
 remain under `league-ews-gpu`, at source commit
 `0f849a4ce83f374fdcfa001bc49297abee224d67`.
 
+The completed follow-up's source checkout is preserved at `4b1573e`. Later
+maintenance changes on the results PR repair formatting and dependencies in a
+separate worktree; they intentionally do not match the archived training source
+freeze. Use the preserved checkouts and CUDA environment below for recovery.
+Do not re-freeze or resume an old output from the maintenance checkout. If those
+checkouts must be recreated, pin `0f849a4` for the original and `4b1573e` for the
+follow-up, then verify their recorded runtime and source hashes before resuming.
+The [maintenance review](../neural-maintenance-2026-10-01/review.md) documents the
+new read-only audit and independent environment.
+
 Use the existing environment. Do not reinstall PyTorch or change the frozen
 source/runtime while resuming a study. The original and follow-up freezes bind
 source hashes, data, model settings and runtime. The development archive is

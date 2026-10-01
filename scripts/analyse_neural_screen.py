@@ -21,7 +21,7 @@ from league_ews.m1_alert_diagnostics import _chronological_halves
 from league_ews.notebook_ews import FAMILIES
 from league_ews.notebook_experiment import SEEDS
 from scripts.export_league_development import require
-from scripts.league_compact_data import EXPECTED_ARCHIVE, EXPECTED_SPLIT
+from scripts.league_compact_data import EXPECTED_ARCHIVE, EXPECTED_SPLIT, load_partition
 
 BOOTSTRAP_SEED = 20261001
 DRAWS = 2000
@@ -86,13 +86,24 @@ def summarise(point: np.ndarray, draws: np.ndarray) -> dict:
     return result
 
 
-def load_completed(study: Path, families: tuple[str, ...] = FAMILIES) -> tuple[dict, dict, dict]:
+def load_completed(
+    study: Path, families: tuple[str, ...] = FAMILIES, *, reference: dict | None = None
+) -> tuple[dict, dict, dict]:
     """Refuse partial studies and verify provenance before reading predictions."""
     summary = json.loads((study / "summary.json").read_bytes())
+    frozen = json.loads((study / "freeze.json").read_bytes())
     binding = sha(study / "freeze.json")
     require(summary["freeze_sha256"] == binding, "Summary freeze mismatch")
+    require(frozen["archive_sha256"] == EXPECTED_ARCHIVE, "Study archive mismatch")
+    require(
+        summary["status"]
+        in ("complete-exploratory-architecture-screen", "complete-exploratory-history-ablation"),
+        "Study is not complete",
+    )
+    require(summary["test_payloads_opened"] == 0, "Study includes test access")
     counts, reports, artifacts = {}, {}, {}
-    reference_offsets, reference_targets = None, None
+    reference_offsets = None if reference is None else reference["match_offsets"]
+    reference_targets = None if reference is None else reference["targets"]
     for family in families:
         per_seed = {h: [] for h in (30, 60)}
         reports[family] = {}
@@ -101,12 +112,14 @@ def load_completed(study: Path, families: tuple[str, ...] = FAMILIES) -> tuple[d
             report = json.loads((folder / "report.json").read_bytes())
             progress = json.loads((folder / "progress.json").read_bytes())
             require(progress["completed_units"] == 576, "Training incomplete")
+            require(progress["freeze_sha256"] == binding, "Progress freeze mismatch")
             require(
                 report["family"] == progress["family"] == family
                 and report["seed"] == progress["seed"] == seed,
                 "Fit identity mismatch",
             )
             require(report["freeze_sha256"] == binding, "Report freeze mismatch")
+            require(report["test_payloads_opened"] == 0, "Report includes test access")
             require(
                 report["checkpoint_sha256"] == sha(folder / "checkpoint.pt"), "Checkpoint changed"
             )
@@ -114,18 +127,36 @@ def load_completed(study: Path, families: tuple[str, ...] = FAMILIES) -> tuple[d
             require(report["scores_sha256"] == sha(score_file), "Scores changed")
             require(summary["models"][f"{family}/{seed}"] == report, "Summary report mismatch")
             with np.load(score_file, allow_pickle=False) as z:
-                if reference_offsets is None:
-                    reference_offsets, reference_targets = z["match_offsets"], z["targets"]
-                require(np.array_equal(reference_offsets, z["match_offsets"]), "Offsets differ")
-                require(np.array_equal(reference_targets, z["targets"]), "Targets differ")
-                require(np.isfinite(z["probabilities"]).all(), "Nonfinite predictions")
+                offsets, targets, probabilities = (
+                    z["match_offsets"],
+                    z["targets"],
+                    z["probabilities"],
+                )
                 require(
-                    ((z["probabilities"] >= 0) & (z["probabilities"] <= 1)).all(),
+                    offsets.shape == (6001,)
+                    and offsets.dtype.kind in "iu"
+                    and offsets[0] == 0
+                    and np.all(np.diff(offsets) > 0)
+                    and targets.shape == (offsets[-1], 12)
+                    and targets.dtype.kind in "biu"
+                    and np.isin(targets, (0, 1)).all()
+                    and probabilities.shape == targets.shape,
+                    "Invalid calibration array shape, offsets or targets",
+                )
+                if reference_offsets is None:
+                    reference_offsets, reference_targets = offsets, targets
+                require(np.array_equal(reference_offsets, offsets), "Offsets differ")
+                require(np.array_equal(reference_targets, targets), "Targets differ")
+                require(np.isfinite(probabilities).all(), "Nonfinite predictions")
+                require(
+                    ((probabilities >= 0) & (probabilities <= 1)).all(),
                     "Invalid probabilities",
                 )
                 for h in (30, 60):
                     c = np.stack([z[f"counts_{event}_{h}"] for event in EVENTS])
-                    require(c.shape == (3, 3000, 6), "Wrong match count")
+                    require(
+                        c.shape == (3, 3000, 6) and c.dtype.kind in "iu", "Invalid match counts"
+                    )
                     require(
                         np.all(c >= 0)
                         and np.all(c[..., 2] <= c[..., 1])
@@ -137,9 +168,24 @@ def load_completed(study: Path, families: tuple[str, ...] = FAMILIES) -> tuple[d
                         r = report["warnings"][f"{event}_{h}"]["later"]
                         sums = c[i].sum(axis=0)
                         require(
-                            int(sums[0]) == r["events"]
-                            and int(sums[2]) == r["timely_matched_events"]
-                            and int(sums[3]) == r["alerts"],
+                            r["matches"] == 3000
+                            and all(
+                                int(sums[j]) == r[key]
+                                for j, key in enumerate(
+                                    (
+                                        "events",
+                                        "matched_events",
+                                        "timely_matched_events",
+                                        "alerts",
+                                    )
+                                )
+                            )
+                            and int(sums[5]) == r["timely_opportunities"]
+                            and np.isclose(sums[4] / 3000, r["false_alerts_per_match"])
+                            and np.isclose((sums[1] - sums[2]) / 3000, r["late_alerts_per_match"])
+                            and np.isclose(
+                                (sums[3] - sums[2]) / 3000, r["non_timely_alerts_per_match"]
+                            ),
                             "Counts/report mismatch",
                         )
                     per_seed[h].append(c)
@@ -192,8 +238,9 @@ def calibration_routes(archive: Path) -> np.ndarray:
 
 
 def run(study: Path, archive: Path, output: Path) -> dict:
-    counts, reports, artifacts = load_completed(study)
     routes = calibration_routes(archive)
+    reference, _ = load_partition(archive, "calibration")
+    counts, reports, artifacts = load_completed(study, reference=reference)
     pairs = [
         ("leagueews", "gru"),
         ("leagueews", "tcn"),

@@ -13,6 +13,7 @@ from league_ews.coordination_experiment import sha, write_json
 from league_ews.notebook_experiment import SEEDS
 from scripts.analyse_neural_screen import analyse, calibration_routes, load_completed
 from scripts.export_league_development import require
+from scripts.league_compact_data import load_partition
 
 
 def run(control: Path, followup: Path, archive: Path, output: Path) -> dict:
@@ -22,8 +23,14 @@ def run(control: Path, followup: Path, archive: Path, output: Path) -> dict:
         sha(control / "summary.json") == frozen["plan"]["control_summary_sha256"],
         "Control summary changed",
     )
-    original, original_reports, original_artifacts = load_completed(control, (family,))
-    repeated, repeated_reports, repeated_artifacts = load_completed(followup, (family,))
+    routes = calibration_routes(archive)
+    reference, _ = load_partition(archive, "calibration")
+    original, original_reports, original_artifacts = load_completed(
+        control, (family,), reference=reference
+    )
+    repeated, repeated_reports, repeated_artifacts = load_completed(
+        followup, (family,), reference=reference
+    )
     for h in (30, 60):
         require(
             np.array_equal(original[family][h][..., 0], repeated[family][h][..., 0]),
@@ -31,7 +38,7 @@ def run(control: Path, followup: Path, archive: Path, output: Path) -> dict:
         )
     analysis = analyse(
         {"full_history": original[family], "current_only": repeated[family]},
-        calibration_routes(archive),
+        routes,
         [("full_history", "current_only")],
     )
     primary = analysis["overall"]["30"]["contrasts"]["full_history_minus_current_only"]

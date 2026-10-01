@@ -42,8 +42,7 @@ PLAN = {
     "events": list(EVENTS),
     "target": "next-30-seconds;existing-exact-binary-target",
     "features": (
-        "snapshot=27-values+27-missing;history=plus-lags-1-3-7-and-their-ages;"
-        "no-cross-match-lags"
+        "snapshot=27-values+27-missing;history=plus-lags-1-3-7-and-their-ages;no-cross-match-lags"
     ),
     "estimator": {
         "max_iter": 200,

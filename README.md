@@ -18,14 +18,15 @@ a versioned, validated research release.
 
 ## Research status
 
-**1 October 2026:** The uploaded development archive passed validation, and nine
-three-event tree controls were fitted on 24,000 League matches. Added lagged
-frames did not improve macro timely recall; training for the useful lead window
-gave a modest exploratory gain, with a warning-burden tradeoff. See the
-[complete results](reports/league-three-event-results-2026-10-01.md) and
-[PC GPU instructions](docs/compact-gpu-continuation.md) for the unchanged
-LeagueEWS/GRU/TCN/snapshot neural study. No breakthrough is established; the
-patch-16.17 test remains sealed.
+**1 October 2026:** All twelve LeagueEWS/GRU/TCN/snapshot fits and three matched
+history-ablation fits completed on the PC GPU. LeagueEWS gains 4.623 percentage
+points of macro timely recall over GRU at 10–30 seconds, but fails the registered
+regional warning-budget gate. It shows no clear advantage over TCN. The history
+ablation supports a limited past-state benefit, mainly for Baron; task sharing
+remains untested. See the [research report](reports/neural-continuation-2026-10-01/research-report.md),
+[complete tables](reports/neural-continuation-2026-10-01/tables.md), and
+[earlier nine tree controls](reports/league-three-event-results-2026-10-01.md).
+No breakthrough is established; the patch-16.17 test remains sealed.
 
 The original MSc notebooks reported promising results, but a post-project audit
 found data leakage, broken features and train/test contamination. Those results
@@ -80,14 +81,16 @@ corrections needed to evaluate that architecture fairly.
 The implemented continuation retains this model family and compares it with
 snapshot, GRU and TCN controls on the existing audited League sequence cache.
 It restores all three events and separately reports the original 30-second task.
-Twelve fits are planned; **none has been run on real data in this workspace**.
-The WSL runner needs the existing cache, without exporting or recollecting it.
+All twelve fits and their gated calibration evaluations completed, followed by
+three separately frozen history-ablation fits. Preserve the completed outputs
+and use the [pinned reproduction instructions](reports/neural-continuation-2026-10-01/reproduce.md)
+for analysis or checkpoint recovery; maintenance code is not the frozen runner.
 
 ## League research status
 
 **This project is exclusively about League of Legends.** The
 [scope correction](docs/league-research-scope.md) records the evidence boundary
-and the next data-access step. The separate Dota experiments are inactive and
+and the available development data. The separate Dota experiments are inactive and
 excluded from League results and novelty claims.
 
 The audited League development cohort contains **24,000 training matches /
@@ -101,10 +104,10 @@ Dragon and Baron targets identify objective kills/completions, not first attacks
 | [Coordination screen](reports/coordination-screen-real-2026-09-29.md) | Coordination versus history: +0.168 percentage points of timely Dragon recall; paired 95% interval −0.044 to +0.389 | No clear incremental coordination benefit |
 | [Timing-objective screen](reports/timely-objective-real-2026-09-30.md) | Training for the useful warning interval improved recall under a false-plus-late budget, but failed the primary regional budget gate | Objective alignment, without established methodological novelty |
 
-These are **exploratory calibration results from the user's WSL runs**. Their
-aggregate summaries are available here; the private models have not been refitted
-in this workspace. The later calibration half has already been examined and is
-not a fresh test. Neither result establishes a breakthrough or state of the art.
+Those two earlier studies are **exploratory calibration results from the user's
+WSL runs**; their private models were not refitted during this continuation.
+The completed neural studies above also use the already examined calibration
+population. None supplies a fresh test, breakthrough or state-of-the-art claim.
 
 The [cooldown-aware warning candidate](docs/cooldown-aware-warning-research.md)
 and [adversarial novelty checks](docs/policy-novelty-defense.md) are implemented,

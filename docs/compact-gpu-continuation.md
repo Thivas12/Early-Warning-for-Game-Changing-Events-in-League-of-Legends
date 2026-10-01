@@ -3,10 +3,13 @@
 The uploaded development ZIP is validated and usable. No further collection,
 export or upload is required. This runner reads that exact ZIP directly.
 
-The user's PC has the intended GPU; the chat execution workspace has no GPU.
-The nine tree controls were run in the chat workspace on CPU. The full neural
-study must run on the PC through its existing CUDA-enabled Python environment.
-This document does not claim that the PC's CUDA preflight has already passed.
+**Completed, 1 October 2026:** CUDA was verified on the RTX 4060 Laptop GPU.
+All twelve fits, 6,912 shard updates and twelve gated evaluations finished with
+exit code 0. The [results](../reports/neural-continuation-2026-10-01/research-report.md)
+and [status verification](../reports/neural-continuation-2026-10-01/status-verification.json)
+record the actual execution. The launch instructions below describe the original
+run; inspect its existing output before using them. For recovery, use the
+[pinned source and environment](../reports/neural-continuation-2026-10-01/reproduce.md).
 
 ## Model and fixed experiment
 
@@ -39,8 +42,7 @@ The compact reader reconstructs the same B4 histories, fits normalization only
 on training current frames in original shard order, and uses the original backend
 and batch-order seeds. It has software checks for bit-identical inputs and model
 predictions, exact checkpoint continuation, target separation, training-only
-normalization and the calibration scoring gate. CUDA execution itself remains
-to be verified on the PC. Package/CUDA version and device differences can change
+normalization and the calibration scoring gate. Package/CUDA version and device differences can change
 numerical results; cross-device bit-identical training is not promised.
 
 ## Start in WSL
