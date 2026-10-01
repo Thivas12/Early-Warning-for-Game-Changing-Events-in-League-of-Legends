@@ -2,9 +2,10 @@
 
 **Update, 1 October 2026:** the development archive is available and validated.
 [Nine real three-event tree fits](../reports/league-three-event-results-2026-10-01.md)
-are complete. The [compact GPU continuation](compact-gpu-continuation.md) runs
-the existing 12-fit neural study directly from that archive on the user's PC.
-The access limitation recorded below is historical and has been resolved.
+are complete, as are the twelve neural fits and three matched history-ablation
+fits. The [neural report](../reports/neural-continuation-2026-10-01/research-report.md)
+records both failed development gates and a limited history benefit. Task sharing
+remains untested. The access limitation recorded below is historical and resolved.
 
 Status, 30 September 2026: **no breakthrough established**. The next empirical
 question comes from the original report's claim that temporal buildup and
@@ -78,9 +79,11 @@ something to investigate; it does not automatically establish a new method.
    established transfer method; the model family must follow the observed
    failure, not precede it as an invented novelty label.
 
-Steps 2–4 are specified here but **not implemented or run**. Adding more untested
-architectures while the development data are unavailable would not answer the
-research question. The existing 12-fit runner is implemented in PR #72.
+Steps 1 and 2 are complete; neither passed its full regional-budget screen.
+Steps 3 and 4 remain unrun. Shared versus independent event encoders are the next
+specified mechanism comparison, with three seeds per event and the existing
+joint controls. The 12-fit runner and history-ablation freezes remain unchanged;
+the archived comparisons cannot establish task transfer or a hybrid advantage.
 
 ### Endpoints and rejection rules
 

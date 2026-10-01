@@ -1,0 +1,59 @@
+{
+  "schema_version": "league-maintenance-verification-v1",
+  "frozen_sources": {
+    "original": {
+      "checkout": "/home/thivas/work/ai-portfolio/league-ews-gpu",
+      "source_files": 92,
+      "mismatches": []
+    },
+    "followup": {
+      "checkout": "/home/thivas/work/ai-portfolio/league-ews-audit/tmp/league-ews-analysis-20261001",
+      "source_files": 94,
+      "mismatches": []
+    }
+  },
+  "reanalysis": {
+    "neural-analysis.json": {
+      "archived_sha256": "b29985d1f2ead715621f85c89487e367293556c90378918dc60d848c65fc4bbb",
+      "recomputed_sha256": "b85c9a6a90494ba71605bcd23270c86bd57669d2b1c7741dd152d0bc7daa71e7",
+      "changed_fields": [
+        "analysis_source_sha256"
+      ],
+      "all_results_and_artifact_bindings_identical": true
+    },
+    "history-analysis.json": {
+      "archived_sha256": "82b7a83ef972450368b0b18ac7dfc647c2c748d4d5c88ffd37aab3c00baca648",
+      "recomputed_sha256": "27a9276b3f766992b1f947760ce53a6f53cdeb8d11e2891be66053fbf053c555",
+      "changed_fields": [
+        "analysis_source_sha256",
+        "paired_analysis_source_sha256"
+      ],
+      "all_results_and_artifact_bindings_identical": true
+    }
+  },
+  "lockfile_changed_packages": [
+    "urllib3"
+  ],
+  "test_payloads_opened": 0,
+  "new_empirical_training_fits": 0,
+  "local_checks": {
+    "make_check_exit_code": 0,
+    "tests_passed": 544,
+    "tests_skipped": 1,
+    "coverage_percent": 85.89,
+    "required_coverage_percent": 85,
+    "formatted_python_files": 292,
+    "type_checked_source_files": 87,
+    "new_regression_cases": 13,
+    "credential_scan": "passed",
+    "diff_check": "passed",
+    "shell_syntax": "passed",
+    "transient_failures": "Initial mypy segmentation fault and pytest AST collection error did not reproduce in isolated checks or final complete run; cause not established"
+  },
+  "validation_artifacts_sha256": {
+    "replay-audit.json": "6f4696715063881707396736f58b14e18a1893c7eeb40aad25bf6c5c5d69bc0b",
+    "make-check.log": "2db63dedaf38bff456e7e0b767e6818926f12c07aff46cdf880fa3d6dbd16ee0",
+    "dependency-audit.json": "86c0559d49c9de018989242a37b128f77a67cea302ccd57f6f4638bc30dd370e",
+    "torch-upstream-audit.json": "3202edb25a3e1eca8e5711dd86e6c8c551ecf5e97f651bbcc83a6d5f8ae3139c"
+  }
+}

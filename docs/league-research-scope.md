@@ -3,8 +3,10 @@
 **Access update, 1 October 2026:** the user supplied the compact three-event
 development ZIP. All 60 shards and 879,998 observed rows passed validation;
 train/calibration data are now available here. Nine real three-event tree fits
-are reported in [the current results](../reports/league-three-event-results-2026-10-01.md).
-Test payloads remain absent. The restoration instructions below are historical;
+are reported in [the tree results](../reports/league-three-event-results-2026-10-01.md).
+The [neural study and history ablation](../reports/neural-continuation-2026-10-01/research-report.md)
+also completed on the PC GPU. Test payloads remain absent from the export.
+The restoration instructions below are historical;
 do not request another export merely because those paragraphs describe the
 previous access limitation.
 

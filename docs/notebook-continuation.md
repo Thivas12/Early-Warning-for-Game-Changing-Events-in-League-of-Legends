@@ -1,10 +1,12 @@
 # Continue from the original LeagueEWS project
 
-**Update, 1 October 2026:** the three-event development ZIP has been received and
-validated. [Nine real tree controls](../reports/league-three-event-results-2026-10-01.md)
-have now run. The full neural experiment can read that ZIP directly using the
-[compact GPU runner](compact-gpu-continuation.md). The earlier access limitation
-below describes 30 September; no new upload is required.
+**Update, 1 October 2026:** the validated development ZIP supported nine tree
+controls, all twelve neural fits and three history-ablation fits. The
+[completed neural report](../reports/neural-continuation-2026-10-01/research-report.md)
+records higher recall than GRU, no clear advantage over TCN, and failed regional
+warning-budget gates. The earlier access and implementation status below is
+historical. Use the [pinned reproduction instructions](../reports/neural-continuation-2026-10-01/reproduce.md)
+to preserve the completed experiments; no new upload is required.
 
 The starting point is Keerthivasan Kannan's **LeagueEWS**, described in the
 55-page final report and implemented in the original model-building notebooks.
@@ -179,7 +181,7 @@ If the already collected B4 cache was never staged, reuse the existing commands
 Do not rerun API collection. Do not use another game's data. The output is
 `data/private/notebook-ews-v1/summary.json` after training and calibration finish.
 
-## Verification and current status
+## Verification at initial implementation
 
 Twenty-one tests passed on CPU: 14 new continuation checks and seven existing
 sequence/normalization checks. They check training of all three heads in

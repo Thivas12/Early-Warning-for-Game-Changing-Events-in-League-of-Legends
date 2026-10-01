@@ -1,0 +1,199 @@
+{
+  "schema_version": "league-neural-publication-verification-v1",
+  "verified_at_utc": "2026-10-01T13:43:46.528051+00:00",
+  "study_path": "/home/thivas/work/ai-portfolio/league-ews-gpu/data/private/compact-notebook-v1",
+  "study_source_commit": "0f849a4ce83f374fdcfa001bc49297abee224d67",
+  "results_branch": "research/league-neural-followup-20261001",
+  "summary_exists": true,
+  "summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7",
+  "summary_status": "complete-exploratory-architecture-screen",
+  "completed_fits": 12,
+  "planned_fits": 12,
+  "completed_shard_updates": 6912,
+  "planned_shard_updates": 6912,
+  "calibration_reports": 12,
+  "fits": [
+    {
+      "family": "gru",
+      "seed": 20260930,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "3857aca6b847c0fade992eb6c515a449fad361d5fa8f0e0abaa3cd3d74dbb519",
+      "report_sha256": "75515da6ef34f2cc161f7c409e5d2dfee8f5245b0066e6aa928ddfc0fcc9c119"
+    },
+    {
+      "family": "gru",
+      "seed": 20261001,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "8805c8dc994df19896990a531041082c226d830042ffdea7d2982c14b6bf8700",
+      "report_sha256": "b99f22b2e01ba2f0b0ed432bd1abdae0a1418088c60f972960a57a0407fb7ddf"
+    },
+    {
+      "family": "gru",
+      "seed": 20261002,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "358c11300ac86119d863e0748e6a29c04a45cf06ea2ea99dfa152dc10eb4cbee",
+      "report_sha256": "2fa0731edee52e49c5c32d32c479ee69adc33fdb414fc8f293140ce181252adf"
+    },
+    {
+      "family": "leagueews",
+      "seed": 20260930,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "248412d4ea75bebe414e2b49060f9e29b9d9c2efd4e4c02c5118bd73279d60a5",
+      "report_sha256": "477789a975b6c4f2fa8f4b625cf513a044311c2c38be36d4ecb9a7c8bd906d2c"
+    },
+    {
+      "family": "leagueews",
+      "seed": 20261001,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "a45a2080f6b40c064f7011bd0e6e6db1bc476f56532ad6eb371dc8f65199ade1",
+      "report_sha256": "6ded67aef39cbf0875a060af8ffddfcd1398357ace70e25693321ef4e5720a92"
+    },
+    {
+      "family": "leagueews",
+      "seed": 20261002,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "20cd6c252ad0bd5dd4ce6b0bc90768867d5b998c0414a915c23cdf175b975adc",
+      "report_sha256": "4eb81392dfc15b430b252b320d5c2453724f6d38d82c23ad5a425a3e77405672"
+    },
+    {
+      "family": "snapshot",
+      "seed": 20260930,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "5558f9d952a9cfaaf112896485e3ff64564015e40ee933a7d2c979d4401870bf",
+      "report_sha256": "bba4ebdcfafb4639206bf327a07a0638bee988ae3dbee97e1538da151b1f6591"
+    },
+    {
+      "family": "snapshot",
+      "seed": 20261001,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "cb21fae46a0cd97108e593e3b57061349de42e654a8a229cc69366c36c298e17",
+      "report_sha256": "4f12b2d245555a629a0900a15585030fa94290efb6c3d5b8eb050849381256a6"
+    },
+    {
+      "family": "snapshot",
+      "seed": 20261002,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "f33922b7ab80b48f9f13e4654193e5fe9481ff5555c7db471fd6c3cb699c2269",
+      "report_sha256": "fcb4f93f38ff7910f316191143b4b0f6fdee7e6eb8b0e9d05a63948ffaf16d96"
+    },
+    {
+      "family": "tcn",
+      "seed": 20260930,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "2384e45eadae6a0230014efe7481afba8fb80203547761060e89f4d5d0b39560",
+      "report_sha256": "76b5dd7c0aa3ea94e8f3b03c8483f70e7e896a0f13a0cb7d9b57b95716637d10"
+    },
+    {
+      "family": "tcn",
+      "seed": 20261001,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "00c71c44eb66e8f35089698e05fe0dcf3e9e18732d22dbd77d5cebf0049917f1",
+      "report_sha256": "8584bb65be3822fd49592372a0aa8e04e7851771920e366789d71936a3adc0c0"
+    },
+    {
+      "family": "tcn",
+      "seed": 20261002,
+      "completed_shard_updates": 576,
+      "planned_shard_updates": 576,
+      "epochs_completed": 12,
+      "calibration_report_exists": true,
+      "progress_sha256": "a44647c0b00269c91c06f8beb6803f9ddf678ea756da51f68e13c432afb5fdb5",
+      "report_sha256": "f0bba06b71208e7f23ea6a9a1f1c6374ec7a4b127f18da191c0acd82f7f9787c"
+    }
+  ],
+  "worker": {
+    "exit_code": 0,
+    "status": "completed",
+    "active_training_processes_observed": 0,
+    "gpu_compute_processes_observed": 0,
+    "observation_scope": "Host ps and nvidia-smi inspection in this verification turn; point-in-time observation",
+    "resumed": false,
+    "new_training_workers_launched": 0
+  },
+  "archived_original_files_unchanged": {
+    "summary.json": true,
+    "freeze.json": true,
+    "validation.json": true,
+    "normalizer.json": true,
+    "worker.log": true
+  },
+  "frozen_source_verification": {
+    "original": {
+      "checked_files": 92,
+      "mismatches": []
+    },
+    "followup": {
+      "checked_files": 94,
+      "mismatches": []
+    }
+  },
+  "reanalysis": {
+    "neural-analysis.json": {
+      "sha256": "b29985d1f2ead715621f85c89487e367293556c90378918dc60d848c65fc4bbb",
+      "byte_identical_to_saved": true
+    },
+    "neural-by-seed.csv": {
+      "sha256": "f24c23c2c3d7ff8b2e58da8e6df9fb29622c7526525689163f8e3a035b6c0bf2",
+      "byte_identical_to_saved": true
+    }
+  },
+  "registered_primary": {
+    "both_models_regional_budgets_by_seed": [
+      true,
+      false,
+      true
+    ],
+    "contrast": "leagueews_minus_gru",
+    "differences_by_seed": [
+      0.049317288082975426,
+      0.03378545508896197,
+      0.05559298029702087
+    ],
+    "endpoint": "macro timely recall at 10-30 seconds",
+    "screen_passed": false
+  },
+  "checks": {
+    "focused_tests": "32 passed in 4.07s",
+    "ruff_check": "passed",
+    "ruff_format_check": "7 files already formatted",
+    "shell_syntax": "passed",
+    "git_diff_check": "passed after removing generated trailing blank lines",
+    "repository_credential_scan": "passed",
+    "publication_scope": "Text source, aggregate statistics, logs, configuration and hashes only; no raw match rows, private datasets, per-match predictions or model binaries"
+  },
+  "test_payloads_opened": 0,
+  "patch_16_17": "sealed"
+}
