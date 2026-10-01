@@ -1,0 +1,92 @@
+# Run the original LeagueEWS continuation on the PC's GPU
+
+The uploaded development ZIP is validated and usable. No further collection,
+export or upload is required. This runner reads that exact ZIP directly.
+
+The user's PC has the intended GPU; the chat execution workspace has no GPU.
+The nine tree controls were run in the chat workspace on CPU. The full neural
+study must run on the PC through its existing CUDA-enabled Python environment.
+This document does not claim that the PC's CUDA preflight has already passed.
+
+## Model and fixed experiment
+
+The original LeagueEWS descendant is unchanged: residual TCN with squeeze-excitation,
+two bidirectional GRUs, cross-attention, self-attention, temporal pooling,
+shared dense layers and three event heads. Its implementation is
+`src/league_ews/notebook_ews.py`, reviewed against the MSc notebook in
+[the source review](notebook-continuation.md).
+
+| Setting | Fixed value |
+|---|---|
+| Families | LeagueEWS, GRU, TCN, current-frame MLP |
+| Seeds | 20260930, 20261001, 20261002 |
+| Training population | 24,000 matches; 704,967 observed rows; patches 16.12–16.15 |
+| Calibration | 6,000 matches; 175,031 rows; patch 16.16 |
+| History | Eight real observed frames; 27 values, 27 missingness flags and age |
+| Targets | Baron, Dragon and teamfight, each at 10/20/30/60 seconds |
+| Training | 12 epochs; batch 256; AdamW, learning rate 0.0001, weight decay 0.0001 |
+| Loss | Original event weights 1 / 2 / 2.5; unchanged twelve binary outputs |
+| Device | CUDA by default; unavailable CUDA causes an explicit error |
+| Checkpoint | Every 500-match training shard, including model, optimizer and RNG |
+| Evaluation | All 12 fits finish before fitted-model calibration scoring begins |
+
+This is an alternate input runner for the already specified experiment, not an
+additional model family or a changed loss. Do not launch it alongside an already
+running complete `notebook-continuation` study. The new outputs are separate from
+the earlier runner's checkpoints, so existing results are preserved.
+
+The compact reader reconstructs the same B4 histories, fits normalization only
+on training current frames in original shard order, and uses the original backend
+and batch-order seeds. It has software checks for bit-identical inputs and model
+predictions, exact checkpoint continuation, target separation, training-only
+normalization and the calibration scoring gate. CUDA execution itself remains
+to be verified on the PC. Package/CUDA version and device differences can change
+numerical results; cross-device bit-identical training is not promised.
+
+## Start in WSL
+
+These commands create a separate code checkout and use the existing environment
+and ZIP. They do not switch the existing audit checkout or reinstall PyTorch.
+
+```bash
+cd /home/thivas/work/ai-portfolio/league-ews-audit
+git fetch origin research/league-real-three-event-screen
+git worktree add --detach ../league-ews-gpu origin/research/league-real-three-event-screen
+cd ../league-ews-gpu
+export LEAGUE_PYTHON=../league-ews-audit/.venv/bin/python
+export LEAGUE_ARCHIVE=../league-ews-audit/data/private/league-three-event-export-v1/development.zip
+make compact-notebook-canary DEVICE=cuda && make start-compact-notebook DEVICE=cuda
+```
+
+Create the worktree once. The canary prints the actual GPU name, torch/CUDA build,
+trains one real shard and checkpoints it. The background worker resumes there
+and survives closing the terminal. A duplicate worker for this output is rejected.
+If CUDA is unavailable, copy the error; the runner will not quietly train on CPU.
+
+Progress, including after opening a new terminal:
+
+```bash
+cd /home/thivas/work/ai-portfolio/league-ews-gpu
+make compact-notebook-status LEAGUE_PYTHON=../league-ews-audit/.venv/bin/python
+```
+
+There are 6,912 shard updates: 48 shards × 12 epochs × 12 fits. Calibration report
+count stays zero during training by design. The canary reports real shard time;
+no whole-study duration is promised before observing the hardware's performance.
+
+Results are written under `league-ews-gpu/data/private/compact-notebook-v1/`.
+When complete, upload `summary.json` from that folder. Each fit also preserves
+its checkpoint, progress, row predictions, match counts and report. To resume
+after interruption, set the same two variables and rerun the start target.
+The freeze rejects changed source, data, device or runtime rather than mixing runs.
+
+## Research interpretation
+
+Primary neural contrast remains LeagueEWS minus GRU in macro 10–30-second timely
+recall. All three events and regional false-plus-late warning budgets are reported.
+The available calibration data have already been examined: these are development
+results. Patch-16.17 payloads are absent from the ZIP and are not requested.
+
+The new tree results provide necessary controls but do not test neural task
+sharing. A positive hybrid result still needs the separately specified mechanism
+ablations and a frozen confirmatory evaluation before a novelty claim.

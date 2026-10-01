@@ -1,5 +1,13 @@
 # League-only scope correction: 30 September 2026
 
+**Access update, 1 October 2026:** the user supplied the compact three-event
+development ZIP. All 60 shards and 879,998 observed rows passed validation;
+train/calibration data are now available here. Nine real three-event tree fits
+are reported in [the current results](../reports/league-three-event-results-2026-10-01.md).
+Test payloads remain absent. The restoration instructions below are historical;
+do not request another export merely because those paragraphs describe the
+previous access limitation.
+
 The research objective is early warning of Baron, Dragon and teamfight events in
 **League of Legends**. The user explicitly rejected the substitution of Dota
 experiments. Availability of a different game's replays is not authorization to

@@ -1,5 +1,11 @@
 # Continue from the original LeagueEWS project
 
+**Update, 1 October 2026:** the three-event development ZIP has been received and
+validated. [Nine real tree controls](../reports/league-three-event-results-2026-10-01.md)
+have now run. The full neural experiment can read that ZIP directly using the
+[compact GPU runner](compact-gpu-continuation.md). The earlier access limitation
+below describes 30 September; no new upload is required.
+
 The starting point is Keerthivasan Kannan's **LeagueEWS**, described in the
 55-page final report and implemented in the original model-building notebooks.
 The research question covers **Baron, Dragon and teamfights**. The original

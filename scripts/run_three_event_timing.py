@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import time
+from itertools import pairwise
 from pathlib import Path
 
 import joblib
@@ -35,7 +36,9 @@ from scripts.run_three_event_trees import policy_report
 PLAN = {
     "schema_version": "league-three-event-timing-plan-v1",
     "status": "adaptive-exploratory-control-follow-up",
-    "reason": "History screen macro gain is null; test whether within-30 target rewards late alerts",
+    "reason": (
+        "History screen macro gain is null; test whether within-30 target rewards late alerts"
+    ),
     "estimator": CONTROL_PLAN["estimator"],
     "features": "same-history-219-as-fixed-tree-control",
     "targets": "next-strictly-future-event;closed-10-through-30-second-interval",
@@ -51,7 +54,7 @@ PLAN = {
 def timely_targets(data, event):
     target = np.zeros(len(data["times_ms"]), dtype=np.int8)
     offsets, eo = data["match_offsets"], data[f"{event}_offsets"]
-    for i, (a, b) in enumerate(zip(offsets[:-1], offsets[1:], strict=True)):
+    for i, (a, b) in enumerate(pairwise(offsets)):
         times = data["times_ms"][a:b]
         events = data[f"{event}_ms"][eo[i] : eo[i + 1]]
         next_index = np.searchsorted(events, times, side="right")
@@ -104,7 +107,7 @@ def run(archive, control, output, repo):
                 )
                 continue
             started = time.perf_counter()
-            print(f"Fitting timely 10–30s/{event} on all {len(x):,} training rows", flush=True)
+            print(f"Fitting timely 10-30s/{event} on all {len(x):,} training rows", flush=True)
             model = HistGradientBoostingClassifier(**PLAN["estimator"])
             model.fit(x, timely_targets(train, event))
             temporary = path.with_suffix(".partial")
@@ -148,7 +151,8 @@ def run(archive, control, output, repo):
                 ),
             }
             print(
-                f"{event}: recall {warnings['later']['timely_event_recall']:.4f}; budget {warnings['regional_budget_met']}",
+                f"{event}: recall {warnings['later']['timely_event_recall']:.4f}; "
+                f"budget {warnings['regional_budget_met']}",
                 flush=True,
             )
     rng = np.random.default_rng(20261001)
@@ -183,7 +187,10 @@ def run(archive, control, output, repo):
             and baseline["models"][f"history-{e}"]["warnings"]["regional_budget_met"]
             for e in EVENTS
         ),
-        "interpretation": "Adaptive development study; known objective alignment; not novelty or confirmation; one tree seed",
+        "interpretation": (
+            "Adaptive development study; known objective alignment; "
+            "not novelty or confirmation; one tree seed"
+        ),
         "test_payloads_opened": 0,
     }
     write_json(output / "summary.json", summary)
