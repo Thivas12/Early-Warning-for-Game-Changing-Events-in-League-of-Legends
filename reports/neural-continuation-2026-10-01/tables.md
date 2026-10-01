@@ -159,4 +159,3 @@ Each budget is per event and region. A mean below one does not erase a failing s
 |---|---|---|---|---|
 | GRU | 20261001 | baron | americas | 1.004000 |
 | TCN | 20261002 | baron | americas | 1.034000 |
-

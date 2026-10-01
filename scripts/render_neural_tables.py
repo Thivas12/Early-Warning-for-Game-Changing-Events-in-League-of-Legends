@@ -130,7 +130,7 @@ def render(data: dict) -> str:
         if not failures:
             lines.append("| None | — | — | — | — |")
         lines.append("")
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 if __name__ == "__main__":

@@ -5,6 +5,13 @@ worker exit code 0. **LeagueEWS improves on GRU at the primary endpoint, but the
 registered development screen fails its regional warning-budget requirement.**
 LeagueEWS and the smaller TCN have nearly identical average primary recall.
 
+The [status verification](status-verification.json) records 12/12 complete fits,
+576/576 shard updates per fit (6,912/6,912 total), and 12/12 calibration reports.
+`league-ews-gpu/data/private/compact-notebook-v1/summary.json` exists. A fresh
+host process and GPU check found no active training worker. Reanalysis verified
+the checkpoint and prediction bindings and reproduced the archived JSON exactly;
+no training restart or threshold change was needed.
+
 ## Useful warning recall
 
 These are percentages of distinct events warned about with 10–30 seconds of

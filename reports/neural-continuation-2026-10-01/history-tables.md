@@ -70,4 +70,3 @@ The two variants have the same architecture, parameter count, training data, ini
 | Variant | Seed | Event | Route | False plus late per match |
 |---|---|---|---|---|
 | Current-only | 20260930 | baron | americas | 1.019333 |
-
