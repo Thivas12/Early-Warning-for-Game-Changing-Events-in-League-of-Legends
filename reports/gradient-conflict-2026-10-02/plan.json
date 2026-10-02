@@ -1,0 +1,127 @@
+{
+  "control_freeze_sha256": "3ff075d75cd32d42132a3bb800c1616ad2cd16e8bad584ed9ab0a4f2358337e6",
+  "control_summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7",
+  "controls": [
+    "ordinary joint LeagueEWS",
+    "same-width independent event encoders",
+    "TCN",
+    "GRU",
+    "snapshot"
+  ],
+  "diagnostic_file": "reports/gradient-conflict-2026-10-02/diagnostics.json",
+  "diagnostic_sha256": "7002ea0fc82f97e6d7acb49198c811cbe1af81ea62e4035da2f8b9e7fa2b1802",
+  "events": [
+    "baron",
+    "dragon",
+    "teamfight"
+  ],
+  "formatted_policy_source_sha256": "9d37933b1dd7c915609d483d0e0ba30186a68bb75ef499e6a0e7be252afaa603",
+  "frozen_at_utc": "2026-10-02T14:07:31.314186+00:00",
+  "frozen_diagnostic_rules": {
+    "baron_recovery": "PCGrad-minus-joint primary Baron recall positive in every seed and fixed-seed mean conditional95 interval above zero.",
+    "interpretation": "Passing is an exploratory candidate only, not breakthrough, deployment, novelty or confirmatory evidence. Negative outcomes retained. No equivalence claim from interval overlap. No clinically/practically justified noninferiority margin yet; no confirmatory test authorized.",
+    "macro_gain": "PCGrad-minus-joint primary macro positive every seed and mean conditional95 interval above zero.",
+    "no_mean_task_harm": "All three event mean primary recall differences versus joint >=0; also show each event/seed/region and secondary interval regardless.",
+    "practical_screen": "All preceding rules AND every PCGrad primary event/region/seed burden <=1. Report all comparator budget violations explicitly; a comparator failure does not excuse PCGrad failure.",
+    "strong_control_gain": "Primary macro mean conditional95 intervals above zero versus both independent encoders and TCN; report all seed signs."
+  },
+  "implementation": "Three-task Gram-matrix equivalent of literal vector projections, verified numerically. Separate per-shard NumPy projection RNG seeded [batch_shuffle_seed,20261002]; does not consume torch dropout RNG or batch-shuffle RNG. Original task-head updates. AdamW unchanged.",
+  "independent_summary_sha256": "7acd5d700f5b6762888f1bf5fe21be1d7af4ec00792d85a1ef4a6ac4154094f2",
+  "intervention": "PCGrad (Yu et al. 2020 Algorithm 1) on all shared parameters. Independently random order of the other tasks per task per minibatch; project against original weighted task gradients; sum projected shared gradients. Task heads retain the original summed gradients. No change to original event weights 1/2/2.5, targets, architecture or policies. No gradient normalization, learning-rate tuning, clipping or search.",
+  "mechanism_limits": "PCGrad changes both gradient direction and magnitude under AdamW. A gain cannot uniquely identify gradient conflict, loss scaling or representation interference as the cause. A failure rejects this intervention at this fixed budget, not every conflict-mitigation method. No causal claim from near-zero average cosine.",
+  "multiplicity": "Exploratory unadjusted intervals for all contrasts; report full inventory without selecting a winning endpoint. No confirmatory significance or first-ever claim.",
+  "next_decision": "Complete and analyse this bounded mechanistic study before selecting any further model or opening any new data.",
+  "normalization": "Reuse identical train-current-frame moments; verify recomputed normalizer equals control.",
+  "original_plan": {
+    "budget": "<=1-false-plus-late-alert-per-match-in-each-route",
+    "epochs": 12,
+    "families": [
+      "leagueews",
+      "gru",
+      "tcn",
+      "snapshot"
+    ],
+    "inputs": "frozen-b4-8-real-frames-27-values-27-missingness-bits-age",
+    "model": {
+      "attention_heads": 4,
+      "attention_key_dimension": 64,
+      "event_loss_weights": [
+        1.0,
+        2.0,
+        2.5
+      ],
+      "gru_layers": 2,
+      "gru_units_per_direction": 160,
+      "horizons_seconds": [
+        10,
+        20,
+        30,
+        60
+      ],
+      "normalization": "per-token-layernorm;masked-squeeze-excitation",
+      "representation_width": 128,
+      "shared_dense": [
+        512,
+        256
+      ],
+      "shared_dropout": 0.5,
+      "squeeze_excitation_ratio": 8,
+      "tcn_dilations": [
+        1,
+        2,
+        4
+      ],
+      "tcn_filters": [
+        80,
+        160,
+        160
+      ],
+      "tcn_kernel": 3
+    },
+    "model_selection": "fixed-final-epoch;report-every-seed;no-calibration-selection",
+    "optimizer": "AdamW;lr=0.0001;weight_decay=0.0001;batch=256;constant-lr",
+    "policy": "early-calibration-route-halves-only;60s-cooldown;chronological-one-to-one",
+    "primary": "LeagueEWS-minus-GRU;macro-timely-recall-10-to-30-seconds",
+    "schema_version": "league-ews-notebook-continuation-plan-v1",
+    "secondary": "per-event-30s-and-60s;all-four-row-horizons;all-controls",
+    "seeds": [
+      20260930,
+      20261001,
+      20261002
+    ],
+    "status": "exploratory-architecture-continuation-not-novelty-or-confirmation",
+    "targets": [
+      "y_baron_10",
+      "y_baron_20",
+      "y_baron_30",
+      "y_baron_60",
+      "y_dragon_10",
+      "y_dragon_20",
+      "y_dragon_30",
+      "y_dragon_60",
+      "y_teamfight_10",
+      "y_teamfight_20",
+      "y_teamfight_30",
+      "y_teamfight_60"
+    ],
+    "test_access": "prohibited"
+  },
+  "policy": "Original early-only 101-point threshold selection, 60s cooldown, one-to-one chronological credit, <=1 false-plus-late per match per event per region. Report both10-30 primary and20-60 secondary. Do not select thresholds or models on later calibration.",
+  "primary_diagnostic_contrast": "PCGrad minus ordinary joint LeagueEWS in Baron timely recall at 10-30 seconds. Original registered LeagueEWS-minus-GRU macro primary remains unchanged.",
+  "prior_work": "https://proceedings.neurips.cc/paper/2020/file/3fe78a8acf5fda99de95303940a2420c-Paper.pdf; applying PCGrad is established method use, not a new method.",
+  "publication": "Aggregate results, code, protocol and hashes only. Private match arrays, predictions and model binaries remain excluded.",
+  "purpose": "Test whether established shared-gradient conflict mitigation can recover Baron advance warning without concealing harm to Dragon or teamfight, after the shared-versus-independent tradeoff.",
+  "resources": "Same 1751647 active parameters as joint LeagueEWS, three task backward passes per minibatch and one optimizer update. Matched examples/updates/capacity, not equal wall-clock compute. Independent control is three encoders per seed.",
+  "schema_version": "league-pcgrad-plan-v1",
+  "seeds": [
+    20260930,
+    20261001,
+    20261002
+  ],
+  "selection_evidence": "Training-only diagnostics: other event gradients oppose Baron in 42-48% of final-checkpoint batches; mean pairwise cosine near zero and raw joint ascent only 0-2%. Early calibration shows burden and timing effects too. Conflict mitigation is plausible to test, not an established cause.",
+  "source_compatibility": "Verify every original source against preserved GPU checkout. In current checkout permit only pinned scripts/run_three_event_trees.py formatting repair, requiring AST identity. Archive exporter sources remain byte-identical.",
+  "status": "adaptive-exploratory-established-method-mechanism-test",
+  "test_access": "Patch16.17 prohibited, League development ZIP only.",
+  "training": "Three seeds, all 48 train shards for 12 epochs =1728 updates, same 704967 rows/epoch, batch256, 8 observed frames, all 12 binary outputs, fixed final epoch. Checkpoint after every shard with model, optimizer and CPU/CUDA RNG. No scoring until all three fits complete.",
+  "uncertainty": "2000 whole-match bootstrap draws stratified by route, seed 20261001, paired across events and fitted seeds; conditional on fitted models/policies. Report each seed and fixed-seed average; do not multiply sample size by seeds."
+}
