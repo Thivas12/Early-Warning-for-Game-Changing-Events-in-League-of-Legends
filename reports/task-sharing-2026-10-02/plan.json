@@ -1,0 +1,118 @@
+{
+  "capacity": "Same full encoder width per event. Each fit allocates the original 1751647 parameters; 1749591 active. Three independent encoders require 5248773 active parameters versus 1751647 joint. This does not match total storage or training compute.",
+  "control_freeze_sha256": "3ff075d75cd32d42132a3bb800c1616ad2cd16e8bad584ed9ab0a4f2358337e6",
+  "control_summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7",
+  "diagnostic_support_rule": "Descriptive positive macro sharing effect requires positive difference in every seed and fixed-seed mean paired conditional 95% interval entirely above zero. Uniform task benefit also requires no negative event mean. Practical promotion additionally requires every primary regional budget for both variants; existing joint budget failure already rules this out. Report each component separately.",
+  "evaluation": "All nine fits complete before scoring any new fitted model. Original early route halves select thresholds; later halves evaluate on 3000 distinct matches; 60s cooldown, chronological one-to-one credit, <=1 false-plus-late alert per match per event per region. Secondary 20-60 seconds, row metrics, false and late burden separately, all seeds and both regions.",
+  "events": [
+    "baron",
+    "dragon",
+    "teamfight"
+  ],
+  "follow_on_selection": "Do not add models or change thresholds after seeing this study. Use results to document which hypothesis survives; any new method requires a separately frozen study and appropriate baselines.",
+  "formatted_policy_source_sha256": "9d37933b1dd7c915609d483d0e0ba30186a68bb75ef499e6a0e7be252afaa603",
+  "frozen_at_utc": "2026-10-02T07:32:29.619072+00:00",
+  "harm_rule": "An event with negative joint-minus-independent timely recall in all seeds and fixed-seed mean paired conditional 95% interval entirely below zero is descriptive evidence of harm for that event under this recipe; unadjusted exploratory intervals cannot establish a universal or confirmatory effect.",
+  "intervention": "Each independent encoder receives only its event four-horizon BCE, multiplied by original event weight (1 Baron, 2 Dragon, 2.5 teamfight), without renormalization. Two inert original heads remain frozen and their forward calls preserve initialization and dropout RNG. Only the selected event predictions are evaluated and saved.",
+  "known_original_registered_screen_passed": false,
+  "mechanism_limits": "Tests shared supervision and its optimization interaction for this architecture/loss recipe, not gradient conflict as a cause, optimal loss balancing, or a novel transfer mechanism. Independent training uses three times the encoders. Previously inspected calibration is development evidence, not a fresh test.",
+  "normalization": "Reuse identical train-current-frame moments; verify recomputed normalizer equals control.",
+  "original_plan": {
+    "budget": "<=1-false-plus-late-alert-per-match-in-each-route",
+    "epochs": 12,
+    "families": [
+      "leagueews",
+      "gru",
+      "tcn",
+      "snapshot"
+    ],
+    "inputs": "frozen-b4-8-real-frames-27-values-27-missingness-bits-age",
+    "model": {
+      "attention_heads": 4,
+      "attention_key_dimension": 64,
+      "event_loss_weights": [
+        1.0,
+        2.0,
+        2.5
+      ],
+      "gru_layers": 2,
+      "gru_units_per_direction": 160,
+      "horizons_seconds": [
+        10,
+        20,
+        30,
+        60
+      ],
+      "normalization": "per-token-layernorm;masked-squeeze-excitation",
+      "representation_width": 128,
+      "shared_dense": [
+        512,
+        256
+      ],
+      "shared_dropout": 0.5,
+      "squeeze_excitation_ratio": 8,
+      "tcn_dilations": [
+        1,
+        2,
+        4
+      ],
+      "tcn_filters": [
+        80,
+        160,
+        160
+      ],
+      "tcn_kernel": 3
+    },
+    "model_selection": "fixed-final-epoch;report-every-seed;no-calibration-selection",
+    "optimizer": "AdamW;lr=0.0001;weight_decay=0.0001;batch=256;constant-lr",
+    "policy": "early-calibration-route-halves-only;60s-cooldown;chronological-one-to-one",
+    "primary": "LeagueEWS-minus-GRU;macro-timely-recall-10-to-30-seconds",
+    "schema_version": "league-ews-notebook-continuation-plan-v1",
+    "secondary": "per-event-30s-and-60s;all-four-row-horizons;all-controls",
+    "seeds": [
+      20260930,
+      20261001,
+      20261002
+    ],
+    "status": "exploratory-architecture-continuation-not-novelty-or-confirmation",
+    "targets": [
+      "y_baron_10",
+      "y_baron_20",
+      "y_baron_30",
+      "y_baron_60",
+      "y_dragon_10",
+      "y_dragon_20",
+      "y_dragon_30",
+      "y_dragon_60",
+      "y_teamfight_10",
+      "y_teamfight_20",
+      "y_teamfight_30",
+      "y_teamfight_60"
+    ],
+    "test_access": "prohibited"
+  },
+  "primary_diagnostic_contrast": "Joint LeagueEWS minus independent event encoders: macro timely recall at 10-30 seconds. Preserve original registered LeagueEWS-minus-GRU comparison unchanged.",
+  "publication": "Aggregate results, code, protocol and hashes only. Private match arrays, predictions and model binaries remain excluded.",
+  "purpose": "Test whether joint three-event supervision helps or harms each LeagueEWS task relative to a same-width independently supervised encoder.",
+  "schema_version": "league-task-sharing-plan-v1",
+  "seeds": [
+    20260930,
+    20261001,
+    20261002
+  ],
+  "selection_evidence": {
+    "history_dragon_mean_gain_pp": -0.171,
+    "history_macro_gain_pp": 0.851,
+    "leagueews_minus_tcn_macro_pp": 0.012,
+    "unresolved": "All previous neural fits shared event supervision; notebook report attributes gains partly to joint learning."
+  },
+  "selection_evidence_sha256": {
+    "reports/neural-continuation-2026-10-01/history-analysis.json": "82b7a83ef972450368b0b18ac7dfc647c2c748d4d5c88ffd37aab3c00baca648",
+    "reports/neural-continuation-2026-10-01/neural-analysis.json": "b29985d1f2ead715621f85c89487e367293556c90378918dc60d848c65fc4bbb"
+  },
+  "source_compatibility": "Verify every original source against preserved GPU checkout. In current checkout permit only pinned scripts/run_three_event_trees.py formatting repair, requiring AST identity. Archive exporter sources remain byte-identical.",
+  "status": "adaptive-exploratory-after-screen-and-history-ablation",
+  "test_access": "Patch 16.17 prohibited; use only the existing development ZIP.",
+  "training": "Nine fits: three events times three original seeds, 12 epochs on all 48 training shards. Identical inputs, normalization, initialization, shuffles, batch 256, AdamW, learning rate, weight decay and dropout RNG consumption to joint controls. Fixed final epoch; no tuning or early stopping.",
+  "uncertainty": "2000 whole-match bootstrap draws stratified by route, seed 20261001, paired across events and fitted seeds; conditional on fitted models/policies. Report each seed and fixed-seed average; do not multiply sample size by seeds."
+}
