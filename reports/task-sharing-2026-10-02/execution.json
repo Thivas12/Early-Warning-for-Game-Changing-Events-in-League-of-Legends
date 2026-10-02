@@ -1,0 +1,35 @@
+{
+  "base_commit": "befc2a5049bd755c8eae4839bdd0f08812fbf62c",
+  "branch": "research/league-task-sharing-20261002",
+  "canary": {
+    "completed_shards": 1,
+    "evaluation_opened": false,
+    "exit_code": 0,
+    "loss": 0.2719517591434082,
+    "rows": 14443,
+    "training_seconds": 2.4241893850266933
+  },
+  "checks": {
+    "additional_analysis_check": "All nine fit bindings validated before reading any predictions",
+    "full_suite": "562 passed, 1 skipped, 85.89% coverage; separate CPU maintenance environment",
+    "lint": "passed",
+    "pretraining_checks": "13 passed on preserved CUDA environment using CPU fixtures",
+    "types": "87 source files passed",
+    "warning": "Existing test_m3_followup scalar conversion warning; optional archived numba test skipped."
+  },
+  "freeze_sha256": "ae2f54e1006b09153acfd08e383752c1ebe996112b665fc6a005bfc3ee286bbe",
+  "implementation_commit": "5c66ffe",
+  "publication_scope": "Aggregates, code, protocol and hashes only; no match-level arrays, identifiers, private data or checkpoint binaries.",
+  "recorded_at_utc": "2026-10-02T07:55:33.494667+00:00",
+  "runtime": {
+    "cuda_build": "13.0",
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "torch": "2.14.0+cu130"
+  },
+  "status": "training-in-progress",
+  "test_payloads_opened": 0,
+  "validation_sha256": "5f055f8dacf2c025fe4954979e02e384b7efa490e46ddf4325062baf8a69812f",
+  "worker_first_observed_utc": "2026-10-02T07:43:07+00:00",
+  "worker_pid": 53469
+}
