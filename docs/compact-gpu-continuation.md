@@ -11,6 +11,12 @@ record the actual execution. The launch instructions below describe the original
 run; inspect its existing output before using them. For recovery, use the
 [pinned source and environment](../reports/neural-continuation-2026-10-01/reproduce.md).
 
+**Follow-up completed, 2 October 2026:** nine independent event encoders finished
+5,184 updates and nine gated evaluations with exit code 0. Their
+[results and interpretation](../reports/task-sharing-2026-10-02/research-report.md)
+and [separate frozen runner](../reports/task-sharing-2026-10-02/reproduce.md)
+preserve this original experiment. Patch 16.17 remains sealed.
+
 ## Model and fixed experiment
 
 The original LeagueEWS descendant is unchanged: residual TCN with squeeze-excitation,

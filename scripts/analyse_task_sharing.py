@@ -47,6 +47,8 @@ def validate_predictions(saved, reference, event):
 
 
 def replay_fit(saved, report, cal, rows, event):
+    # NpzFile does not cache __getitem__: decode once, not once per match.
+    probabilities = saved["probabilities"]
     early, later = _chronological_halves(rows)
     require(len(early) == len(later) == 3000 and not set(early) & set(later), "Halves differ")
     routes = np.array([row["regional_route"] for row in rows])
@@ -62,7 +64,7 @@ def replay_fit(saved, report, cal, rows, event):
                 reference_counts(
                     cal["times_ms"][a:b],
                     cal[f"{event}_ms"][left:right],
-                    saved["probabilities"][a:b, column],
+                    probabilities[a:b, column],
                     policy["threshold"],
                     horizon,
                 )

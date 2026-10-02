@@ -143,3 +143,41 @@ def test_loader_checks_every_fit_before_opening_predictions(tmp_path, monkeypatc
     monkeypatch.setattr(analysis.np, "load", lambda *a, **k: pytest.fail("Premature predictions"))
     with pytest.raises(ValueError, match="training incomplete"):
         analysis.load_independent(study, control, {}, [])
+
+
+def test_replay_decodes_compressed_predictions_once_per_fit(monkeypatch):
+    from scripts import analyse_task_sharing as analysis
+
+    class LazyArrays(dict):
+        prediction_reads = 0
+
+        def __getitem__(self, name):
+            if name == "probabilities":
+                self.prediction_reads += 1
+            return super().__getitem__(name)
+
+    rows = [{"regional_route": "europe" if i % 2 == 0 else "americas"} for i in range(6000)]
+    cal = {
+        "match_offsets": np.arange(0, 12001, 2),
+        "times_ms": np.tile([0, 45000], 6000),
+        "baron_offsets": np.arange(6001),
+        "baron_ms": np.full(6000, 50000),
+    }
+    saved = LazyArrays(probabilities=np.zeros((12000, 4)))
+    report = {"warnings": {}}
+    for h in (30, 60):
+        saved[f"counts_baron_{h}"] = np.tile([1, 0, 0, 0, 0, int(h == 60)], (3000, 1))
+        report["warnings"][f"baron_{h}"] = {
+            "threshold": 0.5,
+            "later": {},
+            "by_route": {"europe": {}, "americas": {}},
+            "regional_budget_met": True,
+        }
+    monkeypatch.setattr(
+        analysis, "_chronological_halves", lambda _: (list(range(3000)), list(range(3000, 6000)))
+    )
+    monkeypatch.setattr(analysis, "check_report", lambda *args: None)
+    counts, _ = analysis.replay_fit(saved, report, cal, rows, "baron")
+    assert saved.prediction_reads == 1
+    for h in (30, 60):
+        np.testing.assert_array_equal(counts[h], saved[f"counts_baron_{h}"])
