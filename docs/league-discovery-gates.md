@@ -1,11 +1,15 @@
 # LeagueEWS: the evidence needed for a strong paper
 
-**Update, 1 October 2026:** the development archive is available and validated.
+**Update, 2 October 2026:** the development archive is available and validated.
 [Nine real three-event tree fits](../reports/league-three-event-results-2026-10-01.md)
 are complete, as are the twelve neural fits and three matched history-ablation
-fits. The [neural report](../reports/neural-continuation-2026-10-01/research-report.md)
-records both failed development gates and a limited history benefit. Task sharing
-remains untested. The access limitation recorded below is historical and resolved.
+fits, followed by nine independent event fits. The
+[neural report](../reports/neural-continuation-2026-10-01/research-report.md)
+records failed development gates and a limited history benefit. The
+[task sharing report](../reports/task-sharing-2026-10-02/research-report.md)
+finds a +0.445-point macro recall effect of joint training, while Baron loses
+0.627 points and both variants fail a regional budget. Uniform task benefit is
+unsupported. The access limitation recorded below is historical and resolved.
 
 Status, 30 September 2026: **no breakthrough established**. The next empirical
 question comes from the original report's claim that temporal buildup and
@@ -80,10 +84,16 @@ something to investigate; it does not automatically establish a new method.
    failure, not precede it as an invented novelty label.
 
 Steps 1 and 2 are complete; neither passed its full regional-budget screen.
-Steps 3 and 4 remain unrun. Shared versus independent event encoders are the next
-specified mechanism comparison, with three seeds per event and the existing
-joint controls. The 12-fit runner and history-ablation freezes remain unchanged;
-the archived comparisons cannot establish task transfer or a hybrid advantage.
+Step 3 is now complete: sharing raises Dragon recall, lowers Baron recall in
+every seed, and gives no clear primary teamfight recall gain. The mean effect
+varies by region and lead interval and costs additional warning burden. The
+frozen no-task-harm and practical promotion rules fail. This identifies a
+task-dependent effect of the joint recipe, without isolating gradient conflict,
+loss scaling, representation competition or threshold timing as its cause.
+Step 4 remains the next diagnostic step using training and early calibration.
+The original runner, history-ablation runner and independent-event training
+freezes remain unchanged. No new transfer mechanism or hybrid advantage has
+been established.
 
 ### Endpoints and rejection rules
 

@@ -1,5 +1,12 @@
 # Continue from the original LeagueEWS project
 
+**Update, 2 October 2026:** the nine independent event fits also completed.
+[Joint versus independent results](../reports/task-sharing-2026-10-02/research-report.md)
+show higher Dragon recall and lower Baron recall under joint training, with
+failed regional budgets. The shared-learning explanation is task-dependent;
+no breakthrough is established. Use the study's
+[separate reproduction record](../reports/task-sharing-2026-10-02/reproduce.md).
+
 **Update, 1 October 2026:** the validated development ZIP supported nine tree
 controls, all twelve neural fits and three history-ablation fits. The
 [completed neural report](../reports/neural-continuation-2026-10-01/research-report.md)
