@@ -1,0 +1,112 @@
+........................................................................ [ 12%]
+........................................................................ [ 24%]
+........................................................................ [ 36%]
+........................................................................ [ 49%]
+........................................................................ [ 61%]
+........................................................................ [ 73%]
+........................................................................ [ 86%]
+........................................................................ [ 98%]
+.........                                                                [100%]
+=============================== warnings summary ===============================
+tests/test_m3_followup.py::test_censored_loss_ignores_unknown_negative_and_checks_exposure
+  /home/thivas/work/ai-portfolio/league-ews-audit/tmp/league-ews-gradient-conflict-20261002/tests/test_m3_followup.py:85: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+    assert float(loss) == pytest.approx(np.log(2))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                                        Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------------------------
+src/league_ews/__init__.py                      2      0      0      0   100%
+src/league_ews/__main__.py                      2      2      0      0     0%   1-3
+src/league_ews/alert_policy.py                140     10     44     10    89%   122, 127, 130, 133, 159, 163, 172, 189, 217, 225
+src/league_ews/audit.py                        81      6     30      8    87%   59-60, 68, 89, 98, 104->121, 112, 161->170, 170->180
+src/league_ews/authority.py                   133      7     38      7    92%   114, 116, 128, 130, 158, 161, 168
+src/league_ews/b4_backend.py                  103     10     26      7    87%   26, 45, 49-50, 60-61, 83, 107, 121, 139
+src/league_ews/b4_calibration.py              102      8     28      7    88%   31, 34, 51, 54, 81, 151, 170-171
+src/league_ews/b4_normalizer.py                96      7     32      7    89%   42, 45, 63, 86, 102, 110, 177
+src/league_ews/b4_plan.py                      37      0      8      0   100%
+src/league_ews/b4_sequence.py                  53      4     18      4    89%   45, 51, 55, 62
+src/league_ews/b4_staging.py                  107     21     36      8    77%   32-61, 89, 95, 110-111, 145->147, 151, 154, 170, 175, 182
+src/league_ews/b4_summary.py                   75      6     24      6    88%   46, 86, 103, 119, 124, 159
+src/league_ews/b4_training.py                  72      4     18      3    92%   27, 37, 54, 57
+src/league_ews/baseline_floor.py              167     16     80     18    86%   44, 48, 50, 60->55, 62, 63->55, 66, 68, 85, 114, 116, 127, 151, 153, 189, 194, 241, 259
+src/league_ews/benchmark.py                    72     10     18      3    79%   46-52, 106-107, 117
+src/league_ews/calibration_bootstrap.py       139      9     42      9    90%   136, 139, 145, 148, 177, 188, 204, 222, 246
+src/league_ews/cli.py                         966    127     68      2    87%   126-134, 138-143, 147-157, 174->176, 488-502, 506-552, 694-699, 729-731, 749-759, 763-789, 793-795, 799-812, 816-818, 822-851, 855-856, 860-871, 875-882, 886-899, 903-904, 908-917, 921-935, 939-956, 960-996, 1000-1034, 1038-1051, 1055-1075, 1079-1090, 1094-1110, 1114-1141, 1145-1169, 1207-1219, 1223-1253, 1257-1288, 1292-1317, 1321-1350, 1354-1355, 1359-1366, 1370-1381, 1385-1416, 1420-1449, 1453-1457
+src/league_ews/constants.py                    13      0      0      0   100%
+src/league_ews/coordination_experiment.py     246      2     72      2    99%   135, 137
+src/league_ews/coordination_features.py        92      1     30      1    98%   196
+src/league_ews/coordination_policy.py          63      1     26      1    98%   59
+src/league_ews/diagnostics.py                  78      2     20      4    94%   52, 81, 85->78, 87->78
+src/league_ews/discovery.py                   387     47     84     18    85%   229-233, 240, 308-315, 319, 333-343, 400-401, 444, 452, 493, 516, 523, 527, 575-576, 605, 611, 634-635, 640, 666, 709-710, 767, 818-819, 828, 926, 932->999, 941, 996->932
+src/league_ews/duration.py                    138     18     48     15    82%   46-47, 49, 56, 78, 83, 86-87, 101, 150, 153, 157, 160, 187, 207, 212, 214, 219
+src/league_ews/duration_rule.py               178     30     28      8    80%   144-148, 155, 164-171, 248, 273-274, 288->297, 291-292, 295, 374, 376, 380, 399-400, 429-430, 458-462
+src/league_ews/eda.py                         236     23    100     23    86%   30, 46, 49, 74, 77, 83, 88, 96, 104, 107, 121, 128, 141, 144, 159, 168, 265, 274, 277, 280, 282, 285, 289
+src/league_ews/event_review.py                110     15     54     16    81%   25, 34, 39, 42, 44, 46, 51->40, 53->40, 77, 90, 121-122, 134, 139, 140->136, 145, 162, 165
+src/league_ews/events.py                      109     14     34     10    82%   55-61, 74, 76, 78, 100, 128, 155->141, 193, 197
+src/league_ews/features.py                     19      0      2      1    95%   70->exit
+src/league_ews/final_collection.py            264     96     72     22    59%   84-88, 122, 159-160, 162, 170-196, 227-228, 230, 241-248, 284-294, 297, 302-306, 329, 340-346, 357-359, 473, 476, 484, 486, 489, 494, 496, 498-502, 512, 517-538, 546, 550-551, 564-565, 569, 578, 612-657
+src/league_ews/final_discovery.py             369     44     70     17    84%   231, 321-328, 332, 346-360, 427-445, 480-487, 532-533, 545, 650, 676, 683->747, 692, 744->683, 778, 817, 825-828, 860, 873, 895, 913, 917, 978
+src/league_ews/final_selection.py             496     53     84     17    87%   365, 535-542, 552, 581-588, 634-699, 750-757, 793, 814, 855, 961->1009, 968, 1016, 1098, 1104-1107, 1161, 1172, 1207, 1225, 1230-1231, 1233, 1256, 1267-1268, 1270, 1280
+src/league_ews/final_split.py                  60      7     22      5    85%   21, 35, 52, 78, 86, 110-111
+src/league_ews/graph.py                        76      5     36      7    89%   55, 57, 93, 147->142, 159, 161->160, 166
+src/league_ews/hazards.py                      52      5     30      5    88%   20, 36, 38, 46, 59
+src/league_ews/io.py                           24      0     10      1    97%   34->36
+src/league_ews/labels.py                       56      1     24      1    98%   29
+src/league_ews/m1_ablation_calibration.py     103      9     32      8    87%   43, 66, 89, 92, 113, 155, 188, 207-208
+src/league_ews/m1_ablation_inputs.py           27      1     14      2    93%   43, 58->60
+src/league_ews/m1_ablation_plan.py             39      1     10      1    96%   123
+src/league_ews/m1_ablation_summary.py          88     10     32     10    83%   39, 42, 63, 84, 88, 132, 153, 169, 174, 213
+src/league_ews/m1_ablation_training.py         68      4     18      1    94%   37, 41, 45, 94
+src/league_ews/m1_alert_diagnostics.py        165      5     64      5    96%   175, 184, 233, 236, 247
+src/league_ews/m1_alert_policy.py              87      9     32      9    85%   46, 62, 67, 70, 82, 91, 102, 108, 113
+src/league_ews/m1_backend.py                  147     12     40      9    89%   60, 103, 105, 107, 114-115, 117, 125-126, 224, 252, 268
+src/league_ews/m1_calibration.py              113     10     32      9    87%   57, 65, 79, 104, 108, 131, 164, 184, 203-204
+src/league_ews/m1_calibration_audit.py         83      6     30      6    89%   41, 75, 85, 128, 137, 184
+src/league_ews/m1_fixed_grid.py                59     11     22      3    78%   20-35, 62, 78, 98
+src/league_ews/m1_graph_plan.py                38      2     10      2    92%   76, 94
+src/league_ews/m1_graph_staging.py             88     24     34      7    66%   30-50, 72, 123, 128, 131, 147, 151, 157-158
+src/league_ews/m1_graph_window.py              68      5     22      5    89%   49, 52, 56, 60, 66
+src/league_ews/m1_normalizer.py               111      9     40      9    88%   48, 51, 65, 68, 74, 91, 109, 117, 213
+src/league_ews/m1_policy_summary.py            85     12     38     12    80%   37, 40, 56, 60, 62, 65, 98, 102, 135, 139, 144, 179
+src/league_ews/m1_summary.py                   77      4     24      4    92%   98, 132, 137, 182
+src/league_ews/m1_training.py                 102     26     30      4    70%   30, 38-97, 122, 147, 172, 178
+src/league_ews/m1_training_plan.py             44      1     12      1    96%   112
+src/league_ews/m2_backend.py                  113     12     24      8    85%   32, 43, 47-48, 50, 95, 120, 187, 190, 206, 209, 212
+src/league_ews/m2_calibration.py               95     30     28      4    61%   32-56, 60-66, 85, 127, 152, 164-173
+src/league_ews/m2_plan.py                      39      1      6      2    93%   99, 101->105
+src/league_ews/m2_preprocessing_audit.py       70     25     22      2    60%   22, 48, 85, 147-194
+src/league_ews/m2_spatial.py                   62      2     22      2    95%   76, 154
+src/league_ews/m2_training.py                  69     12     14      2    78%   30-39, 106, 137
+src/league_ews/m2_utility.py                  114      9     40      9    88%   96, 128, 132, 140, 150, 159, 194, 209, 271
+src/league_ews/m3_followup.py                  28      1      6      1    94%   59
+src/league_ews/m3_followup_audit.py           150     18     60     21    81%   66, 73->79, 94, 98, 101, 104, 109, 171, 174, 178, 181, 188, 204, 217, 221, 224, 229, 231->233, 239, 258, 260->264
+src/league_ews/metrics.py                      15      1      4      1    89%   17
+src/league_ews/notebook_ews.py                166      7     42      6    94%   42, 207-208, 218, 222, 247, 273
+src/league_ews/notebook_experiment.py         205     68     38      4    65%   65-128, 354, 363->362, 376->363, 382-462, 470-491
+src/league_ews/notebook_policy.py              49      3     24      3    92%   23, 36, 81
+src/league_ews/pilot_collection.py            462     64     96     28    83%   249-253, 275, 281-284, 307, 336, 370, 385, 390-391, 393, 417, 428-429, 431, 441, 549, 552-553, 568, 572, 580-581, 583, 609-610, 625-627, 629, 648-654, 656, 659, 664-668, 691, 702-708, 730-732, 834, 836, 839, 846, 852, 881-882, 884, 919, 928, 967-973
+src/league_ews/policy_novelty.py               94      0     28      0   100%
+src/league_ews/processed_validation.py         89     14     30      7    82%   36, 46, 52, 55, 77, 79, 82-83, 91, 121-122, 160-162
+src/league_ews/processing.py                   92      6     28      6    90%   30, 52, 61, 75, 111, 113
+src/league_ews/provenance.py                   15      2      0      0    87%   19-20
+src/league_ews/raw_field_coverage.py          106     11     46      9    87%   25, 34-35, 49, 53, 102, 140, 144, 147, 157, 159
+src/league_ews/raw_validation.py              405     46    100     22    87%   137, 144, 165, 212-213, 274, 300, 302, 306, 312-313, 317, 325-326, 336, 344-345, 350, 354-355, 357, 410, 413, 416-417, 440-446, 459, 474-478, 670, 702, 707, 721->726, 723->726, 807-808, 812-814, 829-831, 999, 1072->1074
+src/league_ews/riot.py                        342     57    120     31    79%   65, 89-91, 94-103, 121, 164, 167, 182, 200-201, 218, 223, 266, 286-288, 311, 313, 329, 365-368, 382, 384, 421, 445, 453-454, 456, 479-480, 482, 520, 523, 527, 537-538, 551, 587, 600, 604, 610-612, 615->606, 650, 654, 664, 669, 676, 681
+src/league_ews/sampling.py                    239     17     20      3    92%   257, 266-275, 285-292, 294, 522
+src/league_ews/scheduled_experiment.py        145     30     36      1    80%   201, 322-373
+src/league_ews/scheduled_model.py             165      1     40      2    99%   188, 241->239
+src/league_ews/scheduled_policy.py             91      0     22      0   100%
+src/league_ews/selection.py                   396     36    110     26    87%   215, 221-225, 229, 259-260, 265, 267, 296, 316, 343, 487, 500, 508-509, 523, 527, 529, 531, 537, 541, 548, 555, 565, 592, 595, 607-608, 623, 698, 785, 863->910, 870, 917
+src/league_ews/splits.py                       49      4     16      4    88%   18, 36, 81, 97
+src/league_ews/tabular_baseline.py            162     14     64     17    86%   59, 95, 99, 101, 112->107, 116->107, 118->107, 121, 123, 178, 188, 190, 231, 239, 249, 256, 271
+src/league_ews/timeline.py                    113      6     28      7    91%   85, 88, 117->113, 159, 171, 195, 201
+src/league_ews/timely_experiment.py           212     12     72      8    92%   74, 84, 91, 139, 166, 177, 347, 478-490
+src/league_ews/timely_policy.py                42      0      8      1    98%   88->92
+---------------------------------------------------------------------------------------
+TOTAL                                       11399   1281   3086    617    86%
+Required test coverage of 85% reached. Total coverage: 85.89%
+585 passed, 1 skipped, 1 warning in 106.51s (0:01:46)

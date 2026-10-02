@@ -1,0 +1,31 @@
+{
+  "schema_version": "league-pcgrad-execution-v1",
+  "status": "training-running",
+  "updated_utc": "2026-10-02T14:28:06.296597+00:00",
+  "training_commit": "da18592",
+  "worker_pid": 61927,
+  "worker_session": 41987,
+  "fits_planned": 3,
+  "updates_planned": 1728,
+  "canary": {
+    "completed_units": 1,
+    "last_loss": 2.085287,
+    "shard_seconds": 3.3,
+    "resumed_by_full_worker": true
+  },
+  "pretraining_software_checks": "12 PCGrad tests passed on CPU, including literal algorithm equivalence, shared-only update, RNG preservation, exact resume, calibration gate, all twelve score outputs. 9 additional analysis-rule checks passed before any new evaluation. Synthetic checks are not League evidence.",
+  "frozen_sources_modified": false,
+  "original_worker_was_complete": true,
+  "duplicate_training_workers_launched": 0,
+  "test_payloads_opened": 0,
+  "known_failures": [],
+  "publication": "Only aggregate diagnostics/results, hashes, code, plan, logs and interpretation. Private match data/predictions and checkpoint binaries excluded.",
+  "software_verification": {
+    "pytest_passed": 585,
+    "pytest_skipped": 1,
+    "coverage_percent": 85.89,
+    "ruff_check": "passed",
+    "ruff_format": "313 files already formatted",
+    "mypy": "87 source files, no issues"
+  }
+}
