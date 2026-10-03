@@ -1,0 +1,221 @@
+{
+  "budgets": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "contrasts": [
+    [
+      "pcgrad",
+      "leagueews"
+    ],
+    [
+      "pcgrad",
+      "tcn"
+    ],
+    [
+      "pcgrad",
+      "independent"
+    ],
+    [
+      "leagueews",
+      "tcn"
+    ],
+    [
+      "leagueews",
+      "gru"
+    ],
+    [
+      "leagueews",
+      "snapshot"
+    ],
+    [
+      "leagueews",
+      "independent"
+    ],
+    [
+      "leagueews",
+      "current_only"
+    ]
+  ],
+  "deterministic_control": "Original 101 geometric thresholds plus silence, single threshold across routes; maximize pooled early timely hits subject to non-timely/match <= nominal budget in EACH region. Tie: lower total burden, then higher threshold, with silence highest. Budget1 must exactly reproduce every original threshold and later match count.",
+  "events": [
+    "baron",
+    "dragon",
+    "teamfight"
+  ],
+  "families": [
+    "leagueews",
+    "gru",
+    "tcn",
+    "snapshot",
+    "current_only",
+    "independent",
+    "pcgrad"
+  ],
+  "frozen_at_utc": "2026-10-03T17:08:52.758997+00:00",
+  "frozen_rules": {
+    "consistent_across_budgets": "At each of the four primary budget points, PCGrad-minus-joint mean macro recall difference >0; report seeds and pointwise intervals at every point.",
+    "no_extra_burden": "Primary diagnostic mean burden difference upper95 bound <=0. A positive recall with positive later burden is not demonstrated equal-cost superiority.",
+    "no_mean_event_harm": "Each event budget-averaged primary mean recall difference >=0.",
+    "positive_recall": "Primary diagnostic fixed-seed mean paired lower95 bound >0 and all three budget-averaged seed recall differences >0.",
+    "regional_hard_budget": "Every primary PCGrad region/event/seed/budget expected burden <=1. Also separately show deviations above each nominal budget (not the hard1 limit).",
+    "warning_efficiency_screen": "All five preceding rules. Passing only identifies an exploratory candidate; cannot establish breakthrough, novelty or future-patch generalization. No minimum worthwhile effect or justified noninferiority margin is invented."
+  },
+  "gate": "Select all126 model-seed-event-horizon heads on early3000 matches and freeze all policies and their hashes before ANY new later-policy evaluation. Saved predictions necessarily contain both halves; only early counts enter selection. Preserve existing studies read-only and checkpoint every selected/evaluated head in a separate output.",
+  "horizons": [
+    30,
+    60
+  ],
+  "matched_early_mixture": "Within each event, seed and region, maximize early timely hits over convex mixtures of the SAME frozen thresholds with expected early burden EXACTLY equal to the prespecified budget. Enumerate single points and pairs (vertices of two-equality LP). Fixed candidate order resolves objective ties. One threshold would be sampled independently of observations at match start and held for the whole match. Evaluation uses expected whole-match counts analytically, not sampled coin realizations or per-row mixtures.",
+  "mixture_limits": "Region-specific selection and whole-match randomization are additional policy flexibility applied equally to ALL models. Exact early equality is not exact later equality, a hard per-match cap, or a future risk guarantee. Forcing equal early cost may be suboptimal relative to a <= constraint. No new method or convex-hull novelty claim.",
+  "next_decision": "Use the full results to select any subsequent hypothesis; do not continue blind architecture or seed search to force a positive claim.",
+  "outputs": "All seven families, every seed, event, region, horizon, budget and policy. Mean fixed-seed conditional intervals, seed points/ranges/SD; compare deterministic and exact-early mixtures. Record every failed nominal budget and every >1 hard-budget violation; no cherry-picked best point, seed, head or region.",
+  "primary_diagnostic": "PCGrad-minus-ordinary joint, 10-30-second macro timely recall, equally averaged across the FOUR fixed budget points under matched-early mixtures. Also paired differences in false-plus-late, false, late warning burden. This new exploratory diagnostic does not replace registered original LeagueEWS-minus-GRU atbudget1 under originalpolicy.",
+  "publication": "Code, aggregate counts/curves, plan, hashes and concise interpretation only; no private match arrays, predictions or checkpoint binaries.",
+  "purpose": "Test whether PCGrad recall gains persist when expected EARLY warning burden is exactly matched, and compare history, architecture and sharing across the same prespecified operating budgets. This is a policy diagnostic, no new neural fitting.",
+  "schema_version": "league-warning-efficiency-plan-v1",
+  "seeds": [
+    20260930,
+    20261001,
+    20261002
+  ],
+  "selection_evidence": {
+    "finding": "PCGrad primary macro +0.367pp versus joint accompanies +0.0459 false-plus-late/match/event; TCN and independent differences also spend more warning burden. Same maximum-budget rule did not equalize realized burden.",
+    "previous_report": "reports/gradient-conflict-2026-10-02/research-report.md",
+    "report_sha256": "5bc9ae722209f92dd4b0b797772dd624461c4aeddbb627ee3099e1c585b8fd4f"
+  },
+  "status": "adaptive-exploratory-after-PCGrad-review",
+  "studies": {
+    "control": {
+      "freeze_sha256": "3ff075d75cd32d42132a3bb800c1616ad2cd16e8bad584ed9ab0a4f2358337e6",
+      "summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7"
+    },
+    "history": {
+      "freeze_sha256": "11a450477e7e0e49e3f783eaf11a9c741449a438b0703f1fdcf36b9c41222aff",
+      "summary_sha256": "5a7abad8d5a097722dc5a5ed73a5fa9dbd4671db11c1d50f872747b7aed82ed7"
+    },
+    "independent": {
+      "freeze_sha256": "ae2f54e1006b09153acfd08e383752c1ebe996112b665fc6a005bfc3ee286bbe",
+      "summary_sha256": "7acd5d700f5b6762888f1bf5fe21be1d7af4ec00792d85a1ef4a6ac4154094f2"
+    },
+    "pcgrad": {
+      "freeze_sha256": "3d1234e010b2db987d9818b0e767f861b89ca49c30073fede974171f22aed458",
+      "summary_sha256": "ad37f8a6d0f83e05196e1b9a5b998e501d73707f37e66cb5779d9de7bc7885a1"
+    }
+  },
+  "test_access": "Patch16.17 sealed, development League archive only; no new collection.",
+  "thresholds": [
+    null,
+    1.0,
+    0.8912509381337459,
+    0.7943282347242822,
+    0.7079457843841388,
+    0.6309573444801942,
+    0.5623413251903491,
+    0.5011872336272725,
+    0.4466835921509635,
+    0.39810717055349776,
+    0.3548133892335753,
+    0.31622776601683794,
+    0.2818382931264455,
+    0.25118864315095824,
+    0.22387211385683423,
+    0.1995262314968879,
+    0.1778279410038923,
+    0.15848931924611143,
+    0.14125375446227553,
+    0.12589254117941687,
+    0.1122018454301963,
+    0.1,
+    0.08912509381337459,
+    0.07943282347242822,
+    0.0707945784384138,
+    0.06309573444801936,
+    0.05623413251903491,
+    0.05011872336272725,
+    0.04466835921509635,
+    0.039810717055349734,
+    0.035481338923357565,
+    0.03162277660168379,
+    0.02818382931264455,
+    0.025118864315095822,
+    0.0223872113856834,
+    0.01995262314968881,
+    0.01778279410038923,
+    0.01584893192461114,
+    0.014125375446227554,
+    0.012589254117941675,
+    0.01122018454301964,
+    0.01,
+    0.008912509381337459,
+    0.00794328234724282,
+    0.00707945784384138,
+    0.006309573444801936,
+    0.005623413251903491,
+    0.005011872336272725,
+    0.004466835921509635,
+    0.003981071705534973,
+    0.0035481338923357567,
+    0.0031622776601683794,
+    0.002818382931264455,
+    0.002511886431509582,
+    0.00223872113856834,
+    0.0019952623149688807,
+    0.0017782794100389228,
+    0.001584893192461114,
+    0.001412537544622754,
+    0.0012589254117941675,
+    0.0011220184543019641,
+    0.001,
+    0.0008912509381337459,
+    0.0007943282347242822,
+    0.000707945784384138,
+    0.000630957344480193,
+    0.0005623413251903491,
+    0.0005011872336272725,
+    0.0004466835921509635,
+    0.00039810717055349735,
+    0.0003548133892335753,
+    0.00031622776601683794,
+    0.0002818382931264455,
+    0.0002511886431509582,
+    0.000223872113856834,
+    0.00019952623149688788,
+    0.00017782794100389227,
+    0.00015848931924611142,
+    0.00014125375446227554,
+    0.00012589254117941674,
+    0.0001122018454301963,
+    0.0001,
+    8.912509381337459e-05,
+    7.943282347242822e-05,
+    7.079457843841373e-05,
+    6.309573444801929e-05,
+    5.623413251903491e-05,
+    5.011872336272725e-05,
+    4.466835921509635e-05,
+    3.9810717055349695e-05,
+    3.5481338923357534e-05,
+    3.1622776601683795e-05,
+    2.818382931264455e-05,
+    2.5118864315095822e-05,
+    2.238721138568338e-05,
+    1.9952623149688786e-05,
+    1.778279410038923e-05,
+    1.584893192461114e-05,
+    1.4125375446227555e-05,
+    1.2589254117941661e-05,
+    1.122018454301963e-05,
+    1e-05
+  ],
+  "uncertainty": {
+    "conditions": "Fitted models, early-selected policies and randomization expectation fixed; does not include refitting, threshold-selection, adaptive-search or realized coin-flip variance. Seeds/rows are not additional independent matches.",
+    "draws": 2000,
+    "intervals": "Pointwise unadjusted exploratory95%; no confirmatory or equivalence claim.",
+    "pairing": "Same bootstrap match weights across ALL models/events/seeds/budgets/policies",
+    "seed": 20261001,
+    "unit": "whole match, stratified by region"
+  }
+}
