@@ -1,0 +1,12 @@
+{
+  "recorded_at_utc": "2026-10-03T17:30:11.393230+00:00",
+  "phase": "all-early-selected-before-any-later-evaluation",
+  "early_heads": 126,
+  "later_heads": 0,
+  "plan_implementation_commit": "f304d73",
+  "study_freeze_sha256": "87477efb8ef81a999f2e292e1faaa52cda12fdd3b704a5ea35f203c2d4603621",
+  "policy_freeze_sha256": "81987e73d0ea0a1107318f8e81f2bc5235a171da1384e80ba833473d39f14a78",
+  "analysis_sha256": "1ccaa8944b882fa960f1277cca195e8b682192095ad767ddc53953d173f642c8",
+  "focused_tests_passed": 19,
+  "test_payloads_opened": 0
+}
