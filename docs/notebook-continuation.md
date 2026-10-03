@@ -1,5 +1,14 @@
 # Continue from the original LeagueEWS project
 
+**Latest analysis, 3 October 2026:** the
+[warning-efficiency study](../reports/warning-efficiency-2026-10-03/research-report.md)
+completed all seven variants, three seeds and four fixed budgets using stored
+scores. The PCGrad primary advantage is not clear after matching expected early
+cost; the longer-lead result is adverse and the frozen screen fails. The primary
+history benefit survives this diagnostic. No new fit or test release occurred.
+Its [reproduction record](../reports/warning-efficiency-2026-10-03/reproduce.md)
+supersedes suggestions to launch another PCGrad worker.
+
 **Update, 3 October 2026:** the three separately frozen PCGrad fits and gated
 evaluation completed. The [mechanism report](../reports/gradient-conflict-2026-10-02/research-report.md)
 records a mean primary macro gain with more warning burden, a negative seed,

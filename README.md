@@ -30,6 +30,11 @@ in every seed; regional budgets still fail. The separately frozen PCGrad test
 adds 0.367 points of mean primary macro recall, but fails to recover Baron,
 loses macro recall in one seed, adds warning burden and breaches a regional
 budget. Longer-lead improvements for Baron accompany Dragon and teamfight losses.
+The completed [warning-efficiency follow-up](reports/warning-efficiency-2026-10-03/research-report.md)
+matches expected early cost across four fixed budgets: PCGrad-minus-joint primary
+macro recall is +0.027 points [−0.036, +0.098], with a negative seed and later
+budget failures. Its longer-lead result is adverse. History retains a primary
+benefit, but a hybrid-specific or uniform task-sharing gain is unsupported.
 See the [PCGrad mechanism report](reports/gradient-conflict-2026-10-02/research-report.md),
 [task sharing report](reports/task-sharing-2026-10-02/research-report.md),
 [original neural report](reports/neural-continuation-2026-10-01/research-report.md),

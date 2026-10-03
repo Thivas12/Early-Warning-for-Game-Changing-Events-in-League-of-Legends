@@ -1,0 +1,40 @@
+{
+  "recorded_at_utc": "2026-10-03T17:49:18.398273+00:00",
+  "status": "complete-exploratory-warning-efficiency",
+  "new_neural_fits": 0,
+  "completed_control_fits": 27,
+  "completed_control_shard_updates": 15552,
+  "early_heads": 126,
+  "later_heads": 126,
+  "policy_head_budget_combinations": 1008,
+  "later_unique_matches": 3000,
+  "original_full_match_count_checks": 378000,
+  "independent_component_threshold_match_checks": 26226,
+  "registered_baseline_statistic_checks": 960,
+  "registered_baseline_max_absolute_error": 0.0,
+  "early_policy_freeze_mtime_utc": "2026-10-03T17:28:19.815089+00:00",
+  "first_later_report_mtime_utc": "2026-10-03T17:30:27.601348+00:00",
+  "summary_mtime_utc": "2026-10-03T17:30:40.208421+00:00",
+  "plan_runner_commit": "f304d73",
+  "pre_evaluation_analysis_commit": "3ec6fc1",
+  "study_freeze_sha256": "87477efb8ef81a999f2e292e1faaa52cda12fdd3b704a5ea35f203c2d4603621",
+  "policy_freeze_sha256": "81987e73d0ea0a1107318f8e81f2bc5235a171da1384e80ba833473d39f14a78",
+  "summary_sha256": "7f27f60bff587b0ae32504d1b4128dc26d7e1d5d9150ca35931c403645b8ae9c",
+  "analysis_sha256": "4e1850d083f3d2883b5c4be2b67f1cbc8b1b9e6d7e3fb0ab9baf32e47a0f2de8",
+  "full_tests": {
+    "passed": 604,
+    "skipped": 1,
+    "coverage_percent": 85.89
+  },
+  "ruff": "passed",
+  "mypy": "87 source files passed",
+  "test_payloads_opened": 0,
+  "final_worker_verification": {
+    "checked_at_utc": "2026-10-03T17:54:38.373107+00:00",
+    "league_training_or_evaluation_workers": 0,
+    "nvidia_compute_processes": 0,
+    "original_gpu_summary_exists": true
+  },
+  "raw_analysis_sha256": "872c06c85b19d064a14e474ed2e1195c82dd451a32c27f7dc1a8efc8c50fc645",
+  "publication_format": "Lossless JSON formatting by renderer; all values preserved, arrays and short records kept inline."
+}
