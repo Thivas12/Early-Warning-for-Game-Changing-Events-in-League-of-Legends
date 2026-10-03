@@ -42,6 +42,18 @@ exact lower-bound ties in the shorter interval; event replay retains the
 registered inclusive timely boundaries. Only early calibration enters these
 statistics. No new later-calibration comparison selected the intervention.
 
+A further descriptive reading of those same frozen diagnostics, while PCGrad
+was training, shows that early-calibration Dragon recall gains occur in both
+regions on average (+2.020 points Europe, +1.903 Americas), with extra burden
+of 0.102 and 0.116 respectively. Early Baron primary mean changes are −0.304
+and −0.785 points, but seed signs are mixed in each region. At 20–60 seconds,
+Baron loses recall in every seed in both regions. Its average precision also
+falls in every seed in both the 20–30-minute and later match phases. Dragon
+average precision rises consistently after 20 minutes at both horizons;
+teamfight's primary average precision falls in every seed before 30 minutes.
+These descriptive patterns leave event type, phase and policy timing relevant;
+they do not identify a gradient mechanism. This reading did not amend the plan.
+
 The frozen [plan](plan.json) therefore tests a limited hypothesis: can PCGrad
 recover Baron timely recall while retaining the other tasks and satisfying the
 same regional warning limits? It preserves model width, history, task weights,

@@ -1,10 +1,10 @@
 {
   "schema_version": "league-pcgrad-execution-v1",
-  "status": "training-running",
-  "updated_utc": "2026-10-02T14:28:06.296597+00:00",
+  "status": "complete-exploratory-failed-practical-screen",
+  "updated_utc": "2026-10-03T16:29:27.979116+00:00",
   "training_commit": "da18592",
   "worker_pid": 61927,
-  "worker_session": 41987,
+  "worker_session": null,
   "fits_planned": 3,
   "updates_planned": 1728,
   "canary": {
@@ -27,5 +27,43 @@
     "ruff_check": "passed",
     "ruff_format": "313 files already formatted",
     "mypy": "87 source files, no issues"
-  }
+  },
+  "progress_unit": "one completed training shard, not one minibatch optimizer step",
+  "optimizer_steps_per_epoch": 2781,
+  "optimizer_steps_per_fit": 33372,
+  "optimizer_steps_three_fits": 100116,
+  "analysis_commit_before_evaluation": "97220da",
+  "analysis_source_sha256": "86aebb78c7005a3e4e144def641898db7870b667b62b36ac3cb8fb1d50ce8511",
+  "fits_completed": 3,
+  "shard_updates_completed": 1728,
+  "reports_completed": 3,
+  "worker_exit_code": 0,
+  "worker_active": false,
+  "all_scores_after_final_training": true,
+  "last_checkpoint_utc": "2026-10-02T15:34:11.760371+00:00",
+  "first_score_utc": "2026-10-02T15:34:52.200502+00:00",
+  "summary_utc": "2026-10-02T15:36:13.936099+00:00",
+  "summary_sha256": "ad37f8a6d0f83e05196e1b9a5b998e501d73707f37e66cb5779d9de7bc7885a1",
+  "analysis_sha256": "812abd1b4bdcb8f717fec10f80d46b119c71c240babaefb5c418a45595f65333",
+  "training_log_sha256": "1bb40a6d30a9bfe047865ee9f3b785200ea947dad0b020b4b056deba866b3fbe",
+  "training_shard_seconds": 4157.667581080634,
+  "per_seed_shard_seconds": {
+    "20260930": 1349.3474272849853,
+    "20261001": 1384.8590235236916,
+    "20261002": 1423.4611302719568
+  },
+  "timing_scope": "Input reading/reconstruction plus model training; excludes checkpoint writes and calibration scoring; not pure GPU compute.",
+  "replayed_new_policies": 18,
+  "replay_matches_per_policy": 6000,
+  "evaluation_distinct_matches": 3000,
+  "diagnostic_rules": {
+    "all_pcgrad_primary_regional_budgets": false,
+    "baron_recovery": false,
+    "macro_gain": false,
+    "no_mean_task_harm": false,
+    "practical_screen": false,
+    "strong_control_gain": true
+  },
+  "analysis_failure_or_restart": false,
+  "verified_original_summary_exists": true
 }

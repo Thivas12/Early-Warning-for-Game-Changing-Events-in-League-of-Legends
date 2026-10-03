@@ -18,14 +18,19 @@ a versioned, validated research release.
 
 ## Research status
 
-**2 October 2026:** All twelve LeagueEWS/GRU/TCN/snapshot fits, three matched
-history-ablation fits and nine independent event fits completed on the PC GPU.
+**3 October 2026:** All twelve LeagueEWS/GRU/TCN/snapshot fits, three matched
+history-ablation fits, nine independent event fits and three PCGrad fits
+completed on the PC GPU.
 LeagueEWS gains 4.623 percentage
 points of macro timely recall over GRU at 10–30 seconds, but fails the registered
 regional warning-budget gate. It shows no clear advantage over TCN. The history
 ablation supports a limited past-state benefit, mainly for Baron. Joint versus
 independent training raises macro recall by 0.445 points but lowers Baron recall
-in every seed; regional budgets still fail. See the
+in every seed; regional budgets still fail. The separately frozen PCGrad test
+adds 0.367 points of mean primary macro recall, but fails to recover Baron,
+loses macro recall in one seed, adds warning burden and breaches a regional
+budget. Longer-lead improvements for Baron accompany Dragon and teamfight losses.
+See the [PCGrad mechanism report](reports/gradient-conflict-2026-10-02/research-report.md),
 [task sharing report](reports/task-sharing-2026-10-02/research-report.md),
 [original neural report](reports/neural-continuation-2026-10-01/research-report.md),
 [complete tables](reports/neural-continuation-2026-10-01/tables.md), and
@@ -86,7 +91,8 @@ The implemented continuation retains this model family and compares it with
 snapshot, GRU and TCN controls on the existing audited League sequence cache.
 It restores all three events and separately reports the original 30-second task.
 All twelve fits and their gated calibration evaluations completed, followed by
-three separately frozen history-ablation fits and nine independent event fits.
+three separately frozen history-ablation fits, nine independent event fits and
+three [PCGrad mechanism fits](reports/gradient-conflict-2026-10-02/reproduce.md).
 The [task sharing study](reports/task-sharing-2026-10-02/reproduce.md) has its own
 frozen runner and checkpoints. Preserve the completed outputs
 and use the [pinned reproduction instructions](reports/neural-continuation-2026-10-01/reproduce.md)
