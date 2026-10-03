@@ -1,0 +1,25 @@
+{
+  "archive_sha256": "3bdee868abe445947a8573167d4b3b561b60f5d2247f1857f6b538ff603e6a23",
+  "limit": "Checks the uploaded export and recorded provenance, not unavailable original raw payloads",
+  "partitions": {
+    "calibration": {
+      "baron_events": 6498,
+      "dragon_events": 22737,
+      "matches": 6000,
+      "rows": 175031,
+      "teamfight_events": 40021
+    },
+    "train": {
+      "baron_events": 25600,
+      "dragon_events": 90990,
+      "matches": 24000,
+      "rows": 704967,
+      "teamfight_events": 161658
+    }
+  },
+  "schema_version": "league-compact-validation-v1",
+  "shards_validated": 60,
+  "source_files_matched": 89,
+  "status": "passed",
+  "test_payloads_present": 0
+}

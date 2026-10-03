@@ -1,5 +1,14 @@
 # Continue from the original LeagueEWS project
 
+**Update, 3 October 2026:** the three separately frozen PCGrad fits and gated
+evaluation completed. The [mechanism report](../reports/gradient-conflict-2026-10-02/research-report.md)
+records a mean primary macro gain with more warning burden, a negative seed,
+unrecovered Baron recall and a Europe Dragon budget failure. At longer lead,
+Baron improves while Dragon and teamfights decline. The practical screen fails;
+this established optimization method does not resolve the sharing tradeoff.
+Use its [pinned reproduction record](../reports/gradient-conflict-2026-10-02/reproduce.md).
+All original freezes remain unchanged, and patch 16.17 remains sealed.
+
 **Update, 2 October 2026:** the nine independent event fits also completed.
 [Joint versus independent results](../reports/task-sharing-2026-10-02/research-report.md)
 show higher Dragon recall and lower Baron recall under joint training, with

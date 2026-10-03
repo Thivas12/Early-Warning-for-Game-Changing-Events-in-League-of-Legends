@@ -17,6 +17,14 @@ run; inspect its existing output before using them. For recovery, use the
 and [separate frozen runner](../reports/task-sharing-2026-10-02/reproduce.md)
 preserve this original experiment. Patch 16.17 remains sealed.
 
+**Further follow-up, analysed 3 October 2026:** all three PCGrad fits completed
+1,728 shard updates and gated evaluation, exit code 0. The
+[results](../reports/gradient-conflict-2026-10-02/research-report.md) fail the
+frozen practical screen: additional mean primary recall carries more warning
+burden, does not recover Baron and is not positive in every seed. Preserve its
+[separate frozen outputs and runner](../reports/gradient-conflict-2026-10-02/reproduce.md).
+There is no running training worker to duplicate or completed fit to restart.
+
 ## Model and fixed experiment
 
 The original LeagueEWS descendant is unchanged: residual TCN with squeeze-excitation,
