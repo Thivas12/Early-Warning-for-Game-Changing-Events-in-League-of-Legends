@@ -13,7 +13,13 @@ unsupported. The [PCGrad follow-up](../reports/gradient-conflict-2026-10-02/rese
 raises mean primary macro recall by 0.367 points with more burden, but fails
 Baron recovery, seed consistency and a regional budget. Longer-lead Baron gains
 accompany Dragon and teamfight losses. No breakthrough is established.
-The access limitation recorded below is historical and resolved.
+The [warning-efficiency diagnostic](../reports/warning-efficiency-2026-10-03/research-report.md)
+now evaluates all seven variants across four fixed budgets without new fitting.
+With expected early cost matched, PCGrad-minus-joint primary macro recall is
++0.027 points [−0.036, +0.098]; its longer-lead difference is negative in every
+seed. The frozen screen fails. A primary history benefit survives, while the
+joint-versus-independent macro advantage does not clearly survive this policy
+comparison. The access limitation recorded below is historical and resolved.
 
 Status, 30 September 2026: **no breakthrough established**. The next empirical
 question comes from the original report's claim that temporal buildup and
@@ -102,6 +108,10 @@ of Baron harm. Mean primary gains against TCN and independent encoders carry
 additional warning burden. A next comparison should address warning efficiency
 across prespecified early-calibration operating budgets for all strong controls;
 selecting favorable heads, seeds or horizons from these results is not confirmation.
+That warning-efficiency comparison is now complete. Exact early-cost mixtures
+do not establish a primary PCGrad advantage; later budget drift remains. The
+robust primary history effect motivates identifying which past information
+matters, using a separately frozen trained ablation before any new claims.
 No further method or test release is selected here. All completed training
 freezes remain unchanged. No new transfer mechanism or broad hybrid advantage
 has been established.

@@ -25,6 +25,13 @@ burden, does not recover Baron and is not positive in every seed. Preserve its
 [separate frozen outputs and runner](../reports/gradient-conflict-2026-10-02/reproduce.md).
 There is no running training worker to duplicate or completed fit to restart.
 
+**CPU follow-up completed, 3 October 2026:** the separately frozen
+[warning-efficiency analysis](../reports/warning-efficiency-2026-10-03/research-report.md)
+reused all completed scores. Its 126 early heads and 126 later heads are complete;
+no new training is needed to reproduce it. PCGrad fails the new diagnostic screen.
+Use the [separate replay instructions](../reports/warning-efficiency-2026-10-03/reproduce.md)
+and preserve all original GPU experiment files and checkpoints.
+
 ## Model and fixed experiment
 
 The original LeagueEWS descendant is unchanged: residual TCN with squeeze-excitation,
