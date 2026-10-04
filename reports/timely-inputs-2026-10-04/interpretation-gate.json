@@ -1,0 +1,7 @@
+{
+  "recorded_at_utc": "2026-10-04T12:29:41.611581+00:00",
+  "calibration_prediction_reports": 0,
+  "limitation": "The two input contrasts do not isolate non-timing history conditional on current full state and genuine timing history. A positive history effect cannot be assigned to non-timing buildup from this study alone.",
+  "potential_control": "Retain genuine seven-channel timer history and ages; repeat current other values and missingness at earlier valid frames. No control selected or fit in this record.",
+  "test_payloads_opened": 0
+}

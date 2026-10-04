@@ -1,5 +1,7 @@
 # LeagueEWS: the evidence needed for a strong paper
 
+**Latest evidence, 4 October 2026:** the [useful-lead input controls](../reports/timely-inputs-2026-10-04/research-report.md) support a primary history gain of +.650 points [.478, .821], with lower aggregate burden and positive effects in every seed and both regions. Full input also exceeds timing-only input, but those two comparisons do not identify the contribution of past non-timing state conditional on current state and timer history. Longer-lead history evidence is weak, and previously failed regional budgets remain failed. This is an exploratory mechanism result, not a novel architecture or breakthrough. All six new fits and 198 gated policy heads completed; patch 16.17 remains sealed.
+
 **Update, 3 October 2026:** the development archive is available and validated.
 [Nine real three-event tree fits](../reports/league-three-event-results-2026-10-01.md)
 are complete, as are the twelve neural fits and three matched history-ablation

@@ -46,12 +46,21 @@ PYTHONPATH=.:src "$league_python" -u -m scripts.evaluate_timely_inputs "${league
 PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 "$league_python" \
   -u -m scripts.analyse_timely_inputs --study "$league_output" \
   --archive "$league_archive" --plan "$league_report/plan.json" --output "$league_report"
+PYTHONPATH=.:src "$league_python" -m scripts.audit_timely_input_results \
+  --training "$league_inputs" --policy "$league_output" --output "$league_report"
 PYTHONPATH=.:src "$league_python" -m scripts.render_timely_inputs --output "$league_report"
 ```
 
 The one-shard CUDA canary precedes the wrapper on a new study; it was already
 completed for this output. Never repeat a completed fit as a canary. Exact
 continuation verifies model, optimizer, RNG, source, data, runtime and device.
+The original worker later exited with native SIGSEGV during the final seed,
+after 32 checkpointed updates. `recovery-record.json` records verification of
+all six checkpoints, preservation of the crash log and partial-fit checkpoint,
+and a successful one-shard continuation to update 33. The five completed model
+hashes were unchanged. Recovery enabled `PYTHONFAULTHANDLER=1` for diagnostics
+without changing training files, packages or settings. The native crash's root
+cause was not established; a successful continuation is not proof of its repair.
 All six fits finish before calibration scoring. The evaluator verifies all
 198 score heads and freezes all early policies before evaluating any new later
 head. An interrupted evaluation computes only missing heads after verifying

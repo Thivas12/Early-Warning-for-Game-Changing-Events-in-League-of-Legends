@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-10-04T12:45:46.171540+00:00",
+  "analysis_commit": "9ccb4a6",
+  "early_heads": 198,
+  "later_heads": 0,
+  "test_payloads_opened": 0,
+  "frozen_artifacts": {
+    "freeze.json": "e3367700e249a5119932dd9484eaafa8c042fbd9045cb6f20699de93f921e6a1",
+    "policy-freeze.json": "04d5202d81f4030f0913730477975ef2df66f3f83f0a0d9a0816aaaa70de28a3"
+  }
+}

@@ -49,8 +49,31 @@ under this fixed recipe. It does not identify which excluded feature causes a
 gain. The current-only intervention still contains historical summaries in its
 current frame and retains observation ages; timing-only still has a history.
 
+## Regional exposure check using already published aggregates
+
+The [descriptive exposure record](prior-exposure-diagnostic.json) reuses the
+completed objective audit and dense-policy analysis; it selects no new policy.
+Americas has 44,120 observed frames in the early half and 44,157 later, only
+0.084% more, with 1,500 distinct matches in each half. Its Baron opportunity fraction changes
+from 33.27% to 32.68%, while full timely LeagueEWS's mean dense budget-one burden
+is 1.0313 warnings per match across seeds. Europe's observed-frame count falls
+1.03%; its corresponding Baron burden is 0.9364.
+
+The near-equal Americas frame exposure does not support explaining its overrun
+simply as substantially more observed frames per match. It does not rule out
+changes in match composition, conditional risks or score distributions. Aggregate
+ratios cannot identify the cause of drift or turn a mean training/calibration
+constraint into a later regional risk guarantee. All failed gates remain failed.
+
 ## What remains unresolved regardless of the result
 
+- The two input contrasts are not a factorial decomposition. Full-minus-current
+  removes past timing and non-timing state together; full-minus-clock removes
+  current and past non-timing state together. Even two positive contrasts cannot
+  prove that the history gain comes from past non-timing state. That requires an
+  additional control retaining genuine timer history and all current state while
+  replacing only past non-timing values and missingness with their current values.
+  This limitation was recorded before the new calibration predictions existed.
 - Equal parameter counts do not guarantee equal effective capacity or equally
   good optimization after input removal. A weak reduced-input model is not an
   information-theoretic proof that timing cannot predict an event.

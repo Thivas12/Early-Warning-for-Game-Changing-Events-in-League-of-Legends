@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-10-04T12:40:26.417029+00:00",
+  "fits_complete": 6,
+  "checkpointed_updates": 3456,
+  "calibration_reports": 6,
+  "worker_exit_code": 0,
+  "summary_sha256": "072c387aa04c90dbb8426c9414b289b80176817f85aeb25db480913c6e245043",
+  "freeze_sha256": "7e522a2a5eeb75ffec0e97240ccfe91891759585101270bfefee6c64280be193",
+  "original_compact_summary_exists": true,
+  "test_payloads_opened": 0
+}
