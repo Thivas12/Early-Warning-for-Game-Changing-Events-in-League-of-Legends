@@ -1,0 +1,15 @@
+{
+  "recorded_at_utc": "2026-10-04T11:24:08.419160+00:00",
+  "training_protocol_commit": "039f927",
+  "training_freeze_sha256": "7e522a2a5eeb75ffec0e97240ccfe91891759585101270bfefee6c64280be193",
+  "fits_complete": 0,
+  "training_shard_updates": 470,
+  "new_calibration_prediction_reports": 0,
+  "new_later_policy_evaluations": 0,
+  "analysis_source_sha256": {
+    "scripts/evaluate_timely_inputs.py": "ba3a8dd144dc24bed88423805ac9cd9df2e95da37f35cbbb487dea08fe4e56ff",
+    "scripts/analyse_timely_inputs.py": "eed1e97ea28df4235bae289176aadb3211bdb22bf5a1f7b9ff1d9b3066116c9e"
+  },
+  "focused_tests_passed": 8,
+  "test_payloads_opened": 0
+}
