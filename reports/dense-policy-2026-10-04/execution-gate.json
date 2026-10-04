@@ -1,0 +1,14 @@
+{
+  "recorded_at_utc": "2026-10-04T09:55:00.073847+00:00",
+  "reference_commit": "2d50b24",
+  "source_sha256": {
+    "scripts/evaluate_dense_policy.py": "1deea7824d2dd93b2f7b12644f3490d0ce5c5b36e4c5324d01c942f7bc03dd20",
+    "scripts/analyse_dense_policy.py": "a6a9dd33e11470e574ce74a419efee41a932f9bf5f811375f62e111434bcce22",
+    "reports/dense-policy-2026-10-04/plan.json": "1171469256201db60e088450451dcb4b93c9ef436e24f7644bb81da3b40fc6fd"
+  },
+  "new_early_heads": 0,
+  "new_later_heads": 0,
+  "focused_tests_passed": 4,
+  "new_fits": 0,
+  "test_payloads_opened": 0
+}
