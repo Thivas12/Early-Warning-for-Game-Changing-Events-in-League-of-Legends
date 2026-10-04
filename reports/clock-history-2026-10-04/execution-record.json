@@ -1,0 +1,63 @@
+{
+  "recorded_at_utc": "2026-10-04T16:46:44.854249+00:00",
+  "training_protocol_commit": "997e299",
+  "analysis_commit": "98346c3",
+  "training_freeze_sha256": "ddcab5af71711c6cd66706a62b3ee76ec0eb5b66ee1cbfc7de6de96037056cc4",
+  "training_summary_sha256": "e37a50fc8de1eaab5f026437fe9bdb1de4c1417b9f1e4254bf7555dfea393aad",
+  "training_exit_code": 0,
+  "new_fits": 3,
+  "new_shard_updates": 1728,
+  "new_fit_training_seconds": 2155.2473442733753,
+  "new_fit_records": {
+    "clock_history/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 704.7870718916529,
+      "checkpoint_sha256": "5a369996121a667cbc232c774b7cdfa95539dc39692561122eaae820f1037ac2",
+      "scores_sha256": "d22455697dae20753a02dbf8384303b60185b838544263bf21039a06415647ad"
+    },
+    "clock_history/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 718.0035844066879,
+      "checkpoint_sha256": "bd266b4f04ff3c0d1762f23c7ffb4c23e1792c572f5b4790de231c2359b2171b",
+      "scores_sha256": "d67fa148fb479d1a6f9a185592ae27390293bb9e793d07c031fd5e8ae761f8db"
+    },
+    "clock_history/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 732.4566879750346,
+      "checkpoint_sha256": "6312d1894ae26975635e096918aebbfee5c3e527aad499b7f3e78c8f4d8029f7",
+      "scores_sha256": "d620866dd0b7165a46e697ef75d502e3682df37b02c7d64b27917a797a957043"
+    }
+  },
+  "completed_prior_neural_fits": 39,
+  "total_completed_neural_fits": 42,
+  "test_payloads_opened": 0,
+  "freeze_sha256": "ddd45313ec6a74f82247ca478717c49764f010c07bd2162848d57c21fa5e70e5",
+  "policy_freeze_sha256": "bc6ae7e2a8c8e9f6294d8a3d7f707c45430d39a9a83196e9ab134b5716ddf67f",
+  "summary_sha256": "1a0f92740f1d729fe29f604e9c77cfd38022c13c6f8913315e69bdfaf7f18edc",
+  "early_heads": 216,
+  "later_heads": 216,
+  "independent_component_checks": 83359,
+  "new_full_reference_checks": 108000,
+  "prior_all_five_policy_heads_reproduced": 198,
+  "prior_dense_heads_reproduced": 72,
+  "prior_analysis_exact_reproduction": {
+    "timely-inputs-2026-10-04": {
+      "model_metric_records": 26400,
+      "shared_contrast_metric_records": 26400
+    }
+  },
+  "raw_analysis_sha256": "35174c4fce26e35a5a7ca71e7d88d955c3780484e29a397ee281573e3491605d",
+  "raw_policies_sha256": "b833ca43eedada6ff7061e4415e247782af8d38394702a6f4e8396434b156165",
+  "tests_passed": 642,
+  "tests_skipped": 1,
+  "coverage_percent": 85.89,
+  "focused_experiment_tests_passed": 8,
+  "scoring_release_tests_passed": 7,
+  "pre_prediction_tests_passed": 635,
+  "protocol_commit_order_met": false,
+  "protocol_deviation_sha256": "28835ec9c35f1fdc9f549f8e40995eaaa79a0c86636408bee576137bbeaa9c93",
+  "mypy_source_files": 87,
+  "published_analysis_sha256": "3e8b5e1f502802d2bec60bfb2666a2e2b3799462c6d26198009839d76df54627",
+  "published_policies_sha256": "e3455050bf77ddf2dbea06ab9c6902f578de18c76dc269283d6e86e0149d20d2",
+  "figure_visually_inspected": true
+}

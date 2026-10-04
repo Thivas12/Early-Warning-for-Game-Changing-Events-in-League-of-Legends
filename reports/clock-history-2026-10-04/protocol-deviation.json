@@ -1,0 +1,19 @@
+{
+  "recorded_at_utc": "2026-10-04T16:39:29.958940+00:00",
+  "planned_requirement": "Commit evaluation and paired analysis before calibration predictions.",
+  "actual_analysis_gate_written_at_utc": "2026-10-04T14:35:25.469119+00:00",
+  "actual_analysis_commit": "98346c3034220147bcc98df1c4b3ae45e9ee3927",
+  "actual_analysis_commit_time": "2026-10-04T16:37:09+00:00",
+  "prediction_report_filesystem_mtimes_utc": {
+    "seed-20260930": "2026-10-04T15:01:32.871807+00:00",
+    "seed-20261001": "2026-10-04T15:01:38.695742+00:00",
+    "seed-20261002": "2026-10-04T15:01:44.534849+00:00"
+  },
+  "analysis_source_matches_pre_prediction_hash_record": true,
+  "new_scores_or_policy_results_inspected_before_record": false,
+  "protocol_commit_order_met": false,
+  "cause": "Git mutation approval returned after the unattended training worker completed scoring. The runner enforced all fits before scoring, but did not enforce a committed analysis release.",
+  "correction": "Preserve trained artifacts and unchanged analysis; disclose delayed commit; do not claim pre-scoring Git registration. Require an explicit hash-bound committed release gate before scoring in future studies, so a delayed approval leaves training checkpoints intact and calibration unopened. Do not change this frozen runner or rerun fits to conceal the deviation.",
+  "interpretation": "Timing record supports an unchanged prewritten analysis but is not an externally timestamped preregistration. Study remains adaptive and exploratory. The separate all-216-early-head gate still precedes later policy evaluation.",
+  "test_payloads_opened": 0
+}
