@@ -1,0 +1,322 @@
+{
+  "additional_contrast": "difference-in-differences: (timely_leagueews-leagueews)-(timely_tcn-tcn), at all policies/budgets/lead windows; tests whether objective benefit differs by family, not general hybrid novelty.",
+  "budgets": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "contrasts": [
+    [
+      "timely_leagueews",
+      "leagueews"
+    ],
+    [
+      "timely_tcn",
+      "tcn"
+    ],
+    [
+      "timely_leagueews",
+      "timely_tcn"
+    ],
+    [
+      "timely_leagueews",
+      "pcgrad"
+    ],
+    [
+      "timely_leagueews",
+      "independent"
+    ],
+    [
+      "leagueews",
+      "tcn"
+    ],
+    [
+      "leagueews",
+      "gru"
+    ],
+    [
+      "leagueews",
+      "snapshot"
+    ],
+    [
+      "leagueews",
+      "current_only"
+    ],
+    [
+      "leagueews",
+      "independent"
+    ]
+  ],
+  "control_freeze_sha256": "3ff075d75cd32d42132a3bb800c1616ad2cd16e8bad584ed9ab0a4f2358337e6",
+  "control_summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7",
+  "evaluation_families": [
+    "leagueews",
+    "gru",
+    "tcn",
+    "snapshot",
+    "current_only",
+    "independent",
+    "pcgrad",
+    "timely_leagueews",
+    "timely_tcn"
+  ],
+  "events": [
+    "baron",
+    "dragon",
+    "teamfight"
+  ],
+  "evidence": {
+    "objective_audit_sha256": "2ac4e63bcbf781e2b49dcc3273c9a37000d504a2166f9ab7a4fde0c6d0086b31",
+    "previous_report_sha256": "15c9646fb4c6f94adb14531958d11aab3af98b0122000dbc6360f2fcc8ea9828",
+    "tree_timing_report_sha256": "6450c4570f1b833fa37ffadc91d29fcbab131cd317c81b7665bad0e3b291e730"
+  },
+  "families": [
+    "leagueews",
+    "tcn"
+  ],
+  "fits": 6,
+  "formatted_policy_source_sha256": "9d37933b1dd7c915609d483d0e0ba30186a68bb75ef499e6a0e7be252afaa603",
+  "frozen_at_utc": "2026-10-03T20:07:51.924284+00:00",
+  "frozen_rules": {
+    "no_extra_burden": "Primary budget-mean false-plus-late difference upper95 <=0; crossing zero does not establish equal cost.",
+    "no_mean_event_harm": "Each primary budget-mean event recall difference >=0; report all event intervals and seeds, no post-result noninferiority margin.",
+    "objective_alignment_effect": "Primary fixed-seed mean recall paired lower95 >0 AND all three primary seed recall differences >0.",
+    "practical_promotion": "All five preceding checks; passing is exploratory candidate evidence only. No breakthrough, novelty or future-patch claim from this development screen.",
+    "regional_hard_budget": "Both timely families meet <=1 later expected false-plus-late/match for every primary region/event/seed/budget under matched-early policy; report nominal-budget drift separately.",
+    "strong_control_gain": "Primary timely_leagueews-minus-timely_tcn mean recall lower95 >0 AND all three seed differences >0."
+  },
+  "intervention": "Only columns30 and60 per event change from any-event cumulative labels to NEXT STRICTLY FUTURE event delay in closed [10,30]s and [20,60]s. Original 10/20s cumulative auxiliary labels retained; no changes to the twelve-logit model or BCE weights. Events at cutoff are excluded. A nearer late event precludes positive credit from a second later event.",
+  "mechanism_limits": "This changes supervision across six evaluated heads and hence shared gradients; it is not a pure loss-scale or gradient-conflict intervention. It does not identify which past feature matters. Score calibration on the fitted target; do not compare Brier/AUC across different target definitions as the same estimand.",
+  "next_decision": "Use complete results to select the next hypothesis. Do not adapt epochs, weights, targets or families mid-run. No automatic promotion from a small improvement.",
+  "normalization": "Recompute training-only moments and require exact equality to original normalizer; original inputs and masks remain identical.",
+  "original_plan": {
+    "budget": "<=1-false-plus-late-alert-per-match-in-each-route",
+    "epochs": 12,
+    "families": [
+      "leagueews",
+      "gru",
+      "tcn",
+      "snapshot"
+    ],
+    "inputs": "frozen-b4-8-real-frames-27-values-27-missingness-bits-age",
+    "model": {
+      "attention_heads": 4,
+      "attention_key_dimension": 64,
+      "event_loss_weights": [
+        1.0,
+        2.0,
+        2.5
+      ],
+      "gru_layers": 2,
+      "gru_units_per_direction": 160,
+      "horizons_seconds": [
+        10,
+        20,
+        30,
+        60
+      ],
+      "normalization": "per-token-layernorm;masked-squeeze-excitation",
+      "representation_width": 128,
+      "shared_dense": [
+        512,
+        256
+      ],
+      "shared_dropout": 0.5,
+      "squeeze_excitation_ratio": 8,
+      "tcn_dilations": [
+        1,
+        2,
+        4
+      ],
+      "tcn_filters": [
+        80,
+        160,
+        160
+      ],
+      "tcn_kernel": 3
+    },
+    "model_selection": "fixed-final-epoch;report-every-seed;no-calibration-selection",
+    "optimizer": "AdamW;lr=0.0001;weight_decay=0.0001;batch=256;constant-lr",
+    "policy": "early-calibration-route-halves-only;60s-cooldown;chronological-one-to-one",
+    "primary": "LeagueEWS-minus-GRU;macro-timely-recall-10-to-30-seconds",
+    "schema_version": "league-ews-notebook-continuation-plan-v1",
+    "secondary": "per-event-30s-and-60s;all-four-row-horizons;all-controls",
+    "seeds": [
+      20260930,
+      20261001,
+      20261002
+    ],
+    "status": "exploratory-architecture-continuation-not-novelty-or-confirmation",
+    "targets": [
+      "y_baron_10",
+      "y_baron_20",
+      "y_baron_30",
+      "y_baron_60",
+      "y_dragon_10",
+      "y_dragon_20",
+      "y_dragon_30",
+      "y_dragon_60",
+      "y_teamfight_10",
+      "y_teamfight_20",
+      "y_teamfight_30",
+      "y_teamfight_60"
+    ],
+    "test_access": "prohibited"
+  },
+  "policies": [
+    "deterministic",
+    "regional_deterministic",
+    "matched_early_mixture"
+  ],
+  "policy_definitions": {
+    "deterministic": "Original 101 geometric thresholds plus silence, single threshold across routes; maximize pooled early timely hits subject to non-timely/match <= nominal budget in EACH region. Tie: lower total burden, then higher threshold, with silence highest. Budget1 must exactly reproduce every original threshold and later match count.",
+    "matched_early_mixture": "Within each event, seed and region, maximize early timely hits over convex mixtures of the SAME frozen thresholds with expected early burden EXACTLY equal to the prespecified budget. Enumerate single points and pairs (vertices of two-equality LP). Fixed candidate order resolves objective ties. One threshold would be sampled independently of observations at match start and held for the whole match. Evaluation uses expected whole-match counts analytically, not sampled coin realizations or per-row mixtures.",
+    "regional_deterministic": "The same deterministic grid, budget and tie rule independently within each region. This added control separates region-specific threshold selection from randomization/budget interpolation when comparing policy recipes."
+  },
+  "policy_limits": "Region-specific selection and whole-match randomization are additional policy flexibility applied equally to ALL models. Exact early equality is not exact later equality, a hard per-match cap, or a future risk guarantee. Forcing equal early cost may be suboptimal relative to a <= constraint. No new method or convex-hull novelty claim.",
+  "primary_diagnostic": "timely_leagueews minus cumulative leagueews: 10-30s macro timely event recall, equal mean over four fixed budgets under matched_early_mixture. Report paired burden differences and all seeds. Preserve original registered LeagueEWS-minus-GRU deterministic budget1 comparison.",
+  "publication": "Reproducible code, aggregates, figures and provenance; exclude private match arrays, scores and model binaries.",
+  "purpose": "Test the omitted useful-lead neural training control before attributing cumulative-target recipe results to architecture or sharing. A known objective-alignment intervention, not a novel method.",
+  "reporting": "All nine variants, all three seeds, both regions, three events, two lead windows, three policies and four budgets. Include false and late burden, seed ranges/SD, paired match uncertainty, policy-factor contrasts and all negative results. Never use rows, budgets or repeated fits as independent matches.",
+  "schema_version": "league-timely-neural-plan-v1",
+  "seeds": [
+    20260930,
+    20261001,
+    20261002
+  ],
+  "status": "adaptive-exploratory-missing-control-after-warning-efficiency-audit",
+  "studies": {
+    "control": {
+      "freeze_sha256": "3ff075d75cd32d42132a3bb800c1616ad2cd16e8bad584ed9ab0a4f2358337e6",
+      "summary_sha256": "46aed802c4080657c9dd568a942208e809e27f35c952183c42371d05e8df02c7"
+    },
+    "history": {
+      "freeze_sha256": "11a450477e7e0e49e3f783eaf11a9c741449a438b0703f1fdcf36b9c41222aff",
+      "summary_sha256": "5a7abad8d5a097722dc5a5ed73a5fa9dbd4671db11c1d50f872747b7aed82ed7"
+    },
+    "independent": {
+      "freeze_sha256": "ae2f54e1006b09153acfd08e383752c1ebe996112b665fc6a005bfc3ee286bbe",
+      "summary_sha256": "7acd5d700f5b6762888f1bf5fe21be1d7af4ec00792d85a1ef4a6ac4154094f2"
+    },
+    "pcgrad": {
+      "freeze_sha256": "3d1234e010b2db987d9818b0e767f861b89ca49c30073fede974171f22aed458",
+      "summary_sha256": "ad37f8a6d0f83e05196e1b9a5b998e501d73707f37e66cb5779d9de7bc7885a1"
+    }
+  },
+  "test_access": "Patch16.17 sealed. League development archive only.",
+  "thresholds": [
+    null,
+    1.0,
+    0.8912509381337459,
+    0.7943282347242822,
+    0.7079457843841388,
+    0.6309573444801942,
+    0.5623413251903491,
+    0.5011872336272725,
+    0.4466835921509635,
+    0.39810717055349776,
+    0.3548133892335753,
+    0.31622776601683794,
+    0.2818382931264455,
+    0.25118864315095824,
+    0.22387211385683423,
+    0.1995262314968879,
+    0.1778279410038923,
+    0.15848931924611143,
+    0.14125375446227553,
+    0.12589254117941687,
+    0.1122018454301963,
+    0.1,
+    0.08912509381337459,
+    0.07943282347242822,
+    0.0707945784384138,
+    0.06309573444801936,
+    0.05623413251903491,
+    0.05011872336272725,
+    0.04466835921509635,
+    0.039810717055349734,
+    0.035481338923357565,
+    0.03162277660168379,
+    0.02818382931264455,
+    0.025118864315095822,
+    0.0223872113856834,
+    0.01995262314968881,
+    0.01778279410038923,
+    0.01584893192461114,
+    0.014125375446227554,
+    0.012589254117941675,
+    0.01122018454301964,
+    0.01,
+    0.008912509381337459,
+    0.00794328234724282,
+    0.00707945784384138,
+    0.006309573444801936,
+    0.005623413251903491,
+    0.005011872336272725,
+    0.004466835921509635,
+    0.003981071705534973,
+    0.0035481338923357567,
+    0.0031622776601683794,
+    0.002818382931264455,
+    0.002511886431509582,
+    0.00223872113856834,
+    0.0019952623149688807,
+    0.0017782794100389228,
+    0.001584893192461114,
+    0.001412537544622754,
+    0.0012589254117941675,
+    0.0011220184543019641,
+    0.001,
+    0.0008912509381337459,
+    0.0007943282347242822,
+    0.000707945784384138,
+    0.000630957344480193,
+    0.0005623413251903491,
+    0.0005011872336272725,
+    0.0004466835921509635,
+    0.00039810717055349735,
+    0.0003548133892335753,
+    0.00031622776601683794,
+    0.0002818382931264455,
+    0.0002511886431509582,
+    0.000223872113856834,
+    0.00019952623149688788,
+    0.00017782794100389227,
+    0.00015848931924611142,
+    0.00014125375446227554,
+    0.00012589254117941674,
+    0.0001122018454301963,
+    0.0001,
+    8.912509381337459e-05,
+    7.943282347242822e-05,
+    7.079457843841373e-05,
+    6.309573444801929e-05,
+    5.623413251903491e-05,
+    5.011872336272725e-05,
+    4.466835921509635e-05,
+    3.9810717055349695e-05,
+    3.5481338923357534e-05,
+    3.1622776601683795e-05,
+    2.818382931264455e-05,
+    2.5118864315095822e-05,
+    2.238721138568338e-05,
+    1.9952623149688786e-05,
+    1.778279410038923e-05,
+    1.584893192461114e-05,
+    1.4125375446227555e-05,
+    1.2589254117941661e-05,
+    1.122018454301963e-05,
+    1e-05
+  ],
+  "training": "Identical original family initialization, architecture, 12 epochs, 48 train shards, batch256, AdamW 1e-4, weight_decay1e-4, event weights1/2/2.5, original row permutations and final epoch. No tuning, reseeding, new rows or extra observation times.",
+  "training_gate": "All six fits complete before saving any new calibration predictions. A separate evaluation implementation is committed before any new later-policy evaluation; all 162 early heads are fixed and jointly hashed before later evaluation.",
+  "uncertainty": {
+    "conditions": "Fitted models, early-selected policies and randomization expectation fixed; does not include refitting, threshold-selection, adaptive-search or realized coin-flip variance. Seeds/rows are not additional independent matches.",
+    "draws": 2000,
+    "intervals": "Pointwise unadjusted exploratory95%; no confirmatory or equivalence claim.",
+    "pairing": "Same bootstrap match weights across ALL models/events/seeds/budgets/policies",
+    "seed": 20261001,
+    "unit": "whole match, stratified by region"
+  }
+}

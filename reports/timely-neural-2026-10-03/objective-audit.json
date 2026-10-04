@@ -1,0 +1,709 @@
+{
+  "archive_sha256": "3bdee868abe445947a8573167d4b3b561b60f5d2247f1857f6b538ff603e6a23",
+  "partitions": {
+    "early": {
+      "americas": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 804,
+              "event_count": 1614,
+              "frame_only_recall_ceiling": 0.33271375464684017,
+              "frame_opportunities": 537,
+              "late_fraction_of_cumulative_positives": 0.332089552238806,
+              "late_only_positive_rows": 267,
+              "useful_next_event_positive_rows": 537
+            },
+            "60": {
+              "cumulative_positive_rows": 1612,
+              "event_count": 1614,
+              "frame_only_recall_ceiling": 0.6716232961586122,
+              "frame_opportunities": 1084,
+              "late_fraction_of_cumulative_positives": 0.32754342431761785,
+              "late_only_positive_rows": 528,
+              "useful_next_event_positive_rows": 1084
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 2909,
+              "event_count": 5763,
+              "frame_only_recall_ceiling": 0.34166232864827345,
+              "frame_opportunities": 1969,
+              "late_fraction_of_cumulative_positives": 0.3231350979718116,
+              "late_only_positive_rows": 940,
+              "useful_next_event_positive_rows": 1969
+            },
+            "60": {
+              "cumulative_positive_rows": 5758,
+              "event_count": 5763,
+              "frame_only_recall_ceiling": 0.6699635606454971,
+              "frame_opportunities": 3861,
+              "late_fraction_of_cumulative_positives": 0.32945467176102816,
+              "late_only_positive_rows": 1897,
+              "useful_next_event_positive_rows": 3861
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 5103,
+              "event_count": 10223,
+              "frame_only_recall_ceiling": 0.34412599041377284,
+              "frame_opportunities": 3518,
+              "late_fraction_of_cumulative_positives": 0.3172643543013913,
+              "late_only_positive_rows": 1619,
+              "useful_next_event_positive_rows": 3484
+            },
+            "60": {
+              "cumulative_positive_rows": 9946,
+              "event_count": 10223,
+              "frame_only_recall_ceiling": 0.6632104079037464,
+              "frame_opportunities": 6780,
+              "late_fraction_of_cumulative_positives": 0.34566659963804547,
+              "late_only_positive_rows": 3438,
+              "useful_next_event_positive_rows": 6508
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.01323322383857344,
+        "gap_ms_quantiles": [
+          268.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          65010.0
+        ],
+        "matches": 1500,
+        "observations": 44120
+      },
+      "europe": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 821,
+              "event_count": 1643,
+              "frame_only_recall_ceiling": 0.3371880706025563,
+              "frame_opportunities": 554,
+              "late_fraction_of_cumulative_positives": 0.32521315468940315,
+              "late_only_positive_rows": 267,
+              "useful_next_event_positive_rows": 554
+            },
+            "60": {
+              "cumulative_positive_rows": 1642,
+              "event_count": 1643,
+              "frame_only_recall_ceiling": 0.674984783931832,
+              "frame_opportunities": 1109,
+              "late_fraction_of_cumulative_positives": 0.32460414129110843,
+              "late_only_positive_rows": 533,
+              "useful_next_event_positive_rows": 1109
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 2786,
+              "event_count": 5645,
+              "frame_only_recall_ceiling": 0.32719220549158545,
+              "frame_opportunities": 1847,
+              "late_fraction_of_cumulative_positives": 0.3370423546302943,
+              "late_only_positive_rows": 939,
+              "useful_next_event_positive_rows": 1847
+            },
+            "60": {
+              "cumulative_positive_rows": 5636,
+              "event_count": 5645,
+              "frame_only_recall_ceiling": 0.6724534986713906,
+              "frame_opportunities": 3796,
+              "late_fraction_of_cumulative_positives": 0.32647267565649396,
+              "late_only_positive_rows": 1840,
+              "useful_next_event_positive_rows": 3796
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 5011,
+              "event_count": 10003,
+              "frame_only_recall_ceiling": 0.34019794061781466,
+              "frame_opportunities": 3403,
+              "late_fraction_of_cumulative_positives": 0.3264817401716224,
+              "late_only_positive_rows": 1636,
+              "useful_next_event_positive_rows": 3375
+            },
+            "60": {
+              "cumulative_positive_rows": 9743,
+              "event_count": 10003,
+              "frame_only_recall_ceiling": 0.6579026292112367,
+              "frame_opportunities": 6581,
+              "late_fraction_of_cumulative_positives": 0.3498922303192035,
+              "late_only_positive_rows": 3409,
+              "useful_next_event_positive_rows": 6334
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.014274856301363355,
+        "gap_ms_quantiles": [
+          237.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          61161.0
+        ],
+        "matches": 1500,
+        "observations": 43602
+      },
+      "overall": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 1625,
+              "event_count": 3257,
+              "frame_only_recall_ceiling": 0.33497083205403744,
+              "frame_opportunities": 1091,
+              "late_fraction_of_cumulative_positives": 0.32861538461538464,
+              "late_only_positive_rows": 534,
+              "useful_next_event_positive_rows": 1091
+            },
+            "60": {
+              "cumulative_positive_rows": 3254,
+              "event_count": 3257,
+              "frame_only_recall_ceiling": 0.6733190052195271,
+              "frame_opportunities": 2193,
+              "late_fraction_of_cumulative_positives": 0.326060233558697,
+              "late_only_positive_rows": 1061,
+              "useful_next_event_positive_rows": 2193
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 5695,
+              "event_count": 11408,
+              "frame_only_recall_ceiling": 0.3345021037868163,
+              "frame_opportunities": 3816,
+              "late_fraction_of_cumulative_positives": 0.3299385425812116,
+              "late_only_positive_rows": 1879,
+              "useful_next_event_positive_rows": 3816
+            },
+            "60": {
+              "cumulative_positive_rows": 11394,
+              "event_count": 11408,
+              "frame_only_recall_ceiling": 0.6711956521739131,
+              "frame_opportunities": 7657,
+              "late_fraction_of_cumulative_positives": 0.32797963840617866,
+              "late_only_positive_rows": 3737,
+              "useful_next_event_positive_rows": 7657
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 10114,
+              "event_count": 20226,
+              "frame_only_recall_ceiling": 0.342183328389202,
+              "frame_opportunities": 6921,
+              "late_fraction_of_cumulative_positives": 0.3218311251730275,
+              "late_only_positive_rows": 3255,
+              "useful_next_event_positive_rows": 6859
+            },
+            "60": {
+              "cumulative_positive_rows": 19689,
+              "event_count": 20226,
+              "frame_only_recall_ceiling": 0.6605853851478295,
+              "frame_opportunities": 13361,
+              "late_fraction_of_cumulative_positives": 0.34775763116460967,
+              "late_only_positive_rows": 6847,
+              "useful_next_event_positive_rows": 12842
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.013750855739949481,
+        "gap_ms_quantiles": [
+          237.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          65010.0
+        ],
+        "matches": 3000,
+        "observations": 87722
+      }
+    },
+    "later": {
+      "americas": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 803,
+              "event_count": 1631,
+              "frame_only_recall_ceiling": 0.32679337829552424,
+              "frame_opportunities": 533,
+              "late_fraction_of_cumulative_positives": 0.33623910336239105,
+              "late_only_positive_rows": 270,
+              "useful_next_event_positive_rows": 533
+            },
+            "60": {
+              "cumulative_positive_rows": 1631,
+              "event_count": 1631,
+              "frame_only_recall_ceiling": 0.6768853464132434,
+              "frame_opportunities": 1104,
+              "late_fraction_of_cumulative_positives": 0.3231146535867566,
+              "late_only_positive_rows": 527,
+              "useful_next_event_positive_rows": 1104
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 2879,
+              "event_count": 5751,
+              "frame_only_recall_ceiling": 0.33072509128847155,
+              "frame_opportunities": 1902,
+              "late_fraction_of_cumulative_positives": 0.3393539423410907,
+              "late_only_positive_rows": 977,
+              "useful_next_event_positive_rows": 1902
+            },
+            "60": {
+              "cumulative_positive_rows": 5748,
+              "event_count": 5751,
+              "frame_only_recall_ceiling": 0.6617979481829247,
+              "frame_opportunities": 3806,
+              "late_fraction_of_cumulative_positives": 0.3378566457898399,
+              "late_only_positive_rows": 1942,
+              "useful_next_event_positive_rows": 3806
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 4894,
+              "event_count": 9817,
+              "frame_only_recall_ceiling": 0.33584598146073136,
+              "frame_opportunities": 3297,
+              "late_fraction_of_cumulative_positives": 0.33203923171230076,
+              "late_only_positive_rows": 1625,
+              "useful_next_event_positive_rows": 3269
+            },
+            "60": {
+              "cumulative_positive_rows": 9539,
+              "event_count": 9817,
+              "frame_only_recall_ceiling": 0.662829785066721,
+              "frame_opportunities": 6507,
+              "late_fraction_of_cumulative_positives": 0.3462627109759933,
+              "late_only_positive_rows": 3303,
+              "useful_next_event_positive_rows": 6236
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.013292073985512343,
+        "gap_ms_quantiles": [
+          234.0,
+          60008.0,
+          60016.0,
+          60026.0,
+          63120.0
+        ],
+        "matches": 1500,
+        "observations": 44157
+      },
+      "europe": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 834,
+              "event_count": 1610,
+              "frame_only_recall_ceiling": 0.34658385093167704,
+              "frame_opportunities": 558,
+              "late_fraction_of_cumulative_positives": 0.33093525179856115,
+              "late_only_positive_rows": 276,
+              "useful_next_event_positive_rows": 558
+            },
+            "60": {
+              "cumulative_positive_rows": 1609,
+              "event_count": 1610,
+              "frame_only_recall_ceiling": 0.6509316770186335,
+              "frame_opportunities": 1048,
+              "late_fraction_of_cumulative_positives": 0.34866376631448104,
+              "late_only_positive_rows": 561,
+              "useful_next_event_positive_rows": 1048
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 2750,
+              "event_count": 5578,
+              "frame_only_recall_ceiling": 0.3287916816063105,
+              "frame_opportunities": 1834,
+              "late_fraction_of_cumulative_positives": 0.3330909090909091,
+              "late_only_positive_rows": 916,
+              "useful_next_event_positive_rows": 1834
+            },
+            "60": {
+              "cumulative_positive_rows": 5571,
+              "event_count": 5578,
+              "frame_only_recall_ceiling": 0.672104697024023,
+              "frame_opportunities": 3749,
+              "late_fraction_of_cumulative_positives": 0.3270507987793933,
+              "late_only_positive_rows": 1822,
+              "useful_next_event_positive_rows": 3749
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 4955,
+              "event_count": 9978,
+              "frame_only_recall_ceiling": 0.335838845460012,
+              "frame_opportunities": 3351,
+              "late_fraction_of_cumulative_positives": 0.32855701311806257,
+              "late_only_positive_rows": 1628,
+              "useful_next_event_positive_rows": 3327
+            },
+            "60": {
+              "cumulative_positive_rows": 9698,
+              "event_count": 9978,
+              "frame_only_recall_ceiling": 0.6644618159951894,
+              "frame_opportunities": 6630,
+              "late_fraction_of_cumulative_positives": 0.34440090740358836,
+              "late_only_positive_rows": 3340,
+              "useful_next_event_positive_rows": 6358
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.012628445212714876,
+        "gap_ms_quantiles": [
+          167.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          61153.0
+        ],
+        "matches": 1500,
+        "observations": 43152
+      },
+      "overall": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 1637,
+              "event_count": 3241,
+              "frame_only_recall_ceiling": 0.33662449861153965,
+              "frame_opportunities": 1091,
+              "late_fraction_of_cumulative_positives": 0.3335369578497251,
+              "late_only_positive_rows": 546,
+              "useful_next_event_positive_rows": 1091
+            },
+            "60": {
+              "cumulative_positive_rows": 3240,
+              "event_count": 3241,
+              "frame_only_recall_ceiling": 0.663992594878124,
+              "frame_opportunities": 2152,
+              "late_fraction_of_cumulative_positives": 0.3358024691358025,
+              "late_only_positive_rows": 1088,
+              "useful_next_event_positive_rows": 2152
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 5629,
+              "event_count": 11329,
+              "frame_only_recall_ceiling": 0.3297731485568011,
+              "frame_opportunities": 3736,
+              "late_fraction_of_cumulative_positives": 0.336294190797655,
+              "late_only_positive_rows": 1893,
+              "useful_next_event_positive_rows": 3736
+            },
+            "60": {
+              "cumulative_positive_rows": 11319,
+              "event_count": 11329,
+              "frame_only_recall_ceiling": 0.6668726277694412,
+              "frame_opportunities": 7555,
+              "late_fraction_of_cumulative_positives": 0.3325382100892305,
+              "late_only_positive_rows": 3764,
+              "useful_next_event_positive_rows": 7555
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 9849,
+              "event_count": 19795,
+              "frame_only_recall_ceiling": 0.3358423844405153,
+              "frame_opportunities": 6648,
+              "late_fraction_of_cumulative_positives": 0.3302873388161235,
+              "late_only_positive_rows": 3253,
+              "useful_next_event_positive_rows": 6596
+            },
+            "60": {
+              "cumulative_positive_rows": 19237,
+              "event_count": 19795,
+              "frame_only_recall_ceiling": 0.6636524374842132,
+              "frame_opportunities": 13137,
+              "late_fraction_of_cumulative_positives": 0.3453241149867443,
+              "late_only_positive_rows": 6643,
+              "useful_next_event_positive_rows": 12594
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.01296421497111815,
+        "gap_ms_quantiles": [
+          167.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          63120.0
+        ],
+        "matches": 3000,
+        "observations": 87309
+      }
+    },
+    "train": {
+      "americas": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 6372,
+              "event_count": 12799,
+              "frame_only_recall_ceiling": 0.33947964684740994,
+              "frame_opportunities": 4345,
+              "late_fraction_of_cumulative_positives": 0.31811048336472064,
+              "late_only_positive_rows": 2027,
+              "useful_next_event_positive_rows": 4345
+            },
+            "60": {
+              "cumulative_positive_rows": 12794,
+              "event_count": 12799,
+              "frame_only_recall_ceiling": 0.6716931010235174,
+              "frame_opportunities": 8597,
+              "late_fraction_of_cumulative_positives": 0.3280443958105362,
+              "late_only_positive_rows": 4197,
+              "useful_next_event_positive_rows": 8597
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 22909,
+              "event_count": 46098,
+              "frame_only_recall_ceiling": 0.33148943555034927,
+              "frame_opportunities": 15281,
+              "late_fraction_of_cumulative_positives": 0.3329695752760924,
+              "late_only_positive_rows": 7628,
+              "useful_next_event_positive_rows": 15281
+            },
+            "60": {
+              "cumulative_positive_rows": 46079,
+              "event_count": 46098,
+              "frame_only_recall_ceiling": 0.6698121393552866,
+              "frame_opportunities": 30877,
+              "late_fraction_of_cumulative_positives": 0.329911673430413,
+              "late_only_positive_rows": 15202,
+              "useful_next_event_positive_rows": 30877
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 40325,
+              "event_count": 80292,
+              "frame_only_recall_ceiling": 0.338838240422458,
+              "frame_opportunities": 27206,
+              "late_fraction_of_cumulative_positives": 0.3318784872907626,
+              "late_only_positive_rows": 13383,
+              "useful_next_event_positive_rows": 26942
+            },
+            "60": {
+              "cumulative_positive_rows": 78051,
+              "event_count": 80292,
+              "frame_only_recall_ceiling": 0.6603522144173766,
+              "frame_opportunities": 53021,
+              "late_fraction_of_cumulative_positives": 0.3484388412704514,
+              "late_only_positive_rows": 27196,
+              "useful_next_event_positive_rows": 50855
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.013944879250287846,
+        "gap_ms_quantiles": [
+          167.0,
+          60008.0,
+          60016.0,
+          60026.0,
+          63708.0
+        ],
+        "matches": 12000,
+        "observations": 355065
+      },
+      "europe": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 6322,
+              "event_count": 12801,
+              "frame_only_recall_ceiling": 0.33427076009686746,
+              "frame_opportunities": 4279,
+              "late_fraction_of_cumulative_positives": 0.323157228725087,
+              "late_only_positive_rows": 2043,
+              "useful_next_event_positive_rows": 4279
+            },
+            "60": {
+              "cumulative_positive_rows": 12794,
+              "event_count": 12801,
+              "frame_only_recall_ceiling": 0.6794000468713381,
+              "frame_opportunities": 8697,
+              "late_fraction_of_cumulative_positives": 0.3202282319837424,
+              "late_only_positive_rows": 4097,
+              "useful_next_event_positive_rows": 8697
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 22070,
+              "event_count": 44892,
+              "frame_only_recall_ceiling": 0.32881136950904394,
+              "frame_opportunities": 14761,
+              "late_fraction_of_cumulative_positives": 0.33117353874037153,
+              "late_only_positive_rows": 7309,
+              "useful_next_event_positive_rows": 14761
+            },
+            "60": {
+              "cumulative_positive_rows": 44857,
+              "event_count": 44892,
+              "frame_only_recall_ceiling": 0.6745968101220707,
+              "frame_opportunities": 30284,
+              "late_fraction_of_cumulative_positives": 0.32487683081793256,
+              "late_only_positive_rows": 14573,
+              "useful_next_event_positive_rows": 30284
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 40708,
+              "event_count": 81366,
+              "frame_only_recall_ceiling": 0.3373890814345058,
+              "frame_opportunities": 27452,
+              "late_fraction_of_cumulative_positives": 0.33167927680062886,
+              "late_only_positive_rows": 13502,
+              "useful_next_event_positive_rows": 27206
+            },
+            "60": {
+              "cumulative_positive_rows": 79118,
+              "event_count": 81366,
+              "frame_only_recall_ceiling": 0.6598087653319569,
+              "frame_opportunities": 53686,
+              "late_fraction_of_cumulative_positives": 0.3489850602896939,
+              "late_only_positive_rows": 27611,
+              "useful_next_event_positive_rows": 51507
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.013444726577528395,
+        "gap_ms_quantiles": [
+          133.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          64459.0
+        ],
+        "matches": 12000,
+        "observations": 349902
+      },
+      "overall": {
+        "events": {
+          "baron": {
+            "30": {
+              "cumulative_positive_rows": 12694,
+              "event_count": 25600,
+              "frame_only_recall_ceiling": 0.336875,
+              "frame_opportunities": 8624,
+              "late_fraction_of_cumulative_positives": 0.32062391681109187,
+              "late_only_positive_rows": 4070,
+              "useful_next_event_positive_rows": 8624
+            },
+            "60": {
+              "cumulative_positive_rows": 25588,
+              "event_count": 25600,
+              "frame_only_recall_ceiling": 0.675546875,
+              "frame_opportunities": 17294,
+              "late_fraction_of_cumulative_positives": 0.32413631389713926,
+              "late_only_positive_rows": 8294,
+              "useful_next_event_positive_rows": 17294
+            }
+          },
+          "dragon": {
+            "30": {
+              "cumulative_positive_rows": 44979,
+              "event_count": 90990,
+              "frame_only_recall_ceiling": 0.3301681503461919,
+              "frame_opportunities": 30042,
+              "late_fraction_of_cumulative_positives": 0.33208830787700927,
+              "late_only_positive_rows": 14937,
+              "useful_next_event_positive_rows": 30042
+            },
+            "60": {
+              "cumulative_positive_rows": 90936,
+              "event_count": 90990,
+              "frame_only_recall_ceiling": 0.6721727662380481,
+              "frame_opportunities": 61161,
+              "late_fraction_of_cumulative_positives": 0.32742808128793877,
+              "late_only_positive_rows": 29775,
+              "useful_next_event_positive_rows": 61161
+            }
+          },
+          "teamfight": {
+            "30": {
+              "cumulative_positive_rows": 81033,
+              "event_count": 161658,
+              "frame_only_recall_ceiling": 0.33810884707221417,
+              "frame_opportunities": 54658,
+              "late_fraction_of_cumulative_positives": 0.33177841126454655,
+              "late_only_positive_rows": 26885,
+              "useful_next_event_positive_rows": 54148
+            },
+            "60": {
+              "cumulative_positive_rows": 157169,
+              "event_count": 161658,
+              "frame_only_recall_ceiling": 0.6600786846305162,
+              "frame_opportunities": 106707,
+              "late_fraction_of_cumulative_positives": 0.3487138048851873,
+              "late_only_positive_rows": 54807,
+              "useful_next_event_positive_rows": 102362
+            }
+          }
+        },
+        "exact_60s_gap_fraction": 0.013696698958980392,
+        "gap_ms_quantiles": [
+          133.0,
+          60008.0,
+          60017.0,
+          60026.0,
+          64459.0
+        ],
+        "matches": 24000,
+        "observations": 704967
+      }
+    }
+  },
+  "schema_version": "league-neural-objective-audit-v1",
+  "scope": "Descriptive audited development data; no fitted-model evaluation or test access",
+  "source_sha256": {
+    "/home/thivas/work/ai-portfolio/league-ews-audit/tmp/league-ews-timely-neural-20261003/scripts/audit_neural_objectives.py": "fe5ada6d37af3c8c5c918ce2320ebefc249568195ab468cb0327860ef2868ff7",
+    "/home/thivas/work/ai-portfolio/league-ews-audit/tmp/league-ews-timely-neural-20261003/scripts/timely_neural_targets.py": "04119e3fd58cfc82cca6e0d481a88a2b4e0b01e62283eb4624fbf9f1e7be067d"
+  },
+  "test_payloads_opened": 0,
+  "validation": {
+    "archive_sha256": "3bdee868abe445947a8573167d4b3b561b60f5d2247f1857f6b538ff603e6a23",
+    "limit": "Checks the uploaded export and recorded provenance, not unavailable original raw payloads",
+    "partitions": {
+      "calibration": {
+        "baron_events": 6498,
+        "dragon_events": 22737,
+        "matches": 6000,
+        "rows": 175031,
+        "teamfight_events": 40021
+      },
+      "train": {
+        "baron_events": 25600,
+        "dragon_events": 90990,
+        "matches": 24000,
+        "rows": 704967,
+        "teamfight_events": 161658
+      }
+    },
+    "schema_version": "league-compact-validation-v1",
+    "shards_validated": 60,
+    "source_files_matched": 89,
+    "status": "passed",
+    "test_payloads_present": 0
+  }
+}

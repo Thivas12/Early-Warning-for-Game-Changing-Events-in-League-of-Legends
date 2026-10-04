@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-10-04T07:43:11.343722+00:00",
+  "training_protocol_commit": "eeaf25b",
+  "training_freeze_sha256": "3d2e20c9e44c8a99a5f73302e56863580c9e7b9264bc3de27756b90624b8b172",
+  "training_freeze_mtime_utc": "2026-10-04T07:30:58.353754+00:00",
+  "fits_complete": 0,
+  "training_shard_updates": 445,
+  "new_calibration_prediction_reports": 0,
+  "new_later_policy_evaluations": 0,
+  "analysis_source_sha256": {
+    "scripts/evaluate_timely_neural.py": "37a005f6083436c1d6e893588b2a4100da3d781383c39efaaedfeb85bf3bb9fe",
+    "scripts/analyse_timely_neural.py": "1efe1109cbd012ea5dddb7df911fd9c68ee1f6979c2c7edd094b652b95dd24b0"
+  },
+  "focused_tests_passed": 11,
+  "test_payloads_opened": 0
+}
