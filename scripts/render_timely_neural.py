@@ -122,7 +122,9 @@ def render(folder, plots=False):
         make_plots(folder, results)
         for name in ("target-effects.svg", "event-target-effects.svg"):
             path = folder / name
-            path.write_text("\n".join(line.rstrip() for line in path.read_text().splitlines()) + "\n")
+            path.write_text(
+                "\n".join(line.rstrip() for line in path.read_text().splitlines()) + "\n"
+            )
 
 
 def make_plots(folder, results):
