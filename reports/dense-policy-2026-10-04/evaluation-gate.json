@@ -1,0 +1,15 @@
+{
+  "recorded_at_utc": "2026-10-04T09:57:53.889251+00:00",
+  "implementation_analysis_commit": "4c89cc6",
+  "early_heads": 72,
+  "later_heads": 0,
+  "new_fits": 0,
+  "test_payloads_opened": 0,
+  "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+  "policy_freeze_sha256": "8693f99fe275898206a6f38871e7103e0418f3cb221bcba75eeb26faaf6514ab",
+  "tests_passed": 619,
+  "tests_skipped": 1,
+  "coverage_percent": 85.89,
+  "focused_tests_passed": 4,
+  "mypy_source_files": 87
+}
