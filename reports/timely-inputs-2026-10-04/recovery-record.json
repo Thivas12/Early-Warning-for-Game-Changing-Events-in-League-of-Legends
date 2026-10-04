@@ -1,0 +1,84 @@
+{
+  "recorded_at_utc": "2026-10-04T12:21:51.556073+00:00",
+  "worker_pid": 90882,
+  "worker_exit_code": 139,
+  "failure": "Native Python SIGSEGV while running final clock-only fit; no Python traceback",
+  "root_cause": "Unresolved; kernel logged a Python segmentation fault. No evidence here establishes CUDA failure or out-of-memory.",
+  "training_freeze_sha256": "7e522a2a5eeb75ffec0e97240ccfe91891759585101270bfefee6c64280be193",
+  "all_frozen_sources_unchanged": true,
+  "checkpoint_records": [
+    {
+      "family": "clock_only",
+      "seed": 20260930,
+      "completed_units": 576,
+      "checkpoint_sha256": "4a6d7d604ba5ebe45b8d425fa94cf22acfecd307dace3776a08eb84462b78131",
+      "backend_tensors_checked": 418,
+      "backend_tensors_finite": true
+    },
+    {
+      "family": "clock_only",
+      "seed": 20261001,
+      "completed_units": 576,
+      "checkpoint_sha256": "86282b7827a819c5ddef42f4fd4590390112e63adf41ee470fbb0503eec9f48b",
+      "backend_tensors_checked": 418,
+      "backend_tensors_finite": true
+    },
+    {
+      "family": "clock_only",
+      "seed": 20261002,
+      "completed_units": 32,
+      "checkpoint_sha256": "3195c04cebd0ff68e2b10468cfce1b0d23c7147eef767438f9b997d066555973",
+      "backend_tensors_checked": 418,
+      "backend_tensors_finite": true
+    },
+    {
+      "family": "current_only",
+      "seed": 20260930,
+      "completed_units": 576,
+      "checkpoint_sha256": "18b93e65e59be4ea81931a7bc813d17743b43cf5a4d1a7f66c3ff8a34e442faf",
+      "backend_tensors_checked": 418,
+      "backend_tensors_finite": true
+    },
+    {
+      "family": "current_only",
+      "seed": 20261001,
+      "completed_units": 576,
+      "checkpoint_sha256": "66c7f5fd4fdc93dfa0c3893f1b150366ab8d7da311851e0cdf8e465664ee7c55",
+      "backend_tensors_checked": 418,
+      "backend_tensors_finite": true
+    },
+    {
+      "family": "current_only",
+      "seed": 20261002,
+      "completed_units": 576,
+      "checkpoint_sha256": "1c5aee5664fea6a685a807b8b97a180c3884711c7468574bb2a0985d21244133",
+      "backend_tensors_checked": 418,
+      "backend_tensors_finite": true
+    }
+  ],
+  "completed_fits": 5,
+  "valid_partial_fit_updates": 32,
+  "calibration_reports": 0,
+  "summary_exists": false,
+  "recovery_checkpoint_preserved": true,
+  "test_payloads_opened": 0,
+  "one_shard_recovery": {
+    "recorded_at_utc": "2026-10-04T12:27:05.526377+00:00",
+    "exit_code": 0,
+    "completed_units_before": 32,
+    "completed_units_after": 33,
+    "loss": 0.9468939257324215,
+    "checkpoint_sha256": "03cce19f03de42f715aae63a3edce924aeb928663c644d4c0c789f02789fb294",
+    "five_completed_checkpoint_hashes_unchanged": true,
+    "runtime_unchanged": true,
+    "diagnostic_environment_addition": "PYTHONFAULTHANDLER=1; no training configuration or source change"
+  },
+  "completed_recovery": {
+    "recorded_at_utc": "2026-10-04T12:47:17.390016+00:00",
+    "final_worker_exit_code": 0,
+    "final_fit_completed_units": 576,
+    "final_checkpoint_sha256": "df408d6d28befa702dc623d27dfe840e53088c18aa32d6f7997ba22fc7a26ac1",
+    "five_completed_checkpoint_hashes_unchanged": true,
+    "root_cause_established": false
+  }
+}

@@ -1,5 +1,7 @@
 # Run the original LeagueEWS continuation on the PC's GPU
 
+**Useful-lead input controls completed, 4 October 2026:** six additional LeagueEWS fits and all 198 policy heads finished. A native crash in the final seed was recovered from a verified checkpoint; the resumed worker exited zero and all five previously completed checkpoints were unchanged. The [report](../reports/timely-inputs-2026-10-04/research-report.md) supports a short-lead history benefit, with longer-lead and regional limitations. Use the [pinned reproduction record](../reports/timely-inputs-2026-10-04/reproduce.md); preserve all 39 completed neural fits. This study's GPU worker is finished. Patch 16.17 remains sealed.
+
 The uploaded development ZIP is validated and usable. No further collection,
 export or upload is required. This runner reads that exact ZIP directly.
 

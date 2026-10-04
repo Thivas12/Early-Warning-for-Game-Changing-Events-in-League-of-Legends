@@ -1,5 +1,7 @@
 # Continue from the original LeagueEWS project
 
+**Latest analysis, 4 October 2026:** the [useful-lead input study](../reports/timely-inputs-2026-10-04/research-report.md) completed six fits and all 198 policy heads. History improves primary macro recall by +.650 points [.478, .821], with all seeds and regions positive and lower aggregate burden. Full input exceeds timing-only input, but the two contrasts do not isolate non-timing history. Longer-lead history evidence is weak; most of the target gain also occurs with current-only input. Existing regional gates remain failed. Preserve the [completed outputs and recovery record](../reports/timely-inputs-2026-10-04/reproduce.md); no breakthrough or test release is claimed.
+
 **Latest analysis, 3 October 2026:** the
 [warning-efficiency study](../reports/warning-efficiency-2026-10-03/research-report.md)
 completed all seven variants, three seeds and four fixed budgets using stored
