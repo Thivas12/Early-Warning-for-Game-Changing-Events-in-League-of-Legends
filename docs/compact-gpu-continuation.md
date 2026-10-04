@@ -39,6 +39,12 @@ objective-alignment gains, particularly secondary Dragon, but fail the frozen
 practical screen. The [separate runner](../reports/timely-neural-2026-10-03/reproduce.md)
 preserves all prior studies. No GPU worker remains active. Patch 16.17 is sealed.
 
+**Threshold-resolution control completed, 4 October 2026:** all 72 early and
+72 later heads finished with no new training. The [results](../reports/dense-policy-2026-10-04/research-report.md)
+recover a deterministic useful-lead target gain, but warning-cost and regional
+gates remain unresolved. Preserve the [separate replay](../reports/dense-policy-2026-10-04/reproduce.md)
+and every earlier experiment. No worker is active.
+
 ## Model and fixed experiment
 
 The original LeagueEWS descendant is unchanged: residual TCN with squeeze-excitation,

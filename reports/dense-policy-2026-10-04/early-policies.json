@@ -1,0 +1,434 @@
+{
+  "leagueews-20260930-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20260930-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 96, "0.5": 135, "0.75": 161, "1.0": 184}, "dense_regional_deterministic": {"0.25": {"americas": 97, "europe": 96}, "0.5": {"americas": 135, "europe": 138}, "0.75": {"americas": 161, "europe": 167}, "1.0": {"americas": 184, "europe": 190}}}
+  },
+  "leagueews-20260930-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20260930-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 62, "0.5": 87, "0.75": 103, "1.0": 115}, "dense_regional_deterministic": {"0.25": {"americas": 62, "europe": 63}, "0.5": {"americas": 87, "europe": 89}, "0.75": {"americas": 103, "europe": 107}, "1.0": {"americas": 115, "europe": 119}}}
+  },
+  "leagueews-20260930-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20260930-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 37, "0.5": 50, "0.75": 61, "1.0": 72}, "dense_regional_deterministic": {"0.25": {"americas": 38, "europe": 37}, "0.5": {"americas": 51, "europe": 50}, "0.75": {"americas": 62, "europe": 61}, "1.0": {"americas": 73, "europe": 72}}}
+  },
+  "leagueews-20260930-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20260930-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 13, "0.5": 18, "0.75": 23, "1.0": 28}, "dense_regional_deterministic": {"0.25": {"americas": 13, "europe": 13}, "0.5": {"americas": 18, "europe": 18}, "0.75": {"americas": 23, "europe": 23}, "1.0": {"americas": 28, "europe": 29}}}
+  },
+  "leagueews-20260930-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20260930-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 74, "0.5": 87, "0.75": 98, "1.0": 105}, "dense_regional_deterministic": {"0.25": {"americas": 75, "europe": 74}, "0.5": {"americas": 88, "europe": 87}, "0.75": {"americas": 99, "europe": 98}, "1.0": {"americas": 107, "europe": 105}}}
+  },
+  "leagueews-20260930-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20260930-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 48, "0.5": 56, "0.75": 62, "1.0": 67}, "dense_regional_deterministic": {"0.25": {"americas": 48, "europe": 48}, "0.5": {"americas": 56, "europe": 56}, "0.75": {"americas": 63, "europe": 62}, "1.0": {"americas": 67, "europe": 67}}}
+  },
+  "leagueews-20261001-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261001-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 90, "0.5": 123, "0.75": 149, "1.0": 171}, "dense_regional_deterministic": {"0.25": {"americas": 90, "europe": 89}, "0.5": {"americas": 123, "europe": 127}, "0.75": {"americas": 149, "europe": 154}, "1.0": {"americas": 171, "europe": 178}}}
+  },
+  "leagueews-20261001-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261001-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 59, "0.5": 80, "0.75": 94, "1.0": 106}, "dense_regional_deterministic": {"0.25": {"americas": 59, "europe": 60}, "0.5": {"americas": 80, "europe": 81}, "0.75": {"americas": 94, "europe": 97}, "1.0": {"americas": 106, "europe": 110}}}
+  },
+  "leagueews-20261001-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261001-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 34, "0.5": 46, "0.75": 58, "1.0": 69}, "dense_regional_deterministic": {"0.25": {"americas": 35, "europe": 34}, "0.5": {"americas": 48, "europe": 46}, "0.75": {"americas": 59, "europe": 58}, "1.0": {"americas": 70, "europe": 69}}}
+  },
+  "leagueews-20261001-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261001-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 12, "0.5": 17, "0.75": 22, "1.0": 27}, "dense_regional_deterministic": {"0.25": {"americas": 12, "europe": 12}, "0.5": {"americas": 17, "europe": 17}, "0.75": {"americas": 22, "europe": 22}, "1.0": {"americas": 27, "europe": 28}}}
+  },
+  "leagueews-20261001-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261001-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 67, "0.5": 80, "0.75": 88, "1.0": 95}, "dense_regional_deterministic": {"0.25": {"americas": 68, "europe": 67}, "0.5": {"americas": 81, "europe": 80}, "0.75": {"americas": 90, "europe": 88}, "1.0": {"americas": 97, "europe": 95}}}
+  },
+  "leagueews-20261001-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261001-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 42, "0.5": 50, "0.75": 56, "1.0": 61}, "dense_regional_deterministic": {"0.25": {"americas": 42, "europe": 43}, "0.5": {"americas": 51, "europe": 50}, "0.75": {"americas": 57, "europe": 56}, "1.0": {"americas": 61, "europe": 61}}}
+  },
+  "leagueews-20261002-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261002-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 122, "0.75": 145, "1.0": 166}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 87}, "0.5": {"americas": 122, "europe": 123}, "0.75": {"americas": 145, "europe": 150}, "1.0": {"americas": 166, "europe": 171}}}
+  },
+  "leagueews-20261002-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261002-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 57, "0.5": 81, "0.75": 94, "1.0": 105}, "dense_regional_deterministic": {"0.25": {"americas": 57, "europe": 57}, "0.5": {"americas": 81, "europe": 82}, "0.75": {"americas": 94, "europe": 97}, "1.0": {"americas": 105, "europe": 109}}}
+  },
+  "leagueews-20261002-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261002-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 36, "0.5": 47, "0.75": 57, "1.0": 66}, "dense_regional_deterministic": {"0.25": {"americas": 37, "europe": 36}, "0.5": {"americas": 48, "europe": 47}, "0.75": {"americas": 57, "europe": 57}, "1.0": {"americas": 67, "europe": 66}}}
+  },
+  "leagueews-20261002-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261002-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 13, "0.5": 18, "0.75": 22, "1.0": 27}, "dense_regional_deterministic": {"0.25": {"americas": 13, "europe": 13}, "0.5": {"americas": 18, "europe": 18}, "0.75": {"americas": 22, "europe": 23}, "1.0": {"americas": 27, "europe": 28}}}
+  },
+  "leagueews-20261002-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261002-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 75, "0.5": 90, "0.75": 100, "1.0": 107}, "dense_regional_deterministic": {"0.25": {"americas": 76, "europe": 75}, "0.5": {"americas": 91, "europe": 90}, "0.75": {"americas": 101, "europe": 100}, "1.0": {"americas": 109, "europe": 107}}}
+  },
+  "leagueews-20261002-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "leagueews-20261002-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 47, "0.5": 56, "0.75": 62, "1.0": 67}, "dense_regional_deterministic": {"0.25": {"americas": 48, "europe": 47}, "0.5": {"americas": 56, "europe": 56}, "0.75": {"americas": 62, "europe": 62}, "1.0": {"americas": 67, "europe": 67}}}
+  },
+  "tcn-20260930-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20260930-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 131, "0.75": 161, "1.0": 186}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 91}, "0.5": {"americas": 130, "europe": 133}, "0.75": {"americas": 160, "europe": 166}, "1.0": {"americas": 186, "europe": 191}}}
+  },
+  "tcn-20260930-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20260930-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 57, "0.5": 84, "0.75": 104, "1.0": 117}, "dense_regional_deterministic": {"0.25": {"americas": 57, "europe": 59}, "0.5": {"americas": 84, "europe": 87}, "0.75": {"americas": 104, "europe": 106}, "1.0": {"americas": 117, "europe": 122}}}
+  },
+  "tcn-20260930-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20260930-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 36, "0.5": 48, "0.75": 59, "1.0": 69}, "dense_regional_deterministic": {"0.25": {"americas": 36, "europe": 36}, "0.5": {"americas": 49, "europe": 48}, "0.75": {"americas": 59, "europe": 59}, "1.0": {"americas": 70, "europe": 69}}}
+  },
+  "tcn-20260930-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20260930-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 12, "0.5": 17, "0.75": 21, "1.0": 27}, "dense_regional_deterministic": {"0.25": {"americas": 12, "europe": 13}, "0.5": {"americas": 17, "europe": 17}, "0.75": {"americas": 21, "europe": 22}, "1.0": {"americas": 27, "europe": 28}}}
+  },
+  "tcn-20260930-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20260930-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 77, "0.5": 91, "0.75": 100, "1.0": 108}, "dense_regional_deterministic": {"0.25": {"americas": 79, "europe": 77}, "0.5": {"americas": 92, "europe": 91}, "0.75": {"americas": 102, "europe": 100}, "1.0": {"americas": 110, "europe": 108}}}
+  },
+  "tcn-20260930-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20260930-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 48, "0.5": 56, "0.75": 62, "1.0": 67}, "dense_regional_deterministic": {"0.25": {"americas": 49, "europe": 48}, "0.5": {"americas": 57, "europe": 56}, "0.75": {"americas": 63, "europe": 62}, "1.0": {"americas": 68, "europe": 67}}}
+  },
+  "tcn-20261001-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261001-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 96, "0.5": 137, "0.75": 168, "1.0": 192}, "dense_regional_deterministic": {"0.25": {"americas": 96, "europe": 99}, "0.5": {"americas": 137, "europe": 143}, "0.75": {"americas": 168, "europe": 174}, "1.0": {"americas": 192, "europe": 197}}}
+  },
+  "tcn-20261001-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261001-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 62, "0.5": 88, "0.75": 104, "1.0": 119}, "dense_regional_deterministic": {"0.25": {"americas": 62, "europe": 64}, "0.5": {"americas": 88, "europe": 91}, "0.75": {"americas": 104, "europe": 108}, "1.0": {"americas": 119, "europe": 123}}}
+  },
+  "tcn-20261001-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261001-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 38, "0.5": 52, "0.75": 64, "1.0": 76}, "dense_regional_deterministic": {"0.25": {"americas": 39, "europe": 38}, "0.5": {"americas": 53, "europe": 52}, "0.75": {"americas": 64, "europe": 64}, "1.0": {"americas": 77, "europe": 76}}}
+  },
+  "tcn-20261001-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261001-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 14, "0.5": 19, "0.75": 24, "1.0": 30}, "dense_regional_deterministic": {"0.25": {"americas": 14, "europe": 14}, "0.5": {"americas": 19, "europe": 20}, "0.75": {"americas": 24, "europe": 25}, "1.0": {"americas": 30, "europe": 31}}}
+  },
+  "tcn-20261001-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261001-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 72, "0.5": 86, "0.75": 96, "1.0": 104}, "dense_regional_deterministic": {"0.25": {"americas": 74, "europe": 72}, "0.5": {"americas": 88, "europe": 86}, "0.75": {"americas": 97, "europe": 96}, "1.0": {"americas": 105, "europe": 104}}}
+  },
+  "tcn-20261001-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261001-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 47, "0.5": 55, "0.75": 61, "1.0": 67}, "dense_regional_deterministic": {"0.25": {"americas": 48, "europe": 47}, "0.5": {"americas": 57, "europe": 55}, "0.75": {"americas": 63, "europe": 61}, "1.0": {"americas": 68, "europe": 67}}}
+  },
+  "tcn-20261002-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261002-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 86, "0.5": 125, "0.75": 153, "1.0": 176}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 86}, "0.5": {"americas": 125, "europe": 130}, "0.75": {"americas": 153, "europe": 159}, "1.0": {"americas": 176, "europe": 180}}}
+  },
+  "tcn-20261002-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261002-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 58, "0.5": 82, "0.75": 99, "1.0": 111}, "dense_regional_deterministic": {"0.25": {"americas": 58, "europe": 58}, "0.5": {"americas": 82, "europe": 85}, "0.75": {"americas": 99, "europe": 102}, "1.0": {"americas": 111, "europe": 115}}}
+  },
+  "tcn-20261002-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261002-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 32, "0.5": 43, "0.75": 52, "1.0": 61}, "dense_regional_deterministic": {"0.25": {"americas": 33, "europe": 32}, "0.5": {"americas": 44, "europe": 43}, "0.75": {"americas": 53, "europe": 52}, "1.0": {"americas": 62, "europe": 61}}}
+  },
+  "tcn-20261002-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261002-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 12, "0.5": 16, "0.75": 20, "1.0": 24}, "dense_regional_deterministic": {"0.25": {"americas": 12, "europe": 12}, "0.5": {"americas": 16, "europe": 17}, "0.75": {"americas": 20, "europe": 21}, "1.0": {"americas": 24, "europe": 26}}}
+  },
+  "tcn-20261002-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261002-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 81, "0.5": 94, "0.75": 102, "1.0": 110}, "dense_regional_deterministic": {"0.25": {"americas": 82, "europe": 81}, "0.5": {"americas": 95, "europe": 94}, "0.75": {"americas": 104, "europe": 102}, "1.0": {"americas": 112, "europe": 110}}}
+  },
+  "tcn-20261002-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "tcn-20261002-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 50, "0.5": 58, "0.75": 64, "1.0": 68}, "dense_regional_deterministic": {"0.25": {"americas": 51, "europe": 50}, "0.5": {"americas": 59, "europe": 58}, "0.75": {"americas": 65, "europe": 64}, "1.0": {"americas": 69, "europe": 68}}}
+  },
+  "timely_leagueews-20260930-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20260930-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 129, "0.5": 159, "0.75": 187, "1.0": 211}, "dense_regional_deterministic": {"0.25": {"americas": 129, "europe": 129}, "0.5": {"americas": 159, "europe": 161}, "0.75": {"americas": 187, "europe": 193}, "1.0": {"americas": 211, "europe": 214}}}
+  },
+  "timely_leagueews-20260930-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20260930-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 110, "0.5": 120, "0.75": 129, "1.0": 138}, "dense_regional_deterministic": {"0.25": {"americas": 110, "europe": 111}, "0.5": {"americas": 120, "europe": 121}, "0.75": {"americas": 129, "europe": 131}, "1.0": {"americas": 138, "europe": 140}}}
+  },
+  "timely_leagueews-20260930-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20260930-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 94, "0.75": 100, "1.0": 106}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 87}, "0.5": {"americas": 94, "europe": 94}, "0.75": {"americas": 101, "europe": 100}, "1.0": {"americas": 107, "europe": 106}}}
+  },
+  "timely_leagueews-20260930-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20260930-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 47, "0.5": 58, "0.75": 69, "1.0": 78}, "dense_regional_deterministic": {"0.25": {"americas": 48, "europe": 47}, "0.5": {"americas": 58, "europe": 58}, "0.75": {"americas": 69, "europe": 69}, "1.0": {"americas": 78, "europe": 78}}}
+  },
+  "timely_leagueews-20260930-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20260930-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 125, "0.5": 135, "0.75": 142, "1.0": 148}, "dense_regional_deterministic": {"0.25": {"americas": 125, "europe": 125}, "0.5": {"americas": 135, "europe": 135}, "0.75": {"americas": 142, "europe": 142}, "1.0": {"americas": 148, "europe": 148}}}
+  },
+  "timely_leagueews-20260930-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20260930-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 95, "0.75": 100, "1.0": 104}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 89}, "0.5": {"americas": 95, "europe": 96}, "0.75": {"americas": 100, "europe": 101}, "1.0": {"americas": 104, "europe": 104}}}
+  },
+  "timely_leagueews-20261001-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261001-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 122, "0.5": 152, "0.75": 175, "1.0": 196}, "dense_regional_deterministic": {"0.25": {"americas": 123, "europe": 122}, "0.5": {"americas": 152, "europe": 152}, "0.75": {"americas": 175, "europe": 180}, "1.0": {"americas": 196, "europe": 202}}}
+  },
+  "timely_leagueews-20261001-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261001-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 108, "0.5": 116, "0.75": 125, "1.0": 133}, "dense_regional_deterministic": {"0.25": {"americas": 108, "europe": 109}, "0.5": {"americas": 116, "europe": 117}, "0.75": {"americas": 125, "europe": 127}, "1.0": {"americas": 133, "europe": 137}}}
+  },
+  "timely_leagueews-20261001-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261001-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 96, "0.75": 103, "1.0": 110}, "dense_regional_deterministic": {"0.25": {"americas": 88, "europe": 87}, "0.5": {"americas": 97, "europe": 96}, "0.75": {"americas": 103, "europe": 103}, "1.0": {"americas": 110, "europe": 110}}}
+  },
+  "timely_leagueews-20261001-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261001-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 49, "0.5": 62, "0.75": 73, "1.0": 83}, "dense_regional_deterministic": {"0.25": {"americas": 50, "europe": 49}, "0.5": {"americas": 62, "europe": 62}, "0.75": {"americas": 73, "europe": 73}, "1.0": {"americas": 83, "europe": 84}}}
+  },
+  "timely_leagueews-20261001-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261001-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 122, "0.5": 131, "0.75": 137, "1.0": 142}, "dense_regional_deterministic": {"0.25": {"americas": 122, "europe": 122}, "0.5": {"americas": 131, "europe": 131}, "0.75": {"americas": 138, "europe": 137}, "1.0": {"americas": 142, "europe": 143}}}
+  },
+  "timely_leagueews-20261001-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261001-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 94, "0.75": 99, "1.0": 103}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 88}, "0.5": {"americas": 94, "europe": 95}, "0.75": {"americas": 99, "europe": 100}, "1.0": {"americas": 103, "europe": 104}}}
+  },
+  "timely_leagueews-20261002-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261002-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 118, "0.5": 143, "0.75": 164, "1.0": 183}, "dense_regional_deterministic": {"0.25": {"americas": 118, "europe": 119}, "0.5": {"americas": 142, "europe": 144}, "0.75": {"americas": 164, "europe": 169}, "1.0": {"americas": 183, "europe": 188}}}
+  },
+  "timely_leagueews-20261002-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261002-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 109, "0.5": 117, "0.75": 124, "1.0": 131}, "dense_regional_deterministic": {"0.25": {"americas": 109, "europe": 109}, "0.5": {"americas": 117, "europe": 117}, "0.75": {"americas": 124, "europe": 126}, "1.0": {"americas": 131, "europe": 134}}}
+  },
+  "timely_leagueews-20261002-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261002-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 83, "0.5": 91, "0.75": 97, "1.0": 103}, "dense_regional_deterministic": {"0.25": {"americas": 84, "europe": 83}, "0.5": {"americas": 91, "europe": 91}, "0.75": {"americas": 97, "europe": 97}, "1.0": {"americas": 103, "europe": 103}}}
+  },
+  "timely_leagueews-20261002-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261002-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 47, "0.5": 58, "0.75": 68, "1.0": 77}, "dense_regional_deterministic": {"0.25": {"americas": 48, "europe": 47}, "0.5": {"americas": 58, "europe": 58}, "0.75": {"americas": 68, "europe": 68}, "1.0": {"americas": 77, "europe": 77}}}
+  },
+  "timely_leagueews-20261002-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261002-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 126, "0.5": 137, "0.75": 144, "1.0": 150}, "dense_regional_deterministic": {"0.25": {"americas": 126, "europe": 127}, "0.5": {"americas": 137, "europe": 137}, "0.75": {"americas": 144, "europe": 144}, "1.0": {"americas": 150, "europe": 150}}}
+  },
+  "timely_leagueews-20261002-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_leagueews-20261002-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 88, "0.5": 96, "0.75": 101, "1.0": 105}, "dense_regional_deterministic": {"0.25": {"americas": 88, "europe": 91}, "0.5": {"americas": 96, "europe": 97}, "0.75": {"americas": 101, "europe": 102}, "1.0": {"americas": 105, "europe": 106}}}
+  },
+  "timely_tcn-20260930-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20260930-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 121, "0.5": 155, "0.75": 185, "1.0": 207}, "dense_regional_deterministic": {"0.25": {"americas": 121, "europe": 122}, "0.5": {"americas": 155, "europe": 158}, "0.75": {"americas": 185, "europe": 190}, "1.0": {"americas": 207, "europe": 215}}}
+  },
+  "timely_tcn-20260930-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20260930-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 113, "0.5": 124, "0.75": 133, "1.0": 142}, "dense_regional_deterministic": {"0.25": {"americas": 113, "europe": 114}, "0.5": {"americas": 124, "europe": 125}, "0.75": {"americas": 133, "europe": 135}, "1.0": {"americas": 142, "europe": 144}}}
+  },
+  "timely_tcn-20260930-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20260930-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 85, "0.5": 92, "0.75": 99, "1.0": 106}, "dense_regional_deterministic": {"0.25": {"americas": 85, "europe": 86}, "0.5": {"americas": 92, "europe": 92}, "0.75": {"americas": 99, "europe": 99}, "1.0": {"americas": 106, "europe": 106}}}
+  },
+  "timely_tcn-20260930-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20260930-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 48, "0.5": 59, "0.75": 69, "1.0": 79}, "dense_regional_deterministic": {"0.25": {"americas": 48, "europe": 48}, "0.5": {"americas": 59, "europe": 59}, "0.75": {"americas": 69, "europe": 70}, "1.0": {"americas": 79, "europe": 80}}}
+  },
+  "timely_tcn-20260930-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20260930-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 131, "0.5": 140, "0.75": 146, "1.0": 152}, "dense_regional_deterministic": {"0.25": {"americas": 132, "europe": 131}, "0.5": {"americas": 140, "europe": 140}, "0.75": {"americas": 146, "europe": 147}, "1.0": {"americas": 152, "europe": 152}}}
+  },
+  "timely_tcn-20260930-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20260930-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 85, "0.5": 93, "0.75": 98, "1.0": 103}, "dense_regional_deterministic": {"0.25": {"americas": 85, "europe": 87}, "0.5": {"americas": 93, "europe": 94}, "0.75": {"americas": 98, "europe": 99}, "1.0": {"americas": 103, "europe": 103}}}
+  },
+  "timely_tcn-20261001-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261001-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 135, "0.5": 169, "0.75": 197, "1.0": 221}, "dense_regional_deterministic": {"0.25": {"americas": 135, "europe": 139}, "0.5": {"americas": 169, "europe": 175}, "0.75": {"americas": 197, "europe": 203}, "1.0": {"americas": 219, "europe": 227}}}
+  },
+  "timely_tcn-20261001-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261001-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 114, "0.5": 125, "0.75": 135, "1.0": 144}, "dense_regional_deterministic": {"0.25": {"americas": 114, "europe": 115}, "0.5": {"americas": 125, "europe": 127}, "0.75": {"americas": 135, "europe": 137}, "1.0": {"americas": 144, "europe": 146}}}
+  },
+  "timely_tcn-20261001-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261001-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 89, "0.5": 96, "0.75": 102, "1.0": 109}, "dense_regional_deterministic": {"0.25": {"americas": 89, "europe": 89}, "0.5": {"americas": 97, "europe": 96}, "0.75": {"americas": 103, "europe": 102}, "1.0": {"americas": 109, "europe": 109}}}
+  },
+  "timely_tcn-20261001-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261001-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 52, "0.5": 62, "0.75": 72, "1.0": 81}, "dense_regional_deterministic": {"0.25": {"americas": 52, "europe": 52}, "0.5": {"americas": 63, "europe": 62}, "0.75": {"americas": 72, "europe": 73}, "1.0": {"americas": 81, "europe": 82}}}
+  },
+  "timely_tcn-20261001-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261001-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 125, "0.5": 134, "0.75": 140, "1.0": 145}, "dense_regional_deterministic": {"0.25": {"americas": 127, "europe": 125}, "0.5": {"americas": 134, "europe": 134}, "0.75": {"americas": 140, "europe": 140}, "1.0": {"americas": 145, "europe": 145}}}
+  },
+  "timely_tcn-20261001-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261001-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 89, "0.5": 95, "0.75": 100, "1.0": 104}, "dense_regional_deterministic": {"0.25": {"americas": 89, "europe": 89}, "0.5": {"americas": 95, "europe": 96}, "0.75": {"americas": 100, "europe": 101}, "1.0": {"americas": 104, "europe": 104}}}
+  },
+  "timely_tcn-20261002-baron-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261002-baron-30",
+    "policies": {"dense_deterministic": {"0.25": 122, "0.5": 153, "0.75": 177, "1.0": 198}, "dense_regional_deterministic": {"0.25": {"americas": 122, "europe": 125}, "0.5": {"americas": 153, "europe": 155}, "0.75": {"americas": 177, "europe": 180}, "1.0": {"americas": 198, "europe": 201}}}
+  },
+  "timely_tcn-20261002-baron-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261002-baron-60",
+    "policies": {"dense_deterministic": {"0.25": 116, "0.5": 125, "0.75": 132, "1.0": 139}, "dense_regional_deterministic": {"0.25": {"americas": 116, "europe": 116}, "0.5": {"americas": 125, "europe": 125}, "0.75": {"americas": 132, "europe": 133}, "1.0": {"americas": 139, "europe": 141}}}
+  },
+  "timely_tcn-20261002-dragon-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261002-dragon-30",
+    "policies": {"dense_deterministic": {"0.25": 85, "0.5": 92, "0.75": 97, "1.0": 103}, "dense_regional_deterministic": {"0.25": {"americas": 85, "europe": 85}, "0.5": {"americas": 92, "europe": 92}, "0.75": {"americas": 98, "europe": 97}, "1.0": {"americas": 103, "europe": 103}}}
+  },
+  "timely_tcn-20261002-dragon-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261002-dragon-60",
+    "policies": {"dense_deterministic": {"0.25": 49, "0.5": 61, "0.75": 71, "1.0": 81}, "dense_regional_deterministic": {"0.25": {"americas": 50, "europe": 49}, "0.5": {"americas": 61, "europe": 61}, "0.75": {"americas": 71, "europe": 72}, "1.0": {"americas": 81, "europe": 82}}}
+  },
+  "timely_tcn-20261002-teamfight-30": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261002-teamfight-30",
+    "policies": {"dense_deterministic": {"0.25": 130, "0.5": 140, "0.75": 147, "1.0": 152}, "dense_regional_deterministic": {"0.25": {"americas": 132, "europe": 130}, "0.5": {"americas": 140, "europe": 140}, "0.75": {"americas": 147, "europe": 147}, "1.0": {"americas": 152, "europe": 152}}}
+  },
+  "timely_tcn-20261002-teamfight-60": {
+    "early_region_sizes": [1500, 1500],
+    "freeze_sha256": "bafe01c7c4c1de3a5a5865660b420f16d672b2079ef078e1679fbc6c2941a616",
+    "head": "timely_tcn-20261002-teamfight-60",
+    "policies": {"dense_deterministic": {"0.25": 87, "0.5": 94, "0.75": 99, "1.0": 103}, "dense_regional_deterministic": {"0.25": {"americas": 87, "europe": 88}, "0.5": {"americas": 94, "europe": 95}, "0.75": {"americas": 99, "europe": 100}, "1.0": {"americas": 103, "europe": 104}}}
+  }
+}
