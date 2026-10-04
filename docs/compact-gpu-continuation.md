@@ -32,6 +32,13 @@ no new training is needed to reproduce it. PCGrad fails the new diagnostic scree
 Use the [separate replay instructions](../reports/warning-efficiency-2026-10-03/reproduce.md)
 and preserve all original GPU experiment files and checkpoints.
 
+**Timely-target control completed, 4 October 2026:** six new LeagueEWS/TCN fits
+finished 3,456 updates, followed by all 162 gated policy heads. The
+[results](../reports/timely-neural-2026-10-03/research-report.md) find consistent
+objective-alignment gains, particularly secondary Dragon, but fail the frozen
+practical screen. The [separate runner](../reports/timely-neural-2026-10-03/reproduce.md)
+preserves all prior studies. No GPU worker remains active. Patch 16.17 is sealed.
+
 ## Model and fixed experiment
 
 The original LeagueEWS descendant is unchanged: residual TCN with squeeze-excitation,
