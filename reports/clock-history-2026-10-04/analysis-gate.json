@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-10-04T14:35:25.469119+00:00",
+  "training_protocol_commit": "997e299",
+  "training_freeze_sha256": "ddcab5af71711c6cd66706a62b3ee76ec0eb5b66ee1cbfc7de6de96037056cc4",
+  "fits_complete": 0,
+  "training_shard_updates": 524,
+  "new_calibration_prediction_reports": 0,
+  "new_later_policy_evaluations": 0,
+  "analysis_source_sha256": {
+    "scripts/evaluate_clock_history.py": "dac433b478c1edeb60966c56a17d2444d2d8f6496e546be72cee8e12ba204a70",
+    "scripts/analyse_clock_history.py": "e99db707086b142a0b2ade05733f9151ed9d53ee10d29109bed68048525ae1d4"
+  },
+  "focused_tests_passed": 8,
+  "full_tests_passed": 635,
+  "full_tests_skipped": 1,
+  "coverage_percent": 85.89,
+  "mypy_source_files": 87,
+  "ruff": "passed",
+  "test_payloads_opened": 0
+}
