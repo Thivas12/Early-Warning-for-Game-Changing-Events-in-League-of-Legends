@@ -1,0 +1,17 @@
+{
+  "schema_version": "league-timely-optimization-diagnostic-plan-v1",
+  "question": "Do loss weighting and PCGrad change local useful-lead event-loss update directions when actual AdamW moments and weight decay are retained?",
+  "batch_seed": 20261005,
+  "data": "One fixed 256-row training batch per shard, all 48 training shards and original three seeds; no calibration statistics or test access.",
+  "control_freeze_sha256": "3d2e20c9e44c8a99a5f73302e56863580c9e7b9264bc3de27756b90624b8b172",
+  "control_summary_sha256": "0c809dbe8e5c713089029caf295c7b5ae923c473e9df3aa5d37fae7a66dca9fc",
+  "variants": {
+    "original_sum": {"weights": [1.0, 2.0, 2.5], "aggregation": "sum"},
+    "equal_sum": {"weights": [1.8333333333333333, 1.8333333333333333, 1.8333333333333333], "aggregation": "sum"},
+    "original_pcgrad": {"weights": [1.0, 2.0, 2.5], "aggregation": "pcgrad"},
+    "equal_pcgrad": {"weights": [1.8333333333333333, 1.8333333333333333, 1.8333333333333333], "aggregation": "pcgrad"}
+  },
+  "sources": ["scripts/diagnose_timely_optimization.py", "scripts/timely_optimization_backend.py", "scripts/pcgrad_backend.py", "scripts/timely_neural_targets.py", "scripts/run_compact_notebook.py", "src/league_ews/notebook_ews.py"],
+  "reporting": "Report all four cells, all events and seeds; raw-gradient versus actual AdamW first-order and same-dropout observed loss changes. Restore the same source checkpoint and optimizer before every virtual step. No new fitted model or checkpoint is saved.",
+  "interpretation": "Descriptive local probes, not a gradient-conflict diagnosis or prediction of alternative full-training outcomes. Equal weights preserve total loss weight 5.5. All virtual steps start with moments learned under original weights."
+}
