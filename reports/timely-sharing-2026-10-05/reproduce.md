@@ -8,6 +8,28 @@ hash-bound committed-analysis release before scoring. This corrects the previous
 study's disclosed commit-timing deviation without altering its historical results.
 All studies remain exploratory on previously inspected development matches.
 
+**Recovery on 5 October:** the prior worker was inactive after an interruption.
+Three Baron fits were complete, and the first Dragon checkpoint had completed
+417 of 576 shard units. The prior log ended with null bytes; its last printed
+line was behind the checkpoint, and the cause of interruption was not inferred.
+The unchanged runner verified the source/data/runtime bindings and resumed the
+checkpoint's model, optimizer and RNG state. See [recovery-record.json](recovery-record.json).
+The resumed worker completed all nine fits and exited with zero new scores at
+the mandatory release gate. Release against commit `570b10c` then preceded
+scoring; all nine checkpoint hashes remained unchanged. Separate local logs
+are `worker-resume-2026-10-05.log`, `scoring-2026-10-05.log` and
+`evaluation-2026-10-05.log` under the private training directory. Preserve the
+original `worker.log` as the interruption record.
+
+**Completed:** all 234 early and later heads, 2,000 paired bootstrap draws,
+108,000 full-match reference checks and 89,869 component checks passed. The
+audit exactly reproduced 28,800 previous model and 31,200 shared-contrast metric
+records. The nine-fit inventory is complete; do not restart training for this
+study. Read [research-report.md](research-report.md) for the failed sharing
+rules and longer-lead penalty. [execution-record.json](execution-record.json)
+retains raw JSON hashes, and [published-artifacts.json](published-artifacts.json)
+records the final losslessly formatted aggregates and figures.
+
 Use the existing RTX 4060 Laptop GPU (8 GB), driver 610.74, Python 3.12.14,
 PyTorch 2.14.0+cu130, CUDA 13.0 and NumPy 2.5.3. No dependency changes are required.
 Never synchronize the CPU lockfile into the GPU environment. First inspect running
@@ -140,3 +162,9 @@ previous-policy parity, early/later gates with tamper detection and the paired
 interaction identity. These software checks are not empirical League evidence.
 Publish only aggregate reports and code; exclude private arrays and model binaries.
 Patch 16.17 stays sealed.
+
+The earlier temporary plotting installation was absent during recovery. It
+was restored only under `/tmp/league-warning-plot-tools`; the CUDA environment
+was not modified. Final figures use Matplotlib 3.11.2 with NumPy 2.5.3. This
+rendering step consumes completed aggregate results and changes no prediction,
+policy or inferential calculation.

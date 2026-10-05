@@ -18,6 +18,22 @@ a versioned, validated research release.
 
 ## Research status
 
+**5 October 2026:** The [useful-lead sharing study](reports/timely-sharing-2026-10-05/research-report.md)
+completed nine independent-event fits and all 234 policy heads; 51 neural fits
+are now preserved across the continuation. Shared learning still helps
+short-lead Dragon and harms Baron, with no clear primary macro gain
+(−0.061 recall points [−0.219, +0.099]). At 20–60 seconds the joint model loses
+0.664 points [0.397, 0.925] relative to independent models, with all seeds and
+both regional macro intervals adverse. Useful-lead targets improve both
+recipes, but their longer-lead gain is larger for independent models.
+Regional warning-budget gates still fail. Training, scoring, paired analysis
+and independent replay audits are complete; no worker needs restarting.
+The committed-analysis release preceded scoring, and all previous policy
+counts and shared estimates reproduced exactly. The earlier
+[history control](reports/clock-history-2026-10-04/research-report.md) still
+supports a limited short-lead contribution from past non-timing state.
+All findings remain exploratory; patch 16.17 stays sealed.
+
 **3 October 2026:** All twelve LeagueEWS/GRU/TCN/snapshot fits, three matched
 history-ablation fits, nine independent event fits and three PCGrad fits
 completed on the PC GPU.

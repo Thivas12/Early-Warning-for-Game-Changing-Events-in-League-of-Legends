@@ -1,0 +1,57 @@
+{
+  "recorded_at_utc": "2026-10-05T15:24:11.657461+00:00",
+  "status": "resumed-original-checkpoints-training-in-progress",
+  "training_freeze_sha256": "012ee1e03358aa34221eb902d264c9ca0cb4d15cb34c92cb1967455f44991588",
+  "analysis_commit": "570b10cd5f731c279cfb14884adcf94298ba46fc",
+  "declared_committed_analysis_sources_verified": 24,
+  "before_resume": {
+    "fits_complete": 3,
+    "completed_shard_updates": 2145,
+    "active_event": "dragon",
+    "active_seed": 20260930,
+    "active_completed_units": 417
+  },
+  "observed_after_resume": [
+    {
+      "event": "baron",
+      "seed": 20260930,
+      "completed_units": 576
+    },
+    {
+      "event": "baron",
+      "seed": 20261001,
+      "completed_units": 576
+    },
+    {
+      "event": "baron",
+      "seed": 20261002,
+      "completed_units": 576
+    },
+    {
+      "event": "dragon",
+      "seed": 20260930,
+      "completed_units": 576
+    },
+    {
+      "event": "dragon",
+      "seed": 20261001,
+      "completed_units": 576
+    },
+    {
+      "event": "dragon",
+      "seed": 20261002,
+      "completed_units": 576
+    },
+    {
+      "event": "teamfight",
+      "seed": 20260930,
+      "completed_units": 240
+    }
+  ],
+  "new_prediction_reports": 0,
+  "analysis_release_exists": false,
+  "test_payloads_opened": 0,
+  "prior_worker_observation": "No training worker was present. Prior log ended with null bytes; root cause is unverified. The valid checkpoint, rather than the truncated log, supplied the resume position.",
+  "resume_log": "worker-resume-2026-10-05.log",
+  "source_changes": "None in frozen training or declared analysis sources."
+}

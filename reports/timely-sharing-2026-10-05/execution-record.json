@@ -1,0 +1,131 @@
+{
+  "recorded_at_utc": "2026-10-05T17:15:05.181785+00:00",
+  "training_protocol_commit": "7b9bc1b",
+  "analysis_commit": "570b10c",
+  "training_freeze_sha256": "012ee1e03358aa34221eb902d264c9ca0cb4d15cb34c92cb1967455f44991588",
+  "training_summary_sha256": "770295c7db65b0faa434e299c807f097d6192c6514a24d8b4f9be47027aad63c",
+  "training_exit_code": 0,
+  "new_fits": 9,
+  "new_shard_updates": 5184,
+  "new_fit_training_seconds": 6331.259774859781,
+  "new_fit_records": {
+    "baron/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 715.640762901865,
+      "checkpoint_sha256": "b4b8b6337c413483d7ed75d8533d17fbec9e5cd51bb6421632b7fe15bda87478",
+      "scores_sha256": "ac0dd3ec05e633ddda87f3fb8696593977fb51ee756b676693f3f49ff843509f"
+    },
+    "baron/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 703.5898422946921,
+      "checkpoint_sha256": "8c342e2a4fc40c74c59cb36d5f95f231e295fbf84a7f2ef5d017db8a9275fc5b",
+      "scores_sha256": "3c5e6d2269e8eb03d52ffe754d93eabec733f5bdd1bd3586cd3c3f59152f2427"
+    },
+    "baron/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 700.6632555655669,
+      "checkpoint_sha256": "fe752f5cc4822f93121378c4918b5ecd1f1f175b6e5784f6ca3fb8e876b8614d",
+      "scores_sha256": "6aedf870437cce1a795f85f7db2087211b5900e1ae7472f6915434b708df63ec"
+    },
+    "dragon/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 698.4165435446521,
+      "checkpoint_sha256": "ac87eb2ce2678b3daf3d122e624269fde25359a52bf0b63e6416f0b44f5565d2",
+      "scores_sha256": "aaad8621dda037cd7c5b93e61325409d155bb510fafa601b892c49876bff0d0e"
+    },
+    "dragon/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 700.194935871004,
+      "checkpoint_sha256": "a61d0ddb439549218adf55dffce5318a77517099ff9f73282dd0c6b74a6201e1",
+      "scores_sha256": "80e7975d11640cbb5581f24b969f8ed086a4aee7e2d3fa0af43edf286c36e95e"
+    },
+    "dragon/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 699.5195434660022,
+      "checkpoint_sha256": "6d816a5a0f36588919b6f38bb8b00fff27dc37dfa54bc5f7d7591c236ac64ca8",
+      "scores_sha256": "6fe9a9eb9626eaaab32afd7838311eaa044b618263ca86eefe53cc7031bce392"
+    },
+    "teamfight/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 704.1027709539994,
+      "checkpoint_sha256": "38e81dc58972dce644b8fa8e3b04572fde9899cde7a5babecef89a222d309abf",
+      "scores_sha256": "a009b80095b5534ff2cacd4db2979d03c33202a970cc26133fd26a5b41244c1b"
+    },
+    "teamfight/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 704.8220175549923,
+      "checkpoint_sha256": "fd9059ee03761aa6d36fd9ed6634e0439e31675793bc2995d91279a3669cbc2a",
+      "scores_sha256": "433b482e3989f40d03035e3353a72c29a93a01e2e131b12c732e0e7601fd8660"
+    },
+    "teamfight/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 704.310102707007,
+      "checkpoint_sha256": "fb3e954a00ade5e2c806171e4e882857207773d66eefeae9068996178b9f9aa5",
+      "scores_sha256": "99d0097812357575c08859d6bcd6d0f3d93972dc5ddf84af0421e945affa32ae"
+    }
+  },
+  "completed_prior_neural_fits": 42,
+  "total_completed_neural_fits": 51,
+  "test_payloads_opened": 0,
+  "freeze_sha256": "715913b61b5a6597702450329118ef03ef48e74400e7e8bdf94621ebd466665f",
+  "policy_freeze_sha256": "ca4b0849384efdb803d994c0484fce68de43dadbab37761903bbb3707ef5632d",
+  "summary_sha256": "754e29beab84b7fd560843c2dec30bde15f4d05381f31e49e7568b4b98b4a37d",
+  "early_heads": 234,
+  "later_heads": 234,
+  "independent_component_checks": 89869,
+  "new_full_reference_checks": 108000,
+  "prior_all_five_policy_heads_reproduced": 216,
+  "prior_dense_heads_reproduced": 72,
+  "prior_analysis_exact_reproduction": {
+    "clock-history-2026-10-04": {
+      "model_metric_records": 28800,
+      "shared_contrast_metric_records": 31200
+    }
+  },
+  "raw_analysis_sha256": "8095e5368682f8a6a1b25fdfa8ae005d965484b3dd16ef0f27a6f9059a957d11",
+  "raw_policies_sha256": "48f4213001392fc130974c6d7a1c0f131bb1b51dfe40e52b3abaac925b55eaf7",
+  "tests_passed": 653,
+  "tests_skipped": 1,
+  "coverage_percent": 85.89,
+  "focused_experiment_tests_passed": 11,
+  "protocol_commit_order_met": true,
+  "analysis_commit_time_utc": "2026-10-05T13:44:56+00:00",
+  "first_score_modified_utc": "2026-10-05T16:31:45.862702+00:00",
+  "timing_evidence": "Local commit, release and artifact timestamps; not an external registry",
+  "analysis_release_sha256": "e38cae5c0dfc52c6f2d70fa2066446281c46c6be1f716180a8d8a60308b4db9e",
+  "analysis_release": {
+    "schema_version": "league-committed-scoring-release-v1",
+    "recorded_at_utc": "2026-10-05T16:31:29.957933+00:00",
+    "analysis_commit": "570b10cd5f731c279cfb14884adcf94298ba46fc",
+    "sources_sha256": {
+      "scripts/evaluate_timely_sharing.py": "ad8a14e0c039241b9bb1eb50f4f0245fa5622ab467a4394546b4b900259f088a",
+      "scripts/analyse_timely_sharing.py": "2bdd49ca102aa6bcfd5a6a2b24996fe0db8601b21f8f413a38f0a3010a08cd2a",
+      "scripts/evaluate_clock_history.py": "dac433b478c1edeb60966c56a17d2444d2d8f6496e546be72cee8e12ba204a70",
+      "scripts/analyse_clock_history.py": "e99db707086b142a0b2ade05733f9151ed9d53ee10d29109bed68048525ae1d4",
+      "scripts/evaluate_timely_inputs.py": "ba3a8dd144dc24bed88423805ac9cd9df2e95da37f35cbbb487dea08fe4e56ff",
+      "scripts/analyse_timely_inputs.py": "eed1e97ea28df4235bae289176aadb3211bdb22bf5a1f7b9ff1d9b3066116c9e",
+      "scripts/evaluate_timely_neural.py": "37a005f6083436c1d6e893588b2a4100da3d781383c39efaaedfeb85bf3bb9fe",
+      "scripts/evaluate_dense_policy.py": "1deea7824d2dd93b2f7b12644f3490d0ce5c5b36e4c5324d01c942f7bc03dd20",
+      "scripts/timely_neural_targets.py": "04119e3fd58cfc82cca6e0d481a88a2b4e0b01e62283eb4624fbf9f1e7be067d",
+      "scripts/warning_efficiency.py": "2ec05b4bc83a289847d77a5beabe49e2249139548282ebca871238dcb1ee8c28",
+      "scripts/run_warning_efficiency.py": "fd7003d7440e7dbd3d780ebd04714657224a315b253f503dec67accb1b237ac2",
+      "scripts/analyse_neural_screen.py": "4bb6516ee017a13e11196cd0c69b47e1351997c71219f7e97aaab2c0c295c918",
+      "scripts/audit_neural_results.py": "7a7fc9aa912e732277da7cc8da857458de8f86080665bd20814b5ecd351306b5",
+      "scripts/league_compact_data.py": "31ef1507e3cf7a1a5396ca48e5ce624ad2a7552205949ddf58e6a0c115ace665",
+      "scripts/export_league_development.py": "16e838397be37cb45dc3fe9112a01511039fc17571b518f4bec743e152392c89",
+      "src/league_ews/coordination_experiment.py": "b4ce0cc65b9b632cf0aa6f0011135e5ae60032fa7e4bcc760050abb1a93a91ce",
+      "src/league_ews/m1_alert_diagnostics.py": "66b3aa9ca5f667547a05068f5fc5f98c80f085d1185b1bacba87017236c2059c",
+      "src/league_ews/alert_policy.py": "dd3bdf3c8a085cbeb9e5454156b3cfa41991c42e4c19f39f64eaf6f78804928c",
+      "src/league_ews/constants.py": "7fc33017b2cb6b5c86ce64bef74c025694e0452d56ca20667666aecc637b6a1a",
+      "src/league_ews/notebook_experiment.py": "3f1ba0fb7f7e8c7e19d76b61573376f3b52885159142d9d32a92437dfbd5b77a",
+      "scripts/run_timely_sharing.py": "e4c625ce7980a20699d29f535bc56f5b26937c9fd6d1f494ab7e46fbfb36674c",
+      "scripts/run_timely_sharing.sh": "2933be5138ead64ee3e58e4c4ed00ce67efdc0607c9bd768525ed6898c142363",
+      "scripts/task_sharing_backend.py": "23f495a02732d2d7dcbd2f856ecdac820d5025a860b89f4c1d5ab2b04adb0126",
+      "scripts/scoring_release.py": "a0e2036091dc5972cda03fa6bd6003ac565fea43899aea3894783f0b3eabe71a",
+      "reports/timely-sharing-2026-10-05/plan.json": "e19b303717c29ce0d997b9c658982fb1b35a777f5d7c552dfba20c3871aec0c1"
+    },
+    "plan": "reports/timely-sharing-2026-10-05/plan.json",
+    "training_freeze_sha256": "012ee1e03358aa34221eb902d264c9ca0cb4d15cb34c92cb1967455f44991588"
+  },
+  "mypy_source_files": 87
+}

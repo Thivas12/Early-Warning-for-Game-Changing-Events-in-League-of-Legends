@@ -1,5 +1,20 @@
 # Continue from the original LeagueEWS project
 
+**Latest completed follow-up, 5 October 2026:** the
+[useful-lead task-sharing study](../reports/timely-sharing-2026-10-05/research-report.md)
+completed nine independent-event fits and all 234 policy heads, bringing the
+preserved neural inventory to 51 fits. Joint minus independent primary macro
+recall is −0.061 points [−0.219, +0.099]; Dragon gains and Baron losses persist.
+At 20–60 seconds the macro contrast is −0.664 [−0.925, −0.397], with all seeds
+and both regional intervals adverse. The longer-lead target-by-sharing
+interaction is −0.562 [−0.776, −0.343]: aligned targets benefit independent
+models more. All four descriptive sharing rules fail and regional budgets
+remain failed. The interrupted worker recovered its original checkpoints;
+committed analysis release preceded scoring, and all prior policy counts and
+shared estimates reproduced exactly. See the
+[execution and recovery instructions](../reports/timely-sharing-2026-10-05/reproduce.md).
+No worker needs restarting, no breakthrough is claimed, and patch 16.17 stays sealed.
+
 **Latest completed follow-up, 4 October 2026:** the [conditional history study](../reports/clock-history-2026-10-04/research-report.md) completed three further fits and all 216 policy heads. Past non-timing state adds +.533 recall points [.374, .696] beyond genuine timer history and current state at 10–30 seconds, with all seed and regional macro effects positive and lower aggregate burden. Longer-lead Dragon declines; regional budget gates remain failed. The analysis hash record preceded scoring, but Git approval delayed its commit until afterward; [the deviation and enforced future release procedure](../reports/clock-history-2026-10-04/scoring-release-repair.md) are explicit. Preserve all 42 completed neural fits. No worker needs restarting, no breakthrough is claimed, and patch 16.17 stays sealed.
 
 **Latest analysis, 4 October 2026:** the [useful-lead input study](../reports/timely-inputs-2026-10-04/research-report.md) completed six fits and all 198 policy heads. History improves primary macro recall by +.650 points [.478, .821], with all seeds and regions positive and lower aggregate burden. Full input exceeds timing-only input, but the two contrasts do not isolate non-timing history. Longer-lead history evidence is weak; most of the target gain also occurs with current-only input. Existing regional gates remain failed. Preserve the [completed outputs and recovery record](../reports/timely-inputs-2026-10-04/reproduce.md); no breakthrough or test release is claimed.
