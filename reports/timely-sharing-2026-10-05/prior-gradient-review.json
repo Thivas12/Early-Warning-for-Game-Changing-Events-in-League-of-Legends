@@ -1,0 +1,145 @@
+{
+  "source": "reports/gradient-conflict-2026-10-02/diagnostics.json",
+  "source_sha256": "7002ea0fc82f97e6d7acb49198c811cbe1af81ea62e4035da2f8b9e7fa2b1802",
+  "new_fits": 0,
+  "new_gradient_computations": 0,
+  "original_gradient_by_seed": {
+    "20260930": {
+      "baron_interference_ratio_median": 0.04984208957774773,
+      "baron_joint_raw_gradient_ascent_fraction": 0.020833333333333332,
+      "baron_other_opposes_fraction": 0.4375,
+      "batches": 48,
+      "mean_cosine": [
+        [
+          1.0,
+          0.021270348014993463,
+          0.004004117012425363
+        ],
+        [
+          0.021270348014993463,
+          1.0,
+          -0.016686307949191653
+        ],
+        [
+          0.004004117012425363,
+          -0.016686307949191653,
+          1.0
+        ]
+      ],
+      "median_weighted_gradient_norm": [
+        0.18921146984337306,
+        0.43872448859146906,
+        0.5855506378034878
+      ],
+      "negative_cosine_fraction": [
+        [
+          0.0,
+          0.3958333333333333,
+          0.4791666666666667
+        ],
+        [
+          0.3958333333333333,
+          0.0,
+          0.5416666666666666
+        ],
+        [
+          0.4791666666666667,
+          0.5416666666666666,
+          0.0
+        ]
+      ]
+    },
+    "20261001": {
+      "baron_interference_ratio_median": 0.0634573022343143,
+      "baron_joint_raw_gradient_ascent_fraction": 0.020833333333333332,
+      "baron_other_opposes_fraction": 0.4166666666666667,
+      "batches": 48,
+      "mean_cosine": [
+        [
+          1.0,
+          -0.00812614296219088,
+          0.020767787133629815
+        ],
+        [
+          -0.00812614296219088,
+          1.0,
+          0.009769629770796463
+        ],
+        [
+          0.020767787133629815,
+          0.009769629770796463,
+          1.0
+        ]
+      ],
+      "median_weighted_gradient_norm": [
+        0.19410905189489408,
+        0.42105539456497043,
+        0.538582881832562
+      ],
+      "negative_cosine_fraction": [
+        [
+          0.0,
+          0.5625,
+          0.3333333333333333
+        ],
+        [
+          0.5625,
+          0.0,
+          0.4583333333333333
+        ],
+        [
+          0.3333333333333333,
+          0.4583333333333333,
+          0.0
+        ]
+      ]
+    },
+    "20261002": {
+      "baron_interference_ratio_median": 0.01652647458910357,
+      "baron_joint_raw_gradient_ascent_fraction": 0.0,
+      "baron_other_opposes_fraction": 0.4791666666666667,
+      "batches": 48,
+      "mean_cosine": [
+        [
+          1.0,
+          0.02796023979130546,
+          -0.0012011594593120572
+        ],
+        [
+          0.02796023979130546,
+          1.0,
+          -0.018664247600033795
+        ],
+        [
+          -0.0012011594593120572,
+          -0.018664247600033795,
+          1.0
+        ]
+      ],
+      "median_weighted_gradient_norm": [
+        0.22555899139775448,
+        0.4260766755043036,
+        0.6404592135448235
+      ],
+      "negative_cosine_fraction": [
+        [
+          0.0,
+          0.5,
+          0.5208333333333334
+        ],
+        [
+          0.5,
+          0.0,
+          0.5833333333333334
+        ],
+        [
+          0.5208333333333334,
+          0.5833333333333334,
+          0.0
+        ]
+      ]
+    }
+  },
+  "interpretation": "These are final cumulative-target checkpoint diagnostics. Opposing other-task components occur in42-48%of sampled training batches, but raw summed-gradient ascent for Baron occurs in0-2.1%. These fractions do not model Adam preconditioning and cannot establish the cause of recall losses. Do not transfer them as measurements of useful-lead joint training. The current paired sharing study does not isolate gradients from representation or optimization effects.",
+  "test_payloads_opened": 0
+}
