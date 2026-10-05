@@ -1,0 +1,55 @@
+{
+  "recorded_at_utc": "2026-10-05T17:39:35.203442+00:00",
+  "purpose": "Hashes of published aggregates and figures after lossless JSON formatting; raw JSON hashes remain in execution-record.json.",
+  "artifacts": {
+    "analysis.json": {
+      "sha256": "acfccf36eee2e38d3c242ddb1b39e94e85c54330f3159cd4b440d78532dda43a",
+      "bytes": 29612049
+    },
+    "early-policies.json": {
+      "sha256": "7a330b5d687a4eae7f4ace8d3ee8485ab64e7cd94cacfbf4fc8408a3fed58d3c",
+      "bytes": 18292179
+    },
+    "aggregate-counts.csv": {
+      "sha256": "f488f593ad441838acc2a293efe760ab9de5a01f02dd4ad3e0956ff5d7633e28",
+      "bytes": 1690600
+    },
+    "by-seed.csv": {
+      "sha256": "a4a27595c28c29b4c7200b37011c038f67f70c76bf1055e592db4b0d66046460",
+      "bytes": 3192425
+    },
+    "budget-violations.csv": {
+      "sha256": "188ee5cc74b54ba4f0ed190b8bbc1395c122d899d7bb6b4ba2c7eb004ab393a4",
+      "bytes": 272193
+    },
+    "tables.md": {
+      "sha256": "ab2c8bbed24569c58de172c4e800bc68af7ae44408054eb8f4745e4f5fab2253",
+      "bytes": 32716
+    },
+    "sharing-effects.svg": {
+      "sha256": "5c6d743b88c83ddf177baf16c1b8990f83243b8ea6b468b11894f4068493cd57",
+      "bytes": 77027
+    },
+    "sharing-effects.png": {
+      "sha256": "12d13dba2f305abf1423080d2c91fbcea4f1eeffc95754a3f9d9997375f3fc89",
+      "bytes": 177518
+    },
+    "execution-record.json": {
+      "sha256": "10601cadde9acbee9bf62db6d800b5280ca27ef5a4dba444295095381d65d0e8",
+      "bytes": 7700
+    },
+    "scoring-release-gate.json": {
+      "sha256": "d7e5625f2ffb554039aad9c5370a84b3e27c56ecf27e61d4987c51f6980922f6",
+      "bytes": 4509
+    },
+    "evaluation-gate.json": {
+      "sha256": "f388ff420259cc4a4ce34ec7c157c57d2e49759319def6cca7ffa163d4b6afcf",
+      "bytes": 427
+    },
+    "recovery-record.json": {
+      "sha256": "e455f196ab03b7e25374cf3aaaaf5bf80dc5b2e62d79da5d25d6093e28b68b84",
+      "bytes": 1618
+    }
+  },
+  "csv_format": "CSV record terminators normalized to LF for portable Git checkouts; aggregate values unchanged."
+}

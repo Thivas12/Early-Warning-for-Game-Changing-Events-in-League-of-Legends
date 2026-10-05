@@ -1,0 +1,14 @@
+{
+  "baseRefName": "research/league-clock-history-20261004",
+  "createdAt": "2026-10-05T14:05:44Z",
+  "headRefOid": "356430215de3e2dde9e5edd784521b4cc57cbdb6",
+  "isDraft": true,
+  "url": "https://github.com/Thivas12/Early-Warning-for-Game-Changing-Events-in-League-of-Legends/pull/83",
+  "observed_at_utc": "2026-10-05T14:11:40.674278+00:00",
+  "analysis_commit": "570b10cd5f731c279cfb14884adcf94298ba46fc",
+  "analysis_is_ancestor_of_published_head": true,
+  "new_prediction_reports": 0,
+  "analysis_release_exists": false,
+  "test_payloads_opened": 0,
+  "interpretation": "Public draft predates fitted-model scoring; exploratory protocol using previously inspected calibration, not fresh confirmation."
+}

@@ -1,0 +1,9 @@
+{
+  "recorded_at_utc": "2026-10-05T17:14:03.111597+00:00",
+  "early_heads": 234,
+  "later_heads_before_evaluation": 0,
+  "freeze_sha256": "715913b61b5a6597702450329118ef03ef48e74400e7e8bdf94621ebd466665f",
+  "policy_freeze_sha256": "ca4b0849384efdb803d994c0484fce68de43dadbab37761903bbb3707ef5632d",
+  "analysis_release_sha256": "e38cae5c0dfc52c6f2d70fa2066446281c46c6be1f716180a8d8a60308b4db9e",
+  "test_payloads_opened": 0
+}
