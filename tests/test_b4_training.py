@@ -144,7 +144,10 @@ def test_bounded_seed_resume_and_binding(tmp_path, monkeypatch):
         b4_training.train_b4_seed(*args, seed=20260915)
 
 
-def test_cuda_requires_a_supported_runtime():
+def test_cuda_requires_a_supported_runtime(monkeypatch):
+    import torch
+
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
     with pytest.raises(RuntimeError, match="CUDA is unavailable"):
         TorchBackend(20260915, "cuda")
 
