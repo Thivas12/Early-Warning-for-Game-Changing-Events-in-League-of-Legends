@@ -1,0 +1,67 @@
+{
+  "recorded_at_utc": "2026-10-06T16:39:03.302047+00:00",
+  "training_protocol_commit": "f45933a",
+  "training_freeze_sha256": "bf31de989e7009cb959eaf6c56f655984e3baa4c692fb3889e3fc948ad0f382b",
+  "fits_complete": 9,
+  "training_shard_updates": 5184,
+  "new_prediction_reports": 0,
+  "test_payloads_opened": 0,
+  "worker_exit_code": 0,
+  "all_checkpoint_parameters_finite": true,
+  "models": {
+    "equal_tcn/20260930": {
+      "checkpoint_sha256": "7b26f8987ec8996a2a26c68c02ca783e078bcbb5e15b57ce195fb8d09d6e03f3",
+      "completed_units": 576,
+      "training_seconds": 323.46970027001225,
+      "parameters": 557087
+    },
+    "equal_tcn/20261001": {
+      "checkpoint_sha256": "532a95fb2291ac5c6b3b8483019b4d8ef9012a6db60acbb3350b8bed85acad82",
+      "completed_units": 576,
+      "training_seconds": 323.08639565476915,
+      "parameters": 557087
+    },
+    "equal_tcn/20261002": {
+      "checkpoint_sha256": "8bd1b314a120450dd60d4ea28afffe7b087ac70781f94156101e57481230fd41",
+      "completed_units": 576,
+      "training_seconds": 319.6477784160088,
+      "parameters": 557087
+    },
+    "original_gru/20260930": {
+      "checkpoint_sha256": "4c90cb616142907211fce3bda0138ea4ed9a0a262696df51e8b0ff053932342c",
+      "completed_units": 576,
+      "training_seconds": 398.11313669801166,
+      "parameters": 912717
+    },
+    "original_gru/20261001": {
+      "checkpoint_sha256": "eb38cf19cf5004246c4c48377ef8b2c9cc4a1a17ebff62fc1c77058c41c631e0",
+      "completed_units": 576,
+      "training_seconds": 403.7370442119718,
+      "parameters": 912717
+    },
+    "original_gru/20261002": {
+      "checkpoint_sha256": "95c3bc6565d0c886dfa1bc6f2334701e86f946a2308b076ed42f3303f7cc574d",
+      "completed_units": 576,
+      "training_seconds": 399.7983880639222,
+      "parameters": 912717
+    },
+    "equal_gru/20260930": {
+      "checkpoint_sha256": "38f24f9eaebb2933a86a827dde3778200d6b7eaff456d7be5df023449d60abb7",
+      "completed_units": 576,
+      "training_seconds": 396.28778018603043,
+      "parameters": 912717
+    },
+    "equal_gru/20261001": {
+      "checkpoint_sha256": "a2fc0f81020ec958899bf0e0d0f0747dc43f88fd5ecebbf5e6f972e2214da478",
+      "completed_units": 576,
+      "training_seconds": 398.6632416202774,
+      "parameters": 912717
+    },
+    "equal_gru/20261002": {
+      "checkpoint_sha256": "16657521012a937586949dd11b23fe1e12c103f308d9a434b53d1c8104df226e",
+      "completed_units": 576,
+      "training_seconds": 397.28917168907356,
+      "parameters": 912717
+    }
+  }
+}
