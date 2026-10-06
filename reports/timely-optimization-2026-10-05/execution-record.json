@@ -1,0 +1,179 @@
+{
+  "recorded_at_utc": "2026-10-06T11:17:36.174295+00:00",
+  "training_protocol_commit": "881262a",
+  "analysis_commit": "2dbe0dd",
+  "training_freeze_sha256": "bef9a186a714276f5da4c2a6c90b232b643c95e2a28c1b67966ec23549fb94ad",
+  "training_summary_sha256": "d9a51d86873b77302e8c249f8a37fad385f06a9be4fdba1a3454915c4696372a",
+  "training_exit_code": 0,
+  "new_fits": 9,
+  "new_shard_updates": 5184,
+  "new_fit_training_seconds": 10536.15697627065,
+  "new_fit_records": {
+    "equal_pcgrad/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 1404.606240816851,
+      "checkpoint_sha256": "c7ee376bc7eccf124397e932be1af53e7fb75b4647644ddf47e9ed5660e768b7",
+      "scores_sha256": "95f4b07426d65ecb722bd4ef6f2cd60129d474b88c0222b57dfba87384c9ed33"
+    },
+    "equal_pcgrad/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 1393.6575983849616,
+      "checkpoint_sha256": "d3e13dd5b3be8962a600582c3a6b1bb9219162a8b9b4aeba94ec145acb69cd92",
+      "scores_sha256": "d9b68575f8458108bec9c564823e8b0a601e10a7cc779a0972d61a27fad6b9e3"
+    },
+    "equal_pcgrad/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 1397.1100658550276,
+      "checkpoint_sha256": "92f4dcd1477ecece4d1f4b619b96c15231742d7e17c805f8c52c67d9cd84f157",
+      "scores_sha256": "139c8b772b04c382f597dabd0948ff3d35c47f9d1c645eabd16cc932debccb0f"
+    },
+    "equal_sum/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 714.5019618979786,
+      "checkpoint_sha256": "e6a3fbb73078b1e0349e2c095c81a01c716187b01b8259439c3e7aeda32ac0eb",
+      "scores_sha256": "b60bd82d2b02add17ccf6f23229069876166dcdda1123689d239e10bd2e31679"
+    },
+    "equal_sum/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 714.0939243229368,
+      "checkpoint_sha256": "b41670beba8d13132449fc1ec8bcad2e75966b075101284f4ff0485c0b0e6256",
+      "scores_sha256": "1b3024b5b57539a895d0ce83dd07bbf414af61cc74652ee210342fd238bbd203"
+    },
+    "equal_sum/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 717.0254897679552,
+      "checkpoint_sha256": "9cf79de5919ccf0a77140fbe5fe046c60082750865863a440b956d3f7c9ff2df",
+      "scores_sha256": "2cceece5eea8fbc8c19a1a1a5d1895ea5f1b40adafa29afd93e2a8b736ea5928"
+    },
+    "original_pcgrad/20260930": {
+      "parameters": 1751647,
+      "training_seconds": 1398.1811773839945,
+      "checkpoint_sha256": "9cfdac7ff070e83ecf4bae0c5716fe4477ab54801c8fd706bd5c8231d11b6c91",
+      "scores_sha256": "e7437cd2247de13bc31b4d11ce61166bb54c6795bba96e9637f7feb88a34e0a8"
+    },
+    "original_pcgrad/20261001": {
+      "parameters": 1751647,
+      "training_seconds": 1398.2675254860587,
+      "checkpoint_sha256": "bcaec62779d0cb18fcfc77168a2c1e8ad9d65f071d06f67a0b69bd08f01ebb1d",
+      "scores_sha256": "6c998a3222997973666dd144fee9e775bdc6a337d8920d57cba4881566406989"
+    },
+    "original_pcgrad/20261002": {
+      "parameters": 1751647,
+      "training_seconds": 1398.7129923548855,
+      "checkpoint_sha256": "f3facacbed3d66eab2ea57afe8d12a363ce7d9a1a43ca61134b8ec62909adbf1",
+      "scores_sha256": "c5a90c8cb295bfcfffbed9a002eccef42f2f06a5245dbaacf50166888286cfbf"
+    }
+  },
+  "completed_prior_neural_fits": 51,
+  "total_completed_neural_fits": 60,
+  "test_payloads_opened": 0,
+  "freeze_sha256": "4a84fb763c543372d083cef346f6e1ce8c61f65f371539b4c17f1f12a91f3c53",
+  "policy_freeze_sha256": "188f57c7754ead3bd2155e5ba04d19ee520f154669877c3968f7a21f14f7697c",
+  "summary_sha256": "6b443c95cb2687133ac57ea682d3ade8534920e331425a613c3cae6ceb9da249",
+  "early_heads": 288,
+  "later_heads": 288,
+  "independent_component_checks": 110453,
+  "new_full_reference_checks": 324000,
+  "prior_all_five_policy_heads_reproduced": 234,
+  "prior_dense_heads_reproduced": 72,
+  "prior_analysis_exact_reproduction": {
+    "timely-sharing-2026-10-05": {
+      "model_metric_records": 31200,
+      "shared_contrast_metric_records": 38400
+    }
+  },
+  "raw_analysis_sha256": "f1203b34945d34ef8daec456e61a3ac394680bc168c363620f1001a2d1cb075e",
+  "raw_policies_sha256": "e6d1bc2227a5be207907705bdba8499e54c80b4724f359f21c1d3c75bdeee111",
+  "quality_gate_sha256": "05cbe5103c710f5b1f0a61576785499290a0091c68008d5b8d0f19863a94c957",
+  "quality_gate": {
+    "status": "passed",
+    "recorded_at_utc": "2026-10-06T10:42:12.282067+00:00",
+    "tests_passed": 676,
+    "tests_skipped": 1,
+    "coverage_percent": 85.86,
+    "focused_new_tests_passed": 23,
+    "ruff": "passed",
+    "mypy_source_files": 87,
+    "secret_check": "passed",
+    "source_sha256": {
+      "scripts/evaluate_timely_sharing.py": "ad8a14e0c039241b9bb1eb50f4f0245fa5622ab467a4394546b4b900259f088a",
+      "scripts/analyse_timely_sharing.py": "2bdd49ca102aa6bcfd5a6a2b24996fe0db8601b21f8f413a38f0a3010a08cd2a",
+      "scripts/evaluate_clock_history.py": "dac433b478c1edeb60966c56a17d2444d2d8f6496e546be72cee8e12ba204a70",
+      "scripts/analyse_clock_history.py": "e99db707086b142a0b2ade05733f9151ed9d53ee10d29109bed68048525ae1d4",
+      "scripts/evaluate_timely_inputs.py": "ba3a8dd144dc24bed88423805ac9cd9df2e95da37f35cbbb487dea08fe4e56ff",
+      "scripts/analyse_timely_inputs.py": "eed1e97ea28df4235bae289176aadb3211bdb22bf5a1f7b9ff1d9b3066116c9e",
+      "scripts/evaluate_timely_neural.py": "37a005f6083436c1d6e893588b2a4100da3d781383c39efaaedfeb85bf3bb9fe",
+      "scripts/evaluate_dense_policy.py": "1deea7824d2dd93b2f7b12644f3490d0ce5c5b36e4c5324d01c942f7bc03dd20",
+      "scripts/timely_neural_targets.py": "04119e3fd58cfc82cca6e0d481a88a2b4e0b01e62283eb4624fbf9f1e7be067d",
+      "scripts/warning_efficiency.py": "2ec05b4bc83a289847d77a5beabe49e2249139548282ebca871238dcb1ee8c28",
+      "scripts/run_warning_efficiency.py": "fd7003d7440e7dbd3d780ebd04714657224a315b253f503dec67accb1b237ac2",
+      "scripts/analyse_neural_screen.py": "4bb6516ee017a13e11196cd0c69b47e1351997c71219f7e97aaab2c0c295c918",
+      "scripts/audit_neural_results.py": "7a7fc9aa912e732277da7cc8da857458de8f86080665bd20814b5ecd351306b5",
+      "scripts/league_compact_data.py": "31ef1507e3cf7a1a5396ca48e5ce624ad2a7552205949ddf58e6a0c115ace665",
+      "scripts/export_league_development.py": "16e838397be37cb45dc3fe9112a01511039fc17571b518f4bec743e152392c89",
+      "src/league_ews/coordination_experiment.py": "b4ce0cc65b9b632cf0aa6f0011135e5ae60032fa7e4bcc760050abb1a93a91ce",
+      "src/league_ews/m1_alert_diagnostics.py": "66b3aa9ca5f667547a05068f5fc5f98c80f085d1185b1bacba87017236c2059c",
+      "src/league_ews/alert_policy.py": "dd3bdf3c8a085cbeb9e5454156b3cfa41991c42e4c19f39f64eaf6f78804928c",
+      "src/league_ews/constants.py": "7fc33017b2cb6b5c86ce64bef74c025694e0452d56ca20667666aecc637b6a1a",
+      "src/league_ews/notebook_experiment.py": "3f1ba0fb7f7e8c7e19d76b61573376f3b52885159142d9d32a92437dfbd5b77a",
+      "scripts/run_timely_sharing.py": "e4c625ce7980a20699d29f535bc56f5b26937c9fd6d1f494ab7e46fbfb36674c",
+      "scripts/run_timely_sharing.sh": "2933be5138ead64ee3e58e4c4ed00ce67efdc0607c9bd768525ed6898c142363",
+      "scripts/task_sharing_backend.py": "23f495a02732d2d7dcbd2f856ecdac820d5025a860b89f4c1d5ab2b04adb0126",
+      "scripts/scoring_release.py": "a0e2036091dc5972cda03fa6bd6003ac565fea43899aea3894783f0b3eabe71a",
+      "scripts/evaluate_timely_optimization.py": "c77f447c0940217457d260c5165b3908908d6724843a874d10ac5c2e26ac1486",
+      "scripts/analyse_timely_optimization.py": "31af911beda78a38fc7847b4fe5a43ccb70f3e892cb725586deef254c0cb8576",
+      "scripts/run_timely_optimization.py": "18a10611186f78d59bce4c0665e0e1eb57c3de88516c06e25d8c84fa76d651fb",
+      "scripts/run_timely_optimization.sh": "b5b6c08c7633e2946134cbd244b6c172fbcbc58e655bdd583c1ec561f91e95e9",
+      "scripts/timely_optimization_backend.py": "3d470005d6504929191145ad77046557848b52a5db17cabe8f7571fb5df09c30",
+      "scripts/pcgrad_backend.py": "5b9d195d07d1f5c2147f53359301f33f902bd37f6adaceab97ec3cc447e43b51"
+    },
+    "plan_sha256": "aba9478c69149186da4d67e1d18dac639f10d2e3fcbb3c74280ee7077b8b9d7a",
+    "test_note": "The full suite initially failed the legacy unavailable-CUDA fixture on real CUDA hardware; explicitly mocking unavailable CUDA fixed the fixture, and the subsequent complete suite passed. No research source changed for that fix."
+  },
+  "protocol_commit_order_met": true,
+  "analysis_commit_time_utc": "2026-10-06T10:42:13+00:00",
+  "first_score_modified_utc": "2026-10-06T10:43:00.765993+00:00",
+  "timing_evidence": "Local commit, release and artifact timestamps; not an external registry",
+  "analysis_release_sha256": "2e43f2d9bf25ce658c5d5036eded845ca8d46696c553013312c87482b84b1af1",
+  "analysis_release": {
+    "schema_version": "league-committed-scoring-release-v1",
+    "recorded_at_utc": "2026-10-06T10:42:45.869508+00:00",
+    "analysis_commit": "2dbe0dd98cc0244253fe12c0f44bdea26e7e71ab",
+    "sources_sha256": {
+      "scripts/evaluate_timely_sharing.py": "ad8a14e0c039241b9bb1eb50f4f0245fa5622ab467a4394546b4b900259f088a",
+      "scripts/analyse_timely_sharing.py": "2bdd49ca102aa6bcfd5a6a2b24996fe0db8601b21f8f413a38f0a3010a08cd2a",
+      "scripts/evaluate_clock_history.py": "dac433b478c1edeb60966c56a17d2444d2d8f6496e546be72cee8e12ba204a70",
+      "scripts/analyse_clock_history.py": "e99db707086b142a0b2ade05733f9151ed9d53ee10d29109bed68048525ae1d4",
+      "scripts/evaluate_timely_inputs.py": "ba3a8dd144dc24bed88423805ac9cd9df2e95da37f35cbbb487dea08fe4e56ff",
+      "scripts/analyse_timely_inputs.py": "eed1e97ea28df4235bae289176aadb3211bdb22bf5a1f7b9ff1d9b3066116c9e",
+      "scripts/evaluate_timely_neural.py": "37a005f6083436c1d6e893588b2a4100da3d781383c39efaaedfeb85bf3bb9fe",
+      "scripts/evaluate_dense_policy.py": "1deea7824d2dd93b2f7b12644f3490d0ce5c5b36e4c5324d01c942f7bc03dd20",
+      "scripts/timely_neural_targets.py": "04119e3fd58cfc82cca6e0d481a88a2b4e0b01e62283eb4624fbf9f1e7be067d",
+      "scripts/warning_efficiency.py": "2ec05b4bc83a289847d77a5beabe49e2249139548282ebca871238dcb1ee8c28",
+      "scripts/run_warning_efficiency.py": "fd7003d7440e7dbd3d780ebd04714657224a315b253f503dec67accb1b237ac2",
+      "scripts/analyse_neural_screen.py": "4bb6516ee017a13e11196cd0c69b47e1351997c71219f7e97aaab2c0c295c918",
+      "scripts/audit_neural_results.py": "7a7fc9aa912e732277da7cc8da857458de8f86080665bd20814b5ecd351306b5",
+      "scripts/league_compact_data.py": "31ef1507e3cf7a1a5396ca48e5ce624ad2a7552205949ddf58e6a0c115ace665",
+      "scripts/export_league_development.py": "16e838397be37cb45dc3fe9112a01511039fc17571b518f4bec743e152392c89",
+      "src/league_ews/coordination_experiment.py": "b4ce0cc65b9b632cf0aa6f0011135e5ae60032fa7e4bcc760050abb1a93a91ce",
+      "src/league_ews/m1_alert_diagnostics.py": "66b3aa9ca5f667547a05068f5fc5f98c80f085d1185b1bacba87017236c2059c",
+      "src/league_ews/alert_policy.py": "dd3bdf3c8a085cbeb9e5454156b3cfa41991c42e4c19f39f64eaf6f78804928c",
+      "src/league_ews/constants.py": "7fc33017b2cb6b5c86ce64bef74c025694e0452d56ca20667666aecc637b6a1a",
+      "src/league_ews/notebook_experiment.py": "3f1ba0fb7f7e8c7e19d76b61573376f3b52885159142d9d32a92437dfbd5b77a",
+      "scripts/run_timely_sharing.py": "e4c625ce7980a20699d29f535bc56f5b26937c9fd6d1f494ab7e46fbfb36674c",
+      "scripts/run_timely_sharing.sh": "2933be5138ead64ee3e58e4c4ed00ce67efdc0607c9bd768525ed6898c142363",
+      "scripts/task_sharing_backend.py": "23f495a02732d2d7dcbd2f856ecdac820d5025a860b89f4c1d5ab2b04adb0126",
+      "scripts/scoring_release.py": "a0e2036091dc5972cda03fa6bd6003ac565fea43899aea3894783f0b3eabe71a",
+      "scripts/evaluate_timely_optimization.py": "c77f447c0940217457d260c5165b3908908d6724843a874d10ac5c2e26ac1486",
+      "scripts/analyse_timely_optimization.py": "31af911beda78a38fc7847b4fe5a43ccb70f3e892cb725586deef254c0cb8576",
+      "scripts/run_timely_optimization.py": "18a10611186f78d59bce4c0665e0e1eb57c3de88516c06e25d8c84fa76d651fb",
+      "scripts/run_timely_optimization.sh": "b5b6c08c7633e2946134cbd244b6c172fbcbc58e655bdd583c1ec561f91e95e9",
+      "scripts/timely_optimization_backend.py": "3d470005d6504929191145ad77046557848b52a5db17cabe8f7571fb5df09c30",
+      "scripts/pcgrad_backend.py": "5b9d195d07d1f5c2147f53359301f33f902bd37f6adaceab97ec3cc447e43b51",
+      "reports/timely-optimization-2026-10-05/plan.json": "aba9478c69149186da4d67e1d18dac639f10d2e3fcbb3c74280ee7077b8b9d7a"
+    },
+    "plan": "reports/timely-optimization-2026-10-05/plan.json",
+    "training_freeze_sha256": "bef9a186a714276f5da4c2a6c90b232b643c95e2a28c1b67966ec23549fb94ad"
+  },
+  "mypy_source_files": 87
+}

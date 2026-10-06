@@ -1,5 +1,13 @@
 # Reproduce the useful-lead optimizer factorial
 
+**Complete:** all nine fits, 288 policy heads, paired analysis and audits finished.
+The evaluation worker exited successfully. Do not restart the completed study.
+The commands below document reproduction and checkpoint-preserving recovery.
+Read [research-report.md](research-report.md) for the positive weighting result
+and the remaining practical failures. Full replay passed 324,000 checks,
+component replay passed 110,453, and 31,200 model plus 38,400 contrast metric
+records exactly reproduced the preceding study.
+
 This branch starts at the completed sharing report, commit `285635c` (draft
 PR #83). Diagnostic code and protocol were committed as `54ebaa2`; all 576
 training-only probes completed before training protocol `881262a`. The nine
