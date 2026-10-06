@@ -18,6 +18,17 @@ a versioned, validated research release.
 
 ## Research status
 
+**6 October 2026:** The [loss-weighting and PCGrad factorial](reports/timely-optimization-2026-10-05/research-report.md)
+completed nine fits and 288 policy heads, bringing the neural inventory to 60.
+Equal event weights improve primary macro recall by +0.325 points [0.231, 0.418],
+with positive effects in every seed and both regions. Baron gains most; its
+longer-lead recall recovers 1.310 points [0.950, 1.672], but still trails
+independent encoders. PCGrad adds no clear primary benefit beyond equal weights.
+The no-extra-burden rule and regional budget gates remain failed. The existing
+TCN uses original weights, so the revised architecture comparison is not yet
+matched on optimization. All prior results reproduce exactly; patch 16.17
+remains sealed and no breakthrough is claimed.
+
 **5 October 2026:** The [useful-lead sharing study](reports/timely-sharing-2026-10-05/research-report.md)
 completed nine independent-event fits and all 234 policy heads; 51 neural fits
 are now preserved across the continuation. Shared learning still helps

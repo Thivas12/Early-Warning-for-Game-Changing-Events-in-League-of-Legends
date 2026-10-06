@@ -1,0 +1,67 @@
+{
+  "recorded_at_utc": "2026-10-06T10:42:12.691742+00:00",
+  "training_protocol_commit": "881262a",
+  "training_freeze_sha256": "bef9a186a714276f5da4c2a6c90b232b643c95e2a28c1b67966ec23549fb94ad",
+  "fits_complete": 9,
+  "training_shard_updates": 5184,
+  "new_prediction_reports": 0,
+  "test_payloads_opened": 0,
+  "worker_exit_code": 0,
+  "all_checkpoint_parameters_finite": true,
+  "models": {
+    "equal_sum/20260930": {
+      "checkpoint_sha256": "e6a3fbb73078b1e0349e2c095c81a01c716187b01b8259439c3e7aeda32ac0eb",
+      "completed_units": 576,
+      "training_seconds": 714.5019618979786,
+      "parameters": 1751647
+    },
+    "equal_sum/20261001": {
+      "checkpoint_sha256": "b41670beba8d13132449fc1ec8bcad2e75966b075101284f4ff0485c0b0e6256",
+      "completed_units": 576,
+      "training_seconds": 714.0939243229368,
+      "parameters": 1751647
+    },
+    "equal_sum/20261002": {
+      "checkpoint_sha256": "9cf79de5919ccf0a77140fbe5fe046c60082750865863a440b956d3f7c9ff2df",
+      "completed_units": 576,
+      "training_seconds": 717.0254897679552,
+      "parameters": 1751647
+    },
+    "original_pcgrad/20260930": {
+      "checkpoint_sha256": "9cfdac7ff070e83ecf4bae0c5716fe4477ab54801c8fd706bd5c8231d11b6c91",
+      "completed_units": 576,
+      "training_seconds": 1398.1811773839945,
+      "parameters": 1751647
+    },
+    "original_pcgrad/20261001": {
+      "checkpoint_sha256": "bcaec62779d0cb18fcfc77168a2c1e8ad9d65f071d06f67a0b69bd08f01ebb1d",
+      "completed_units": 576,
+      "training_seconds": 1398.2675254860587,
+      "parameters": 1751647
+    },
+    "original_pcgrad/20261002": {
+      "checkpoint_sha256": "f3facacbed3d66eab2ea57afe8d12a363ce7d9a1a43ca61134b8ec62909adbf1",
+      "completed_units": 576,
+      "training_seconds": 1398.7129923548855,
+      "parameters": 1751647
+    },
+    "equal_pcgrad/20260930": {
+      "checkpoint_sha256": "c7ee376bc7eccf124397e932be1af53e7fb75b4647644ddf47e9ed5660e768b7",
+      "completed_units": 576,
+      "training_seconds": 1404.606240816851,
+      "parameters": 1751647
+    },
+    "equal_pcgrad/20261001": {
+      "checkpoint_sha256": "d3e13dd5b3be8962a600582c3a6b1bb9219162a8b9b4aeba94ec145acb69cd92",
+      "completed_units": 576,
+      "training_seconds": 1393.6575983849616,
+      "parameters": 1751647
+    },
+    "equal_pcgrad/20261002": {
+      "checkpoint_sha256": "92f4dcd1477ecece4d1f4b619b96c15231742d7e17c805f8c52c67d9cd84f157",
+      "completed_units": 576,
+      "training_seconds": 1397.1100658550276,
+      "parameters": 1751647
+    }
+  }
+}

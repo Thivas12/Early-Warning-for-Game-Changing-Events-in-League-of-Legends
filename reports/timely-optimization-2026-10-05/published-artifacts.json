@@ -1,0 +1,85 @@
+{
+  "recorded_at_utc": "2026-10-06T11:59:10.894944+00:00",
+  "status": "complete-development-only-optimizer-factorial",
+  "test_payloads_opened": 0,
+  "files": {
+    "aggregate-counts.csv": {
+      "sha256": "f572b996821193aacca13ff6939cd9792541f873d42bc02a62e11a63bc19e0a4",
+      "bytes": 2104919
+    },
+    "analysis.json": {
+      "sha256": "4a7d65681d6a14fc2143f58ebebff0fb1b3468b29e9d843887c58f71621c59f2",
+      "bytes": 42553816
+    },
+    "budget-violations.csv": {
+      "sha256": "df9e80222a8035714e87c8fa73987fbb0d669db62eb6ee2465393261b7fcf058",
+      "bytes": 324947
+    },
+    "by-seed.csv": {
+      "sha256": "bcaab6b9bc667abb09416d2f1cb4f739bac457e286c7f185c87b184617fdf968",
+      "bytes": 3969146
+    },
+    "diagnostic-plan.json": {
+      "sha256": "07b96b2cdb3f8e3501c9047a835265665cae6ee27be9f6ad858c428f1c5175d5",
+      "bytes": 1751
+    },
+    "diagnostic-report.md": {
+      "sha256": "41950d13d31c56d4bcf4161d37f6a3ec4a62a71a5b86380fe0d408537d78dce5",
+      "bytes": 3212
+    },
+    "diagnostics.json": {
+      "sha256": "178b8f1c5b00c890bc302a04ced5212183ea30cee6ae77b2a2176a26b957e228",
+      "bytes": 882618
+    },
+    "early-policies.json": {
+      "sha256": "9ca1fe221fd9144535c4bc54474dd6ae56c57016d83c3f21de7f5d6b947350f0",
+      "bytes": 22487548
+    },
+    "evaluation-gate.json": {
+      "sha256": "a9c2d531a8d05b16279d22cef3546adbe619602561a4d3b25fa3ea9fe83f6004",
+      "bytes": 1149
+    },
+    "execution-record.json": {
+      "sha256": "adb1172d3be4d5e82faee3907e140eb96bd2eadd680930f8223e7f295c07a93b",
+      "bytes": 12412
+    },
+    "optimization-effects.png": {
+      "sha256": "61205c41fee9f1f51ec0a96888e7e98096023d2b622bc2aed1d471f62a6c5a53",
+      "bytes": 207247
+    },
+    "optimization-effects.svg": {
+      "sha256": "9bba0127624bca4d7cf714efcfb6d1023b73e564253d8b96c6c12bea8b505c8b",
+      "bytes": 92723
+    },
+    "plan.json": {
+      "sha256": "aba9478c69149186da4d67e1d18dac639f10d2e3fcbb3c74280ee7077b8b9d7a",
+      "bytes": 41813
+    },
+    "quality-gate.json": {
+      "sha256": "05cbe5103c710f5b1f0a61576785499290a0091c68008d5b8d0f19863a94c957",
+      "bytes": 3883
+    },
+    "reproduce.md": {
+      "sha256": "27387213515939ffe18e52d33f19351f6fe7864e457bc23e8be7f8757d584dff",
+      "bytes": 4335
+    },
+    "research-report.md": {
+      "sha256": "ca4097765b695ed1cf8cffe503be8f4e01f1c1fefcd23636c34abe86221c65e6",
+      "bytes": 11312
+    },
+    "scoring-release-gate.json": {
+      "sha256": "1f5c196c0e1434b14ffe3b5725a7702cf968128b5514f29631fc53eaf7a5567f",
+      "bytes": 5057
+    },
+    "tables.md": {
+      "sha256": "1207f09c5b4044a5892e18d39255a7681599fe0d60cdf4309a32fd7a105ee22b",
+      "bytes": 47987
+    },
+    "training-gate.json": {
+      "sha256": "672d5af6ad766935aff468194b533f713b9a969312483f69efd29199f8400c7d",
+      "bytes": 2529
+    }
+  },
+  "formatting": "Aggregate JSON losslessly compacted; CSV line endings normalized to LF. Raw analysis hashes remain in execution-record.json.",
+  "plot_review": "Standalone four-panel PNG visually inspected; every prespecified factorial effect and both warning windows shown."
+}

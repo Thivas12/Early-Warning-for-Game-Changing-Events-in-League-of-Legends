@@ -1,5 +1,18 @@
 # Continue from the original LeagueEWS project
 
+**Latest completed follow-up, 6 October 2026:** the
+[optimizer factorial](../reports/timely-optimization-2026-10-05/research-report.md)
+completed nine fits and all 288 policy heads. Equal event weights improve
+primary macro recall by +0.325 points [0.231, 0.418] across all seeds and both
+regions, largely through Baron. Longer-lead Baron recovers 1.310 points but
+still trails independent encoders. PCGrad has no clear additional primary
+benefit under equal weights. Four diagnostic rules pass; no-extra-burden and
+regional budget requirements remain failed. All 60 neural fits are preserved,
+the committed release preceded scoring, and every prior estimate reproduces.
+The revised TCN/GRU comparisons still need matched optimization controls before
+an architecture claim. Preserve the [completed study](../reports/timely-optimization-2026-10-05/reproduce.md);
+patch 16.17 stays sealed and no breakthrough is established.
+
 **Latest completed follow-up, 5 October 2026:** the
 [useful-lead task-sharing study](../reports/timely-sharing-2026-10-05/research-report.md)
 completed nine independent-event fits and all 234 policy heads, bringing the
