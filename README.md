@@ -18,6 +18,19 @@ a versioned, validated research release.
 
 ## Research status
 
+**7 October 2026, warning-policy follow-up:** The
+[capped risk-selector study](reports/warning-risk-2026-10-07/research-report.md)
+completed 90 heads using existing scores. A fixed uncertainty allowance gives
+zero nominal-budget overruns across all 720 regional evaluation cells without
+selecting silence, but costs LeagueEWS 1.818 short-lead and 3.114 longer-lead
+macro recall points. Most of the loss comes from conservative threshold
+selection; the cap alone does not solve the failures. LeagueEWS retains a
++0.225-point primary advantage over equal-weight TCN [0.118, 0.340], while
+regional consistency and no-extra-burden still fail. All 810,000 full replay
+checks passed and baseline results reproduce exactly. This is an exploratory
+tradeoff, not a risk certification or breakthrough. No new model was fitted;
+all 69 fits are preserved and patch 16.17 remains sealed.
+
 **7 October 2026:** The [matched architecture controls](reports/matched-optimization-2026-10-06/research-report.md)
 completed nine more fits and all 342 policy heads; 69 neural fits are preserved.
 Equal-weight LeagueEWS exceeds equal-weight TCN by +0.242 macro recall points
