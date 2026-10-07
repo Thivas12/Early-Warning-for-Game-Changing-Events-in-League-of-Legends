@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-10-06T17:16:58.248194+00:00",
+  "all_early_heads": 342,
+  "new_later_heads": 0,
+  "policy_freeze_sha256": "e80239315654df018eaa71320c698e1de3dfc345e568ec2d9a3084584c3afb14",
+  "test_payloads_opened": 0,
+  "checkpoint_sha256_after_scoring": {
+    "equal_tcn/20260930": "7b26f8987ec8996a2a26c68c02ca783e078bcbb5e15b57ce195fb8d09d6e03f3",
+    "equal_tcn/20261001": "532a95fb2291ac5c6b3b8483019b4d8ef9012a6db60acbb3350b8bed85acad82",
+    "equal_tcn/20261002": "8bd1b314a120450dd60d4ea28afffe7b087ac70781f94156101e57481230fd41",
+    "original_gru/20260930": "4c90cb616142907211fce3bda0138ea4ed9a0a262696df51e8b0ff053932342c",
+    "original_gru/20261001": "eb38cf19cf5004246c4c48377ef8b2c9cc4a1a17ebff62fc1c77058c41c631e0",
+    "original_gru/20261002": "95c3bc6565d0c886dfa1bc6f2334701e86f946a2308b076ed42f3303f7cc574d",
+    "equal_gru/20260930": "38f24f9eaebb2933a86a827dde3778200d6b7eaff456d7be5df023449d60abb7",
+    "equal_gru/20261001": "a2fc0f81020ec958899bf0e0d0f0747dc43f88fd5ecebbf5e6f972e2214da478",
+    "equal_gru/20261002": "16657521012a937586949dd11b23fe1e12c103f308d9a434b53d1c8104df226e"
+  }
+}

@@ -18,6 +18,19 @@ a versioned, validated research release.
 
 ## Research status
 
+**7 October 2026:** The [matched architecture controls](reports/matched-optimization-2026-10-06/research-report.md)
+completed nine more fits and all 342 policy heads; 69 neural fits are preserved.
+Equal-weight LeagueEWS exceeds equal-weight TCN by +0.242 macro recall points
+[0.131, 0.354] at 10–30 seconds, positive in every seed and each aggregate
+event interval. Europe's macro interval crosses zero, the no-extra-burden
+rule fails, and regional warning-budget violations persist. Longer-lead macro
+recall gains +0.714 points [0.540, 0.892], with higher Baron burden. Matching
+weights reduces the earlier TCN margin; larger GRU gains depend on a recipe
+that performs poorly with useful-lead targets. Architecture capacity and
+computation remain unmatched. All prior results reproduce exactly. The next
+investigation addresses warning-policy transfer; no breakthrough is established
+and patch 16.17 stays sealed.
+
 **6 October 2026:** The [loss-weighting and PCGrad factorial](reports/timely-optimization-2026-10-05/research-report.md)
 completed nine fits and 288 policy heads, bringing the neural inventory to 60.
 Equal event weights improve primary macro recall by +0.325 points [0.231, 0.418],

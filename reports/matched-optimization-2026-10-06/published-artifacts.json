@@ -1,0 +1,89 @@
+{
+  "recorded_at_utc": "2026-10-07T06:52:24.482854+00:00",
+  "status": "complete-development-only-matched-architecture-controls",
+  "test_payloads_opened": 0,
+  "files": {
+    "aggregate-counts.csv": {
+      "sha256": "514947217a7c2fb193c183a439e43f74146e1d28c654897af9b05a1d87e80d99",
+      "bytes": 2511537
+    },
+    "analysis.json": {
+      "sha256": "5d8f0ed2b25628801b8e53b1541a2b74831107a19ec169fd7ec229c3b13126b9",
+      "bytes": 55307321
+    },
+    "architecture-burden.png": {
+      "sha256": "719a0d929f8bf18d3add08bf9a90298ceb80ce24879c24c94874e81e4cdb2575",
+      "bytes": 280765
+    },
+    "architecture-burden.svg": {
+      "sha256": "85799426f63badb975488e4ff6d5dbfa70599a67fe2b3b758f4a974003658a68",
+      "bytes": 103860
+    },
+    "architecture-recall.png": {
+      "sha256": "f633f429e58863dd9a2133af5e9f6aeec575d3b01c13ecdbd299ccd6f4f90caa",
+      "bytes": 279196
+    },
+    "architecture-recall.svg": {
+      "sha256": "bd0ff42516727656bf03c6c4fba817208cc0dec7b89032ee16307734d6d8f2f2",
+      "bytes": 99112
+    },
+    "budget-violations.csv": {
+      "sha256": "00be70aeebd97707f43728a35d8c40ad53ff2cfc1df0243d2cc867505c18f740",
+      "bytes": 369478
+    },
+    "by-seed.csv": {
+      "sha256": "52ebfbca0db2fc27f5164a847fb23d6a34f2d5b0b1343ccbb2c58bcd328b06e6",
+      "bytes": 4731241
+    },
+    "early-policies.json": {
+      "sha256": "af664ec63e059b13da6a16f4eb722906c4280669022b212004402a4cc297bb8a",
+      "bytes": 26671250
+    },
+    "evaluation-gate.json": {
+      "sha256": "a7e5f4aed75bea8edbbaafcd7fa5743b6d833eb9586e79ca0e392b6bf6d24f7e",
+      "bytes": 1131
+    },
+    "execution-record.json": {
+      "sha256": "d21ad6a0196cc963507fafb9bf6cf30fdb944f47b6089bdf41e2179c7204d811",
+      "bytes": 13300
+    },
+    "plan.json": {
+      "sha256": "e58c57e117a83f6e6aef8e759da956ef05436d298e9dc72ebbfc73f8989d48ab",
+      "bytes": 43998
+    },
+    "pretraining-checks.json": {
+      "sha256": "16e3a48e6d677434a723f9f1b8829b1c8c09e5e46c01b0198da28e0453d0f05d",
+      "bytes": 1082
+    },
+    "protocol.md": {
+      "sha256": "fce9e02079bf57f7dc70442e0b41d1dec6b5793df16cec555d9982798f7c2d78",
+      "bytes": 3054
+    },
+    "quality-gate.json": {
+      "sha256": "476c959ffcae76045592528fc0490a856b413d76a44f44ce3051efe4cb5f99fc",
+      "bytes": 4204
+    },
+    "reproduce.md": {
+      "sha256": "e4041d1e535b4f445085c5e8a498819d1a44c7f12e1ec468a0eeff5120143dd9",
+      "bytes": 3942
+    },
+    "research-report.md": {
+      "sha256": "92bb71b5703258ffcd556ce69220c25253e0ff6bb23bfe3b46eaab1c55b73f59",
+      "bytes": 10950
+    },
+    "scoring-release-gate.json": {
+      "sha256": "3f0a19a446d7b4c47a08f8b481230becd4f35b7f879560f32a12ab4567191d6d",
+      "bytes": 5619
+    },
+    "tables.md": {
+      "sha256": "9da2c604dde77f81dccf8fe5e6ae359a7c42f6f29667d29828cded5d5e083a9e",
+      "bytes": 55932
+    },
+    "training-gate.json": {
+      "sha256": "28a37b4df878f5222073d36bf4e070b4108ec5171d8988da9486d3731118dbe0",
+      "bytes": 2502
+    }
+  },
+  "formatting": "Aggregate JSON losslessly compacted; CSV line endings normalized to LF. Raw analysis hashes remain in execution-record.json.",
+  "plot_review": "Both standalone six-panel PNGs visually inspected; matched original/equal-weight architecture contrasts and interactions shown for both warning windows."
+}

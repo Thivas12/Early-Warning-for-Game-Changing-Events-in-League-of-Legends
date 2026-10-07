@@ -1,5 +1,19 @@
 # Continue from the original LeagueEWS project
 
+**Latest completed follow-up, 7 October 2026:** the
+[matched architecture study](../reports/matched-optimization-2026-10-06/research-report.md)
+completed nine fits and 342 policy heads, preserving 69 neural fits. Equal-weight
+LeagueEWS minus equal-weight TCN primary macro recall is +0.242 points
+[0.131, 0.354], positive in all seeds and all aggregate event intervals.
+Europe's macro interval includes zero; regional consistency and no-extra-burden
+rules fail, and regional budgets still overrun. The longer-lead macro gain
+is +0.714 [0.540, 0.892], with additional Baron burden. GRU gains are larger
+but depend on a weak fixed recipe. Matching loss weights does not match model
+capacity, computation or tuning. All previous estimates reproduce; preserve
+the [completed study](../reports/matched-optimization-2026-10-06/reproduce.md).
+Warning-policy transfer is the next unresolved practical question. No
+breakthrough is claimed and patch 16.17 remains sealed.
+
 **Latest completed follow-up, 6 October 2026:** the
 [optimizer factorial](../reports/timely-optimization-2026-10-05/research-report.md)
 completed nine fits and all 288 policy heads. Equal event weights improve
