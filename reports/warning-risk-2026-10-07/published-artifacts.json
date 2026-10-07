@@ -1,0 +1,87 @@
+{
+  "recorded_at_utc": "2026-10-07T14:58:41.902247+00:00",
+  "status": "complete-development-only-warning-risk-study",
+  "new_neural_fits": 0,
+  "test_payloads_opened": 0,
+  "files": {
+    "aggregate-counts.csv": {
+      "sha256": "ad8bb6c42cfd7b9c37dc482e1a55bd9b27a8a52e3265549756e6a85c78a56222",
+      "bytes": 431511
+    },
+    "analysis-release.json": {
+      "sha256": "50d477d6d3baaf3f1e565f89f6215fbfa03d790ab0e4dc809b0c3c767558b4f5",
+      "bytes": 5042
+    },
+    "analysis.json": {
+      "sha256": "0aea572be162f1e7bb10e8e9e7a66dc83ddf9155578068aacc52163df5bf8e89",
+      "bytes": 8166047
+    },
+    "budget-violations.csv": {
+      "sha256": "bf9dd0c713f2c13c44923b8c0b8b59898f73d9a8be5fc5de6910b9f882f0b271",
+      "bytes": 34981
+    },
+    "by-seed.csv": {
+      "sha256": "192c2964c78ece68eb2d656b51a825eceaa7df56084515d4754fdbd848bd5dad",
+      "bytes": 7121395
+    },
+    "early-gate.json": {
+      "sha256": "5f0ca2741dd61fed3b7fb5a51bf14d7258b121b9b99f889f2cb440074ba971bf",
+      "bytes": 292
+    },
+    "early-policies.json": {
+      "sha256": "b0d67d8e3dce7afca137d814426faf42a2a6659af1c461c2247b5202d3e7ad57",
+      "bytes": 22641879
+    },
+    "execution-record.json": {
+      "sha256": "f6114d18e7eb08ca3ab0e99d96f290c8e98eb4c7bc21bd316177406064d7fa92",
+      "bytes": 6795
+    },
+    "plan.json": {
+      "sha256": "5f9f23d70163cd4894b0b64fdb8f0693a59c86ff0afa24696a4981d9f7521b07",
+      "bytes": 29383
+    },
+    "policy-tradeoffs.png": {
+      "sha256": "b81af4cf6dd1610aaba5822f5f16fb8441e710128a49a72585cd395780aa196d",
+      "bytes": 331121
+    },
+    "policy-tradeoffs.svg": {
+      "sha256": "0027d7306237b2b90533876772762cbc15cee13c06c5823bb9e105e85b1fb262",
+      "bytes": 74796
+    },
+    "protocol.md": {
+      "sha256": "30f1c80f0b6a885e64fef1a6f7ca46095641cd9a86d255cf3f52ef2ce810cd9f",
+      "bytes": 7172
+    },
+    "quality-gate.json": {
+      "sha256": "4609c1a5ea7363b235d553565482806897f6b31f9f60100e39a70834f924d20e",
+      "bytes": 5124
+    },
+    "reproduce.md": {
+      "sha256": "5137187e77f60c2839cbbcfb58ba75f2cd5af73d826c08c9dd2c3895e71f1c08",
+      "bytes": 4071
+    },
+    "research-report.md": {
+      "sha256": "ab6e76424c22412212ee8e9f015cbb28ad9194e50e16d77188bd81f0a61e93c5",
+      "bytes": 13171
+    },
+    "risk-architecture-effects.png": {
+      "sha256": "27b33a6f723854ebc91ed93de4a4527b741a97a928fd62653591a8c42e20d0a0",
+      "bytes": 199515
+    },
+    "risk-architecture-effects.svg": {
+      "sha256": "ff9dcf812b672175078f56945808243a5a5035d88f16ff8b259be8b0442a6ed1",
+      "bytes": 69358
+    },
+    "tables.md": {
+      "sha256": "2860305312281a2062f244ff74a905f2fb0ca6c74e736053fa75e6f19537052f",
+      "bytes": 132230
+    }
+  },
+  "formatting": "Aggregate JSON losslessly compacted; CSV uses LF; SVG trailing whitespace removed. Raw hashes remain in execution-record.json.",
+  "plot_review": "Both standalone four-panel PNGs visually inspected. Tradeoff curves and paired architecture recall/burden effects show both lead windows.",
+  "presentation_checks": {
+    "ruff": "passed",
+    "formatted_python_files": 430,
+    "secret_check": "passed"
+  }
+}

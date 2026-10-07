@@ -1,6 +1,18 @@
 # LeagueEWS: the evidence needed for a strong paper
 
 **Latest completed follow-up, 7 October 2026:** the
+[warning-risk study](../reports/warning-risk-2026-10-07/research-report.md)
+passes its new empirical budget-one endpoints: no nominal-budget violation
+occurs in any of 720 regional cells under the capped KL selector. It pays for
+this with 1.818 short-lead and 3.114 longer-lead LeagueEWS recall points.
+The primary matched TCN advantage is +0.225 [0.118, 0.340]; regional
+architecture consistency and no-extra-burden remain failed. Neither a new
+policy's empirical pass nor existing bounded-risk mathematics retroactively
+passes an old gate, certifies the adaptive search, or establishes novelty.
+All 69 fits are unchanged; 90 heads and 810,000 full independent replay checks
+completed. Preserve the failed comparisons and sealed patch-16.17 test.
+
+**Latest completed follow-up, 7 October 2026:** the
 [matched architecture controls](../reports/matched-optimization-2026-10-06/research-report.md)
 close the loss-weight mismatch against TCN and add both useful-lead GRU
 weighting controls. Equal-weight LeagueEWS retains +0.242 primary macro recall

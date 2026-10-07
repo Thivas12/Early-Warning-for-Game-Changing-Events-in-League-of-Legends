@@ -1,6 +1,21 @@
 # Continue from the original LeagueEWS project
 
 **Latest completed follow-up, 7 October 2026:** the
+[warning-risk study](../reports/warning-risk-2026-10-07/research-report.md)
+reuses five fitted families and completes all 90 heads. The capped KL selector
+has no nominal-budget overrun in 720 regional cells and never selects silence.
+LeagueEWS gives up 1.818 short-lead and 3.114 longer-lead macro recall points
+relative to the unchanged fine-grid policy. Its primary TCN advantage remains
++0.225 [0.118, 0.340], but regional consistency and no-extra-burden fail.
+The cap-only control does not eliminate failures; the fixed uncertainty
+allowance drives the cost reduction. All 810,000 full replay checks pass,
+with exact baseline reproduction. This changes no original failed gate and
+does not certify adaptively reused calibration. Preserve all 69 fits and the
+[completed policy study](../reports/warning-risk-2026-10-07/reproduce.md).
+The next question is whether a less conservative bounded-risk calculation can
+recover recall under the same policy controls. Patch 16.17 stays sealed.
+
+**Latest completed follow-up, 7 October 2026:** the
 [matched architecture study](../reports/matched-optimization-2026-10-06/research-report.md)
 completed nine fits and 342 policy heads, preserving 69 neural fits. Equal-weight
 LeagueEWS minus equal-weight TCN primary macro recall is +0.242 points
