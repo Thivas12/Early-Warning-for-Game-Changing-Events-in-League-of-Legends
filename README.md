@@ -18,6 +18,15 @@ a versioned, validated research release.
 
 ## Research status
 
+**7 October 2026, publication decision:** Further incremental calibration
+sweeps are stopped. The [publication assessment](docs/publication-decision-2026-10-07.md)
+and [paper draft](docs/leagueews-paper-draft.md) consolidate the completed
+evidence around history, target alignment, task-dependent sharing and warning
+tradeoffs. They reject a broad hybrid-superiority or new-method claim and
+distinguish failed internal promotion screens from publication quality.
+No breakthrough or untouched-patch confirmation is established. The proposed
+tighter-bound study was not launched; all completed results remain unchanged.
+
 **7 October 2026, warning-policy follow-up:** The
 [capped risk-selector study](reports/warning-risk-2026-10-07/research-report.md)
 completed 90 heads using existing scores. A fixed uncertainty allowance gives
