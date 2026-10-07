@@ -1,5 +1,17 @@
 # LeagueEWS: the evidence needed for a strong paper
 
+**Latest completed follow-up, 7 October 2026:** the
+[matched architecture controls](../reports/matched-optimization-2026-10-06/research-report.md)
+close the loss-weight mismatch against TCN and add both useful-lead GRU
+weighting controls. Equal-weight LeagueEWS retains +0.242 primary macro recall
+points [0.131, 0.354] over equal-weight TCN, with all seeds positive. Regional
+architecture consistency and no-extra-burden fail; practical budget failures
+remain. Architecture support, event point non-harm and secondary GRU support
+pass their descriptive rules, without establishing noninferiority, novelty
+or fresh generalization. All 69 fits and 342 policy heads are complete and
+every prior result reproduces. Warning-policy transfer now needs a separate
+frozen investigation. Preserve the original failed gates and sealed test.
+
 **Latest completed follow-up, 6 October 2026:** the
 [loss-weighting/projection factorial](../reports/timely-optimization-2026-10-05/research-report.md)
 completed nine new fits and 288 gated policy heads. Equal weights improve

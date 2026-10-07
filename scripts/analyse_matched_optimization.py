@@ -1,0 +1,458 @@
+"""Paired useful-lead architecture comparisons with matched event-loss weighting."""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+from pathlib import Path
+
+import numpy as np
+
+from league_ews.constants import EVENTS
+from league_ews.coordination_experiment import sha, write_json
+from league_ews.notebook_experiment import SEEDS
+from scripts.analyse_neural_screen import METRICS, calibration_routes, metrics, resample_weights
+from scripts.evaluate_matched_optimization import FAMILIES, POLICIES, REGIONS, freeze_policies
+from scripts.export_league_development import require
+from scripts.warning_efficiency import BUDGETS
+
+
+def load(study, plan_path):
+    frozen = json.loads((study / "freeze.json").read_bytes())
+    summary = json.loads((study / "summary.json").read_bytes())
+    binding = sha(study / "freeze.json")
+    require(
+        summary["status"] == "complete-exploratory-matched-optimization-policy", "Incomplete study"
+    )
+    require(
+        summary["freeze_sha256"] == binding
+        and summary["test_payloads_opened"] == 0
+        and summary["new_neural_fits"] == 9,
+        "Summary boundary differs",
+    )
+    require(frozen["plan_sha256"] == sha(plan_path), "Plan differs")
+    repo = Path(__file__).resolve().parents[1]
+    require(
+        all(sha(repo / p) == v for p, v in frozen["source_sha256"].items()), "Frozen source differs"
+    )
+    plan = json.loads(plan_path.read_bytes())
+    require(
+        plan == frozen["plan"]
+        and plan["uncertainty"]["draws"] == 2000
+        and plan["uncertainty"]["seed"] == 20261001,
+        "Analysis plan differs",
+    )
+    heads = [
+        {"key": f"{family}-{seed}-{event}-{h}"}
+        for family in FAMILIES
+        for seed in SEEDS
+        for event in EVENTS
+        for h in (30, 60)
+    ]
+    require(set(summary["heads"]) == {head["key"] for head in heads}, "Head inventory differs")
+    policy_binding = freeze_policies(study, heads, binding)
+    require(policy_binding == summary["policy_freeze_sha256"], "Policy freeze differs")
+    counts = {
+        p: {f: {h: np.empty((4, 3, 3, 3000, 6)) for h in (30, 60)} for f in FAMILIES}
+        for p in POLICIES
+    }
+    artifacts, selected_policies = {}, {}
+    for family in FAMILIES:
+        for s, seed in enumerate(SEEDS):
+            for e, event in enumerate(EVENTS):
+                for h in (30, 60):
+                    key = f"{family}-{seed}-{event}-{h}"
+                    path = study / "later" / f"{key}.npz"
+                    report = json.loads(path.with_suffix(".json").read_bytes())
+                    require(
+                        report == summary["heads"][key]
+                        and report["head"] == key
+                        and report["freeze_sha256"] == binding
+                        and report["policy_freeze_sha256"] == policy_binding
+                        and report["counts_sha256"] == sha(path)
+                        and (
+                            report["previous_counts_reproduced"]
+                            or report["new_full_reference_checks"] == 6000
+                        ),
+                        "Later binding differs",
+                    )
+                    with np.load(path, allow_pickle=False) as saved:
+                        require(set(saved.files) == set(POLICIES), "Policy inventory differs")
+                        for p in POLICIES:
+                            c = saved[p]
+                            require(
+                                c.shape == (4, 3000, 6)
+                                and np.isfinite(c).all()
+                                and np.all(c >= -1e-12)
+                                and np.all(c[..., 2] <= c[..., 1] + 1e-12)
+                                and np.all(c[..., 1] <= c[..., 0] + 1e-12)
+                                and np.all(c[..., 2] <= c[..., 5] + 1e-12)
+                                and np.allclose(
+                                    c[..., 3], c[..., 1] + c[..., 4], atol=1e-12, rtol=0
+                                ),
+                                "Invalid match counts",
+                            )
+                            if p != "matched_early_mixture":
+                                require(
+                                    np.array_equal(c, np.rint(c)), "Fractional deterministic count"
+                                )
+                            counts[p][family][h][:, s, e] = c
+                    artifacts[key] = report
+                    selected_policies[key] = json.loads(
+                        (study / "early" / f"{key}.json").read_bytes()
+                    )
+    reference = counts[POLICIES[0]][FAMILIES[0]]
+    for p in POLICIES:
+        for family in FAMILIES:
+            for h in (30, 60):
+                c = counts[p][family][h]
+                for column in (0, 5):
+                    require(
+                        np.allclose(
+                            c[..., column], reference[h][0, 0, :, :, column], rtol=0, atol=1e-12
+                        ),
+                        "Event/opportunity denominators differ",
+                    )
+    return (
+        counts,
+        plan,
+        {
+            "study_freeze_sha256": binding,
+            "policy_freeze_sha256": policy_binding,
+            "summary_sha256": sha(study / "summary.json"),
+            "heads": artifacts,
+        },
+        selected_policies,
+    )
+
+
+def summarise(point, draws):
+    """Retain fixed-seed points; bootstrap averages, never resample seed identities."""
+    result = {}
+    for event, p, b in [
+        *((event, point[:, i], draws[:, :, i]) for i, event in enumerate(EVENTS)),
+        ("macro", point.mean(1), draws.mean(2)),
+    ]:
+        result[event] = {
+            m: {
+                "mean": float(p[:, k].mean()),
+                "ci95": np.percentile(b[:, :, k].mean(1), [2.5, 97.5]).tolist(),
+                "seeds": p[:, k].tolist(),
+                "min": float(p[:, k].min()),
+                "max": float(p[:, k].max()),
+                "sd": float(p[:, k].std(ddof=1)),
+            }
+            for k, m in enumerate(METRICS)
+        }
+    return result
+
+
+def factorial_interaction(values):
+    """Pair all four cells before reducing matches, seeds or bootstrap draws."""
+    original = values["timely_leagueews"]
+    equal = values["timely_equal_sum"]
+    projected_original = values["timely_original_pcgrad"]
+    projected_equal = values["timely_equal_pcgrad"]
+    interaction = (projected_equal - equal) - (projected_original - original)
+    other_order = (projected_equal - projected_original) - (equal - original)
+    require(
+        np.allclose(interaction, other_order, atol=1e-12, rtol=0),
+        "Paired optimizer factorial identity differs",
+    )
+    return interaction
+
+
+def architecture_interactions(values):
+    """Difference of architecture effects equals difference of weighting effects."""
+    original = values["timely_leagueews"]
+    equal = values["timely_equal_sum"]
+    result = {}
+    for family, original_control in (("tcn", "timely_tcn"), ("gru", "timely_original_gru")):
+        control_equal = values[f"timely_equal_{family}"]
+        control_original = values[original_control]
+        interaction = (equal - control_equal) - (original - control_original)
+        other_order = (equal - original) - (control_equal - control_original)
+        require(
+            np.allclose(interaction, other_order, atol=1e-12, rtol=0),
+            "Paired architecture-weighting identity differs",
+        )
+        result[f"leagueews_{family}_by_weighting_interaction"] = interaction
+    return result
+
+
+def analyse(counts, routes, contrasts, draws=2000):
+    results, violations, policy_effects = {}, [], {}
+    for region in ("overall", *REGIONS):
+        idx = np.arange(len(routes)) if region == "overall" else np.flatnonzero(routes == region)
+        weights = resample_weights(routes[idx], draws)
+        results[region], policy_effects[region] = {}, {}
+        for h in (30, 60):
+            results[region][str(h)] = {}
+            all_points, all_sampled = {}, {}
+            for policy in POLICIES:
+                points, sampled = {}, {}
+                for family in FAMILIES:
+                    c = counts[policy][family][h]
+                    points[family] = np.stack(
+                        [metrics(x[:, :, idx], np.ones((1, len(idx))))[0] for x in c]
+                    )
+                    sampled[family] = np.stack([metrics(x[:, :, idx], weights) for x in c])
+                    if region != "overall":
+                        for bi, budget in enumerate(BUDGETS):
+                            for s, seed in enumerate(SEEDS):
+                                for e, event in enumerate(EVENTS):
+                                    cost = float(points[family][bi, s, e, 1])
+                                    if cost > budget + 1e-12:
+                                        violations.append(
+                                            {
+                                                "policy": policy,
+                                                "horizon": h,
+                                                "budget": budget,
+                                                "family": family,
+                                                "region": region,
+                                                "seed": seed,
+                                                "event": event,
+                                                "burden": cost,
+                                                "above_nominal": cost - budget,
+                                                "above_hard_one": cost > 1 + 1e-12,
+                                            }
+                                        )
+                all_points[policy], all_sampled[policy] = points, sampled
+                group = {}
+                for bi, budget in enumerate((*BUDGETS, "mean")):
+                    p = {
+                        f: points[f].mean(0) if budget == "mean" else points[f][bi]
+                        for f in FAMILIES
+                    }
+                    b = {
+                        f: sampled[f].mean(0) if budget == "mean" else sampled[f][bi]
+                        for f in FAMILIES
+                    }
+                    # These are paired differences on the same match draws. Never add CI ends.
+                    for values in (p, b):
+                        full = values["timely_leagueews"]
+                        timer = values["timely_clock_history"]
+                        current = values["timely_current_only"]
+                        require(
+                            np.allclose(
+                                full - current,
+                                (full - timer) + (timer - current),
+                                atol=1e-12,
+                                rtol=0,
+                            ),
+                            "Paired history decomposition differs",
+                        )
+                    comparisons = {
+                        f"{a}-minus-{z}": summarise(p[a] - p[z], b[a] - b[z]) for a, z in contrasts
+                    }
+                    comparisons["history_effect_difference_timely_minus_cumulative"] = summarise(
+                        (p["timely_leagueews"] - p["timely_current_only"])
+                        - (p["leagueews"] - p["current_only"]),
+                        (b["timely_leagueews"] - b["timely_current_only"])
+                        - (b["leagueews"] - b["current_only"]),
+                    )
+                    comparisons["sharing_effect_difference_timely_minus_cumulative"] = summarise(
+                        (p["timely_leagueews"] - p["timely_independent"])
+                        - (p["leagueews"] - p["independent"]),
+                        (b["timely_leagueews"] - b["timely_independent"])
+                        - (b["leagueews"] - b["independent"]),
+                    )
+                    for values in (p, b):
+                        sharing_change = (
+                            values["timely_leagueews"] - values["timely_independent"]
+                        ) - (values["leagueews"] - values["independent"])
+                        target_change = (values["timely_leagueews"] - values["leagueews"]) - (
+                            values["timely_independent"] - values["independent"]
+                        )
+                        require(
+                            np.allclose(sharing_change, target_change, atol=1e-12, rtol=0),
+                            "Paired target-sharing interaction differs",
+                        )
+                    comparisons["projection_by_weighting_interaction"] = summarise(
+                        factorial_interaction(p), factorial_interaction(b)
+                    )
+                    architecture_points = architecture_interactions(p)
+                    architecture_draws = architecture_interactions(b)
+                    for name in architecture_points:
+                        comparisons[name] = summarise(
+                            architecture_points[name], architecture_draws[name]
+                        )
+                    group[str(budget)] = {
+                        "models": {f: summarise(p[f], b[f]) for f in FAMILIES},
+                        "contrasts": comparisons,
+                    }
+                results[region][str(h)][policy] = group
+                print(f"Analysed {region}/{h}/{policy}", flush=True)
+            effects = {}
+            for bi, budget in enumerate((*BUDGETS, "mean")):
+                effects[str(budget)] = {}
+                for family in FAMILIES:
+                    effects[str(budget)][family] = {}
+                    for a, z in (
+                        ("regional_deterministic", "deterministic"),
+                        ("matched_early_mixture", "regional_deterministic"),
+                        ("dense_deterministic", "deterministic"),
+                        ("dense_regional_deterministic", "regional_deterministic"),
+                        ("matched_early_mixture", "dense_regional_deterministic"),
+                    ):
+                        p = all_points[a][family] - all_points[z][family]
+                        b = all_sampled[a][family] - all_sampled[z][family]
+                        effects[str(budget)][family][f"{a}-minus-{z}"] = summarise(
+                            p.mean(0) if budget == "mean" else p[bi],
+                            b.mean(0) if budget == "mean" else b[bi],
+                        )
+            policy_effects[region][str(h)] = effects
+    return results, violations, policy_effects
+
+
+def frozen_rules(results, violations):
+    name = "timely_equal_sum-minus-timely_equal_tcn"
+    groups = results["overall"]["30"]["matched_early_mixture"]["mean"]["contrasts"]
+    comparison = groups[name]
+    primary = comparison["macro"]["timely_recall"]
+    gru = groups["timely_equal_sum-minus-timely_equal_gru"]["macro"]["timely_recall"]
+    regional = [
+        results[r]["30"]["matched_early_mixture"]["mean"]["contrasts"][name]["macro"][
+            "timely_recall"
+        ]
+        for r in REGIONS
+    ]
+    return {
+        "architecture_support": primary["ci95"][0] > 0 and all(v > 0 for v in primary["seeds"]),
+        "event_point_nonharm": all(comparison[e]["timely_recall"]["mean"] >= 0 for e in EVENTS),
+        "no_extra_burden": comparison["macro"]["false_plus_late_per_match"]["ci95"][1] <= 0,
+        "regional_architecture_consistency": all(
+            v["ci95"][0] > 0 and all(z > 0 for z in v["seeds"]) for v in regional
+        ),
+        "gru_support": gru["ci95"][0] > 0 and all(v > 0 for v in gru["seeds"]),
+        "regional_hard_one_violations": {
+            family: {
+                str(h): {
+                    policy: sum(
+                        v["family"] == family
+                        and v["policy"] == policy
+                        and v["horizon"] == h
+                        and v["above_hard_one"]
+                        for v in violations
+                    )
+                    for policy in POLICIES
+                }
+                for h in (30, 60)
+            }
+            for family in FAMILIES
+        },
+        "practical_promotion": (
+            "not established by this exploratory architecture control; "
+            "previous gates and sealed-test requirements remain in force"
+        ),
+    }
+
+
+def write_aggregates(output, counts, routes, results):
+    with (output / "aggregate-counts.csv").open("w") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(
+            [
+                "policy",
+                "budget",
+                "family",
+                "seed",
+                "event",
+                "horizon",
+                "region",
+                "matches",
+                "events",
+                "matched",
+                "timely",
+                "alerts",
+                "false",
+                "opportunities",
+            ]
+        )
+        for policy in POLICIES:
+            for family in FAMILIES:
+                for h in (30, 60):
+                    for bi, budget in enumerate(BUDGETS):
+                        for s, seed in enumerate(SEEDS):
+                            for e, event in enumerate(EVENTS):
+                                for region in ("overall", *REGIONS):
+                                    idx = (
+                                        np.arange(len(routes))
+                                        if region == "overall"
+                                        else np.flatnonzero(routes == region)
+                                    )
+                                    sums = counts[policy][family][h][bi, s, e, idx].sum(0)
+                                    writer.writerow(
+                                        [
+                                            policy,
+                                            budget,
+                                            family,
+                                            seed,
+                                            event,
+                                            h,
+                                            region,
+                                            len(idx),
+                                            *sums,
+                                        ]
+                                    )
+    with (output / "by-seed.csv").open("w") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(
+            ["region", "horizon", "policy", "budget", "family", "seed", "event", *METRICS]
+        )
+        for region, horizons in results.items():
+            for h, policies in horizons.items():
+                for policy, budgets in policies.items():
+                    for budget, groups in budgets.items():
+                        for family, events in groups["models"].items():
+                            for event, values in events.items():
+                                for i, seed in enumerate(SEEDS):
+                                    writer.writerow(
+                                        [
+                                            region,
+                                            h,
+                                            policy,
+                                            budget,
+                                            family,
+                                            seed,
+                                            event,
+                                            *(values[m]["seeds"][i] for m in METRICS),
+                                        ]
+                                    )
+
+
+def main(args):
+    counts, plan, provenance, selected = load(args.study, args.plan)
+    routes = calibration_routes(args.archive)
+    require(
+        len(routes) == 3000 and all((routes == r).sum() == 1500 for r in REGIONS),
+        "Later regions differ",
+    )
+    results, violations, policy_effects = analyse(counts, routes, plan["contrasts"])
+    analysis = {
+        "schema_version": "league-matched-optimization-analysis-v1",
+        "status": "exploratory-development-only",
+        "test_payloads_opened": 0,
+        "plan_sha256": sha(args.plan),
+        "analysis_source_sha256": sha(Path(__file__)),
+        "provenance": provenance,
+        "uncertainty": plan["uncertainty"],
+        "parameters_by_architecture": plan["parameters_by_architecture"],
+        "results": results,
+        "policy_effects": policy_effects,
+        "nominal_budget_violations": violations,
+        "frozen_rules": frozen_rules(results, violations),
+    }
+    args.output.mkdir(parents=True, exist_ok=True)
+    write_json(args.output / "analysis.json", analysis)
+    write_json(args.output / "early-policies.json", selected)
+    write_aggregates(args.output, counts, routes, results)
+    print(json.dumps(analysis["frozen_rules"], indent=2))
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ("study", "archive", "plan", "output"):
+        parser.add_argument(f"--{name}", required=True, type=Path)
+    main(parser.parse_args())
