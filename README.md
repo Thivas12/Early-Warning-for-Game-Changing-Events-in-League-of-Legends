@@ -1,107 +1,291 @@
-# LeagueEWS · Useful early warnings in League of Legends
+# LeagueEWS Research
 
-**Keerthivasan Kannan · Applied machine learning and research engineering**
+[![Research CI](https://github.com/Thivas12/Early-Warning-for-Game-Changing-Events-in-League-of-Legends/actions/workflows/ci.yml/badge.svg)](https://github.com/Thivas12/Early-Warning-for-Game-Changing-Events-in-League-of-Legends/actions/workflows/ci.yml)
 
-Can a model warn about Baron, Dragon and teamfight events early enough to be
-useful, while controlling false and late alerts? LeagueEWS investigates that
-question with prediction-time-available inputs, reproducible GPU experiments
-and chronological warning replay.
+LeagueEWS Research studies whether strategically important League of Legends
+events can be forecast before they occur using only information that was
+available at prediction time.
 
-**30,000 development matches · 879,998 native observations · 69 neural fits**
+The current research question is:
 
-[Read the paper](paper/leagueews-2026-10/leagueews-reviewed-paper.pdf) ·
-[Two-page project brief](reports/publication-package-2026-10-07/leagueews-project-brief.pdf) ·
-[Five-minute technical review](docs/recruiter-walkthrough.md) ·
-[Engineering case study](docs/leagueews-case-study.md)
+> Can Baron, Dragon and teamfight events be forecast 10–60 seconds ahead with
+> calibrated probabilities that remain useful on unseen matches and game
+> patches?
 
-**Status — October 2026:** completed exploratory development study and working
-paper. Incremental experiment sweeps have stopped. The future-patch test remains
-sealed; the [submission closeout](docs/submission-readiness.md) records the
-remaining work. This is not an accepted publication or a deployed player product.
+This repository is the **research and reproducibility project**. A future
+player-facing product will live in a separate repository and will consume only
+a versioned, validated research release.
 
-## The research result
+## Research status
 
-![Controlled comparisons with conditional intervals](reports/publication-package-2026-10-07/evidence-overview.png)
+**Start here:** [Two-page project brief](reports/publication-package-2026-10-07/leagueews-project-brief.pdf)
+· [Engineering case study](docs/leagueews-case-study.md)
+· [Seven-page working paper](paper/leagueews-2026-10/leagueews-working-paper.pdf)
+· [Reproduce the package](reports/publication-package-2026-10-07/reproduce.md)
 
-The investigation separates explanations that are easy to conflate:
+The project now presents 30,000 development matches and 69 preserved neural fits
+as a controlled investigation of history, target alignment, sharing and warning
+cost. It includes source-derived figures, all saved-model CPU/GPU timing cells
+and a bounded confirmation design. **Status: exploratory working paper; no
+accepted publication, new-method breakthrough or fresh-patch confirmation.**
 
-| Controlled question | Result | Interpretation |
+![Controlled research evidence](reports/publication-package-2026-10-07/evidence-overview.png)
+
+**7 October 2026, publication decision:** Further incremental calibration
+sweeps are stopped. The [publication assessment](docs/publication-decision-2026-10-07.md)
+and [paper draft](docs/leagueews-paper-draft.md) consolidate the completed
+evidence around history, target alignment, task-dependent sharing and warning
+tradeoffs. They reject a broad hybrid-superiority or new-method claim and
+distinguish failed internal promotion screens from publication quality.
+No breakthrough or untouched-patch confirmation is established. The proposed
+tighter-bound study was not launched; all completed results remain unchanged.
+
+**7 October 2026, warning-policy follow-up:** The
+[capped risk-selector study](reports/warning-risk-2026-10-07/research-report.md)
+completed 90 heads using existing scores. A fixed uncertainty allowance gives
+zero nominal-budget overruns across all 720 regional evaluation cells without
+selecting silence, but costs LeagueEWS 1.818 short-lead and 3.114 longer-lead
+macro recall points. Most of the loss comes from conservative threshold
+selection; the cap alone does not solve the failures. LeagueEWS retains a
++0.225-point primary advantage over equal-weight TCN [0.118, 0.340], while
+regional consistency and no-extra-burden still fail. All 810,000 full replay
+checks passed and baseline results reproduce exactly. This is an exploratory
+tradeoff, not a risk certification or breakthrough. No new model was fitted;
+all 69 fits are preserved and patch 16.17 remains sealed.
+
+**7 October 2026:** The [matched architecture controls](reports/matched-optimization-2026-10-06/research-report.md)
+completed nine more fits and all 342 policy heads; 69 neural fits are preserved.
+Equal-weight LeagueEWS exceeds equal-weight TCN by +0.242 macro recall points
+[0.130, 0.354] at 10–30 seconds, positive in every seed and each aggregate
+event interval. Europe's macro interval crosses zero, the no-extra-burden
+rule fails, and regional warning-budget violations persist. Longer-lead macro
+recall gains +0.714 points [0.540, 0.892], with higher Baron burden. Matching
+weights reduces the earlier TCN margin; larger GRU gains depend on a recipe
+that performs poorly with useful-lead targets. Architecture capacity and
+computation remain unmatched. All prior results reproduce exactly. The next
+investigation addresses warning-policy transfer; no breakthrough is established
+and patch 16.17 stays sealed.
+
+**6 October 2026:** The [loss-weighting and PCGrad factorial](reports/timely-optimization-2026-10-05/research-report.md)
+completed nine fits and 288 policy heads, bringing the neural inventory to 60.
+Equal event weights improve primary macro recall by +0.325 points [0.231, 0.418],
+with positive effects in every seed and both regions. Baron gains most; its
+longer-lead recall recovers 1.310 points [0.950, 1.672], but still trails
+independent encoders. PCGrad adds no clear primary benefit beyond equal weights.
+The no-extra-burden rule and regional budget gates remain failed. The existing
+TCN uses original weights, so the revised architecture comparison is not yet
+matched on optimization. All prior results reproduce exactly; patch 16.17
+remains sealed and no breakthrough is claimed.
+
+**5 October 2026:** The [useful-lead sharing study](reports/timely-sharing-2026-10-05/research-report.md)
+completed nine independent-event fits and all 234 policy heads; 51 neural fits
+are now preserved across the continuation. Shared learning still helps
+short-lead Dragon and harms Baron, with no clear primary macro gain
+(−0.061 recall points [−0.219, +0.099]). At 20–60 seconds the joint model loses
+0.664 points [0.397, 0.925] relative to independent models, with all seeds and
+both regional macro intervals adverse. Useful-lead targets improve both
+recipes, but their longer-lead gain is larger for independent models.
+Regional warning-budget gates still fail. Training, scoring, paired analysis
+and independent replay audits are complete; no worker needs restarting.
+The committed-analysis release preceded scoring, and all previous policy
+counts and shared estimates reproduced exactly. The earlier
+[history control](reports/clock-history-2026-10-04/research-report.md) still
+supports a limited short-lead contribution from past non-timing state.
+All findings remain exploratory; patch 16.17 stays sealed.
+
+**3 October 2026:** All twelve LeagueEWS/GRU/TCN/snapshot fits, three matched
+history-ablation fits, nine independent event fits and three PCGrad fits
+completed on the PC GPU.
+LeagueEWS gains 4.623 percentage
+points of macro timely recall over GRU at 10–30 seconds, but fails the registered
+regional warning-budget gate. It shows no clear advantage over TCN. The history
+ablation supports a limited past-state benefit, mainly for Baron. Joint versus
+independent training raises macro recall by 0.445 points but lowers Baron recall
+in every seed; regional budgets still fail. The separately frozen PCGrad test
+adds 0.367 points of mean primary macro recall, but fails to recover Baron,
+loses macro recall in one seed, adds warning burden and breaches a regional
+budget. Longer-lead improvements for Baron accompany Dragon and teamfight losses.
+The completed [warning-efficiency follow-up](reports/warning-efficiency-2026-10-03/research-report.md)
+matches expected early cost across four fixed budgets: PCGrad-minus-joint primary
+macro recall is +0.027 points [−0.036, +0.098], with a negative seed and later
+budget failures. Its longer-lead result is adverse. History retains a primary
+benefit, but a hybrid-specific or uniform task-sharing gain is unsupported.
+See the [PCGrad mechanism report](reports/gradient-conflict-2026-10-02/research-report.md),
+[task sharing report](reports/task-sharing-2026-10-02/research-report.md),
+[original neural report](reports/neural-continuation-2026-10-01/research-report.md),
+[complete tables](reports/neural-continuation-2026-10-01/tables.md), and
+[earlier nine tree controls](reports/league-three-event-results-2026-10-01.md).
+No breakthrough is established; the patch-16.17 test remains sealed.
+
+The original MSc notebooks reported promising results, but a post-project audit
+found data leakage, broken features and train/test contamination. Those results
+are preserved for research transparency under [`legacy/msc-v1`](legacy/msc-v1)
+and are **not treated as production or generalisation evidence**.
+
+The `research/v2` programme starts again from a falsifiable protocol:
+
+1. establish causal data contracts;
+2. split complete matches before preprocessing or augmentation;
+3. beat time, event-history and tabular baselines;
+4. evaluate distinct events rather than positive rows;
+5. test calibration, alert burden and lead time;
+6. hold out future patches and publish negative results.
+
+See [`docs/research-plan.md`](docs/research-plan.md) for the registered plan,
+[`docs/research-eda.md`](docs/research-eda.md) for the offline audited data atlas,
+[`docs/rare-event-research.md`](docs/rare-event-research.md) for the rare-event
+diagnostic and follow-on experiment plan, and
+[`reports/rifthazard-calibration-2026-09-26.md`](reports/rifthazard-calibration-2026-09-26.md)
+for the first registered calibration results, including the negative B3
+event-level alert-utility finding. The future-patch test is still untouched.
+See [`docs/legacy-audit.md`](docs/legacy-audit.md) for the evidence that motivated
+the reset. Post-freeze corrections are recorded in
+[`docs/protocol-amendments.md`](docs/protocol-amendments.md). The executable
+two-route, six-patch population and allocation are in
+[`docs/sampling-frame.md`](docs/sampling-frame.md). Its deterministic,
+pre-detail crawl and stopping supplement is in
+[`docs/candidate-discovery.md`](docs/candidate-discovery.md). Checksum-bound
+detail eligibility and exact pilot selection are documented in
+[`docs/pilot-selection.md`](docs/pilot-selection.md). Selection-bound,
+resumable timeline collection is specified in
+[`docs/pilot-collection.md`](docs/pilot-collection.md). The outcome-blind,
+checksum-bound post-pilot duration inspection is documented in
+[`docs/pilot-duration.md`](docs/pilot-duration.md), with the frozen final rule
+in [`configs/rifthazard-duration-rule.yaml`](configs/rifthazard-duration-rule.yaml).
+The pilot-isolated, outcome-blind expansion to the final candidate pool is in
+[`docs/final-discovery.md`](docs/final-discovery.md). Its checksum-bound,
+detail-only final eligibility screen and exact 36,000-match allocation are in
+[`docs/final-selection.md`](docs/final-selection.md). Its selection-bound,
+resumable timeline materialization is specified in
+[`docs/final-collection.md`](docs/final-collection.md).
+
+## Original LeagueEWS and its continuation
+
+The research starts from the user's MSc **LeagueEWS**: residual TCN with
+squeeze-excitation, stacked BiGRUs, cross-attention and shared heads for Baron,
+Dragon and teamfights. The [source review and continuation](docs/notebook-continuation.md)
+trace the original notebooks, saved metrics and final report, including the
+corrections needed to evaluate that architecture fairly.
+
+The implemented continuation retains this model family and compares it with
+snapshot, GRU and TCN controls on the existing audited League sequence cache.
+It restores all three events and separately reports the original 30-second task.
+All twelve fits and their gated calibration evaluations completed, followed by
+three separately frozen history-ablation fits, nine independent event fits and
+three [PCGrad mechanism fits](reports/gradient-conflict-2026-10-02/reproduce.md).
+The [task sharing study](reports/task-sharing-2026-10-02/reproduce.md) has its own
+frozen runner and checkpoints. Preserve the completed outputs
+and use the [pinned reproduction instructions](reports/neural-continuation-2026-10-01/reproduce.md)
+for analysis or checkpoint recovery; maintenance code is not the frozen runner.
+
+## League research status
+
+**This project is exclusively about League of Legends.** The
+[scope correction](docs/league-research-scope.md) records the evidence boundary
+and the available development data. The separate Dota experiments are inactive and
+excluded from League results and novelty claims.
+
+The audited League development cohort contains **24,000 training matches /
+704,967 genuine observed rows** and **6,000 calibration matches / 175,031 rows**.
+Training covers patches 16.12–16.15 and calibration covers 16.16. The 6,000
+patch-16.17 test payloads remain sealed according to the saved run records.
+Dragon and Baron targets identify objective kills/completions, not first attacks.
+
+| Completed League experiment | Finding | Research conclusion |
 |---|---|---|
-| Does past state add information beyond timers and current state? | +0.533 macro recall percentage points at 10–30 seconds of lead | Evidence of incremental history information under the tested recipe |
-| Does joint training help all events? | −0.664 points at 20–60 seconds versus independent encoders | Sharing is task-dependent; independent models also use more resources |
-| Does the hybrid outperform a strong temporal baseline? | +0.242 points versus TCN with matched targets and task weights | Small margin, about 3.14× the parameters, unresolved regional consistency |
-| Can conservative selection remove observed warning overruns? | 0/720 regional-cell violations, with 1.818 and 3.114 points of recall loss | Compliance has a cost; this is not a certified future risk guarantee |
+| [Coordination screen](reports/coordination-screen-real-2026-09-29.md) | Coordination versus history: +0.168 percentage points of timely Dragon recall; paired 95% interval −0.044 to +0.389 | No clear incremental coordination benefit |
+| [Timing-objective screen](reports/timely-objective-real-2026-09-30.md) | Training for the useful warning interval improved recall under a false-plus-late budget, but failed the primary regional budget gate | Objective alignment, without established methodological novelty |
 
-These are separate comparisons, not additive effects or one common-policy
-leaderboard. All use inspected development calibration. Intervals condition on
-fixed fits and selected policies; they do not account for the adaptive research
-search. Read the [manuscript](docs/leagueews-paper-revised.md) for absolute recall,
-event-level limitations, intervals, negative results and exact policy definitions.
+Those two earlier studies are **exploratory calibration results from the user's
+WSL runs**; their private models were not refitted during this continuation.
+The completed neural studies above also use the already examined calibration
+population. None supplies a fresh test, breakthrough or state-of-the-art claim.
 
-## Engineering behind the evidence
+The [cooldown-aware warning candidate](docs/cooldown-aware-warning-research.md)
+and [adversarial novelty checks](docs/policy-novelty-defense.md) are implemented,
+but **no verified real League result exists for this candidate yet**. Synthetic
+examples establish implementation behavior only. Its private-data runner is
+`make start-scheduled-policy`, with explicit CUDA preflight.
 
-- **Leakage audit:** identified overlapping-window contamination, unavailable
-  end-of-match features and retrospective alert peaks in the original MSc
-  evaluation. [Audit and preserved originals](docs/notebook-continuation.md).
-- **Reliable experiments:** whole-match splits, training-only normalization,
-  checkpointed PyTorch execution, and source/data/model hashes.
-  [Training runner](scripts/run_compact_notebook.py) ·
-  [model implementation](src/league_ews/notebook_ews.py).
-- **Decision-level evaluation:** chronological warnings, 60-second cooldown,
-  one-to-one event credit, and an independent scalar replay reference. The latest
-  predictive study records 810,000 full independent replay checks.
-  [Evaluator](scripts/warning_risk.py) ·
-  [verification record](reports/warning-risk-2026-10-07/research-report.md).
-- **Measured systems tradeoffs:** six saved models, 24 CPU/GPU benchmark cells,
-  and 2,400 timing samples. Batch-one hybrid inference is 1.540 ms on CPU versus
-  4.377 ms on GPU on the measured laptop; GPU batching changes the comparison.
-  A TF32 parity failure and its correction are preserved.
-  [Benchmark scope and precision amendment](reports/publication-package-2026-10-07/runtime-protocol-v2.md).
+The [notebook continuation](docs/notebook-continuation.md#run-with-the-users-existing-wsl-data)
+runs against the audited three-event cache in WSL. The earlier
+[export script](scripts/export_league_development.py) remains an optional transfer
+route for the separate Dragon coordination cache; it is not a prerequisite for
+continuing the original three-event model.
 
-The benchmark measures resident-input model execution, not end-to-end serving.
-Software checks establish consistency; they are not independent scientific
-replications. Material AI assistance is documented in the [AI-use record](docs/ai-usage.md).
+## Archived work outside League
 
-## Verify the public evidence
+The [Dota archive index](docs/archived-dota-work.md) preserves the historical
+reports and their unchanged frozen artifacts, including the 48 neural fits.
+Those fits and the additional 7.56 million hero-state rows are Dota work;
+they are not League experiments or an expansion of the Riot cohort.
 
-From the repository root, with Python 3.12 or 3.13:
+## Quick start
 
-```bash
-python scripts/verify_publication_package.py
-```
-
-No GPU, credentials or private data are needed for this standard-library check.
-It verifies eight source-linked effects, recomputes all 24 runtime summaries,
-and checks published documents and evidence links. It does not retrain models
-or replay the private dataset. See the
-[full reproduction guide](reports/publication-package-2026-10-07/reproduce.md)
-and [editorial revision record](reports/publication-review-2026-10-08/README.md).
-
-For library development:
+Python 3.12 and [uv](https://docs.astral.sh/uv/) are the supported development
+environment.
 
 ```bash
 uv sync --all-groups
+uv run league-ews audit --csv /path/to/final_dataset.csv
+uv run league-ews benchmark --csv /path/to/final_dataset.csv --output reports/local
+uv run league-ews validate-sampling-frame --frame configs/rifthazard-sampling-frame.yaml
+make validate-discovery-plan
+make validate-candidate-pool
+make validate-pilot-selection
+make validate-final-discovery-plan
+make validate-final-selection-plan
+make preflight-final-collection
+make validate-final
 uv run pytest
 ```
 
-## Repository guide
+Raw and derived datasets are intentionally excluded from Git. Public data must
+be accompanied by a source, licence and checksum manifest under
+`data/manifests/`.
 
-| Area | Start here |
-|---|---|
-| Research paper and exact evidence | [Revised manuscript](docs/leagueews-paper-revised.md), [effect records](reports/publication-package-2026-10-07/evidence.json), [absolute baselines](reports/publication-review-2026-10-08/absolute-baselines.json) |
-| Research library and tests | [Source](src/league_ews/), [tests](tests/) |
-| Protocols and completed studies | [Research history](RESEARCH_HISTORY.md), [experiment stop decision](docs/publication-decision-2026-10-07.md) |
-| Data and labels | [League scope](docs/league-research-scope.md), [labels](src/league_ews/labels.py), [provenance manifests](data/manifests/) |
-| Confirmation boundary | [Four-claim design](docs/leagueews-confirmation-protocol.md), [submission closeout](docs/submission-readiness.md) |
-| Original MSc work | [Preserved notebooks and report](legacy/msc-v1/) |
+## Repository map
 
-Baron and Dragon labels identify objective completions, not engagement onsets.
-Historical work outside League is archived and excluded from this project's
-empirical claims. Raw data, API keys and player identifiers are not committed.
+```text
+src/league_ews/       tested research library and command-line interface
+tests/                unit, contract and regression tests
+configs/              versioned experiment configurations
+data/manifests/       provenance and licence metadata, never raw data
+reports/              committed reproducible summaries, not ad-hoc outputs
+paper/                manuscript and bibliography
+docs/                 protocol, audit, cards, ethics and AI-use record
+legacy/msc-v1/        immutable historical MSc assets
+```
 
-Code: [MIT License](LICENSE). Dataset, model and paper licences are separate.
-[Citation metadata](CITATION.cff). The legacy Kaggle data are separately licensed
-CC BY-NC 4.0. This project is not endorsed by Riot Games and does not reflect the
-views or opinions of Riot Games or anyone officially involved in producing or
-managing Riot Games properties. Riot Games and associated properties are
-trademarks or registered trademarks of Riot Games, Inc.
+## Reproducibility contract
+
+Every reported result must identify its Git commit, dataset checksum, feature
+and label versions, split manifest, configuration, random seed and runtime.
+Model selection uses validation data only. Test results are generated once for
+the frozen candidate and are never used for tuning.
+
+Raw-validation reports also record genuine within-match snapshot cadence and
+the event-level label opportunity at each registered horizon. These diagnostics
+do not interpolate observations and are not treated as model performance.
+When a sampling frame is supplied, validation additionally requires the exact
+route-platform/patch cross-product and stage-specific count in every cell.
+Registered-pilot validation also proves that the raw inventory exactly
+materializes the checksum-bound frozen selection; route and patch counts alone
+cannot substitute for that identity binding.
+
+## Riot and data notice
+
+This project is not endorsed by Riot Games and does not reflect the views or
+opinions of Riot Games or anyone officially involved in producing or managing
+Riot Games properties. Riot Games and all associated properties are trademarks
+or registered trademarks of Riot Games, Inc.
+
+The legacy Kaggle dataset is distributed separately under CC BY-NC 4.0. It may
+support non-commercial research, but it is not a commercial product data asset.
+Do not commit Riot API keys, PUUIDs or raw player identifiers.
+
+## Licence and citation
+
+Code is licensed under the [MIT License](LICENSE). Dataset, model and paper
+licences are declared separately. Citation metadata is provided in
+[`CITATION.cff`](CITATION.cff).
