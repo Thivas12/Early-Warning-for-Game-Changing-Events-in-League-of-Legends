@@ -1,0 +1,133 @@
+{
+  "schema": "league-publication-synthesis-v1",
+  "date": "2026-10-07",
+  "evidence_base_commit": "4786728c80103c29675ff88934a92898759260c6",
+  "status": "exploratory_draft_no_breakthrough",
+  "new_fits": 0,
+  "new_empirical_evaluations": 0,
+  "held_out_payloads_opened": false,
+  "verification": "All local draft links resolve; completed source bytes equal the pinned evidence commit. Hashes bind sources, not an independent reanalysis.",
+  "sources": [
+    {
+      "path": "docs/league-research-scope.md",
+      "sha256": "6a229d16c5bae7e3c510c3e964c8fc3958dc623425f4e9faa39ee24bf0dd5ee5",
+      "bytes": 6297,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "docs/leagueews-paper-draft.md",
+      "sha256": "1aa74ee41467d79f8ddff561b3ae501be7f34432730180800b94c2fea745d946",
+      "bytes": 20097,
+      "role": "new_synthesis"
+    },
+    {
+      "path": "docs/notebook-continuation.md",
+      "sha256": "b8892bc995e6ed7cee56961f87d86cd8e2b3af5eb6b18f77024d34d1ab0fa30d",
+      "bytes": 19572,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "docs/publication-decision-2026-10-07.md",
+      "sha256": "c223054db96278745be8231db3484e9cc8b2253726b7852dd5c45baeb6a3f174",
+      "bytes": 8226,
+      "role": "new_synthesis"
+    },
+    {
+      "path": "reports/clock-history-2026-10-04/research-report.md",
+      "sha256": "c33fb3d73915eebd89bdaa277889cb2bd0c33fa709aa8f546bb828d67087c968",
+      "bytes": 10650,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/clock-history-2026-10-04/scoring-release-repair.md",
+      "sha256": "cb24d271e4b54f9d04e8847d486220c322bf1037a85d8aede2852dfef1c4f6a4",
+      "bytes": 2065,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/dense-policy-2026-10-04/protocol.md",
+      "sha256": "9b447761d787a1c40ae12b9c77bafb20c2cc1e455cf1b3862c5324ac9c675699",
+      "bytes": 2406,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/matched-optimization-2026-10-06/research-report.md",
+      "sha256": "92bb71b5703258ffcd556ce69220c25253e0ff6bb23bfe3b46eaab1c55b73f59",
+      "bytes": 10950,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/neural-continuation-2026-10-01/methods.md",
+      "sha256": "7f3e034c34f11650648848046674880bf87ad998382cc35c2d062adf85e451ff",
+      "bytes": 5308,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/neural-continuation-2026-10-01/research-report.md",
+      "sha256": "e78c94cb1e0acba13b52e260bb0a93aa16ddb0636dde9905c425e2ea0810dc9a",
+      "bytes": 5370,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/timely-neural-2026-10-03/research-report.md",
+      "sha256": "d3aebb4dbad2377ffacedc038ca5e4c87f3d553f1c218d60abaa164f9bc183fe",
+      "bytes": 10770,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/timely-optimization-2026-10-05/research-report.md",
+      "sha256": "ca4097765b695ed1cf8cffe503be8f4e01f1c1fefcd23636c34abe86221c65e6",
+      "bytes": 11312,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/timely-sharing-2026-10-05/research-report.md",
+      "sha256": "50d9d6216f3444fbde39363210958834f39f22c560812b4c13c79a317c581bfa",
+      "bytes": 14586,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/warning-efficiency-2026-10-03/protocol.md",
+      "sha256": "d6c4005c7bf6d1dbabcaf9bccdee3129d0bcefc2cf95cc716f832aa9ee71a8e7",
+      "bytes": 3460,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/warning-risk-2026-10-07/protocol.md",
+      "sha256": "30f1c80f0b6a885e64fef1a6f7ca46095641cd9a86d255cf3f52ef2ce810cd9f",
+      "bytes": 7172,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/warning-risk-2026-10-07/reproduce.md",
+      "sha256": "5137187e77f60c2839cbbcfb58ba75f2cd5af73d826c08c9dd2c3895e71f1c08",
+      "bytes": 4071,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "reports/warning-risk-2026-10-07/research-report.md",
+      "sha256": "ab6e76424c22412212ee8e9f015cbb28ad9194e50e16d77188bd81f0a61e93c5",
+      "bytes": 13171,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "scripts/warning_risk.py",
+      "sha256": "22e332362c8aac5b2e4fc46c0f5c043d7dcc5c02476af6b663f828e04fa3d7fc",
+      "bytes": 9317,
+      "role": "unchanged_completed_source"
+    },
+    {
+      "path": "src/league_ews/labels.py",
+      "sha256": "40c63554cc13f75c022dd156f6eefcf47cd489816f7d43a4ee2c909ac18ea94e",
+      "bytes": 4021,
+      "role": "unchanged_completed_source"
+    }
+  ],
+  "external_primary_sources": [
+    "https://arxiv.org/abs/2012.09424",
+    "https://arxiv.org/pdf/2110.01052v5",
+    "https://proceedings.mlr.press/v248/yeche24a.html",
+    "https://www.sciencedirect.com/science/article/pii/S1875952126000133"
+  ],
+  "synthesis_revision": "Narrative rounding corrected directly from source JSON on 2026-10-07; completed study sources unchanged."
+}

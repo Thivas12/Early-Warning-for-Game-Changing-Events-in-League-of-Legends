@@ -18,7 +18,27 @@ code and identified data hashes, not from language-model recollection. Web
 sources were opened directly before policy and related-work summaries were
 written.
 
-## Human accountability
+## Material use in the LeagueEWS continuation and publication package
+
+From 30 September through 7 October 2026, OpenAI Codex assisted with the
+three-event notebook continuation, controlled follow-up experiments, checkpoint
+and replay auditing, literature checks, analysis and report writing. On
+7 October it synthesized the completed evidence, drafted the manuscript and
+recruiter-facing case study, generated source-linked figures/PDFs, specified
+the bounded confirmation design and implemented the saved-model CPU/GPU runtime
+measurement. It diagnosed the cuDNN TF32 parity failure and preserved both the
+aborted first run and the committed precision correction.
+
+Affected publication files include `docs/leagueews-paper-draft.md`,
+`docs/leagueews-case-study.md`, `docs/leagueews-confirmation-protocol.md`,
+`scripts/build_publication_package.py`, the two publication benchmark runners,
+`paper/leagueews-2026-10/` and `reports/publication-package-2026-10-07/`.
+Reported empirical figures come from identified execution artifacts, not model
+recollection. Human verification for submission has not been represented as
+complete. The résumé bullets are drafts for the owner's verification, not a
+claim of unaided implementation or accepted publication.
+
+## Human accountability before submission
 
 Before submission, a human author must:
 

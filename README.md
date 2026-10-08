@@ -18,6 +18,28 @@ a versioned, validated research release.
 
 ## Research status
 
+**Start here:** [Two-page project brief](reports/publication-package-2026-10-07/leagueews-project-brief.pdf)
+· [Engineering case study](docs/leagueews-case-study.md)
+· [Seven-page working paper](paper/leagueews-2026-10/leagueews-working-paper.pdf)
+· [Reproduce the package](reports/publication-package-2026-10-07/reproduce.md)
+
+The project now presents 30,000 development matches and 69 preserved neural fits
+as a controlled investigation of history, target alignment, sharing and warning
+cost. It includes source-derived figures, all saved-model CPU/GPU timing cells
+and a bounded confirmation design. **Status: exploratory working paper; no
+accepted publication, new-method breakthrough or fresh-patch confirmation.**
+
+![Controlled research evidence](reports/publication-package-2026-10-07/evidence-overview.png)
+
+**7 October 2026, publication decision:** Further incremental calibration
+sweeps are stopped. The [publication assessment](docs/publication-decision-2026-10-07.md)
+and [paper draft](docs/leagueews-paper-draft.md) consolidate the completed
+evidence around history, target alignment, task-dependent sharing and warning
+tradeoffs. They reject a broad hybrid-superiority or new-method claim and
+distinguish failed internal promotion screens from publication quality.
+No breakthrough or untouched-patch confirmation is established. The proposed
+tighter-bound study was not launched; all completed results remain unchanged.
+
 **7 October 2026, warning-policy follow-up:** The
 [capped risk-selector study](reports/warning-risk-2026-10-07/research-report.md)
 completed 90 heads using existing scores. A fixed uncertainty allowance gives
@@ -34,7 +56,7 @@ all 69 fits are preserved and patch 16.17 remains sealed.
 **7 October 2026:** The [matched architecture controls](reports/matched-optimization-2026-10-06/research-report.md)
 completed nine more fits and all 342 policy heads; 69 neural fits are preserved.
 Equal-weight LeagueEWS exceeds equal-weight TCN by +0.242 macro recall points
-[0.131, 0.354] at 10–30 seconds, positive in every seed and each aggregate
+[0.130, 0.354] at 10–30 seconds, positive in every seed and each aggregate
 event interval. Europe's macro interval crosses zero, the no-extra-burden
 rule fails, and regional warning-budget violations persist. Longer-lead macro
 recall gains +0.714 points [0.540, 0.892], with higher Baron burden. Matching
