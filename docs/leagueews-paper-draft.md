@@ -19,7 +19,7 @@ past non-timing state adds 0.533 percentage points of macro recall with
 with useful-lead targets, joint training loses 0.664 points at 20–60 seconds
 relative to independent event encoders (−0.925 to −0.397). After matching loss
 weights, the hybrid's short-lead advantage over a TCN is 0.242 points
-(0.131–0.354), with unresolved regional consistency. A capped risk-screened
+(0.130–0.354), with unresolved regional consistency. A capped risk-screened
 policy eliminates observed nominal-budget violations across 720 regional
 evaluation cells but reduces hybrid recall by 1.818 short-lead and 3.114
 longer-lead points. These exploratory results distinguish history information,
@@ -213,7 +213,7 @@ does not provide a clear additional primary benefit after equal weighting.
 ### 5.5 Matching weights leaves a small hybrid–TCN margin
 
 Under equal event weights and useful-lead targets, the hybrid exceeds TCN by
-0.242 short-lead macro points [0.131, 0.354] across matched-early budgets.
+0.242 short-lead macro points [0.130, 0.354] across matched-early budgets.
 All three seeds and all aggregate event recall intervals are positive.
 Europe's macro interval nevertheless includes zero; capacity, compute and
 tuning remain unmatched. The longer-lead margin is 0.714 [0.540, 0.892],

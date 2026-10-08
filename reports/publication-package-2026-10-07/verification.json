@@ -1,0 +1,10 @@
+{
+  "status": "passed-public-artifact-verification",
+  "exact_source_effects": 8,
+  "runtime_cells": 24,
+  "timing_samples": 2400,
+  "documents": 2,
+  "local_links": 40,
+  "new_outcome_evaluations": 0,
+  "scope": "Source extraction, independent timing arithmetic, inventory and hashes"
+}

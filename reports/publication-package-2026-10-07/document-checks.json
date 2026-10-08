@@ -1,0 +1,14 @@
+[
+  {
+    "path": "reports/publication-package-2026-10-07/leagueews-project-brief.pdf",
+    "pages": 2,
+    "extracted_characters": 2982,
+    "sha256": "154bb6e2c4f55747bbc5457f00743845b4e51faddce706398e33f5d094b0ad56"
+  },
+  {
+    "path": "paper/leagueews-2026-10/leagueews-working-paper.pdf",
+    "pages": 7,
+    "extracted_characters": 21195,
+    "sha256": "6ce2af87a6067b77857346c8dcb5806e1ce1ef45d1828807f2b2c77de38bc5ab"
+  }
+]

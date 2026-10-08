@@ -1,0 +1,25 @@
+{
+  "status": "complete-publication-package",
+  "predictive_studies_changed": false,
+  "new_neural_fits": 0,
+  "new_outcome_evaluations": 0,
+  "held_out_payloads_opened": 0,
+  "completed_runtime_cells": 24,
+  "measured_timing_calls": 2400,
+  "saved_fits_with_cpu_cuda_parity": 6,
+  "aborted_first_runtime_preserved": true,
+  "pdf_pages": {
+    "project_brief": 2,
+    "working_paper": 7
+  },
+  "visual_review": "All nine pages inspected; final appendix rechecked after table and annotation fixes. Final rounding correction leaves pagination unchanged.",
+  "checks": [
+    "Ruff on four new scripts",
+    "independent aggregate verifier",
+    "secret scan",
+    "local link validation",
+    "PDF text and hash checks"
+  ],
+  "publication_status": "exploratory working paper; fresh confirmation and final human submission review pending",
+  "confirmation_protocol_status": "bounded design, not executable release gate"
+}

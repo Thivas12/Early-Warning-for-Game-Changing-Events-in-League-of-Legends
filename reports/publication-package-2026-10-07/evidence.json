@@ -1,0 +1,141 @@
+{
+  "schema": "league-publication-evidence-v1",
+  "new_empirical_analysis": false,
+  "interpretation": "Selected completed contrasts under four-budget matched-early averaging. Different controlled changes; not additive, a model ranking or a meta-analysis. Pointwise conditional 95% intervals; adaptive development, not confirmation.",
+  "source_sha256": {
+    "reports/clock-history-2026-10-04/analysis.json": "3e8b5e1f502802d2bec60bfb2666a2e2b3799462c6d26198009839d76df54627",
+    "reports/timely-neural-2026-10-03/analysis.json": "149cf2542e299bf551a0b1881faffe380aefadc9bf8ce5840ed81b69cd57721f",
+    "reports/timely-sharing-2026-10-05/analysis.json": "acfccf36eee2e38d3c242ddb1b39e94e85c54330f3159cd4b440d78532dda43a",
+    "reports/matched-optimization-2026-10-06/analysis.json": "5d8f0ed2b25628801b8e53b1541a2b74831107a19ec169fd7ec229c3b13126b9"
+  },
+  "effects": [
+    {
+      "label": "Past state beyond current state and timers",
+      "horizon": 30,
+      "source": "reports/clock-history-2026-10-04/analysis.json",
+      "json_pointer": "/results/overall/30/matched_early_mixture/mean/contrasts/timely_leagueews-minus-timely_clock_history/macro/timely_recall",
+      "recall_difference_pp": 0.532957066025595,
+      "ci95_pp": [
+        0.3738570737237648,
+        0.6957863469713306
+      ],
+      "seeds_pp": [
+        0.7230175708044839,
+        0.5616194285287736,
+        0.3142341987435276
+      ]
+    },
+    {
+      "label": "Past state beyond current state and timers",
+      "horizon": 60,
+      "source": "reports/clock-history-2026-10-04/analysis.json",
+      "json_pointer": "/results/overall/60/matched_early_mixture/mean/contrasts/timely_leagueews-minus-timely_clock_history/macro/timely_recall",
+      "recall_difference_pp": 0.13202604767057133,
+      "ci95_pp": [
+        -0.06351705935943636,
+        0.3244684820350146
+      ],
+      "seeds_pp": [
+        0.16658889956235487,
+        0.05562524146752781,
+        0.17386400198183133
+      ]
+    },
+    {
+      "label": "Useful-lead targets, same hybrid",
+      "horizon": 30,
+      "source": "reports/timely-neural-2026-10-03/analysis.json",
+      "json_pointer": "/results/overall/30/matched_early_mixture/mean/contrasts/timely_leagueews-minus-leagueews/macro/timely_recall",
+      "recall_difference_pp": 0.45051073908366535,
+      "ci95_pp": [
+        0.32363273847073,
+        0.5842345381417113
+      ],
+      "seeds_pp": [
+        0.5411348693526532,
+        0.44555321593232367,
+        0.36484413196601917
+      ]
+    },
+    {
+      "label": "Useful-lead targets, same hybrid",
+      "horizon": 60,
+      "source": "reports/timely-neural-2026-10-03/analysis.json",
+      "json_pointer": "/results/overall/60/matched_early_mixture/mean/contrasts/timely_leagueews-minus-leagueews/macro/timely_recall",
+      "recall_difference_pp": 3.9956848201000073,
+      "ci95_pp": [
+        3.7698836965735087,
+        4.248359490486282
+      ],
+      "seeds_pp": [
+        4.212827101486153,
+        3.8972478534176345,
+        3.876979505396236
+      ]
+    },
+    {
+      "label": "Joint minus independent event encoders",
+      "horizon": 30,
+      "source": "reports/timely-sharing-2026-10-05/analysis.json",
+      "json_pointer": "/results/overall/30/matched_early_mixture/mean/contrasts/timely_leagueews-minus-timely_independent/macro/timely_recall",
+      "recall_difference_pp": -0.06095469970985459,
+      "ci95_pp": [
+        -0.2191669790565985,
+        0.09917857991044593
+      ],
+      "seeds_pp": [
+        0.11149447449561566,
+        -0.03099844243818403,
+        -0.2633601311869954
+      ]
+    },
+    {
+      "label": "Joint minus independent event encoders",
+      "horizon": 60,
+      "source": "reports/timely-sharing-2026-10-05/analysis.json",
+      "json_pointer": "/results/overall/60/matched_early_mixture/mean/contrasts/timely_leagueews-minus-timely_independent/macro/timely_recall",
+      "recall_difference_pp": -0.6641060906073262,
+      "ci95_pp": [
+        -0.924648620678434,
+        -0.39711945707755797
+      ],
+      "seeds_pp": [
+        -0.3581231625050035,
+        -0.8639612983744818,
+        -0.7702338109424931
+      ]
+    },
+    {
+      "label": "Equal-weight hybrid minus equal-weight TCN",
+      "horizon": 30,
+      "source": "reports/matched-optimization-2026-10-06/analysis.json",
+      "json_pointer": "/results/overall/30/matched_early_mixture/mean/contrasts/timely_equal_sum-minus-timely_equal_tcn/macro/timely_recall",
+      "recall_difference_pp": 0.24196257393674123,
+      "ci95_pp": [
+        0.13048935517438817,
+        0.35434436004693326
+      ],
+      "seeds_pp": [
+        0.19945459346346847,
+        0.2670378952617141,
+        0.2593952330850411
+      ]
+    },
+    {
+      "label": "Equal-weight hybrid minus equal-weight TCN",
+      "horizon": 60,
+      "source": "reports/matched-optimization-2026-10-06/analysis.json",
+      "json_pointer": "/results/overall/60/matched_early_mixture/mean/contrasts/timely_equal_sum-minus-timely_equal_tcn/macro/timely_recall",
+      "recall_difference_pp": 0.7139829187795939,
+      "ci95_pp": [
+        0.5400790492134252,
+        0.8920905269127187
+      ],
+      "seeds_pp": [
+        0.8409755819910115,
+        0.7199045960757662,
+        0.581068578272004
+      ]
+    }
+  ]
+}

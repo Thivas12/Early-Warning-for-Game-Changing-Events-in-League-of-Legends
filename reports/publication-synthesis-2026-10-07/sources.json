@@ -16,7 +16,7 @@
     },
     {
       "path": "docs/leagueews-paper-draft.md",
-      "sha256": "58f47f6a9f6716a1d377f0b40910ca8e3ffba5bb06f8d9181a6dca489bbf3cb0",
+      "sha256": "1aa74ee41467d79f8ddff561b3ae501be7f34432730180800b94c2fea745d946",
       "bytes": 20097,
       "role": "new_synthesis"
     },
@@ -28,7 +28,7 @@
     },
     {
       "path": "docs/publication-decision-2026-10-07.md",
-      "sha256": "13919683b69d49778c1874c2b4ab193d46d13a2815d3b6ba235ab413d152543f",
+      "sha256": "c223054db96278745be8231db3484e9cc8b2253726b7852dd5c45baeb6a3f174",
       "bytes": 8226,
       "role": "new_synthesis"
     },
@@ -128,5 +128,6 @@
     "https://arxiv.org/pdf/2110.01052v5",
     "https://proceedings.mlr.press/v248/yeche24a.html",
     "https://www.sciencedirect.com/science/article/pii/S1875952126000133"
-  ]
+  ],
+  "synthesis_revision": "Narrative rounding corrected directly from source JSON on 2026-10-07; completed study sources unchanged."
 }
