@@ -1,0 +1,268 @@
+{
+  "schema": "league-publication-absolute-baselines-v1",
+  "source": "reports/neural-continuation-2026-10-01/neural-analysis.json",
+  "source_sha256": "b29985d1f2ead715621f85c89487e367293556c90378918dc60d848c65fc4bbb",
+  "new_outcome_evaluation": false,
+  "records": [
+    {
+      "family": "leagueews",
+      "event": "baron",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/leagueews/baron/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.19636318590050397,
+          0.2217761138746494
+        ],
+        "estimate": 0.20878329733621312
+      }
+    },
+    {
+      "family": "leagueews",
+      "event": "dragon",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/leagueews/dragon/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.1264463588891515,
+          0.13723231711607012
+        ],
+        "estimate": 0.13175625974637362
+      }
+    },
+    {
+      "family": "leagueews",
+      "event": "teamfight",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/leagueews/teamfight/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.028564862006390433,
+          0.03304398455238891
+        ],
+        "estimate": 0.030815862591563523
+      }
+    },
+    {
+      "family": "leagueews",
+      "event": "macro",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/leagueews/macro/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.11903179359968076,
+          0.12859637717612243
+        ],
+        "estimate": 0.12378513989138341
+      }
+    },
+    {
+      "family": "leagueews",
+      "event": "macro",
+      "metric": "false_plus_late_per_match",
+      "json_pointer": "/analysis/overall/30/families/leagueews/macro/mean_over_fixed_seeds/false_plus_late_per_match",
+      "value": {
+        "conditional_95_interval": [
+          0.839924074074074,
+          0.8919999999999999
+        ],
+        "estimate": 0.8647777777777779
+      }
+    },
+    {
+      "family": "tcn",
+      "event": "baron",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/tcn/baron/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.19429884532176567,
+          0.22030605583885535
+        ],
+        "estimate": 0.20734341252699784
+      }
+    },
+    {
+      "family": "tcn",
+      "event": "dragon",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/tcn/dragon/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.1300652082524053,
+          0.14087801162221583
+        ],
+        "estimate": 0.1353164445229058
+      }
+    },
+    {
+      "family": "tcn",
+      "event": "teamfight",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/tcn/teamfight/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.02608873306081934,
+          0.03044015517176984
+        ],
+        "estimate": 0.028340490022733016
+      }
+    },
+    {
+      "family": "tcn",
+      "event": "macro",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/tcn/macro/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.11879854561912054,
+          0.12841998851270506
+        ],
+        "estimate": 0.12366678235754557
+      }
+    },
+    {
+      "family": "tcn",
+      "event": "macro",
+      "metric": "false_plus_late_per_match",
+      "json_pointer": "/analysis/overall/30/families/tcn/macro/mean_over_fixed_seeds/false_plus_late_per_match",
+      "value": {
+        "conditional_95_interval": [
+          0.8385148148148147,
+          0.8905287037037036
+        ],
+        "estimate": 0.8636296296296296
+      }
+    },
+    {
+      "family": "gru",
+      "event": "baron",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/gru/baron/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.11158567106772735,
+          0.130465760185072
+        ],
+        "estimate": 0.12084747505913812
+      }
+    },
+    {
+      "family": "gru",
+      "event": "dragon",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/gru/dragon/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.08539296304665143,
+          0.0941567870887068
+        ],
+        "estimate": 0.08976961779503928
+      }
+    },
+    {
+      "family": "gru",
+      "event": "teamfight",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/gru/teamfight/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.020383305272130427,
+          0.023738461896044605
+        ],
+        "estimate": 0.02204260335101457
+      }
+    },
+    {
+      "family": "gru",
+      "event": "macro",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/gru/macro/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.07402873033330162,
+          0.08107959940836272
+        ],
+        "estimate": 0.07755323206839732
+      }
+    },
+    {
+      "family": "gru",
+      "event": "macro",
+      "metric": "false_plus_late_per_match",
+      "json_pointer": "/analysis/overall/30/families/gru/macro/mean_over_fixed_seeds/false_plus_late_per_match",
+      "value": {
+        "conditional_95_interval": [
+          0.7635175925925924,
+          0.8069638888888889
+        ],
+        "estimate": 0.7845185185185185
+      }
+    },
+    {
+      "family": "snapshot",
+      "event": "baron",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/snapshot/baron/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.1743201668444935,
+          0.19905399155670303
+        ],
+        "estimate": 0.18636223387843262
+      }
+    },
+    {
+      "family": "snapshot",
+      "event": "dragon",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/snapshot/dragon/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.11249803085364553,
+          0.12257089445383816
+        ],
+        "estimate": 0.11742725159619855
+      }
+    },
+    {
+      "family": "snapshot",
+      "event": "teamfight",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/snapshot/teamfight/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.023716218365758455,
+          0.02798857069166143
+        ],
+        "estimate": 0.025898795992253934
+      }
+    },
+    {
+      "family": "snapshot",
+      "event": "macro",
+      "metric": "timely_recall",
+      "json_pointer": "/analysis/overall/30/families/snapshot/macro/mean_over_fixed_seeds/timely_recall",
+      "value": {
+        "conditional_95_interval": [
+          0.10550440211963302,
+          0.11457216389282376
+        ],
+        "estimate": 0.10989609382229502
+      }
+    },
+    {
+      "family": "snapshot",
+      "event": "macro",
+      "metric": "false_plus_late_per_match",
+      "json_pointer": "/analysis/overall/30/families/snapshot/macro/mean_over_fixed_seeds/false_plus_late_per_match",
+      "value": {
+        "conditional_95_interval": [
+          0.8192916666666666,
+          0.871112037037037
+        ],
+        "estimate": 0.8445555555555556
+      }
+    }
+  ]
+}
